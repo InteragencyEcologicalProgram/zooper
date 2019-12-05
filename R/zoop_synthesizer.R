@@ -1,0 +1,531 @@
+#' Integrates zooplankton datasets in the Sacramento San Joaquin Delta
+#'
+#' This function returns an integrated zooplankton dataset with taxonomic issues resolved, according to user-specifications, along with important caveats about the data.
+#' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
+#' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
+#' @param Data What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See below for more explanation.
+#' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
+#' @param Months Months to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the month numbers you wish to be included. Defaults to \code{Months = NA}, which includes all months.
+#' @param Years Years to be included in the integrated dataset. If you wish to only include data from a subset of years, input a vector of years you wish to be included. Defaults to \code{Years = NA}, which includes all months.
+#' @param Sal_bott_range Filter the data by bottom salinity values. Include a vector of length 2 specifying the minimum and maximum values you wish to include. To include all values above or below a limit, utilize Inf or -Inf for the upper or lower bound respectively. Defaults to \code{Sal_bott_range = NA}, which includes all bottom salinities.
+#' @param Sal_surf_range Same as previous, but for surface salinity.
+#' @param Temp_range Same as \code{Sal_bott_range} but for surface temperature.
+#' @param Lat_range Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaluts to \code{Lat_range = NA}, which includes all latitudes.
+#' @param Long_range Same as previous, but for longitude. Don't forget that Longitudes should be negative in the Delta!
+#' @param Reload_data If set to \code{Reload_data = T} runs the \code{Zoopdownloader} function to re-combine source datasets. To include local versions of the datasets without redownloading them from online, set \code{Reload_data = TRUE} and \code{Redownload_data = FALSE}. Defaults to \code{Reload_data= FALSE}
+#' @param Redownload_data Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, runs \code{Zoopdownloader(Redownload_data = TRUE)}. Defaults to \code{Redownload_data = FALSE}.
+#' @param All_env Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.
+#' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
+#' @keywords integration, synthesis, zooplankton.
+#' @importFrom magrittr %>%
+#' @return An integrated zooplankton dataset.
+#' @details This function combines any combination of the zoo datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.
+#' @section Data type:
+#' The \code{Data} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data="Taxa"} but if you want to conduct a community analysis, use \code{Data = "Community"}.
+#' Briefly, \code{Data = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
+#' \code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparions across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
+#' @author Sam Bashevkin
+#' @examples
+#' MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+#'
+
+Zooper<-function(
+  Sources=c("EMP", "FRP", "FMWT", "TNS", "20mm"),
+  Size_class=c("Micro", "Meso", "Macro"),
+  Data="Community",
+  Date_range=c(NA, NA),
+  Months=NA,
+  Years=NA,
+  Sal_bott_range=NA,
+  Sal_surf_range=NA,
+  Temp_range=NA,
+  Lat_range=NA,
+  Long_range=NA,
+  Reload_data=F,
+  Redownload_data=F,
+  All_env=T,
+  Shiny=F){
+
+
+  # Setup -------------------------------------------------------------------
+
+  #Warnings for improper arguments
+  if (!purrr::every(Sources, ~.%in%c("EMP", "FRP", "FMWT", "TNS", "20mm"))){
+    stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, TNS, 20mm")
+  }
+
+
+  if (!(Data=="Taxa" | Data=="Community")){
+    stop("Data must be either 'Taxa' or 'Community'")
+  }
+
+  if(!purrr::every(list(Shiny, Reload_data, Redownload_data, All_env), is.logical)){
+    stop("Shiny, All_env, Reload_data, and Redownload_data must all have logical arguments.")
+  }
+
+  # Load crosswalk key to add taxonomic info
+  crosswalk <- readxl::read_excel("Data/new_crosswalk.xlsx", sheet = "Hierarchy2")
+
+  #Make it possible to re-download data if desired
+  if(Reload_data | Redownload_data){
+    source("Zoop data downloader.R")
+    Zoopdownloader(Redownload_data=Redownload_data)
+  }
+
+  #Recode Source
+  Sources <- dplyr::recode(Sources, "20mm"= "twentymm")
+
+  # Read in data
+  zoop<-readRDS("Data/zoopforzooper.Rds")
+  zoopEnv<-readRDS("Data/zoopenvforzooper.Rds")
+
+  # Filter data -------------------------------------------------------------
+
+  #Filter to desired data sources. To save memory, environmental data is filtered
+  #then at the end the remaining samples are selected from the zooplankton dataset
+
+  zoopEnv<-dplyr::filter(zoopEnv, Source%in%Sources)
+
+  #Filter data by specified variables if users provide appropriate ranges
+
+  if(!purrr::every(Sal_bott_range, is.na)) {
+    if(purrr::some(Sal_bott_range, is.na)) {
+      stop("One element of Sal_bott_range cannot be NA, use Inf or -Inf to set limitless bounds")
+    }
+    zoopEnv<-dplyr::filter(zoopEnv, dplyr::between(SalBott, min(Sal_bott_range), max(Sal_bott_range)))
+  }
+
+  if(!purrr::every(Sal_surf_range, is.na)) {
+    if(purrr::some(Sal_surf_range, is.na)) {
+      stop("One element of Sal_surf_range cannot be NA, use Inf or -Inf to set limitless bounds")
+    }
+    zoopEnv<-dplyr::filter(zoopEnv, dplyr::between(SalSurf, min(Sal_surf_range), max(Sal_surf_range)))
+  }
+
+  if(!purrr::every(Temp_range, is.na)) {
+    if(purrr::some(Temp_range, is.na)) {
+      stop("One element of Temp_range cannot be NA, use Inf or -Inf to set limitless bounds")
+    }
+    zoopEnv<-dplyr::filter(zoopEnv, dplyr::between(Temperature, min(Temp_range), max(Temp_range)))
+  }
+
+  if(!is.na(Date_range[1])){
+    Datemin<-lubridate::as_date(Date_range[1])
+    if(is.na(Datemin)) {stop("Date_range[1] in incorrect format. Reformat to 'yyyy-mm-dd'")}
+    zoopEnv<-dplyr::filter(zoopEnv, Date>Datemin)
+  }
+
+  if(!is.na(Date_range[2])){
+    Datemax<-lubridate::as_date(Date_range[2])
+    if(is.na(Datemax)) {stop("Date_range[2] in incorrect format. Reformat to 'yyyy-mm-dd'")}
+    zoopEnv<-dplyr::filter(zoopEnv, Date<Datemax)
+  }
+
+  if(!purrr::every(Months, is.na)) {
+    zoopEnv<-dplyr::filter(zoopEnv, lubridate::month(Date)%in%Months)
+  }
+
+  if(!purrr::every(Years, is.na)) {
+    zoopEnv<-dplyr::filter(zoopEnv, Year%in%Years)
+  }
+
+  if(!purrr::every(Lat_range, is.na)) {
+    if(purrr::some(Lat_range, is.na)) {
+      stop("One element of Lat_range cannot be NA, use Inf or -Inf to set limitless bounds")
+    }
+    zoopEnv<-dplyr::filter(zoopEnv, dplyr::between(Latitude, min(Lat_range), max(Lat_range)))
+  }
+
+  if(!purrr::every(Long_range, is.na)) {
+    if(purrr::some(Long_range, is.na)) {
+      stop("One element of Long_range cannot be NA, use Inf or -Inf to set limitless bounds")
+    }
+    if(purrr::some(Long_range>0, isTRUE)) {warning("Longitudes should be negative for the Delta")}
+    zoopEnv<-dplyr::filter(zoopEnv, dplyr::between(Longitude, min(Long_range), max(Long_range)))
+  }
+
+  #Find remaining samples to retain
+  Samples<-zoopEnv%>%
+    dplyr::pull(SampleID)%>%
+    unique()
+
+  #Retain remaining samples and filter to preferred size classes
+  zoop<-dplyr::filter(zoop, SampleID%in%Samples & SizeClass%in%Size_class)
+
+  # Apply LCD approach ------------------------------------------------------
+
+  #Make vector of taxonomic categories that we will use later
+  Taxcats<-c("Genus", "Family", "Order", "Class", "Phylum")
+
+  # Make list of taxa x life stage combinations present in all source datasets
+  SourceTaxaKeyer<-function(source, crosswalk){
+    source2<-rlang::sym(source) #unquote input
+    source2<-rlang::enquo(source2) #capture expression to pass on to functions below
+    crosswalk%>%
+      dplyr::filter(!is.na(!!source2))%>%
+      dplyr::select_at(c(Taxcats, "Taxname", "Lifestage"))%>%
+      dplyr::distinct()%>%
+      dplyr::mutate(Source=source)
+  }
+
+  SourceTaxaKey<-purrr::map_dfr(unique(paste(zoop$Source, zoop$SizeClass, sep="_")), SourceTaxaKeyer, crosswalk)%>%
+    tidyr::separate(Source, into=c("Source", "SizeClass"), sep="_")
+
+
+  #Function to detect common taxonomic names across all source datasets
+  Commontaxer<-function(Taxagroup, sourcetaxakey){
+    Taxagroup<-rlang::sym(Taxagroup) #unquote input
+    Taxagroup<-rlang::enquo(Taxagroup) #capture expression to pass on to functions below
+    N<-sourcetaxakey%>%
+      dplyr::pull(Source)%>%
+      unique()%>%
+      length()
+    sourcetaxakey%>%
+      dplyr::filter(!is.na(!!Taxagroup))%>%
+      dplyr::select(!!Taxagroup, Lifestage, Source)%>%
+      dplyr::distinct()%>%
+      dplyr::group_by(!!Taxagroup, Lifestage)%>%
+      dplyr::summarise(n=dplyr::n())%>% #Create index of number of data sources in which each taxagroup x lifestage combo appears
+      dplyr::ungroup()%>%
+      dplyr::filter(n==N)%>% #only retain taxagroup x lifestage combos that appear in all datasets
+      dplyr::select(!!Taxagroup, Lifestage)
+  }
+
+  #Create variable for size classes present in dataset
+  Size_classes<-zoop%>%
+    dplyr::pull(SizeClass)%>%
+    unique()%>%
+    rlang::set_names()
+
+  #Find all common Taxname x life stage combinations, turn into vector of Taxlifestages
+  Commontax<-purrr::map(Size_classes, function(x)
+    dplyr::filter(SourceTaxaKey, SizeClass==x)%>%
+      Commontaxer("Taxname", .)%>%
+      dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+      dplyr::pull(Taxlifestage))
+
+  # Make list of taxalifestages that do not appear in all datasets
+  Lumper<-function(Sizeclass){
+    Taxa<-zoop%>%
+      dplyr::filter(SizeClass==Sizeclass)%>%
+      dplyr::pull(Taxlifestage)%>%
+      unique()
+    setdiff(Taxa, Commontax[[Sizeclass]])
+
+  }
+
+  Lumped<-purrr::map(Size_classes, Lumper)
+
+  #Create reduced versions of crosswalk
+  Crosswalk_reduced_stage<-crosswalk%>%
+    dplyr::select_at(dplyr::vars(Taxname, Taxcats, Lifestage))%>%
+    dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+    dplyr::distinct()
+
+  Crosswalk_reduced<-Crosswalk_reduced_stage%>%
+    dplyr::select(-Lifestage, -Taxlifestage)%>%
+    dplyr::distinct()
+
+  #Create dataframe of undersampled taxa
+  Undersampled<-readxl::read_excel("Data/Undersampled taxa.xlsx")%>%
+    dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
+    tidyr::pivot_longer(cols=c(Phylum, Class, Order, Family, Genus, Taxname), names_to = "Level", values_to = "Taxa")%>%
+    tidyr::drop_na()%>%
+    dplyr::mutate(Taxlifestage=paste(Taxa, Lifestage),
+                  Undersampled=TRUE)%>%
+    dplyr::select(SizeClass, Taxlifestage, Undersampled)%>%
+    dplyr::distinct()
+
+  # Apply LCD approach for taxa-level data user ----------------------
+
+  if(Data=="Taxa"){
+
+    #Make vector of _g Taxonomic variables
+    Taxcats_g<-paste0(Taxcats, "_g")
+
+    # Define function to sum to least common denominator taxa, one taxonomic level at a time
+    LCD_Taxa<-function(df, Taxagroup){
+      Taxagroup2<-rlang::sym(Taxagroup) #unquote input
+      Taxagroup2<-rlang::enquo(Taxagroup2) #capture expression to pass on to functions below
+      out<-df%>%
+        dplyr::filter(!is.na(!!Taxagroup2))%>% #filter to include only data belonging to the taxonomic grouping
+        dplyr::group_by(!!Taxagroup2)%>%
+        dplyr::mutate(N=length(unique(Taxname)))%>%
+        dplyr::filter(N>1)%>%
+        dplyr::ungroup()%>%
+        dplyr::select_at(dplyr::vars(-c("N", "Taxname", Taxcats_g[Taxcats_g!=Taxagroup])))%>%
+        dtplyr::lazy_dt()%>%
+        dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+        dplyr::summarise(CPUE=sum(CPUE, na.rm=T))%>% #Add up all members of each grouping taxon
+        dplyr::ungroup()%>%
+        tibble::as_tibble()%>%
+        dplyr::mutate(Taxname=!!Taxagroup2) #Add summarized group names to Taxname
+
+      return(out)
+    }
+
+    #Create vector of all unique taxa in dataset
+    UniqueTaxa<-zoop%>%
+      dplyr::select(Taxname)%>%
+      dplyr::distinct()%>%
+      dplyr::left_join(dplyr::select(crosswalk, Taxname, Level)%>%
+                         dplyr::distinct(),
+                       by="Taxname")%>%
+      dplyr::filter(Level!="Species")%>%
+      dplyr::pull(Taxname)
+
+    # Select higher level groupings that correspond to Taxnames, i.e., are a
+    # classification category in one of the original datasets, and rename
+    # them as "Taxonomiclevel_g"
+
+    zoop<-zoop%>%
+      dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))
+
+    #Extract vector of grouping taxa (i.e. all unique taxa retained in the above step)
+    Grouper<-function(Sizeclass){
+      out<-zoop%>%
+        dplyr::filter(SizeClass==Sizeclass)%>%
+        dplyr::select_at(Taxcats_g)%>%
+        dplyr::distinct()%>%
+        tidyr::pivot_longer(tidyselect::everything(), names_to = "Level", values_to = "Species")%>%
+        dplyr::filter(!is.na(Species))%>%
+        dplyr::pull(Species)%>%
+        unique()
+
+      return(out)
+    }
+
+    Groups<-purrr::map(Size_classes, Grouper)
+
+    # Output list of taxa that were not measured in all datasets, and are
+    # not higher taxa that can be calculated by summing lower taxa, i.e.
+    # "orphan taxa"
+
+    Orphaner<-function(Sizeclass){
+      Lumped2<-Lumped[[Sizeclass]]
+      Groups2<-Groups[[Sizeclass]]
+      Remove<-stringr::str_which(paste0("[", paste(Groups2, collapse="|"), "]"), stringr::word(Lumped2, 1, -2))
+      Lumped3<-Lumped2[-Remove]
+      out<-paste(Lumped3, collapse=", ")
+      return(out)
+    }
+
+    Orphans<-purrr::map(Size_classes, Orphaner)
+
+    rm(Lumped)
+
+    #Turn Orphans into dataframe so it can be added to zoop data
+    Orphansdf<-Orphans[which(nchar(Orphans)>0)]
+    Orphansdf<-purrr::map(rlang::set_names(names(Orphansdf)), ~strsplit(Orphansdf[[.x]], ", ")[[1]])%>%
+      tibble::enframe(name = "SizeClass", value = "Taxlifestage")%>%
+      tidyr::unnest(Taxlifestage)%>%
+      dplyr::mutate(Orphan=TRUE)
+
+
+    # Calculate summed groups and create a final dataset
+    zoop<-purrr::map_dfr(Taxcats_g, .f=LCD_Taxa, df=zoop%>%
+                           dplyr::select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage))%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
+      dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
+      dplyr::mutate(Taxname=paste(Taxname, "all", SizeClass, sep="_"), #Differentiate grouped Taxnames from others
+                    Taxatype="Summed group")%>% #Add a label to these summed groups so they can be removed later if users wish)
+      dplyr::bind_rows(zoop%>% #Bind these summarized groupings to the original taxonomic categories in the original dataset
+                         dplyr::mutate(Taxatype=dplyr::if_else(Taxname%in%unique(unlist(Groups, use.names = FALSE)), "UnID species", "Species")))%>%
+      dplyr::ungroup()
+
+    rm(Groups)
+    gc()
+
+    zoop<-zoop%>%
+      dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>% #add back in the Taxlifestage variable (removed by the LCD_Taxa function)
+      {if(nrow(Orphansdf)>0){
+        dplyr::left_join(., Orphansdf, by=c("Taxlifestage", "SizeClass"))%>%
+          dplyr::mutate(Orphan=tidyr::replace_na(Orphan, FALSE)) #add an identifier for orphan taxa (species not counted in all data sources)
+      } else{
+        dplyr::mutate(., Orphan=FALSE)
+      }}%>%
+      dplyr::mutate(Taxname = dplyr::if_else(Taxatype=="UnID species", paste0(Taxname, "_UnID"), Taxname))%>%
+      dplyr::select_at(dplyr::vars(-Taxcats_g))%>%
+      dplyr::left_join(zoopEnv%>%
+                         {if(!All_env){
+                           dplyr::select(., Year, Date, SalSurf, Latitude, Longitude, SampleID)
+                         } else{
+                           dplyr::select(., -Source)
+                         }}, by="SampleID")
+
+    #Output caveats specific to these data
+    caveats<-c(paste0("These species are not counted in all datasets: ", paste(unique(unlist(sapply(names(Orphans), function(x) strsplit(Orphans[[x]], ", ")[[1]]), use.names = FALSE)), collapse=", ")), "NOTE: Do not use this data to make additional higher-level taxonomic summaries or any other operations to add together taxa above the species level unless you first filter out all rows with Taxatype=='Summed group' and, depending on your purpose, Orphan==TRUE. Orphan status varies with size class. Do not compare UnID categories across data sources.")
+
+
+    rm(Orphans)
+
+  }
+
+  # Apply LCD approach for community data user ------------------------------
+
+  if(Data=="Community"){
+
+    #Exit this process early if all studies are taxonomically consistent
+    if(!purrr::some(purrr::map_dbl(Lumped, length), function(x) x>0)){
+      out<-list(Data=zoop%>%
+                  dplyr::left_join(zoopEnv%>%
+                                     {if(!All_env){
+                                       dplyr::select(., Year, Date, SalSurf, Latitude, Longitude, SampleID)
+                                     } else{
+                                       dplyr::select(., -Source)
+                                     }}, by="SampleID"), Caveats="No disclaimers here! Enjoy the clean data!")
+
+      if(Shiny){
+        return(out)
+      } else{
+        print(out$Caveats)
+        return(out$Data)
+      }
+    }
+
+    #Create vector of all unique taxlifestages
+    UniqueTaxlifesize<-zoop%>%
+      dplyr::mutate(Taxlifesize=paste(Taxlifestage, SizeClass))%>%
+      dplyr::pull(Taxlifesize)%>%
+      unique()
+
+    #Create vector of species level taxa
+    UniqueSpecies<-crosswalk%>%
+      dplyr::select(Taxname, Level)%>%
+      dplyr::filter(Level=="Species")%>%
+      dplyr::pull(Taxname)%>%
+      unique()
+
+    #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
+    Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
+                                  rep(Taxcats, length(Size_classes)),
+                                  ~Commontaxer(.y, SourceTaxaKey%>%dplyr::filter(SizeClass==.x)),
+                                  .id = "SizeClass")%>%
+      dplyr::mutate_at(Taxcats, list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
+      dplyr::mutate_at(paste0(Taxcats, "_lifestage"), ~dplyr::if_else(paste(., SizeClass)%in%UniqueTaxlifesize, ., NA_character_))%>%
+      dplyr::select(Genus_lifestage, Family_lifestage, Order_lifestage, Class_lifestage, Phylum_lifestage, SizeClass) #only retain columns we need
+
+    #Create taxonomy table for taxa not present in all datasets, then select their new names corresponding to taxa x life stage combinations that are measured in all datasets
+    LCD_Com<-function(Lumped, crosswalk, Commontaxkey){
+      tibble::tibble(Taxlifestage=Lumped)%>%
+        dplyr::left_join(Crosswalk_reduced_stage, by="Taxlifestage")%>%
+        dplyr::mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
+        dplyr::mutate(Taxname_new=dplyr::case_when( #This will go level by level, look for matches with the Commontaxkey, and assign the taxonomic level that matches. The "TRUE" at end specifies what to do if no conditions are met.
+          !is.na(Genus_lifestage) & Genus_lifestage%in%Commontaxkey$Genus_lifestage ~ paste0(Genus, "_Genus"),
+          !is.na(Family_lifestage) & Family_lifestage%in%Commontaxkey$Family_lifestage ~ paste0(Family, "_Family"),
+          !is.na(Order_lifestage) & Order_lifestage%in%Commontaxkey$Order_lifestage ~ paste0(Order, "_Order"),
+          !is.na(Class_lifestage) & Class_lifestage%in%Commontaxkey$Class_lifestage ~ paste0(Class, "_Class"),
+          !is.na(Phylum_lifestage) & Phylum_lifestage%in%Commontaxkey$Phylum_lifestage ~ paste0(Phylum, "_Phylum"),
+          TRUE ~ "REMOVE_" #If no match is found, change to the Taxname REMOVE so we know to later remove these data from the final database
+        ))%>%
+        dplyr::mutate(Genus=dplyr::if_else(stringr::str_detect(Taxname_new, "\\_Genus"), Genus, NA_character_),
+                      Family=dplyr::if_else(stringr::str_detect(Taxname_new, "\\_Genus|\\_Family"), Family, NA_character_),
+                      Order=dplyr::if_else(stringr::str_detect(Taxname_new, "\\_Genus|\\_Family|\\_Order"), Order, NA_character_),
+                      Class=dplyr::if_else(stringr::str_detect(Taxname_new, "\\_Genus|\\_Family|\\_Order|\\_Class"), Class, NA_character_)
+        )%>% # Addtaxonomoic levels into appropriate columns, making sure all are filled as appropriate.
+        dplyr::mutate(Taxname_new=stringr::str_extract(Taxname_new, "^[^_]+(?=_)")) # Remove the _Genus etc. labels from taxname
+    }
+
+    Lumpedkey<-purrr::map_dfr(Size_classes,
+                              ~LCD_Com(Lumped[[.]], crosswalk, dplyr::filter(Commontaxkey, SizeClass==.)),
+                              .id = "SizeClass")
+
+    rm(Lumped)
+    rm(Commontaxkey)
+
+    #Remove taxa with no relatives across datasets
+    if("REMOVE"%in%Lumpedkey$Taxname_new){
+
+      Removed<-Lumpedkey%>%
+        dplyr::filter(Taxname_new=="REMOVE")%>%
+        dplyr::pull(Taxlifestage)%>%
+        unique()
+
+      Removed<-paste(Removed, collapse=", ")
+
+      caveats<-paste0("These species have no relatives in their size class common to all datasets and have been removed from one or more size classes: ", Removed)
+    } else{
+      caveats<-"No disclaimers here! Enjoy the clean data!"
+    }
+
+    #Rename and sum taxa that are not measured in all datasets, add taxonomic info back to data
+    zoop<-zoop%>%
+      dplyr::left_join(Lumpedkey%>%
+                         dplyr::select(Taxlifestage, Taxname_new, SizeClass),
+                       by=c("Taxlifestage", "SizeClass"))%>%
+      dplyr::mutate(Taxname=dplyr::if_else(is.na(Taxname_new), Taxname, Taxname_new))%>%
+      dplyr::select(-Taxname_new)%>%
+      dplyr::filter(Taxname!="REMOVE")%>%
+      dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+      dplyr::select(-Phylum, -Class, -Order, -Family, -Genus, -Species)%>%
+      dtplyr::lazy_dt()%>%
+      dplyr::group_by_at(dplyr::vars(-CPUE))%>%
+      dplyr::summarise(CPUE=sum(CPUE, na.rm=T))%>%
+      dplyr::ungroup()%>%
+      tibble::as_tibble()%>%
+      dplyr::left_join(crosswalk%>%
+                         dplyr::select(Taxname, Lifestage, Phylum, Class, Order, Family, Genus, Species)%>%
+                         dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+                         dplyr::select(-Taxname, -Lifestage)%>%
+                         dplyr::bind_rows(Lumpedkey%>%
+                                            dplyr::filter(Taxname_new!="REMOVE")%>%
+                                            dplyr::select(Taxname_new, Lifestage, Phylum, Class, Order, Family, Genus)%>%
+                                            dplyr::mutate(Taxlifestage=paste(Taxname_new, Lifestage))%>%
+                                            dplyr::select(-Taxname_new, -Lifestage))%>%
+                         dplyr::distinct(),
+                       by="Taxlifestage"
+      )%>%
+      dplyr::mutate(Taxname=dplyr::if_else(Taxname%in%UniqueSpecies, Taxname, paste0(Taxname, "_UnID")))%>%
+      dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+      dplyr::left_join(zoopEnv%>%
+                         {if(!All_env){
+                           dplyr::select(., Year, Date, SalSurf, Latitude, Longitude, SampleID)
+                         } else{
+                           dplyr::select(., -Source)
+                         }}, by="SampleID")
+  }
+
+  #Add warnings for taxa undersampled by different methods
+  zoop<-zoop%>%
+    dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>%
+    dplyr::mutate(Undersampled=tidyr::replace_na(Undersampled, FALSE))%>%
+    dplyr::mutate(Source = dplyr::recode(Source, twentymm = "20mm"))
+
+  out<-list(Data=zoop, Caveats=caveats)
+
+  if(Shiny){
+    return(out)
+  } else{
+    print(out$Caveats)
+    return(out$Data)
+  }
+}
+
+# Ideas for testing -------------------------------------------------------
+
+# 1)  Make sure rows aren't repeated by looking for repeats of
+#   paste(SurveyID, Taxlifestage)
+
+
+
+# Issues ------------------------------------------------------------------
+
+
+
+# TODO --------------------------------------------------------------------
+
+# 1)  Test case_when statements that are assigning appropriate NAs and 0s
+#   depending on intro, start, and end years to make sure they are working
+#   correctly
+
+# 2)  Do we need to make some of these case_when statements for FRP data or
+#   are 0s and NAs already assigned appropriately?
+
+# 4)  Try speeding up code more. Bottleneck now is probably read_excel()
+
+# 5)  Do we want to append something like "_UnID" to the taxnames of Lumped
+# (LCDed) taxa under option Data=="Community"???
+
+
+# 6)  How do we apply the LCD approach for community data to issues arrising
+#   from changing taxonomic resolution over time in individual datasets
+
