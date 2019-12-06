@@ -4,6 +4,7 @@
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
+#' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{zooper} function without saving the combined dataset to disk.
 #' @param Redownload_data Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.
 #' @param Zoop_path File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
@@ -13,12 +14,13 @@
 #' @author Sam Bashevkin
 #' @examples
 #' Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
-#'
+#' @export
 
 Zoopdownloader <- function(
-  Data_folder = "Data",
+  Data_folder = "data",
   Save_object = TRUE,
   Return_object = FALSE,
+  Return_object_type="List",
   Redownload_data=FALSE,
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper")){
@@ -28,7 +30,7 @@ Zoopdownloader <- function(
   # Load crosswalk key to convert each dataset's taxonomic codes to a
   # unified set of "Taxname" and "Lifestage" values.
 
-  crosswalk <- readxl::read_excel(file.path(Data_folder, "new_crosswalk.xlsx"), sheet = "Hierarchy2")%>%
+  crosswalk <- crosswalk%>%
     dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2")), ~readr::parse_date(as.character(.), format="%Y"))%>%
     dplyr::mutate_at(dplyr::vars(c("EMPstart", "FMWTstart", "twentymmstart", "twentymmstart2", "EMPend", "FMWTend", "twentymmend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)
     dplyr::mutate(EMPend = dplyr::if_else(is.finite(EMPend), EMPend+lubridate::years(1), EMPend))%>% #Change end dates to beginning of next year (first day it was not counted)
@@ -38,8 +40,7 @@ Zoopdownloader <- function(
 
   # Load station key to later incorporate latitudes and longitudes
 
-  stations <- readxl::read_excel(file.path(Data_folder, "zoop_stations.xlsx"), sheet="lat_long")%>%
-    dplyr::rename(Source=Project)
+  stations <- stations
 
   # Initialize list of dataframes
 
@@ -519,8 +520,13 @@ Zoopdownloader <- function(
   }
 
   if(Return_object){
+    if(Return_object_type=="Combined"){
     zoop_full <- dplyr::left_join(zoop, dplyr::select(zoopEnv, -Source), by="SampleID")
     return(zoop_full)
+    }
+    if(Return_object_type=="List"){
+      return(list(Zooplankton=zoop, Environment=zoopEnv))
+    }
   }
 
 }

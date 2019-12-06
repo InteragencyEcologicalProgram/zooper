@@ -5,9 +5,10 @@
 \title{Downloads and combines zooplankton datasets from the Sacramento San Joaquin Delta}
 \usage{
 Zoopdownloader(
-  Data_folder = "Data",
+  Data_folder = "data",
   Save_object = TRUE,
   Return_object = FALSE,
+  Return_object_type = "List",
   Redownload_data = FALSE,
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper")
@@ -19,6 +20,8 @@ Zoopdownloader(
 \item{Save_object}{Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.}
 
 \item{Return_object}{Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.}
+
+\item{Return_object_type}{If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{zooper} function without saving the combined dataset to disk.}
 
 \item{Redownload_data}{Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.}
 
@@ -34,7 +37,6 @@ This function downloads datasets from the internet, converts them to a consisten
 }
 \examples{
 Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
-
 }
 \author{
 Sam Bashevkin

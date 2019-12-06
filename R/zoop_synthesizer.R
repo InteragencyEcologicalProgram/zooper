@@ -1,6 +1,9 @@
 #' Integrates zooplankton datasets in the Sacramento San Joaquin Delta
 #'
 #' This function returns an integrated zooplankton dataset with taxonomic issues resolved, according to user-specifications, along with important caveats about the data.
+#' @param Data_list List of zooplankton datasets. You must provide the list returned from \code{zoopdownloader(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")} with one element named "Zooplankton" and another named "Environment".
+#' @param Zoop_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.
+#' @param Zoopenv_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
 #' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
 #' @param Data What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See below for more explanation.
@@ -16,6 +19,7 @@
 #' @param Redownload_data Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, runs \code{Zoopdownloader(Redownload_data = TRUE)}. Defaults to \code{Redownload_data = FALSE}.
 #' @param All_env Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.
 #' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
+#' @param ... Arguments passed to \code{zoopdownloader}.
 #' @keywords integration, synthesis, zooplankton.
 #' @importFrom magrittr %>%
 #' @return An integrated zooplankton dataset.
@@ -27,9 +31,12 @@
 #' @author Sam Bashevkin
 #' @examples
 #' MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
-#'
+#' @export
 
 Zooper<-function(
+  Data_list=list(Zooplankton=ZoopComb, Environment=ZoopEnvComb),
+  Zoop_path=NULL,
+  Env_path=NULL,
   Sources=c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class=c("Micro", "Meso", "Macro"),
   Data="Community",
@@ -44,7 +51,8 @@ Zooper<-function(
   Reload_data=F,
   Redownload_data=F,
   All_env=T,
-  Shiny=F){
+  Shiny=F,
+  ...){
 
 
   # Setup -------------------------------------------------------------------
@@ -64,20 +72,30 @@ Zooper<-function(
   }
 
   # Load crosswalk key to add taxonomic info
-  crosswalk <- readxl::read_excel("Data/new_crosswalk.xlsx", sheet = "Hierarchy2")
+  crosswalk <- crosswalk
 
   #Make it possible to re-download data if desired
   if(Reload_data | Redownload_data){
-    source("Zoop data downloader.R")
-    Zoopdownloader(Redownload_data=Redownload_data)
+    Zoopdownloader(Redownload_data=Redownload_data, Zoop_path=Zoop_path, Env_path=Env_path, ...)
   }
 
   #Recode Source
   Sources <- dplyr::recode(Sources, "20mm"= "twentymm")
 
   # Read in data
-  zoop<-readRDS("Data/zoopforzooper.Rds")
-  zoopEnv<-readRDS("Data/zoopenvforzooper.Rds")
+
+  if (is.null(Zoop_path) & is.null(Zoopenv_path) & !is.null(Data_list)){
+    zoop<-Data_list$Zooplankton
+    ZoopEnv<-Data_list$Environment
+  } else{
+    if(!is.null(Zoop_path) & !is.null(Zoopenv_path) & is.null(Data_list)){
+      zoop<-readRDS(Zoop_path)
+      zoopEnv<-readRDS(Zoopenv_path)
+    } else{
+      stop("You must either set Zoop_path=NULL, Zoopenv_path=NULL, and provide a list of datasets to Data_list OR set Data_list=NULL and paths to saved combined datasets to Zoop_path and Zoopenv_path. See ?zooper for more info.")
+    }
+  }
+
 
   # Filter data -------------------------------------------------------------
 
@@ -227,7 +245,7 @@ Zooper<-function(
     dplyr::distinct()
 
   #Create dataframe of undersampled taxa
-  Undersampled<-readxl::read_excel("Data/Undersampled taxa.xlsx")%>%
+  Undersampled<-undersampled%>%
     dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
     tidyr::pivot_longer(cols=c(Phylum, Class, Order, Family, Genus, Taxname), names_to = "Level", values_to = "Taxa")%>%
     tidyr::drop_na()%>%

@@ -5,6 +5,9 @@
 \title{Integrates zooplankton datasets in the Sacramento San Joaquin Delta}
 \usage{
 Zooper(
+  Data_list = list(Zooplankton = ZoopComb, Environment = ZoopEnvComb),
+  Zoop_path = NULL,
+  Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
   Data = "Community",
@@ -19,10 +22,15 @@ Zooper(
   Reload_data = F,
   Redownload_data = F,
   All_env = T,
-  Shiny = F
+  Shiny = F,
+  ...
 )
 }
 \arguments{
+\item{Data_list}{List of zooplankton datasets. You must provide the list returned from \code{zoopdownloader(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")} with one element named "Zooplankton" and another named "Environment".}
+
+\item{Zoop_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.}
+
 \item{Sources}{Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.}
 
 \item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
@@ -52,6 +60,10 @@ Zooper(
 \item{All_env}{Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.}
 
 \item{Shiny}{Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.}
+
+\item{...}{Arguments passed to \code{zoopdownloader}.}
+
+\item{Zoopenv_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.}
 }
 \value{
 An integrated zooplankton dataset.
@@ -71,7 +83,6 @@ Briefly, \code{Data = "Community"} optimizes for community-level analyses by tak
 
 \examples{
 MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
-
 }
 \author{
 Sam Bashevkin
