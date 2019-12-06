@@ -1,7 +1,7 @@
 #' Downloads and combines zooplankton datasets from the Sacramento San Joaquin Delta
 #'
 #' This function downloads datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files.
-#' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`.
+#' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`. If you do not want to store every source dataset, you can set this to \code{tempdir()}.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
 #' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{zooper} function without saving the combined dataset to disk.

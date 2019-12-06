@@ -15,7 +15,7 @@ Zoopdownloader(
 )
 }
 \arguments{
-\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`.}
+\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`. If you do not want to store every source dataset, you can set this to \code{tempdir()}.}
 
 \item{Save_object}{Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.}
 

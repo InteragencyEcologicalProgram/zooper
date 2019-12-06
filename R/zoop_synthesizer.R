@@ -3,7 +3,7 @@
 #' This function returns an integrated zooplankton dataset with taxonomic issues resolved, according to user-specifications, along with important caveats about the data.
 #' @param Data_list List of zooplankton datasets. You must provide the list returned from \code{zoopdownloader(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")} with one element named "Zooplankton" and another named "Environment".
 #' @param Zoop_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.
-#' @param Zoopenv_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
+#' @param Env_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
 #' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
 #' @param Data What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See below for more explanation.
@@ -34,7 +34,7 @@
 #' @export
 
 Zooper<-function(
-  Data_list=list(Zooplankton=ZoopComb, Environment=ZoopEnvComb),
+  Data_list=list(Zooplankton=zoopComb, Environment=zoopEnvComb),
   Zoop_path=NULL,
   Env_path=NULL,
   Sources=c("EMP", "FRP", "FMWT", "TNS", "20mm"),
@@ -84,15 +84,15 @@ Zooper<-function(
 
   # Read in data
 
-  if (is.null(Zoop_path) & is.null(Zoopenv_path) & !is.null(Data_list)){
+  if (is.null(Zoop_path) & is.null(Env_path) & !is.null(Data_list)){
     zoop<-Data_list$Zooplankton
-    ZoopEnv<-Data_list$Environment
+    zoopEnv<-Data_list$Environment
   } else{
-    if(!is.null(Zoop_path) & !is.null(Zoopenv_path) & is.null(Data_list)){
+    if(!is.null(Zoop_path) & !is.null(Env_path) & is.null(Data_list)){
       zoop<-readRDS(Zoop_path)
-      zoopEnv<-readRDS(Zoopenv_path)
+      zoopEnv<-readRDS(Env_path)
     } else{
-      stop("You must either set Zoop_path=NULL, Zoopenv_path=NULL, and provide a list of datasets to Data_list OR set Data_list=NULL and paths to saved combined datasets to Zoop_path and Zoopenv_path. See ?zooper for more info.")
+      stop("You must either set Zoop_path=NULL, Env_path=NULL, and provide a list of datasets to Data_list OR set Data_list=NULL and paths to saved combined datasets to Zoop_path and Env_path. See ?zooper for more info.")
     }
   }
 
