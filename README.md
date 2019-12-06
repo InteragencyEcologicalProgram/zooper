@@ -7,12 +7,21 @@ Zooplankton Synthesis in the Sacramento San Joaquin Delta
 An R package to download and integrate zooplankton data from the
 Sacramento San Joaquin Delta.
 
+Install the package with
+
+``` r
+#Requires devtools
+#install.packages("devtools")
+
+devtools::install_github("https://github.com/InteragencyEcologicalProgram/zooper")
+```
+
 The `zooper` function takes zooplankton data from different surveys and
 integrates the data according to user-specified parameter choices. The
 shiny app is a GUI (graphical user interface) that allows folks without
 R experience to run the zooplankton synthesizer funciton and download
-the resulting data. The shiny app also allows folks with all experience
-levels to easily visualize the data.
+the resulting data. The shiny app (coming soon) also allows folks with
+all experience levels to easily visualize the data.
 
 The `zoopdownloader` function downloads the zooplankton datasets from
 their respective online sources and converts them to a consistent
