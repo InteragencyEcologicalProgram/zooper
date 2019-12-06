@@ -32,4 +32,7 @@ zoopEnvComb
 \description{
 Accessory environmental data from the combined zooplankton dataset. Not all datasets report all environmental parameters.
 }
+\seealso{
+\code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+}
 \keyword{datasets}

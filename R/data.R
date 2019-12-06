@@ -33,6 +33,7 @@
 #'   \item{twentymmend}{Last year the 20mm Survey counted this taxa}
 #'   \item{twentymmstart2}{First year the 20mm Survey restarted counting this taxa}
 #'   }
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "crosswalk"
 
 #' Taxa undersampled in each size class
@@ -45,6 +46,7 @@
 #'   \item{Taxname}{The scientific name of taxa undersampled by the corresponding mesh size class}
 #'   \item{Lifestage}{The lifestage of each taxa undersampled by the corresponding mesh size class}
 #' }
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "undersampled"
 
 #' Station locations
@@ -58,6 +60,7 @@
 #'   \item{Latitude}{Latitude in decimal degrees}
 #'   \item{Longitude}{Longitude in decimal degrees}
 #' }
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{zooper}}
 "stations"
 
 #' Combined zooplankton dataset
@@ -81,7 +84,7 @@
 #'   \item{SampleID}{Unique ID of the zooplankton sample. This is the key that links to the \code{zoopEnvComb} dataset}
 #'   \item{CPUE}{Catch per unit effort (number per cubic meter of water)}
 #' }
-#'
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopComb"
 
 #' Environmental data
@@ -110,4 +113,5 @@
 #'   \item{Longitude}{Longitude in decimal degrees}
 #'   \item{SampleID}{Unique ID of the zooplankton sample. This is the key that links to the \code{zoopComb} dataset}
 #' }
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopEnvComb"

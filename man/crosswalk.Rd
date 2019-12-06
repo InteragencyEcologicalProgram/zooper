@@ -41,4 +41,7 @@ crosswalk
 \description{
 A crosswalk table relating the taxonomic keys of each dataset to current scientific names, life stages, and taxonomic heirarchies.
 }
+\seealso{
+\code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+}
 \keyword{datasets}

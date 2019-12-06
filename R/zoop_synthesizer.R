@@ -31,7 +31,7 @@
 #' @author Sam Bashevkin
 #' @examples
 #' MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
-#' @seealso \code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 #' @export
 
 Zoopsynther<-function(

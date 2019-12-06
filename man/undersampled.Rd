@@ -16,4 +16,7 @@ undersampled
 \description{
 A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class)
 }
+\seealso{
+\code{\link{Zoopsynther}}, \code{\link{zooper}}
+}
 \keyword{datasets}

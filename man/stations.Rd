@@ -17,4 +17,7 @@ stations
 \description{
 Latitudes and longitudes for each zooplankton station.
 }
+\seealso{
+\code{\link{Zoopdownloader}}, \code{\link{zooper}}
+}
 \keyword{datasets}

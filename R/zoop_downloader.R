@@ -14,7 +14,7 @@
 #' @author Sam Bashevkin
 #' @examples
 #' Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
-#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}, \code{\link{zooper}}
 #' @export
 
 Zoopdownloader <- function(

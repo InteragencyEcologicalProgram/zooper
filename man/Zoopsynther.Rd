@@ -85,7 +85,7 @@ Briefly, \code{Data = "Community"} optimizes for community-level analyses by tak
 MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
 }
 \seealso{
-\code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}
+\code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 }
 \author{
 Sam Bashevkin

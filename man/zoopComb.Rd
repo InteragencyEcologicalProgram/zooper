@@ -27,4 +27,7 @@ zoopComb
 \description{
 All source zooplankton datasets combined into one tibble.
 }
+\seealso{
+\code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+}
 \keyword{datasets}

@@ -39,7 +39,7 @@ This function downloads datasets from the internet, converts them to a consisten
 Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
 }
 \seealso{
-\code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}
+\code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}, \code{\link{zooper}}
 }
 \author{
 Sam Bashevkin
