@@ -4,7 +4,7 @@
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`. If you do not want to store every source dataset, you can set this to \code{tempdir()}.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
-#' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{zooper} function without saving the combined dataset to disk.
+#' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{Zoopsynther} function without saving the combined dataset to disk.
 #' @param Redownload_data Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.
 #' @param Zoop_path File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
@@ -14,6 +14,7 @@
 #' @author Sam Bashevkin
 #' @examples
 #' Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}
 #' @export
 
 Zoopdownloader <- function(
