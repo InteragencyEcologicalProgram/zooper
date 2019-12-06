@@ -2,4 +2,5 @@
 
 export(Zoopdownloader)
 export(Zoopsynther)
+import(data.table)
 importFrom(magrittr,"%>%")

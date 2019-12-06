@@ -9,8 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-7406-7089"))
 Description: This package downloads and integrates zooplankton datasets from the Sacramento San Joaquin Delta. Datasets are manipulated into a consistent format and bound together, then differences in taxonomic resolution among datasets are resolved using one of two methods, depending on whether the user wishes to analyze community or taxa-specific trends.  Ancillary environmental data are retained in the final dataset. Users can also filter the dataset by a number of parameters.
 Depends: 
-     R (>= 3.5.0), 
-     data.table
+     R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -25,5 +24,6 @@ Imports:
     tibble,
     stringr,
     rlang,
-    magrittr
+    magrittr,
+    data.table
 RoxygenNote: 7.0.2
