@@ -21,7 +21,6 @@
 #' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
 #' @param ... Arguments passed to \code{\link{Zoopdownloader}}.
 #' @keywords integration, synthesis, zooplankton.
-#' @importFrom magrittr %>%
 #' @import data.table
 #' @return An integrated zooplankton dataset.
 #' @details This function combines any combination of the zoo datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.

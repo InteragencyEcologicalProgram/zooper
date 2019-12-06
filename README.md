@@ -2,6 +2,12 @@ Zooplankton Synthesis in the Sacramento San Joaquin Delta
 ================
 12/05/2019
 
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
 # Introduction
 
 An R package to download and integrate zooplankton data from the
@@ -88,3 +94,9 @@ account for this we:
 
 For many studies, taxonomic resolution has changed over time. This could
 confound analyses of zooplankton communities and abundances over time.
+
+# Code of conduct
+
+Please note that the ‘zooper’ project is released with a [Contributor
+Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
+you agree to abide by its terms.
