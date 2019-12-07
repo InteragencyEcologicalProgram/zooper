@@ -6,9 +6,9 @@
 #' @param Env_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
 #' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
-#' @param Data What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See below for more explanation.
+#' @param Data What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See "Details" for more explanation.
 #' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
-#' @param Months Months to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the month numbers you wish to be included. Defaults to \code{Months = NA}, which includes all months.
+#' @param Months Months (as integers) to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the months you wish to be included. Defaults to \code{Months = NA}, which includes all months.
 #' @param Years Years to be included in the integrated dataset. If you wish to only include data from a subset of years, input a vector of years you wish to be included. Defaults to \code{Years = NA}, which includes all months.
 #' @param Sal_bott_range Filter the data by bottom salinity values. Include a vector of length 2 specifying the minimum and maximum values you wish to include. To include all values above or below a limit, utilize Inf or -Inf for the upper or lower bound respectively. Defaults to \code{Sal_bott_range = NA}, which includes all bottom salinities.
 #' @param Sal_surf_range Same as previous, but for surface salinity.
@@ -23,8 +23,8 @@
 #' @keywords integration, synthesis, zooplankton.
 #' @importFrom magrittr %>%
 #' @import data.table
-#' @return An integrated zooplankton dataset.
-#' @details This function combines any combination of the zoo datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.
+#' @return A dataframe comprising an integrated zooplankton dataset.
+#' @details This function combines any combination of the zooplankton datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.
 #' @section Data type:
 #' The \code{Data} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data="Taxa"} but if you want to conduct a community analysis, use \code{Data = "Community"}.
 #' Briefly, \code{Data = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
