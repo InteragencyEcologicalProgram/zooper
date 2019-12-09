@@ -13,7 +13,7 @@
 #' @param Sal_bott_range Filter the data by bottom salinity values. Include a vector of length 2 specifying the minimum and maximum values you wish to include. To include all values above or below a limit, utilize Inf or -Inf for the upper or lower bound respectively. Defaults to \code{Sal_bott_range = NA}, which includes all bottom salinities.
 #' @param Sal_surf_range Same as previous, but for surface salinity.
 #' @param Temp_range Same as \code{Sal_bott_range} but for surface temperature.
-#' @param Lat_range Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaluts to \code{Lat_range = NA}, which includes all latitudes.
+#' @param Lat_range Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaults to \code{Lat_range = NA}, which includes all latitudes.
 #' @param Long_range Same as previous, but for longitude. Don't forget that Longitudes should be negative in the Delta!
 #' @param Reload_data If set to \code{Reload_data = T} runs the \code{\link{Zoopdownloader}} function to re-combine source datasets. To include local versions of the datasets without redownloading them from online, set \code{Reload_data = TRUE} and \code{Redownload_data = FALSE}. Defaults to \code{Reload_data= FALSE}
 #' @param Redownload_data Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, runs \code{\link{Zoopdownloader}(Redownload_data=Redownload_data, Zoop_path=Zoop_path, Env_path=Env_path, ...)}. Defaults to \code{Redownload_data = FALSE}.
@@ -22,15 +22,16 @@
 #' @param ... Arguments passed to \code{\link{Zoopdownloader}}.
 #' @keywords integration, synthesis, zooplankton.
 #' @import data.table
+#' @importFrom magrittr %>%
 #' @return An integrated zooplankton dataset.
 #' @details This function combines any combination of the zoo datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.
 #' @section Data type:
 #' The \code{Data} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data="Taxa"} but if you want to conduct a community analysis, use \code{Data = "Community"}.
 #' Briefly, \code{Data = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
-#' \code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparions across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
+#' \code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparisons across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
 #' @author Sam Bashevkin
 #' @examples
-#' MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+#' MyZoops <- Zoopsynther(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 #' @export
 

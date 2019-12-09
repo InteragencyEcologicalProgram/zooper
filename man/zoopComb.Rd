@@ -7,7 +7,7 @@
 \format{a tibble with 2,409,927 rows and 14 columns.
 \describe{
   \item{Source}{Abbreviated name of the source dataset}
-  \item{SizeClass}{Net size class. Micro corrresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
+  \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
   \item{Volume}{Volume (L) of the zooplankton sample}
   \item{Lifestage}{Zooplankton life stage}
   \item{Taxname}{Scientific name}

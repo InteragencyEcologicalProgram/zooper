@@ -51,7 +51,7 @@ Zoopsynther(
 
 \item{Temp_range}{Same as \code{Sal_bott_range} but for surface temperature.}
 
-\item{Lat_range}{Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaluts to \code{Lat_range = NA}, which includes all latitudes.}
+\item{Lat_range}{Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaults to \code{Lat_range = NA}, which includes all latitudes.}
 
 \item{Long_range}{Same as previous, but for longitude. Don't forget that Longitudes should be negative in the Delta!}
 
@@ -78,11 +78,11 @@ This function combines any combination of the zoo datasets (included as paramete
 
 The \code{Data} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data="Taxa"} but if you want to conduct a community analysis, use \code{Data = "Community"}.
 Briefly, \code{Data = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
-\code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparions across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
+\code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparisons across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
 }
 
 \examples{
-MyZoops <- Zooper(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
 }
 \seealso{
 \code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}

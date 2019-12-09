@@ -1,6 +1,6 @@
-#' Taxnomic crosswalk among datasets
+#' Taxonomic crosswalk among datasets
 #'
-#' A crosswalk table relating the taxonomic keys of each dataset to current scientific names, life stages, and taxonomic heirarchies.
+#' A crosswalk table relating the taxonomic keys of each dataset to current scientific names, life stages, and taxonomic hierarchies.
 #'
 #' @format a tibble with 317 rows and 28 variables
 #' \describe{
@@ -42,7 +42,7 @@
 #'
 #' @format a tibble with 22 rows and 3 columns
 #' \describe{
-#'   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corrresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
+#'   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
 #'   \item{Taxname}{The scientific name of taxa undersampled by the corresponding mesh size class}
 #'   \item{Lifestage}{The lifestage of each taxa undersampled by the corresponding mesh size class}
 #' }
@@ -70,7 +70,7 @@
 #' @format a tibble with 2,409,927 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset}
-#'   \item{SizeClass}{Net size class. Micro corrresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
+#'   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
 #'   \item{Volume}{Volume (L) of the zooplankton sample}
 #'   \item{Lifestage}{Zooplankton life stage}
 #'   \item{Taxname}{Scientific name}

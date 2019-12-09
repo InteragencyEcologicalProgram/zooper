@@ -10,10 +10,11 @@
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
 #' @keywords download, integration, synthesis, zooplankton
 #' @import data.table
-#' @return If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessary environmental parameters.
+#' @importFrom magrittr %>%
+#' @return If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.
 #' @author Sam Bashevkin
 #' @examples
-#' Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
+#' Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE, Save_object = FALSE)
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}, \code{\link{zooper}}
 #' @export
 

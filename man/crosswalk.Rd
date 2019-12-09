@@ -3,7 +3,7 @@
 \docType{data}
 \name{crosswalk}
 \alias{crosswalk}
-\title{Taxnomic crosswalk among datasets}
+\title{Taxonomic crosswalk among datasets}
 \format{a tibble with 317 rows and 28 variables
 \describe{
   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
@@ -39,7 +39,7 @@
 crosswalk
 }
 \description{
-A crosswalk table relating the taxonomic keys of each dataset to current scientific names, life stages, and taxonomic heirarchies.
+A crosswalk table relating the taxonomic keys of each dataset to current scientific names, life stages, and taxonomic hierarchies.
 }
 \seealso{
 \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}

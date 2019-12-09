@@ -25,7 +25,7 @@ devtools::install_github("https://github.com/InteragencyEcologicalProgram/zooper
 The `Zoopsynther` function takes zooplankton data from different surveys
 and integrates the data according to user-specified parameter choices.
 The shiny app is a GUI (graphical user interface) that allows folks
-without R experience to run the zooplankton synthesizer funciton and
+without R experience to run the zooplankton synthesizer function and
 download the resulting data. The shiny app (coming soon) also allows
 folks with all experience levels to easily visualize the data.
 
@@ -49,7 +49,7 @@ lets me use all these datasets.*
   - Consistent taxonomic categories
   - No plankters counted more than once
   - Sacrifices some taxonomic resolution
-  - Removes taxa with no relatives in all datasets (eg., Annelida)
+  - Removes taxa with no relatives in all datasets (e.g., Annelida)
 
 ## For specific taxa analyzers
 
@@ -58,7 +58,7 @@ lets me use all these datasets.*
   - Calculates total CPUE for higher taxonomic levels
   - Some plankters appear in multiple nested taxa (e.g., Calanoida,
     Copepoda)
-  - Perserves taxonomic resolution and creates taxonomic categories that
+  - Preserves taxonomic resolution and creates taxonomic categories that
     are comparable across all datasets
   - Labels taxa that are comparable across all datasets, warns about
     those that are not.
