@@ -5,12 +5,13 @@
 \title{Integrates zooplankton datasets in the Sacramento San Joaquin Delta}
 \usage{
 Zoopsynther(
+  Data_type = NULL,
   Data_list = list(Zooplankton = zoopComb, Environment = zoopEnvComb),
   Zoop_path = NULL,
   Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
-  Data = "Community",
+  Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
   Years = NA,
@@ -27,6 +28,8 @@ Zoopsynther(
 )
 }
 \arguments{
+\item{Data_type}{What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data_type = "Community"}; the default) or Taxa-specific (\code{Data_type = "Taxa"}) analyses. NOTE: If you set \code{Data_type="Community"} we do not recommend utilizing the \code{Taxa} argument. See below for more explanation of this argument.}
+
 \item{Data_list}{List of zooplankton datasets. You must provide the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")} with one element named "Zooplankton" and another named "Environment". The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide paths to the following two arguments.}
 
 \item{Zoop_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.}
@@ -37,7 +40,7 @@ Zoopsynther(
 
 \item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
 
-\item{Data}{What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data = "Community"}; the default) or Taxa-specific (\code{Data = "Taxa"}) analyses. See below for more explanation.}
+\item{Taxa}{If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. Defaults to \code{NULL}, which includes all taxa.}
 
 \item{Date_range}{Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.}
 
@@ -76,16 +79,16 @@ This function combines any combination of the zoo datasets (included as paramete
 }
 \section{Data type}{
 
-The \code{Data} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data="Taxa"} but if you want to conduct a community analysis, use \code{Data = "Community"}.
-Briefly, \code{Data = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
-\code{Data = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparisons across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
+The \code{Data_type} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data_type="Taxa"} but if you want to conduct a community analysis, use \code{Data_type = "Community"}.
+Briefly, \code{Data_type = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.
+\code{Data_type = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparisons across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
 }
 
 \examples{
-MyZoops <- Zoopsynther(Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
 }
 \seealso{
-\code{\link{Zoopdownloader}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
+\code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 }
 \author{
 Sam Bashevkin

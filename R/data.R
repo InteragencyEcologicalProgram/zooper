@@ -115,3 +115,13 @@
 #' }
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopEnvComb"
+
+
+#' All taxonomic names
+#'
+#' A complete list of all valid taxonomic names included in the full dataset. Used to limit choices for filtering by taxa.
+#'
+#' @format a character vector of length 391.
+#' @seealso \code{\link{Taxnamefinder}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+#'
+"completeTaxaList"
