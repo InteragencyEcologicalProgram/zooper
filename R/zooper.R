@@ -1,4 +1,4 @@
-#' zooper: A package for integrating zooplankton datasets from the Sacramento San Joaquin Delta
+#' zooper: A package for integrating zooplankton datasets collected by the Interagency Ecological Program from the Sacramento-San Joaquin Delta
 #'
 #' This package contains functions, lookup tables, and 2 built-in pre-combined datasets (one with the zooplankton data and another with the environmental data).
 #'
