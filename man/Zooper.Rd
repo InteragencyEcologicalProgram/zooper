@@ -5,13 +5,15 @@
 \alias{zooper}
 \title{zooper: A package for integrating zooplankton datasets from the Sacramento San Joaquin Delta}
 \description{
-This package contains 2 functions, 3 lookup tables, and 2 built-in pre-combined datasets (one with the zooplankton data and another with the environmental data).
+This package contains functions, lookup tables, and 2 built-in pre-combined datasets (one with the zooplankton data and another with the environmental data).
 }
 \section{zooper functions}{
 
 \itemize{
   \item \code{\link{Zoopsynther}}
   \item \code{\link{Zoopdownloader}}
+  \item \code{\link{Taxnamefinder}}
+  \item \code{\link{SourceTaxaKeyer}}
 }
 }
 

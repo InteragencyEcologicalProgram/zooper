@@ -1,4 +1,4 @@
-#' Taxnomic crosswalk among datasets
+#' Taxonomic crosswalk among datasets
 #'
 #' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic heirarchies.
 #'
@@ -42,7 +42,7 @@
 #'
 #' @format a tibble with 22 rows and 3 columns
 #' \describe{
-#'   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corrresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
+#'   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
 #'   \item{Taxname}{The scientific name of taxa undersampled by the corresponding mesh size class}
 #'   \item{Lifestage}{The lifestage of each taxa undersampled by the corresponding mesh size class}
 #' }
@@ -70,7 +70,7 @@
 #' @format a tibble with 2,409,927 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey. }
-#'   \item{SizeClass}{Net size class. Micro corrresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
+#'   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
 #'   \item{Volume}{Volume (L) of the zooplankton sample}
 #'   \item{Lifestage}{Zooplankton life stage}
 #'   \item{Taxname}{Scientific name}
@@ -115,3 +115,13 @@
 #' }
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopEnvComb"
+
+
+#' All taxonomic names
+#'
+#' A complete list of all valid taxonomic names included in the full dataset. Used to limit choices for filtering by taxa.
+#'
+#' @format a character vector of length 391.
+#' @seealso \code{\link{Taxnamefinder}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+#'
+"completeTaxaList"

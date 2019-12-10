@@ -5,7 +5,7 @@
 \title{Downloads and combines zooplankton datasets from the Sacramento San Joaquin Delta}
 \usage{
 Zoopdownloader(
-  Data_folder = "data",
+  Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
   Return_object_type = "List",
@@ -15,7 +15,7 @@ Zoopdownloader(
 )
 }
 \arguments{
-\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`. If you do not want to store every source dataset, you can set this to \code{tempdir()}.}
+\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.}
 
 \item{Save_object}{Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.}
 
@@ -30,13 +30,13 @@ Zoopdownloader(
 \item{Env_path}{File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.}
 }
 \value{
-If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessary environmental parameters.
+If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.
 }
 \description{
 This function downloads datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object.
 }
 \examples{
-Data <- Zoopdownloader(Return_object = TRUE, Save_object = FALSE)
+Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE, Save_object = FALSE)
 }
 \seealso{
 \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}, \code{\link{zooper}}
