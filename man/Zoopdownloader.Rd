@@ -2,7 +2,7 @@
 % Please edit documentation in R/zoop_downloader.R
 \name{Zoopdownloader}
 \alias{Zoopdownloader}
-\title{Downloads and combines zooplankton datasets from the Sacramento San Joaquin Delta}
+\title{Downloads and combines zooplankton datasets collected by the Interagency Ecological Program from the Sacramento-San Joaquin Delta}
 \usage{
 Zoopdownloader(
   Data_folder = tempdir(),
@@ -33,7 +33,7 @@ Zoopdownloader(
 If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.
 }
 \description{
-This function downloads datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object.
+This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey).
 }
 \examples{
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE, Save_object = FALSE)

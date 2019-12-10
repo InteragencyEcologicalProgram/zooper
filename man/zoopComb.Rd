@@ -6,7 +6,7 @@
 \title{Combined zooplankton dataset}
 \format{a tibble with 2,409,927 rows and 14 columns.
 \describe{
-  \item{Source}{Abbreviated name of the source dataset}
+  \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey. }
   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
   \item{Volume}{Volume (L) of the zooplankton sample}
   \item{Lifestage}{Zooplankton life stage}

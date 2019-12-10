@@ -6,12 +6,12 @@
 \title{Environmental data}
 \format{a tibble with 35,585 rows and 19 columns
 \describe{
-  \item{Source}{Abbreviated name of the source dataset}
+  \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey.}
   \item{Year}{Year sample was collected}
   \item{Date}{Date sample was collected}
   \item{Datetime}{Date and time sample was collected, if time was provided}
   \item{Tide}{Tidal stage}
-  \item{Station}{Station where sample was collected}
+  \item{Station}{Station where sample was collected. This is the key that links to the  \code{stations} dataset}
   \item{Chl}{Chlorophyll concentration in \eqn{\mu}g/L}
   \item{Secchi}{Secchi depth in cm}
   \item{Temperature}{Temperature in \eqn{^{\circ}}C}
