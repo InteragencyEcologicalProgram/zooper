@@ -5,7 +5,7 @@
 \title{Downloads and combines zooplankton datasets from the Sacramento San Joaquin Delta}
 \usage{
 Zoopdownloader(
-  Data_folder = "data",
+  Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
   Return_object_type = "List",
@@ -15,7 +15,7 @@ Zoopdownloader(
 )
 }
 \arguments{
-\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set `Redownload_data = TRUE`. If you do not want to store every source dataset, you can set this to \code{tempdir()}.}
+\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.}
 
 \item{Save_object}{Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.}
 

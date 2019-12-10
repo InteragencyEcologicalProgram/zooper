@@ -21,7 +21,7 @@ Helps filter the zooplankton dataset by returning a set of lowest-level taxa (i.
 Taxnames <- Taxnamefinder(crosswalk, c("Calanoida", "Cyclopoida"))
 }
 \seealso{
-\code{\link{completeTaxaList}}, \code{\link{Zoopsynther}}\code{\link{completeTaxaList}}
+\code{\link{completeTaxaList}}, \code{\link{Zoopsynther}}
 }
 \author{
 Sam Bashevkin

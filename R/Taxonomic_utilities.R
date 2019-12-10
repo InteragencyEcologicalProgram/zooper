@@ -10,7 +10,7 @@
 #' @author Sam Bashevkin
 #' @examples
 #' Taxnames <- Taxnamefinder(crosswalk, c("Calanoida", "Cyclopoida"))
-#' @seealso \code{\link{completeTaxaList}}, \code{\link{Zoopsynther}}\code{\link{completeTaxaList}}
+#' @seealso \code{\link{completeTaxaList}}, \code{\link{Zoopsynther}}
 #' @export
 #'
 
@@ -22,4 +22,85 @@ Taxnamefinder <- function(Crosswalk, Taxa){
     dplyr::pull()
 
   return(Taxnames)
+}
+
+#' Unique taxa by lifestage combinations present in each source and size class
+#'
+#' Computes a dataframe with all unique taxa by lifestage combinations present in each source and size class
+#'
+#' @param Data Zooplankton dataset. Must have a column named \code{Source} with the names of the source datasets and a column named \code{SizeClass} with the names of the zooplankton size classes.
+#' @param Crosswalk Crosswalk table (e.g., \code{\link{crosswalk}}) with columns named "Phylum", "Class", "Order", "Family", "Genus", "Taxname", "Lifestage", and column names corresponding to each unique value of \code{paste(data$Source, data$SizeClass, sep="_")}.
+#' @keywords Taxonomy, zooplankton
+#' @importFrom magrittr %>%
+#' @return a tibble with the complete taxonomic information for each combination of source and size class.
+#' @author Sam Bashevkin
+#' @examples
+#' SourceTaxaKey <- SourceTaxaKeyer(Data = zoopComb, Crosswalk = crosswalk)
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
+#' @export
+
+
+SourceTaxaKeyer<-function(Data, Crosswalk){
+
+  #Function that lists all unique taxa x life stage combinations for a given source
+  SourceTaxaLister<-function(Source, Crosswalk){
+    Source2<-rlang::sym(Source) #unquote input
+    Source2<-rlang::enquo(Source2) #capture expression to pass on to functions below
+    crosswalk%>%
+      dplyr::filter(!is.na(!!Source2))%>%
+      dplyr::select(Phylum, Class, Order, Family, Genus, Taxname, Lifestage)%>%
+      dplyr::distinct()%>%
+      dplyr::mutate(Source=Source)
+  }
+
+  #Find all combinations of source and sizeclass present in the zooplankton dataset
+  Sources<-unique(paste(Data$Source, Data$SizeClass, sep="_"))
+
+  #apply above function across all unique combos of source and size class
+  SourceTaxaKey<-purrr::map_dfr(Sources, SourceTaxaLister, Crosswalk)%>%
+    tidyr::separate(Source, into=c("Source", "SizeClass"), sep="_")
+
+  return(SourceTaxaKey)
+
+}
+
+
+#' Detect common taxonomic names across all source datasets
+#'
+#' Calculates taxa by life stage combos present in all source datasets
+#'
+#' @param Source_taxa_key A dataframe with columns named Source, Lifestage, SizeClass, and the value provided to the parameter \code{Taxa_level}. This dataframe should list all \code{Taxa_level} by \code{Lifestage} combinations present for each source dataset. You can provide it with the output of \code{\link{SourceTaxaKeyer}}.
+#' @param Taxa_level Taxonomic level you would like to perform this calculation for. E.g., if you wish to determine all Genus x lifestage combinations present in all datasets, provide \code{Taxa_level = "Genus"}. The value provided here must be the name of a column in the dataset provided to \code{Source_taxa_key}.
+#' @param Size_class The size class(es) you would like this function to consider. You should generally only supply 1 size class.
+#' @keywords Taxonomy, zooplankton
+#' @importFrom magrittr %>%
+#' @details This function is designed to work on just one size class. To apply to multiple size classes, use \link[purrr]{map} or \link[base]{apply} functions to apply across size classes.
+#' @return A tibble with a column for \code{Taxa_level} and another for \code{Lifestage} representing all combinations of these values present in all source datasets.
+#' @author Sam Bashevkin
+#' @examples
+#' SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)
+#' Size_classes <- rlang::set_names(c("Micro", "Meso", "Macro"))
+#' Commontax <- purrr::map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .))
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{SourceTaxaKeyer}}
+#' @export
+#'
+
+Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
+  Source_taxa_key<-Source_taxa_key%>%
+    dplyr::filter(SizeClass%in%Size_class)
+  Taxa_level<-rlang::sym(Taxa_level) #unquote input
+  Taxa_level<-rlang::enquo(Taxa_level) #capture expression to pass on to functions below
+  N<-Source_taxa_key%>%
+    dplyr::pull(Source)%>%
+    unique()%>%
+    length()
+  Source_taxa_key%>%
+    dplyr::filter(!is.na(!!Taxa_level))%>%
+    dplyr::select(!!Taxa_level, Lifestage, Source)%>%
+    dplyr::distinct()%>%
+    dplyr::group_by(!!Taxa_level, Lifestage)%>%
+    dplyr::summarise(n=dplyr::n())%>% #Create index of number of data sources in which each Taxa_level x lifestage combo appears
+    dplyr::ungroup()%>%
+    dplyr::filter(n==N)%>% #only retain Taxa_level x lifestage combos that appear in all datasets
+    dplyr::select(!!Taxa_level, Lifestage)
 }

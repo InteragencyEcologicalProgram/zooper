@@ -33,7 +33,7 @@
 #' @author Sam Bashevkin
 #' @examples
 #' MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
-#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{SourceTaxaKeyer}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 #' @export
 
 Zoopsynther<-function(
@@ -200,39 +200,8 @@ Zoopsynther<-function(
   #Make vector of taxonomic categories that we will use later
   Taxcats<-c("Genus", "Family", "Order", "Class", "Phylum")
 
-  # Make list of taxa x life stage combinations present in all source datasets
-  SourceTaxaKeyer<-function(source, crosswalk){
-    source2<-rlang::sym(source) #unquote input
-    source2<-rlang::enquo(source2) #capture expression to pass on to functions below
-    crosswalk%>%
-      dplyr::filter(!is.na(!!source2))%>%
-      dplyr::select_at(c(Taxcats, "Taxname", "Lifestage"))%>%
-      dplyr::distinct()%>%
-      dplyr::mutate(Source=source)
-  }
-
-  SourceTaxaKey<-purrr::map_dfr(unique(paste(zoop$Source, zoop$SizeClass, sep="_")), SourceTaxaKeyer, crosswalk)%>%
-    tidyr::separate(Source, into=c("Source", "SizeClass"), sep="_")
-
-
-  #Function to detect common taxonomic names across all source datasets
-  Commontaxer<-function(Taxagroup, sourcetaxakey){
-    Taxagroup<-rlang::sym(Taxagroup) #unquote input
-    Taxagroup<-rlang::enquo(Taxagroup) #capture expression to pass on to functions below
-    N<-sourcetaxakey%>%
-      dplyr::pull(Source)%>%
-      unique()%>%
-      length()
-    sourcetaxakey%>%
-      dplyr::filter(!is.na(!!Taxagroup))%>%
-      dplyr::select(!!Taxagroup, Lifestage, Source)%>%
-      dplyr::distinct()%>%
-      dplyr::group_by(!!Taxagroup, Lifestage)%>%
-      dplyr::summarise(n=dplyr::n())%>% #Create index of number of data sources in which each taxagroup x lifestage combo appears
-      dplyr::ungroup()%>%
-      dplyr::filter(n==N)%>% #only retain taxagroup x lifestage combos that appear in all datasets
-      dplyr::select(!!Taxagroup, Lifestage)
-  }
+  # Make list of taxa x life stage combinations present in each source dataset
+  SourceTaxaKey<-SourceTaxaKeyer(zoop, crosswalk)
 
   #Create variable for size classes present in dataset
   Size_classes<-zoop%>%
@@ -242,8 +211,7 @@ Zoopsynther<-function(
 
   #Find all common Taxname x life stage combinations, turn into vector of Taxlifestages
   Commontax<-purrr::map(Size_classes, function(x)
-    dplyr::filter(SourceTaxaKey, SizeClass==x)%>%
-      Commontaxer("Taxname", .)%>%
+    Commontaxer(SourceTaxaKey, "Taxname", x)%>%
       dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
       dplyr::pull(Taxlifestage))
 
@@ -441,7 +409,7 @@ Zoopsynther<-function(
     #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
     Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
                                   rep(Taxcats, length(Size_classes)),
-                                  ~Commontaxer(.y, SourceTaxaKey%>%dplyr::filter(SizeClass==.x)),
+                                  ~Commontaxer(SourceTaxaKey, .y, .x),
                                   .id = "SizeClass")%>%
       dplyr::mutate_at(Taxcats, list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
       dplyr::mutate_at(paste0(Taxcats, "_lifestage"), ~dplyr::if_else(paste(., SizeClass)%in%UniqueTaxlifesize, ., NA_character_))%>%
