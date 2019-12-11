@@ -1,6 +1,5 @@
-Zooplankton Synthesis in the Sacramento San Joaquin Delta
-================
-12/05/2019
+
+# zooper <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 

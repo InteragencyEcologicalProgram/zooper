@@ -1,6 +1,4 @@
 ---
-title: "Zooplankton Synthesis in the Sacramento San Joaquin Delta"
-date: "12/05/2019"
 output: github_document
 ---
 
@@ -8,6 +6,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
 ```
+
+# zooper <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
