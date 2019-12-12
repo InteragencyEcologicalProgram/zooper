@@ -22,8 +22,8 @@ Zoopdownloader <- function(
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
-  Return_object_type="List",
-  Redownload_data=FALSE,
+  Return_object_type = "List",
+  Redownload_data = FALSE,
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper")){
 

@@ -32,30 +32,30 @@
 #' \code{Data_type = "Taxa"} optimizes for the Taxa-level user by maintaining all data at the original taxonomic level (but it outputs warnings for taxa not measured in all datasets, which we call "orphans"). To facilitate comparisons across datasets, this option also sums data into general categories that are comparable across all datasets and years: "summed groups." The new variable "Taxatype" identifies which taxa are summed groups (\code{Taxatype = "Summed group"}), which are measured to the species level (\code{Taxatype = "Species"}), and which are higher taxonomic groupings with the species designation unknown: (\code{Taxatype = "UnID species"}).
 #' @author Sam Bashevkin
 #' @examples
-#' MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+#' MyZoops <- Zoopsynther(Data_type = "Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range = c("1990-10-01", "2000-09-30"))
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{SourceTaxaKeyer}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}
 #' @export
 
 Zoopsynther<-function(
-  Data_type=NULL,
-  Data_list=list(Zooplankton=zoopComb, Environment=zoopEnvComb),
-  Zoop_path=NULL,
-  Env_path=NULL,
-  Sources=c("EMP", "FRP", "FMWT", "TNS", "20mm"),
-  Size_class=c("Micro", "Meso", "Macro"),
-  Taxa=NULL,
-  Date_range=c(NA, NA),
-  Months=NA,
-  Years=NA,
-  Sal_bott_range=NA,
-  Sal_surf_range=NA,
-  Temp_range=NA,
-  Lat_range=NA,
-  Long_range=NA,
-  Reload_data=F,
-  Redownload_data=F,
-  All_env=T,
-  Shiny=F,
+  Data_type = NULL,
+  Data_list = list(Zooplankton=zoopComb, Environment=zoopEnvComb),
+  Zoop_path = NULL,
+  Env_path = NULL,
+  Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
+  Size_class = c("Micro", "Meso", "Macro"),
+  Taxa = NULL,
+  Date_range = c(NA, NA),
+  Months = NA,
+  Years = NA,
+  Sal_bott_range = NA,
+  Sal_surf_range = NA,
+  Temp_range = NA,
+  Lat_range = NA,
+  Long_range = NA,
+  Reload_data = F,
+  Redownload_data = F,
+  All_env = T,
+  Shiny = F,
   ...){
 
 

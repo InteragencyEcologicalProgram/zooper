@@ -88,7 +88,7 @@ account for this we:
 3.  All potentially undersampled data are marked with a flag
     `Undersampled == TRUE`
 4.  For the plots in the shiny app, all data with `Undersampled == TRUE`
-    are removed. However, data downloaded from the app do contain
+    can be removed. However, data downloaded from the app do contain
     undersampled data.
 
 ## Unresolved issues
@@ -99,7 +99,10 @@ confound analyses of zooplankton communities and abundances over time.
 # Usage
 
 ``` r
-MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Data_type = "Community", 
+                       Sources = c("EMP", "FRP", "FMWT"), 
+                       Size_class = "Meso", 
+                       Date_range = c("1990-10-01", "2000-09-30"))
 #> [1] "No disclaimers here! Enjoy the clean data!"
 
 str(MyZoops)

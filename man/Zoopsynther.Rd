@@ -85,7 +85,7 @@ Briefly, \code{Data_type = "Community"} optimizes for community-level analyses b
 }
 
 \examples{
-MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Data_type = "Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range = c("1990-10-01", "2000-09-30"))
 }
 \seealso{
 \code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{SourceTaxaKeyer}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}

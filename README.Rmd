@@ -74,7 +74,7 @@ Nets accurately sample zooplankton larger than the mesh size. Zooplankton smalle
 1. Resolve taxonomic resolution separately within each net size class.
 2. If `Data = 'Taxa'`, we mark "summed groups" with the net size class from which they were derived.
 3. All potentially undersampled data are marked with a flag `Undersampled == TRUE`
-4. For the plots in the shiny app, all data with `Undersampled == TRUE` are removed. However, data downloaded from the app do contain undersampled data. 
+4. For the plots in the shiny app, all data with `Undersampled == TRUE` can be removed. However, data downloaded from the app do contain undersampled data. 
 
 ## Unresolved issues
 
@@ -83,7 +83,10 @@ For many studies, taxonomic resolution has changed over time. This could confoun
 # Usage 
 
 ```{r}
-MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Data_type = "Community", 
+                       Sources = c("EMP", "FRP", "FMWT"), 
+                       Size_class = "Meso", 
+                       Date_range = c("1990-10-01", "2000-09-30"))
 
 str(MyZoops)
 ```
