@@ -1,4 +1,6 @@
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # zooper <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
@@ -7,19 +9,19 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-# Introduction
-
 An R package to download and integrate zooplankton data from the
 Sacramento San Joaquin Delta.
 
-Install the package with
+## Installation
+
+You can install the development version from GitHub with:
 
 ``` r
-#Requires devtools
-#install.packages("devtools")
-
-devtools::install_github("https://github.com/InteragencyEcologicalProgram/zooper")
+# install.packages("devtools")
+devtools::install_github("InteragencyEcologicalProgram/zooper")
 ```
+
+# Introduction
 
 The `Zoopsynther` function takes zooplankton data from different surveys
 and integrates the data according to user-specified parameter choices.
@@ -32,7 +34,7 @@ The `Zoopdownloader` function downloads the zooplankton datasets from
 their respective online sources and converts them to a consistent
 format.
 
-# Community or taxon-specific analyses?
+## Community or taxon-specific analyses?
 
 The biggest problem with integrating zooplankton datasets is variability
 in taxonomic resolution. To resolve this, we have developed 2 approaches
@@ -40,7 +42,7 @@ to consolidating inconsistent data to “least common denominator taxa.”
 Depending on what type of analysis you wish to run, you may wish for
 different types of synthesized data.
 
-## For community data analyzers
+### For community data analyzers
 
 *I want to analyze the community composition at whatever taxonomic level
 lets me use all these datasets.*
@@ -50,7 +52,7 @@ lets me use all these datasets.*
   - Sacrifices some taxonomic resolution
   - Removes taxa with no relatives in all datasets (e.g., Annelida)
 
-## For specific taxa analyzers
+### For specific taxa analyzers
 
 *I want all possible data on these specific taxa.*
 
@@ -62,7 +64,7 @@ lets me use all these datasets.*
   - Labels taxa that are comparable across all datasets, warns about
     those that are not.
 
-# Size classes
+## Size classes
 
 We have integrated zooplankton data from 3 net size classes:
 
@@ -89,10 +91,51 @@ account for this we:
     are removed. However, data downloaded from the app do contain
     undersampled data.
 
-# Unresolved issues
+## Unresolved issues
 
 For many studies, taxonomic resolution has changed over time. This could
 confound analyses of zooplankton communities and abundances over time.
+
+# Usage
+
+``` r
+MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range=c("1990-10-01", "2000-09-30"))
+#> [1] "No disclaimers here! Enjoy the clean data!"
+
+str(MyZoops)
+#> Classes 'tbl_df', 'tbl' and 'data.frame':    151478 obs. of  31 variables:
+#>  $ Source      : chr  "EMP" "EMP" "EMP" "EMP" ...
+#>  $ SizeClass   : chr  "Meso" "Meso" "Meso" "Meso" ...
+#>  $ Volume      : num  7.91 7.91 7.91 7.91 7.91 ...
+#>  $ Lifestage   : chr  "Adult" "Adult" "Adult" "Adult" ...
+#>  $ Taxname     : chr  "Acanthocyclops vernalis" "Acartia" "Acartiella sinensis" "Asplanchna" ...
+#>  $ Phylum      : chr  "Arthropoda" "Arthropoda" "Arthropoda" "Rotifera" ...
+#>  $ Class       : chr  "Copepoda" "Copepoda" "Copepoda" "Eurotatoria" ...
+#>  $ Order       : chr  "Cyclopoida" "Calanoida" "Calanoida" "Ploima" ...
+#>  $ Family      : chr  "Cyclopidae" "Acartiidae" "Acartiidae" "Asplanchnidae" ...
+#>  $ Genus       : chr  "Acanthocyclops" "Acartia" "Acartiella" "Asplanchna" ...
+#>  $ Species     : chr  "Acanthocyclops vernalis" NA "Acartiella sinensis" NA ...
+#>  $ Taxlifestage: chr  "Acanthocyclops vernalis Adult" "Acartia Adult" "Acartiella sinensis Adult" "Asplanchna Adult" ...
+#>  $ SampleID    : chr  "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" ...
+#>  $ CPUE        : num  0 0 0 0 1315 ...
+#>  $ Year        : num  1990 1990 1990 1990 1990 1990 1990 1990 1990 1990 ...
+#>  $ Date        : POSIXct, format: "1990-10-08" "1990-10-08" ...
+#>  $ Datetime    : POSIXct, format: NA NA ...
+#>  $ Tide        : chr  "High slack" "High slack" "High slack" "High slack" ...
+#>  $ Station     : chr  "NZ098" "NZ098" "NZ098" "NZ098" ...
+#>  $ Chl         : num  1.4 1.4 1.4 1.4 1.4 1.4 1.4 1.4 1.4 1.4 ...
+#>  $ Secchi      : num  99 99 99 99 99 99 99 99 99 99 ...
+#>  $ Temperature : num  19.5 19.5 19.5 19.5 19.5 19.5 19.5 19.5 19.5 19.5 ...
+#>  $ BottomDepth : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ Turbidity   : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ Microcystis : chr  NA NA NA NA ...
+#>  $ pH          : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ DO          : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ SalSurf     : num  0.203 0.203 0.203 0.203 0.203 ...
+#>  $ SalBott     : num  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ Latitude    : num  38 38 38 38 38 ...
+#>  $ Longitude   : num  -122 -122 -122 -122 -122 ...
+```
 
 # Code of conduct
 
