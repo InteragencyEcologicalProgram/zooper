@@ -44,7 +44,7 @@ Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE, Save_objec
 \author{
 Sam Bashevkin
 }
-\keyword{download,}
-\keyword{integration,}
-\keyword{synthesis,}
+\keyword{download}
+\keyword{integration}
+\keyword{synthesis}
 \keyword{zooplankton}

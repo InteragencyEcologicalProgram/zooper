@@ -93,6 +93,6 @@ MyZoops <- Zoopsynther(Data_type="Community", Sources = c("EMP", "FRP", "FMWT"),
 \author{
 Sam Bashevkin
 }
-\keyword{integration,}
-\keyword{synthesis,}
+\keyword{integration}
+\keyword{synthesis}
 \keyword{zooplankton.}

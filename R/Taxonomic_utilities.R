@@ -4,7 +4,7 @@
 #'
 #' @param Crosswalk Crosswalk table (such as \code{\link{crosswalk}}) with columns named "Phylum", "Class", "Order", "Family", "Genus", "Species", and "Taxname." "Taxname" corresponds to the full scientific name of the taxonomic level assigned to the plankter when recorded in the dataset.
 #' @param Taxa A character vector of taxa you wish to select. These taxa can be from any taxonomic level present in the list above. If using the built-in data and crosswalk, they should be present in the \code{\link{completeTaxaList}}.
-#' @keywords Taxonomy, zooplankton.
+#' @keywords Taxonomy zooplankton.
 #' @importFrom magrittr %>%
 #' @return A character vector of scientific names contained within the vector of \code{Taxa} provided.
 #' @author Sam Bashevkin
@@ -30,7 +30,7 @@ Taxnamefinder <- function(Crosswalk, Taxa){
 #'
 #' @param Data Zooplankton dataset. Must have a column named \code{Source} with the names of the source datasets and a column named \code{SizeClass} with the names of the zooplankton size classes.
 #' @param Crosswalk Crosswalk table (e.g., \code{\link{crosswalk}}) with columns named "Phylum", "Class", "Order", "Family", "Genus", "Taxname", "Lifestage", and column names corresponding to each unique value of \code{paste(data$Source, data$SizeClass, sep="_")}.
-#' @keywords Taxonomy, zooplankton
+#' @keywords Taxonomy zooplankton
 #' @importFrom magrittr %>%
 #' @return a tibble with the complete taxonomic information for each combination of source and size class.
 #' @author Sam Bashevkin
@@ -72,7 +72,7 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
 #' @param Source_taxa_key A dataframe with columns named Source, Lifestage, SizeClass, and the value provided to the parameter \code{Taxa_level}. This dataframe should list all \code{Taxa_level} by \code{Lifestage} combinations present for each source dataset. You can provide it with the output of \code{\link{SourceTaxaKeyer}}.
 #' @param Taxa_level Taxonomic level you would like to perform this calculation for. E.g., if you wish to determine all Genus x lifestage combinations present in all datasets, provide \code{Taxa_level = "Genus"}. The value provided here must be the name of a column in the dataset provided to \code{Source_taxa_key}.
 #' @param Size_class The size class(es) you would like this function to consider. You should generally only supply 1 size class.
-#' @keywords Taxonomy, zooplankton
+#' @keywords Taxonomy zooplankton
 #' @importFrom magrittr %>%
 #' @details This function is designed to work on just one size class. To apply to multiple size classes, use \link[purrr]{map} or \link[base]{apply} functions to apply across size classes.
 #' @return A tibble with a column for \code{Taxa_level} and another for \code{Lifestage} representing all combinations of these values present in all source datasets.

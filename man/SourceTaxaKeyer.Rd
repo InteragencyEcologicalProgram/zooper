@@ -26,5 +26,5 @@ SourceTaxaKey <- SourceTaxaKeyer(Data = zoopComb, Crosswalk = crosswalk)
 \author{
 Sam Bashevkin
 }
-\keyword{Taxonomy,}
+\keyword{Taxonomy}
 \keyword{zooplankton}

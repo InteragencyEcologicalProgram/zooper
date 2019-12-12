@@ -33,5 +33,5 @@ Commontax <- purrr::map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .)
 \author{
 Sam Bashevkin
 }
-\keyword{Taxonomy,}
+\keyword{Taxonomy}
 \keyword{zooplankton}

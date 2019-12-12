@@ -8,7 +8,7 @@
 #' @param Redownload_data Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.
 #' @param Zoop_path File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
-#' @keywords download, integration, synthesis, zooplankton
+#' @keywords download integration synthesis zooplankton
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @return If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.

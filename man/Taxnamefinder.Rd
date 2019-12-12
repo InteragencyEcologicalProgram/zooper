@@ -26,5 +26,5 @@ Taxnames <- Taxnamefinder(crosswalk, c("Calanoida", "Cyclopoida"))
 \author{
 Sam Bashevkin
 }
-\keyword{Taxonomy,}
+\keyword{Taxonomy}
 \keyword{zooplankton.}

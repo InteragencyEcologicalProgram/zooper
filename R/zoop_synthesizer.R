@@ -21,7 +21,7 @@
 #' @param All_env Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.
 #' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
 #' @param ... Arguments passed to \code{\link{Zoopdownloader}}.
-#' @keywords integration, synthesis, zooplankton.
+#' @keywords integration synthesis zooplankton.
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @return An integrated zooplankton dataset.
