@@ -6,7 +6,8 @@
 \usage{
 Zoopsynther(
   Data_type = NULL,
-  Data_list = list(Zooplankton = zoopComb, Environment = zoopEnvComb),
+  zoop = zooper::zoopComb,
+  zoopEnv = zooper::zoopEnvComb,
   Zoop_path = NULL,
   Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
@@ -24,13 +25,17 @@ Zoopsynther(
   Redownload_data = F,
   All_env = T,
   Shiny = F,
+  Crosswalk = zooper::crosswalk,
+  Undersampled = zooper::undersampled,
   ...
 )
 }
 \arguments{
 \item{Data_type}{What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data_type = "Community"}; the default) or Taxa-specific (\code{Data_type = "Taxa"}) analyses. NOTE: If you set \code{Data_type="Community"} we do not recommend utilizing the \code{Taxa} argument. See below for more explanation of this argument.}
 
-\item{Data_list}{List of zooplankton datasets. You must provide the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")} with one element named "Zooplankton" and another named "Environment". The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide paths to the following two arguments.}
+\item{zoop}{Zooplankton data. You must provide the "Zooplankton" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Zoop_path}.}
+
+\item{zoopEnv}{Accessory environmental data. You must provide the "Environment" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Env_path}.}
 
 \item{Zoop_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.}
 
@@ -66,6 +71,10 @@ Zoopsynther(
 
 \item{Shiny}{Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.}
 
+\item{Crosswalk}{Crosswalk table to be used for conversions. Must have columns named for each unique combination of source and size class with an underscore separator, as well as all taxonomic levels Phylum through Species, Taxname (full scientific name) and Lifestage. See \code{\link{crosswalk}} (the default) for an example.}
+
+\item{Undersampled}{A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class). See \code{\link{undersampled}} (the default) for an example.}
+
 \item{...}{Arguments passed to \code{\link{Zoopdownloader}}.}
 }
 \value{
@@ -85,7 +94,10 @@ Briefly, \code{Data_type = "Community"} optimizes for community-level analyses b
 }
 
 \examples{
-MyZoops <- Zoopsynther(Data_type = "Community", Sources = c("EMP", "FRP", "FMWT"), Size_class = "Meso", Date_range = c("1990-10-01", "2000-09-30"))
+MyZoops <- Zoopsynther(Data_type = "Community",
+Sources = c("EMP", "FRP", "FMWT"),
+Size_class = "Meso",
+Date_range = c("1990-10-01", "2000-09-30"))
 }
 \seealso{
 \code{\link{Zoopdownloader}}, \code{\link{Taxnamefinder}}, \code{\link{SourceTaxaKeyer}}, \code{\link{crosswalk}}, \code{\link{undersampled}}, \code{\link{zoopComb}}, \code{\link{zoopEnvComb}}, \code{\link{zooper}}

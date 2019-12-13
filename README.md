@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # zooper <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
@@ -99,6 +97,7 @@ confound analyses of zooplankton communities and abundances over time.
 # Usage
 
 ``` r
+library(zooper)
 MyZoops <- Zoopsynther(Data_type = "Community", 
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 

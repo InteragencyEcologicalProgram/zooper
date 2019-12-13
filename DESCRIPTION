@@ -26,7 +26,9 @@ Imports:
     rlang,
     magrittr,
     data.table,
-    tidyselect
+    tidyselect,
+    stats,
+    utils
 URL: https://github.com/InteragencyEcologicalProgram/zooper
 BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
 RoxygenNote: 7.0.2

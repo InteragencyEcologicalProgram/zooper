@@ -11,7 +11,9 @@ Zoopdownloader(
   Return_object_type = "List",
   Redownload_data = FALSE,
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
-  Env_path = file.path(Data_folder, "zoopenvforzooper")
+  Env_path = file.path(Data_folder, "zoopenvforzooper"),
+  Crosswalk = crosswalk,
+  Stations = stations
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ Zoopdownloader(
 \item{Zoop_path}{File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.}
 
 \item{Env_path}{File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.}
+
+\item{Crosswalk}{Crosswalk table to be used for conversions. Must have columns named for each unique combination of source and size class with an underscore separator, as well as all taxonomic levels Phylum through Species, Taxname (full scientific name) and Lifestage. See \code{\link{crosswalk}} (the default) for an example.}
+
+\item{Stations}{Latitudes and longitudes for each unique station. See \code{\link{stations}} (the default) for an example.}
 }
 \value{
 If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.

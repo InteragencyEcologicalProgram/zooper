@@ -15,7 +15,7 @@ Taxnamefinder(Crosswalk, Taxa)
 A character vector of scientific names contained within the vector of \code{Taxa} provided.
 }
 \description{
-Helps filter the zooplankton dataset by returning a set of lowest-level taxa (i.e. the level taxa were recorded at when counted in plankton samples) within a vector of taxa (wich can include taxa from any taxonomic level).
+Helps filter the zooplankton dataset by returning a set of lowest-level taxa (i.e. the level taxa were recorded at when counted in plankton samples) within a vector of taxa (which can include taxa from any taxonomic level).
 }
 \examples{
 Taxnames <- Taxnamefinder(crosswalk, c("Calanoida", "Cyclopoida"))

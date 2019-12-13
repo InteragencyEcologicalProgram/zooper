@@ -1,8 +1,8 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -11,9 +11,6 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-
-require(zooper)
-require(tidyverse)
 ```
 
 # zooper <img src='man/figures/logo.png' align="right" height="139" />
@@ -83,6 +80,7 @@ For many studies, taxonomic resolution has changed over time. This could confoun
 # Usage 
 
 ```{r}
+library(zooper)
 MyZoops <- Zoopsynther(Data_type = "Community", 
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 

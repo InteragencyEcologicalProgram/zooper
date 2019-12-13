@@ -1,6 +1,6 @@
 #' Taxonomic crosswalk among datasets
 #'
-#' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic heirarchies.
+#' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic hierarchies.
 #'
 #' @format a tibble with 317 rows and 28 variables
 #' \describe{

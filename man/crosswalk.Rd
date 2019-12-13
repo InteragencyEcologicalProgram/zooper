@@ -39,7 +39,7 @@
 crosswalk
 }
 \description{
-A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic heirarchies.
+A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic hierarchies.
 }
 \seealso{
 \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
