@@ -23,10 +23,13 @@ devtools::install_github("InteragencyEcologicalProgram/zooper")
 
 The `Zoopsynther` function takes zooplankton data from different surveys
 and integrates the data according to user-specified parameter choices.
-The shiny app is a GUI (graphical user interface) that allows folks
-without R experience to run the zooplankton synthesizer function and
-download the resulting data. The shiny app (coming soon) also allows
-folks with all experience levels to easily visualize the data.
+The [shiny app](iepsynthesis.shinyapps.io/zoopsynth) [(code for latest
+version available
+here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth) is a
+GUI (graphical user interface) that allows folks without R experience to
+run the zooplankton synthesizer function and download the resulting
+data. The shiny app also allows folks with all experience levels to
+easily visualize the data.
 
 The `Zoopdownloader` function downloads the zooplankton datasets from
 their respective online sources and converts them to a consistent
@@ -145,6 +148,8 @@ Here’s a graph you could make with the data
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
+set.seed(16)
+
 MyZoops%>%
   filter(!is.na(SalSurf))%>%
   mutate(Salinity_zone=case_when(
