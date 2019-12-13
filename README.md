@@ -139,6 +139,42 @@ str(MyZoops)
 #>  $ Longitude   : num  -122 -122 -122 -122 -122 ...
 ```
 
+Here’s a graph you could make with the data
+
+``` r
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+MyZoops%>%
+  filter(!is.na(SalSurf))%>%
+  mutate(Salinity_zone=case_when(
+    SalSurf < 0.5 ~ "Freshwater",
+    SalSurf > 0.5 & SalSurf < 6 ~ "Low salinity zone",
+    SalSurf > 6 ~ "High salinity zone"
+  ))%>%
+  mutate(Salinity_zone=factor(Salinity_zone, levels=c("Freshwater", "Low salinity zone", "High salinity zone")))%>%
+  group_by(Year,Phylum, Class, Order, Family, Genus, Species, Lifestage, Taxlifestage, Salinity_zone)%>%
+  summarise(CPUE=mean(CPUE, na.rm=T))%>%
+  ungroup()%>%
+  arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
+  mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
+  ggplot(aes(x=Year, y=CPUE))+
+  geom_bar(stat="identity", color="white", size=0.01, aes(fill=Taxlifestage))+
+  facet_wrap(~Salinity_zone, nrow=1)+
+  coord_cartesian(expand=0)+
+  scale_x_continuous(breaks = function(x) unique(floor(pretty(seq(min(x), max(x)), n=3))), expand=c(0,0))+
+  scale_fill_manual(values=sample(colorRampPalette(brewer.pal(12, "Set3"))(length(unique(MyZoops$Taxlifestage)))), 
+                    name="Taxa and life stage", 
+                    guide = guide_legend(ncol=3, title.position = "top", title.hjust = 0.5))+
+  ylab(bquote(Average~CPUE~"("*Catch*"/"*m^3*")"))+
+  theme_bw()+
+  theme(panel.grid=element_blank(), text=element_text(size=14), legend.text = element_text(size=8), 
+        legend.key.size = unit(10, "points"), strip.background=element_blank(), legend.position = "bottom", 
+        legend.background = element_rect(color="black"), axis.text.x=element_text(angle=45, hjust=1))
+```
+
+<img src="man/figures/README-plots-1.png" width="100%" />
+
 # Code of conduct
 
 Please note that the ‘zooper’ project is released with a [Contributor
