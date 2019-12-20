@@ -1,6 +1,7 @@
 Package: zooper
-Title: Integrates Zooplankton Datasets from the Sacramento San Joaquin Delta
+Title: Integrate Zooplankton Datasets from the Sacramento San Joaquin Delta
 Version: 0.0.0.9000
+Date: 2019-12-13
 Authors@R: 
     person(given = "Sam",
            family = "Bashevkin",
