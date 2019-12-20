@@ -32,7 +32,7 @@ devtools::install_github("InteragencyEcologicalProgram/zooper")
 ```
 # Introduction
 
-The `Zoopsynther` function takes zooplankton data from different surveys and integrates the data according to user-specified parameter choices. The [shiny app](iepsynthesis.shinyapps.io/zoopsynth) [(code for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth) is a GUI (graphical user interface) that allows folks without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app  also allows folks with all experience levels to easily visualize the data.
+The `Zoopsynther` function takes zooplankton data from different surveys and integrates the data according to user-specified parameter choices. The [shiny app](https://iepsynthesis.shinyapps.io/zoopsynth) with [(code for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth) is a GUI (graphical user interface) that allows folks without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app  also allows folks with all experience levels to easily visualize the data.
 
 The `Zoopdownloader` function downloads the zooplankton datasets from their respective online sources and converts them to a consistent format.
 

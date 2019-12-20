@@ -381,13 +381,19 @@ Zoopsynther<-function(
 
     #Exit this process early if all studies are taxonomically consistent
     if(!purrr::some(purrr::map_dbl(Lumped, length), function(x) x>0)){
-      out<-list(Data=zoop%>%
-                  dplyr::left_join(zoopEnv%>%
-                                     {if(!All_env){
-                                       dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
-                                     } else{
-                                       dplyr::select(., -.data$Source)
-                                     }}, by="SampleID"), Caveats="No disclaimers here! Enjoy the clean data!")
+
+      zoop<-zoop%>%
+        dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>%
+        dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
+        dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm"))%>%
+        dplyr::left_join(zoopEnv%>%
+                           {if(!All_env){
+                             dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
+                           } else{
+                             dplyr::select(., -.data$Source)
+                           }}, by="SampleID")
+
+      out<-list(Data=zoop, Caveats="No disclaimers here! Enjoy the clean data!")
 
       if(Shiny){
         return(out)
