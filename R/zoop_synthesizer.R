@@ -271,8 +271,8 @@ Zoopsynther<-function(
         dplyr::ungroup()%>%
         dplyr::select_at(dplyr::vars(-c("N", "Taxname", Taxcats_g[Taxcats_g!=Taxagroup])))%>%
         dtplyr::lazy_dt()%>%
-        dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
-        dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #Add up all members of each grouping taxon
+        dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+        dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
         dplyr::ungroup()%>%
         tibble::as_tibble()%>%
         dplyr::mutate(Taxname=!!Taxagroup2) #Add summarized group names to Taxname
@@ -417,7 +417,8 @@ Zoopsynther<-function(
                                   .id = "SizeClass")%>%
       dplyr::mutate_at(Taxcats, list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
       dplyr::mutate_at(paste0(Taxcats, "_lifestage"), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_))%>%
-      dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass) #only retain columns we need
+      dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass)%>% #only retain columns we need
+      dplyr::filter_at(dplyr::vars(-.data$SizeClass), dplyr::any_vars(!is.na(.)))
 
     #Create taxonomy table for taxa not present in all datasets, then select their new names corresponding to taxa x life stage combinations that are measured in all datasets
     LCD_Com<-function(Lumped, crosswalk, Commontaxkey){
@@ -473,8 +474,8 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species)%>%
       dtplyr::lazy_dt()%>%
-      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>%
+      dplyr::group_by_at(dplyr::vars(-CPUE))%>%
+      dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(crosswalk%>%
