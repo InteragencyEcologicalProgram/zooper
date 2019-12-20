@@ -212,8 +212,8 @@ Zoopdownloader <- function(
     dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
     dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
     dplyr::ungroup()%>%
-    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID))%>% #Create identifier for each sample
-    tibble::as_tibble()
+    tibble::as_tibble()%>%
+    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
 
 
   # FRP Meso ---------------------------------------------------------------------
@@ -257,9 +257,9 @@ Zoopdownloader <- function(
     dtplyr::lazy_dt()%>% #Speed up code
     dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
     dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+    tibble::as_tibble()%>%
     dplyr::ungroup()%>%
-    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID))%>% #Create identifier for each sample
-    tibble::as_tibble()
+    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
 
 
 
@@ -288,8 +288,8 @@ Zoopdownloader <- function(
   #    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #In case some taxa names are repeated as in EMP so
   #    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
   #    dplyr::ungroup()%>%
-  #    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID))%>% #Create identifier for each sample
-  #    tibble::as_tibble()
+  #    tibble::as_tibble()%>%
+  #    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
 
 
   # EMP Micro ---------------------------------------------------------------
@@ -388,9 +388,9 @@ Zoopdownloader <- function(
     dtplyr::lazy_dt()%>% #Speed up code
     dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
     dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+    tibble::as_tibble()%>%
     dplyr::ungroup()%>%
-    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID))%>% #Create identifier for each sample
-    tibble::as_tibble()
+    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
 
 
   # EMP Macro ---------------------------------------------------------------
