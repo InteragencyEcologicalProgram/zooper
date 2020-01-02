@@ -32,9 +32,9 @@ devtools::install_github("InteragencyEcologicalProgram/zooper")
 ```
 # Introduction
 
-The `Zoopsynther` function takes zooplankton data from different surveys and integrates the data according to user-specified parameter choices. The [shiny app](https://iepsynthesis.shinyapps.io/zoopsynth) with [(code for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth) is a GUI (graphical user interface) that allows folks without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app  also allows folks with all experience levels to easily visualize the data.
+This package has 2 main functions and a few accessory functions. The `Zoopdownloader` function downloads the zooplankton datasets from their respective online sources and converts them to a consistent format. The `Zoopsynther` function takes zooplankton data from different surveys and integrates the data according to user-specified parameter choices.
 
-The `Zoopdownloader` function downloads the zooplankton datasets from their respective online sources and converts them to a consistent format.
+This package is also accessible through a [shiny app](https://iepsynthesis.shinyapps.io/zoopsynth) [(code and installation instructions for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth). The app is a GUI (graphical user interface) that allows uers without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app also allows users with all experience levels to easily visualize the data.
 
 ## Community or taxon-specific analyses?
 
@@ -62,9 +62,9 @@ The biggest problem with integrating zooplankton datasets is variability in taxo
 
 We have integrated zooplankton data from 3 net size classes:
 
-1. Macro (500-505 ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m): Amphipods and mysids
-2. Meso (150 - 160 ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m): Copepods, cladocera
-3. Micro (43 ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m): Copepods, rotifers
+1. Macro (500-505 &mu;m): Amphipods and mysids
+2. Meso (150 - 160 &mu;m): Copepods, cladocera
+3. Micro (43 &mu;m): Copepods, rotifers
 
 Nets accurately sample zooplankton larger than the mesh size. Zooplankton smaller than the mesh size are still captured and often recorded in datasets, but the resulting CPUEs are not accurate. To account for this we: 
 

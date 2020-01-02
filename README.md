@@ -21,19 +21,20 @@ devtools::install_github("InteragencyEcologicalProgram/zooper")
 
 # Introduction
 
-The `Zoopsynther` function takes zooplankton data from different surveys
-and integrates the data according to user-specified parameter choices.
-The [shiny app](https://iepsynthesis.shinyapps.io/zoopsynth) with [(code
-for latest version available
-here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth) is a
-GUI (graphical user interface) that allows folks without R experience to
-run the zooplankton synthesizer function and download the resulting
-data. The shiny app also allows folks with all experience levels to
-easily visualize the data.
+This package has 2 main functions and a few accessory functions. The
+`Zoopdownloader` function downloads the zooplankton datasets from their
+respective online sources and converts them to a consistent format. The
+`Zoopsynther` function takes zooplankton data from different surveys and
+integrates the data according to user-specified parameter choices.
 
-The `Zoopdownloader` function downloads the zooplankton datasets from
-their respective online sources and converts them to a consistent
-format.
+This package is also accessible through a [shiny
+app](https://iepsynthesis.shinyapps.io/zoopsynth) [(code and
+installation instructions for latest version available
+here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth). The
+app is a GUI (graphical user interface) that allows uers without R
+experience to run the zooplankton synthesizer function and download the
+resulting data. The shiny app also allows users with all experience
+levels to easily visualize the data.
 
 ## Community or taxon-specific analyses?
 
@@ -69,14 +70,9 @@ lets me use all these datasets.*
 
 We have integrated zooplankton data from 3 net size classes:
 
-1.  Macro (500-505
-    ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m): Amphipods
-    and mysids
-2.  Meso (150 - 160
-    ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m): Copepods,
-    cladocera
-3.  Micro (43 ![mu](https://latex.codecogs.com/gif.latex?%24%5Cmu%24)m):
-    Copepods, rotifers
+1.  Macro (500-505 μm): Amphipods and mysids
+2.  Meso (150 - 160 μm): Copepods, cladocera
+3.  Micro (43 μm): Copepods, rotifers
 
 Nets accurately sample zooplankton larger than the mesh size.
 Zooplankton smaller than the mesh size are still captured and often
@@ -108,7 +104,7 @@ MyZoops <- Zoopsynther(Data_type = "Community",
 #> [1] "No disclaimers here! Enjoy the clean data!"
 
 str(MyZoops)
-#> Classes 'tbl_df', 'tbl' and 'data.frame':    151478 obs. of  31 variables:
+#> Classes 'tbl_df', 'tbl' and 'data.frame':    151478 obs. of  32 variables:
 #>  $ Source      : chr  "EMP" "EMP" "EMP" "EMP" ...
 #>  $ SizeClass   : chr  "Meso" "Meso" "Meso" "Meso" ...
 #>  $ Volume      : num  7.91 7.91 7.91 7.91 7.91 ...
@@ -123,6 +119,7 @@ str(MyZoops)
 #>  $ Taxlifestage: chr  "Acanthocyclops vernalis Adult" "Acartia Adult" "Acartiella sinensis Adult" "Asplanchna Adult" ...
 #>  $ SampleID    : chr  "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" "EMP NZ098 1990-10-08" ...
 #>  $ CPUE        : num  0 0 0 0 1315 ...
+#>  $ Undersampled: logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
 #>  $ Year        : num  1990 1990 1990 1990 1990 1990 1990 1990 1990 1990 ...
 #>  $ Date        : POSIXct, format: "1990-10-08" "1990-10-08" ...
 #>  $ Datetime    : POSIXct, format: NA NA ...
