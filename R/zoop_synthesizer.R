@@ -259,26 +259,6 @@ Zoopsynther<-function(
     #Make vector of _g Taxonomic variables
     Taxcats_g<-paste0(Taxcats, "_g")
 
-    # Define function to sum to least common denominator taxa, one taxonomic level at a time
-    LCD_Taxa<-function(df, Taxagroup){
-      Taxagroup2<-rlang::sym(Taxagroup) #unquote input
-      Taxagroup2<-rlang::enquo(Taxagroup2) #capture expression to pass on to functions below
-      out<-df%>%
-        dplyr::filter(!is.na(!!Taxagroup2))%>% #filter to include only data belonging to the taxonomic grouping
-        dplyr::group_by(!!Taxagroup2)%>%
-        dplyr::mutate(N=length(unique(.data$Taxname)))%>%
-        dplyr::filter(.data$N>1)%>% # No need to sum up categories if there is only 1 taxa in the category
-        dplyr::ungroup()%>%
-        dplyr::select_at(dplyr::vars(-c("N", "Taxname", Taxcats_g[Taxcats_g!=Taxagroup])))%>%
-        dtplyr::lazy_dt()%>%
-        dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
-        dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
-        dplyr::ungroup()%>%
-        tibble::as_tibble()%>%
-        dplyr::mutate(Taxname=!!Taxagroup2) #Add summarized group names to Taxname
-      return(out)
-    }
-
     #Create vector of all unique taxa in dataset
     UniqueTaxa<-zoop%>%
       dplyr::select(.data$Taxname)%>%

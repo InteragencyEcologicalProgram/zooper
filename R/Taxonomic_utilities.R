@@ -107,3 +107,57 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
     dplyr::filter(.data$n==N)%>% #only retain Taxa_level x lifestage combos that appear in all datasets
     dplyr::select(!!Taxa_level, .data$Lifestage)
 }
+
+
+#' Apply LCD approach for "Taxa" option
+#'
+#' Sums to least common denominator taxa, one taxonomic level at a time
+#'
+#' @param df Zooplankton dataset including columns named the same as the \code{Taxcats_g}, a \code{Taxname} column, and no other taxonomic identifying columns.
+#' @param Taxalevel The value of Taxcats_g on which to apply this function.
+#' @param Taxcats_g The names of taxonomic levels with _g appended corresponding to columns in the zooplankton dataset with higher-level taxonomic categories that have been determined to be important groups for which sums will be calculated. Defaults to \code{Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")}.
+#' @keywords Taxonomy zooplankton
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @details This function is designed to work on just one Taxalevel at a time. To apply to multiple Taxalevels, use \link[purrr]{map} or \link[base]{apply} functions to apply across taxonomic levels.
+#' @return A tibble with sums calculated for each unique value in \code{df$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
+#' @author Sam Bashevkin
+#' @examples
+#' library(magrittr)
+#' library(rlang)
+#' UniqueTaxa<-zoopComb%>%
+#'   dplyr::select(.data$Taxname)%>%
+#'   dplyr::distinct()%>%
+#'   dplyr::left_join(dplyr::select(crosswalk, .data$Taxname, .data$Level)%>%
+#'                      dplyr::distinct(),
+#'                    by="Taxname")%>%
+#'   dplyr::filter(.data$Level!="Species")%>%
+#'   dplyr::pull(.data$Taxname)
+#' df <- zoopComb%>%
+#'   dplyr::mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
+#'                    list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
+#'   dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family,
+#'                 -.data$Genus, -.data$Species, -.data$Taxlifestage)
+#' family_sums <- LCD_Taxa(df, "Family_g")
+#'
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
+#' @export
+
+LCD_Taxa<-function(df, Taxalevel, Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
+  Taxalevel2<-rlang::sym(Taxalevel) #unquote input
+  Taxalevel2<-rlang::enquo(Taxalevel2) #capture expression to pass on to functions below
+  out<-df%>%
+    dplyr::filter(!is.na(!!Taxalevel2))%>% #filter to include only data belonging to the taxonomic grouping
+    dplyr::group_by(!!Taxalevel2)%>%
+    dplyr::mutate(N=length(unique(.data$Taxname)))%>%
+    dplyr::filter(.data$N>1)%>% # No need to sum up categories if there is only 1 taxa in the category
+    dplyr::ungroup()%>%
+    dplyr::select_at(dplyr::vars(-c("N", "Taxname", Taxcats_g[Taxcats_g!=Taxalevel])))%>%
+    dtplyr::lazy_dt()%>%
+    dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+    dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
+    dplyr::ungroup()%>%
+    tibble::as_tibble()%>%
+    dplyr::mutate(Taxname=!!Taxalevel2) #Add summarized group names to Taxname
+  return(out)
+}
