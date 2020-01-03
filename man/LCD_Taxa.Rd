@@ -27,21 +27,19 @@ Sums to least common denominator taxa, one taxonomic level at a time
 This function is designed to work on just one Taxalevel at a time. To apply to multiple Taxalevels, use \link[purrr]{map} or \link[base]{apply} functions to apply across taxonomic levels.
 }
 \examples{
-library(magrittr)
-library(rlang)
+library(dplyr)
 UniqueTaxa<-zoopComb\%>\%
-  dplyr::select(.data$Taxname)\%>\%
-  dplyr::distinct()\%>\%
-  dplyr::left_join(dplyr::select(crosswalk, .data$Taxname, .data$Level)\%>\%
-                     dplyr::distinct(),
+  select(Taxname)\%>\%
+  distinct()\%>\%
+  left_join(select(crosswalk, Taxname, Level)\%>\%
+                     distinct(),
                    by="Taxname")\%>\%
-  dplyr::filter(.data$Level!="Species")\%>\%
-  dplyr::pull(.data$Taxname)
+  filter(Level!="Species")\%>\%
+  pull(Taxname)
 df <- zoopComb\%>\%
-  dplyr::mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-                   list(g=~dplyr::if_else(.\%in\%UniqueTaxa, ., NA_character_)))\%>\%
-  dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family,
-                -.data$Genus, -.data$Species, -.data$Taxlifestage)
+  mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
+                   list(g=~if_else(.\%in\%UniqueTaxa, ., NA_character_)))\%>\%
+  select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 family_sums <- LCD_Taxa(df, "Family_g")
 
 }

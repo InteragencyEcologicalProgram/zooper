@@ -1,3 +1,4 @@
+μm
 Amphipods
 Annelida
 Calanoida
@@ -41,7 +42,10 @@ salinities
 Secchi
 SizeClass
 STN
+Taxalevel
+Taxalevels
 Taxatype
+Taxcats
 Taxname
 tibble
 TNS

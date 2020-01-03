@@ -277,20 +277,7 @@ Zoopsynther<-function(
       dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))
 
     #Extract vector of grouping taxa (i.e. all unique taxa retained in the above step)
-    Grouper<-function(Sizeclass){
-      out<-zoop%>%
-        dplyr::filter(.data$SizeClass==Sizeclass)%>%
-        dplyr::select_at(Taxcats_g)%>%
-        dplyr::distinct()%>%
-        tidyr::pivot_longer(tidyselect::everything(), names_to = "Level", values_to = "Taxa")%>%
-        dplyr::filter(!is.na(.data$Taxa))%>%
-        dplyr::pull(.data$Taxa)%>%
-        unique()
-
-      return(out)
-    }
-
-    Groups<-purrr::map(Size_classes, Grouper)
+    Groups<-purrr::map(Size_classes, function(x) Datareducer(df=dplyr::filter(zoop, SizeClass%in%x), Reduced_vars = Taxcats_g))
 
     # Output list of taxa that were not measured in all datasets, and are
     # not higher taxa that can be calculated by summing lower taxa, i.e.

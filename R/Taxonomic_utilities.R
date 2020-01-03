@@ -81,9 +81,12 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
 #' @return A tibble with a column for \code{Taxa_level} and another for \code{Lifestage} representing all combinations of these values present in all source datasets.
 #' @author Sam Bashevkin
 #' @examples
+#' library(dplyr)
+#' library(rlang)
+#' library(purrr)
 #' SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)
-#' Size_classes <- rlang::set_names(c("Micro", "Meso", "Macro"))
-#' Commontax <- purrr::map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .))
+#' Size_classes <- set_names(c("Micro", "Meso", "Macro"))
+#' Commontax <- map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .))
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{SourceTaxaKeyer}}
 #' @export
 #'
@@ -123,21 +126,19 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @return A tibble with sums calculated for each unique value in \code{df$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
 #' @author Sam Bashevkin
 #' @examples
-#' library(magrittr)
-#' library(rlang)
+#' library(dplyr)
 #' UniqueTaxa<-zoopComb%>%
-#'   dplyr::select(.data$Taxname)%>%
-#'   dplyr::distinct()%>%
-#'   dplyr::left_join(dplyr::select(crosswalk, .data$Taxname, .data$Level)%>%
-#'                      dplyr::distinct(),
+#'   select(Taxname)%>%
+#'   distinct()%>%
+#'   left_join(select(crosswalk, Taxname, Level)%>%
+#'                      distinct(),
 #'                    by="Taxname")%>%
-#'   dplyr::filter(.data$Level!="Species")%>%
-#'   dplyr::pull(.data$Taxname)
+#'   filter(Level!="Species")%>%
+#'   pull(Taxname)
 #' df <- zoopComb%>%
-#'   dplyr::mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-#'                    list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
-#'   dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family,
-#'                 -.data$Genus, -.data$Species, -.data$Taxlifestage)
+#'   mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
+#'                    list(g=~if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
+#'   select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 #' family_sums <- LCD_Taxa(df, "Family_g")
 #'
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
@@ -159,5 +160,34 @@ LCD_Taxa<-function(df, Taxalevel, Taxcats_g = c("Genus_g", "Family_g", "Order_g"
     dplyr::ungroup()%>%
     tibble::as_tibble()%>%
     dplyr::mutate(Taxname=!!Taxalevel2) #Add summarized group names to Taxname
+  return(out)
+}
+
+
+#' Find all unique values within a tibble
+#'
+#' Outputs a vector with all unique non-NA values in a subset of selected columns from a tibble
+#'
+#' @param df Data frame containing at least the columns specified in \code{Reduced_vars}.
+#' @param Reduced_vars Columns from which you would like to select all unique values. Must be quoted names of columns present in \code{df}.
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @return A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{df}.
+#' @author Sam Bashevkin
+#' @examples
+#' #Find all unique taxonomic names in the crosswalk table.
+#' All_taxa <- Datareducer(crosswalk, c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
+#'
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
+#' @export
+
+Datareducer<-function(df, Reduced_vars){
+  out<-df%>%
+    dplyr::select_at(Reduced_vars)%>%
+    dplyr::distinct()%>%
+    tidyr::pivot_longer(cols=Reduced_vars, names_to = "Level", values_to = "Taxa")%>%
+    tidyr::drop_na()%>%
+    dplyr::pull(.data$Taxa)%>%
+    unique()
   return(out)
 }

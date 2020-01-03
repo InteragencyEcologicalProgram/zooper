@@ -31,7 +31,7 @@ This package is also accessible through a [shiny
 app](https://iepsynthesis.shinyapps.io/zoopsynth) [(code and
 installation instructions for latest version available
 here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth). The
-app is a GUI (graphical user interface) that allows uers without R
+app is a GUI (graphical user interface) that allows users without R
 experience to run the zooplankton synthesizer function and download the
 resulting data. The shiny app also allows users with all experience
 levels to easily visualize the data.
