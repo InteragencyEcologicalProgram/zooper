@@ -174,6 +174,7 @@ LCD_Taxa<-function(df, Taxalevel, Taxcats_g = c("Genus_g", "Family_g", "Order_g"
 #' @importFrom rlang .data
 #' @return A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{df}.
 #' @author Sam Bashevkin
+#' @keywords Internal
 #' @examples
 #' #Find all unique taxonomic names in the crosswalk table.
 #' All_taxa <- Datareducer(crosswalk, c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
@@ -189,5 +190,35 @@ Datareducer<-function(df, Reduced_vars){
     tidyr::drop_na()%>%
     dplyr::pull(.data$Taxa)%>%
     unique()
+  return(out)
+}
+
+#' Remove words from a character vector list element
+#'
+#' Given 2 lists of character vectors and an ID corresponding to the name of an element in each list, this function will, for the named element, remove values in one character vector that correspond to values in the other and output a concatenated string of all remaining values.
+#'
+#' @param ID The quoted name of an element in both \code{Taxlifestage_list} and \code{Remove_taxa}
+#' @param Taxlifestage_list The list of character vectors of taxlifestages from which elements will be removed.
+#' @param Remove_taxa The list of character vectors of Taxa names containing values to be removed from \code{Taxlifestage_list}.
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @details This function is designed to work on one ID at a time. To aply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.
+#' @return A comma-separated string of remaining taxlifestages from \code{Taxlifestage_list[[ID]]}
+#' @author Sam Bashevkin
+#' @keywords Internal
+#' @examples
+#' Taxlifestage_list <- list(EMP = paste(crosswalk$EMP_Meso[!is.na(crosswalk$EMP_Meso)], crosswalk$Lifestage[!is.na(crosswalk$EMP_Meso)]))
+#' Remove_taxa <- list(EMP = crosswalk$EMP_Micro[!is.na(crosswalk$EMP_Micro)])
+#' Meso_not_Micro <- Wordremover("EMP", Taxlifestage_list, Remove_taxa)
+#'
+#' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}
+#' @export
+
+Wordremover<-function(ID, Taxlifestage_list, Remove_taxa){
+  Taxlifestage_list<-Taxlifestage_list[[ID]]
+  Remove_taxa<-Remove_taxa[[ID]]
+  Remove<-stringr::str_which(paste0("[", paste(Remove_taxa, collapse="|"), "]"), stringr::word(Taxlifestage_list, 1, -2))
+  Taxlifestage_list<-Taxlifestage_list[-Remove]
+  out<-paste(sort(Taxlifestage_list), collapse=", ")
   return(out)
 }

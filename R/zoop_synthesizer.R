@@ -277,22 +277,13 @@ Zoopsynther<-function(
       dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))
 
     #Extract vector of grouping taxa (i.e. all unique taxa retained in the above step)
-    Groups<-purrr::map(Size_classes, function(x) Datareducer(df=dplyr::filter(zoop, SizeClass%in%x), Reduced_vars = Taxcats_g))
+    Groups<-purrr::map(Size_classes, function(x) Datareducer(df=dplyr::filter(zoop, .data$SizeClass%in%x), Reduced_vars = Taxcats_g))
 
     # Output list of taxa that were not measured in all datasets, and are
     # not higher taxa that can be calculated by summing lower taxa, i.e.
     # "orphan taxa"
 
-    Orphaner<-function(Sizeclass){
-      Lumped2<-Lumped[[Sizeclass]]
-      Groups2<-Groups[[Sizeclass]]
-      Remove<-stringr::str_which(paste0("[", paste(Groups2, collapse="|"), "]"), stringr::word(Lumped2, 1, -2))
-      Lumped3<-Lumped2[-Remove]
-      out<-paste(Lumped3, collapse=", ")
-      return(out)
-    }
-
-    Orphans<-purrr::map(Size_classes, Orphaner)
+    Orphans<-purrr::map(Size_classes, Wordremover, Taxlifestage_list=Lumped, Remove_taxa=Groups)
 
     rm(Lumped)
 
