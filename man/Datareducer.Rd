@@ -19,8 +19,9 @@ Outputs a vector with all unique non-NA values in a subset of selected columns f
 }
 \examples{
 #Find all unique taxonomic names in the crosswalk table.
+\dontrun{
 All_taxa <- Datareducer(crosswalk, c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
-
+}
 }
 \seealso{
 \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}

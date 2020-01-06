@@ -23,7 +23,6 @@ Calculates taxa by life stage combos present in all source datasets
 This function is designed to work on just one size class. To apply to multiple size classes, use \link[purrr]{map} or \link[base]{apply} functions to apply across size classes.
 }
 \examples{
-library(dplyr)
 library(rlang)
 library(purrr)
 SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)

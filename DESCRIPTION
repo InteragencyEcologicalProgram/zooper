@@ -34,5 +34,6 @@ URL: https://github.com/InteragencyEcologicalProgram/zooper
 BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
 RoxygenNote: 7.0.2
 Suggests: 
-    spelling
+    spelling,
+    testthat (>= 2.1.0)
 Language: en-US

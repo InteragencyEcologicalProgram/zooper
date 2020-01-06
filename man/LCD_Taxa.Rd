@@ -7,15 +7,15 @@
 LCD_Taxa(
   df,
   Taxalevel,
-  Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")
+  Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")
 )
 }
 \arguments{
-\item{df}{Zooplankton dataset including columns named the same as the \code{Taxcats_g}, a \code{Taxname} column, and no other taxonomic identifying columns.}
+\item{df}{Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.}
 
-\item{Taxalevel}{The value of Taxcats_g on which to apply this function.}
+\item{Taxalevel}{The value of Groupers on which to apply this function.}
 
-\item{Taxcats_g}{The names of taxonomic levels with _g appended corresponding to columns in the zooplankton dataset with higher-level taxonomic categories that have been determined to be important groups for which sums will be calculated. Defaults to \code{Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")}.}
+\item{Groupers}{A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.}
 }
 \value{
 A tibble with sums calculated for each unique value in \code{df$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
@@ -28,17 +28,9 @@ This function is designed to work on just one Taxalevel at a time. To apply to m
 }
 \examples{
 library(dplyr)
-UniqueTaxa<-zoopComb\%>\%
-  select(Taxname)\%>\%
-  distinct()\%>\%
-  left_join(select(crosswalk, Taxname, Level)\%>\%
-                     distinct(),
-                   by="Taxname")\%>\%
-  filter(Level!="Species")\%>\%
-  pull(Taxname)
 df <- zoopComb\%>\%
   mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-                   list(g=~if_else(.\%in\%UniqueTaxa, ., NA_character_)))\%>\%
+                   list(g=~if_else(.\%in\%completeTaxaList, ., NA_character_)))\%>\%
   select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 family_sums <- LCD_Taxa(df, "Family_g")
 

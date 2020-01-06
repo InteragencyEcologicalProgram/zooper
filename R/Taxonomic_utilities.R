@@ -81,7 +81,6 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
 #' @return A tibble with a column for \code{Taxa_level} and another for \code{Lifestage} representing all combinations of these values present in all source datasets.
 #' @author Sam Bashevkin
 #' @examples
-#' library(dplyr)
 #' library(rlang)
 #' library(purrr)
 #' SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)
@@ -116,9 +115,9 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #'
 #' Sums to least common denominator taxa, one taxonomic level at a time
 #'
-#' @param df Zooplankton dataset including columns named the same as the \code{Taxcats_g}, a \code{Taxname} column, and no other taxonomic identifying columns.
-#' @param Taxalevel The value of Taxcats_g on which to apply this function.
-#' @param Taxcats_g The names of taxonomic levels with _g appended corresponding to columns in the zooplankton dataset with higher-level taxonomic categories that have been determined to be important groups for which sums will be calculated. Defaults to \code{Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")}.
+#' @param df Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.
+#' @param Taxalevel The value of Groupers on which to apply this function.
+#' @param Groupers A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.
 #' @keywords Taxonomy zooplankton
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -127,33 +126,26 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @author Sam Bashevkin
 #' @examples
 #' library(dplyr)
-#' UniqueTaxa<-zoopComb%>%
-#'   select(Taxname)%>%
-#'   distinct()%>%
-#'   left_join(select(crosswalk, Taxname, Level)%>%
-#'                      distinct(),
-#'                    by="Taxname")%>%
-#'   filter(Level!="Species")%>%
-#'   pull(Taxname)
 #' df <- zoopComb%>%
 #'   mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-#'                    list(g=~if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
+#'                    list(g=~if_else(.%in%completeTaxaList, ., NA_character_)))%>%
 #'   select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 #' family_sums <- LCD_Taxa(df, "Family_g")
 #'
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
 
-LCD_Taxa<-function(df, Taxalevel, Taxcats_g = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
+LCD_Taxa<-function(df, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
   Taxalevel2<-rlang::sym(Taxalevel) #unquote input
   Taxalevel2<-rlang::enquo(Taxalevel2) #capture expression to pass on to functions below
+  Groupers <- Groupers[Groupers!=Taxalevel]
   out<-df%>%
     dplyr::filter(!is.na(!!Taxalevel2))%>% #filter to include only data belonging to the taxonomic grouping
     dplyr::group_by(!!Taxalevel2)%>%
     dplyr::mutate(N=length(unique(.data$Taxname)))%>%
     dplyr::filter(.data$N>1)%>% # No need to sum up categories if there is only 1 taxa in the category
     dplyr::ungroup()%>%
-    dplyr::select_at(dplyr::vars(-c("N", "Taxname", Taxcats_g[Taxcats_g!=Taxalevel])))%>%
+    dplyr::select_at(dplyr::vars(-c("N", "Taxname", Groupers)))%>%
     dtplyr::lazy_dt()%>%
     dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
     dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
@@ -177,10 +169,10 @@ LCD_Taxa<-function(df, Taxalevel, Taxcats_g = c("Genus_g", "Family_g", "Order_g"
 #' @keywords Internal
 #' @examples
 #' #Find all unique taxonomic names in the crosswalk table.
+#' \dontrun{
 #' All_taxa <- Datareducer(crosswalk, c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
-#'
+#'}
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
-#' @export
 
 Datareducer<-function(df, Reduced_vars){
   out<-df%>%
@@ -198,21 +190,22 @@ Datareducer<-function(df, Reduced_vars){
 #' Given 2 lists of character vectors and an ID corresponding to the name of an element in each list, this function will, for the named element, remove values in one character vector that correspond to values in the other and output a concatenated string of all remaining values.
 #'
 #' @param ID The quoted name of an element in both \code{Taxlifestage_list} and \code{Remove_taxa}
-#' @param Taxlifestage_list The list of character vectors of taxlifestages from which elements will be removed.
+#' @param Taxlifestage_list The list of character vectors of Taxlifestages from which elements will be removed.
 #' @param Remove_taxa The list of character vectors of Taxa names containing values to be removed from \code{Taxlifestage_list}.
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @details This function is designed to work on one ID at a time. To aply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.
-#' @return A comma-separated string of remaining taxlifestages from \code{Taxlifestage_list[[ID]]}
+#' @details This function is designed to work on one ID at a time. To apply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.
+#' @return A comma-separated string of remaining Taxlifestages from \code{Taxlifestage_list[[ID]]}
 #' @author Sam Bashevkin
 #' @keywords Internal
 #' @examples
-#' Taxlifestage_list <- list(EMP = paste(crosswalk$EMP_Meso[!is.na(crosswalk$EMP_Meso)], crosswalk$Lifestage[!is.na(crosswalk$EMP_Meso)]))
+#' \dontrun{
+#' Taxlifestage_list <- list(EMP = paste(crosswalk$EMP_Meso[!is.na(crosswalk$EMP_Meso)],
+#'                           crosswalk$Lifestage[!is.na(crosswalk$EMP_Meso)]))
 #' Remove_taxa <- list(EMP = crosswalk$EMP_Micro[!is.na(crosswalk$EMP_Micro)])
 #' Meso_not_Micro <- Wordremover("EMP", Taxlifestage_list, Remove_taxa)
-#'
+#' }
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}
-#' @export
 
 Wordremover<-function(ID, Taxlifestage_list, Remove_taxa){
   Taxlifestage_list<-Taxlifestage_list[[ID]]
