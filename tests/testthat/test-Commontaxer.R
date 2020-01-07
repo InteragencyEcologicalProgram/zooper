@@ -1,4 +1,3 @@
-context("Commontaxer")
 library(zooper)
 
 SourceTaxaKey <- tibble::tibble(

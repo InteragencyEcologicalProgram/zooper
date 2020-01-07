@@ -1,4 +1,3 @@
-context("Wordremover")
 library(zooper)
 
 Taxlifestage_list <- list(ID=c("Taxa 1 Adult", "Taxa 2 Adult", "Taxa 3 Adult", "Taxa 1 Larvae", "Taxa 4 Adult", "Taxa 5 Juvenile"))

@@ -1,4 +1,3 @@
-context("Datareducer")
 library(zooper)
 
 words <- tibble::tibble(

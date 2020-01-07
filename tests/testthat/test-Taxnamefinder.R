@@ -1,4 +1,3 @@
-context("Taxnamefinder")
 library(zooper)
 
 Crosswalk <- tibble::tibble(

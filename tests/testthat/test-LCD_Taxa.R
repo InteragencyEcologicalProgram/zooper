@@ -1,4 +1,3 @@
-context("LCD_Taxa")
 library(zooper)
 df <- tibble::tibble(
   Order = rep(c("Calanoida", "Cyclopoida", "Cladocera"), each=10),

@@ -1,4 +1,3 @@
-context("SourceTaxaKeyer")
 library(zooper)
 library(dplyr)
 
