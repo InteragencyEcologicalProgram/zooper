@@ -28,8 +28,8 @@ test_that("Datareducer produces correct length character vector", {
 })
 
 test_that("Datareducer correctly reduces data to character vectors", {
-  expect_equal(sort(Awords), c("A", "B", "C"))
-  expect_equal(sort(ABwords), c("A", "B", "C", "D", "F"))
-  expect_equal(sort(ABCwords), c("A", "B", "C", "D", "F", "G", "P", "Q"))
-  expect_equal(sort(ABCDwords), c("A", "B", "C", "D", "F", "G", "P", "Q", "S", "T", "U", "V"))
+  expect_setequal(Awords, c("A", "B", "C"))
+  expect_setequal(ABwords, c("A", "B", "C", "D", "F"))
+  expect_setequal(ABCwords, c("A", "B", "C", "D", "F", "G", "P", "Q"))
+  expect_setequal(ABCDwords, c("A", "B", "C", "D", "F", "G", "P", "Q", "S", "T", "U", "V"))
 })

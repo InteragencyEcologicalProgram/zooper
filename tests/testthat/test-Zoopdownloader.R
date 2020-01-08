@@ -13,7 +13,7 @@ test_that("Downloading creates warning messages", {
 })
 
 test_that("Dowloaded data includes all datasets", {
-  expect_equal(sort(unique(paste(Data$Zooplankton$Source, Data$Zooplankton$SizeClass, sep="_"))), sort(Data_sets2))
+  expect_setequal(unique(paste(Data$Zooplankton$Source, Data$Zooplankton$SizeClass, sep="_")), Data_sets2)
 })
 
 test_that("No samples duplicated", {
@@ -21,7 +21,7 @@ test_that("No samples duplicated", {
 })
 
 test_that("Same samples present in Zooplankton and Environment datasets", {
-  expect_equal(sort(unique(Data$Zooplankton$SampleID)), sort(unique(Data$Environment$SampleID)))
+  expect_setequal(unique(Data$Zooplankton$SampleID), unique(Data$Environment$SampleID))
 })
 
 test_that("Not all CPUEs are 0", {

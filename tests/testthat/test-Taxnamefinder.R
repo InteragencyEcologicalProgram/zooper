@@ -38,7 +38,7 @@ test_that("Taxnamefinder produces correct length character vector", {
 })
 
 test_that("Taxnamefinder produces correct output", {
-  expect_equal(sort(test1), sort(paste0("Spec", 1:10)))
-  expect_equal(sort(test2), sort(c("Spec1", "Spec2", "Spec4", "Spec5")))
-  expect_equal(sort(test3), sort(c("Spec1", "Spec4", "Spec7", "Spec10", "Spec3", "Spec6", "Spec9")))
+  expect_setequal(test1, paste0("Spec", 1:10))
+  expect_setequal(test2, c("Spec1", "Spec2", "Spec4", "Spec5"))
+  expect_setequal(test3, c("Spec1", "Spec4", "Spec7", "Spec10", "Spec3", "Spec6", "Spec9"))
 })
