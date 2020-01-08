@@ -221,6 +221,12 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::pull(.data$Taxlifestage))
 
+  #Apply commontaxer to every taxa level
+  Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
+                  rep(Taxcats, length(Size_classes)),
+                  ~Commontaxer(SourceTaxaKey, .y, .x),
+                  .id = "SizeClass")
+
   # Make list of taxalifestages that do not appear in all datasets
   Lumper<-function(Sizeclass){
     Taxa<-zoop%>%
@@ -273,11 +279,22 @@ Zoopsynther<-function(
     # classification category in one of the original datasets, and rename
     # them as "Taxonomiclevel_g"
 
+    #Create vector of groups sampled all datasets
+    All_groups<-purrr::map(Size_classes, function(x) Datareducer(df=dplyr::filter(Commontaxkey, .data$SizeClass%in%x), Reduced_vars = Taxcats))
+
+    #Only retain groups if that taxa is present in all datasets (Must be present in the genus, family, order, class, or phylum column of all datasets)
+    #### !!! THIS ENSURES THAT SUMMED GROUPS ARE REPRESENTATIVE ACROSS ALL DATASETS !!! ###
     zoop<-zoop%>%
-      dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))
+      dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
+      dplyr::group_by(SizeClass)%>%
+      dplyr::mutate_at(Taxcats_g, ~dplyr::if_else(.%in%All_groups[[unique(SizeClass)]], ., NA_character_))%>%
+      dplyr::ungroup()
 
     #Extract vector of grouping taxa (i.e. all unique taxa retained in the above step)
     Groups<-purrr::map(Size_classes, function(x) Datareducer(df=dplyr::filter(zoop, .data$SizeClass%in%x), Reduced_vars = Taxcats_g))
+
+    #Only retain groups if that taxa is present in all datasets (Must be present in the genus, family, order, class, or phylum column of all datasets)
+    Groups<-purrr::map(Size_classes, function(x) Groups[[x]][which(Groups[[x]]%in%All_groups[[x]])])
 
     # Output list of taxa that were not measured in all datasets, and are
     # not higher taxa that can be calculated by summing lower taxa, i.e.
@@ -326,7 +343,7 @@ Zoopsynther<-function(
                          }}, by="SampleID")
 
     #Output caveats specific to these data
-    caveats<-c(paste0("These species are not counted in all datasets: ", paste(unique(unlist(sapply(names(Orphans), function(x) strsplit(Orphans[[x]], ", ")[[1]]), use.names = FALSE)), collapse=", ")), "NOTE: Do not use this data to make additional higher-level taxonomic summaries or any other operations to add together taxa above the species level unless you first filter out all rows with Taxatype=='Summed group' and, depending on your purpose, Orphan==TRUE. Orphan status varies with size class. Do not compare UnID categories across data sources.")
+    caveats<-c(ifelse(!purrr::some(purrr::map_dbl(Orphans, nchar), function(x) x>0), "No orphaned taxa here!", paste0("These species are not counted in all datasets: ", paste(unique(unlist(sapply(names(Orphans), function(x) strsplit(Orphans[[x]], ", ")[[1]]), use.names = FALSE)), collapse=", "))), "NOTE: Do not use this data to make additional higher-level taxonomic summaries or any other operations to add together taxa above the species level unless you first filter out all rows with Taxatype=='Summed group' and, depending on your purpose, Orphan==TRUE. Orphan status varies with size class. Do not compare UnID categories across data sources.")
 
 
     rm(Orphans)
@@ -375,10 +392,7 @@ Zoopsynther<-function(
       unique()
 
     #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
-    Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
-                                  rep(Taxcats, length(Size_classes)),
-                                  ~Commontaxer(SourceTaxaKey, .y, .x),
-                                  .id = "SizeClass")%>%
+    Commontaxkey<-Commontaxkey%>%
       dplyr::mutate_at(Taxcats, list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
       dplyr::mutate_at(paste0(Taxcats, "_lifestage"), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_))%>%
       dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass)%>% #only retain columns we need
