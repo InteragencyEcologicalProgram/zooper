@@ -13,3 +13,7 @@ test_that("Wordremover outputs length 1 character vector", {
 test_that("Wordremover correctly removes words", {
   expect_equal(out, "Taxa 2 Adult, Taxa 4 Adult, Taxa 5 Juvenile")
 })
+
+test_that("Wordremover works when there are no words to remove", {
+  expect_equal(Wordremover("ID", Taxlifestage_list, Remove_taxa = list(ID=c("Taxa 7"))), paste(sort(Taxlifestage_list$ID), collapse = ", "))
+})

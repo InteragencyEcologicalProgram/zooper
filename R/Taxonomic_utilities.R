@@ -211,7 +211,7 @@ Wordremover<-function(ID, Taxlifestage_list, Remove_taxa){
   Taxlifestage_list<-Taxlifestage_list[[ID]]
   Remove_taxa<-Remove_taxa[[ID]]
   Remove<-stringr::str_which(paste0("[", paste(Remove_taxa, collapse="|"), "]"), stringr::word(Taxlifestage_list, 1, -2))
-  Taxlifestage_list<-Taxlifestage_list[-Remove]
+  if(length(Remove)>0) {Taxlifestage_list<-Taxlifestage_list[-Remove]}
   out<-paste(sort(Taxlifestage_list), collapse=", ")
   return(out)
 }
