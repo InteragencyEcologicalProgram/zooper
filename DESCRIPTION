@@ -35,5 +35,6 @@ BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
 RoxygenNote: 7.0.2
 Suggests: 
     spelling,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    covr
 Language: en-US
