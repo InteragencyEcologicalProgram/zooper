@@ -343,11 +343,8 @@ Zoopsynther<-function(
                          }}, by="SampleID")
 
     #Output caveats specific to these data
-    caveats<-c(ifelse(!purrr::some(purrr::map_dbl(Orphans, nchar), function(x) x>0), "No orphaned taxa here!", paste0("These species are not counted in all datasets: ", paste(unique(unlist(sapply(names(Orphans), function(x) strsplit(Orphans[[x]], ", ")[[1]]), use.names = FALSE)), collapse=", "))), "NOTE: Do not use this data to make additional higher-level taxonomic summaries or any other operations to add together taxa above the species level unless you first filter out all rows with Taxatype=='Summed group' and, depending on your purpose, Orphan==TRUE. Orphan status varies with size class. Do not compare UnID categories across data sources.")
-
-
+    caveats<-c(dplyr::if_else(!purrr::some(purrr::map_dbl(Orphans, nchar), function(x) x>0), "No orphaned taxa here!", "Some taxa were not measured in all datasets and are indicated by the flag Orphan = TRUE"), "NOTE: Do not use this data to make additional higher-level taxonomic summaries or any other operations to add together taxa above the species level unless you first filter out all rows with Taxatype=='Summed group' and, depending on your purpose, Orphan==TRUE. Orphan status varies with size class. Do not compare UnID categories across data sources.")
     rm(Orphans)
-
   }
 
   # Apply LCD approach for community data user ------------------------------

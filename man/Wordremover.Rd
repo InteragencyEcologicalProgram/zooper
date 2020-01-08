@@ -36,4 +36,4 @@ Meso_not_Micro <- Wordremover("EMP", Taxlifestage_list, Remove_taxa)
 \author{
 Sam Bashevkin
 }
-\keyword{Internal}
+\keyword{internal}

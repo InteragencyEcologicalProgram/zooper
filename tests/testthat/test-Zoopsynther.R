@@ -21,7 +21,7 @@ test_that("Taxa option produces messages", {
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
-                            Samples = list(unique(SampleID[which(Order!="Amphipoda")]))), "[These species are not counted in all datasets|Do not use this data to make additional higher]", all=TRUE)
+                            Samples = list(unique(SampleID[which(Order!="Amphipoda")]))), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
 Data_source <- c("EMP", "FMWT", "TNS", "20mm", "FRP", "EMP", "FRP", "EMP", "FMWT", "TNS")

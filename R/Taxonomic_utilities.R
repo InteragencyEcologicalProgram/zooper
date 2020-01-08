@@ -166,7 +166,7 @@ LCD_Taxa<-function(df, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g",
 #' @importFrom rlang .data
 #' @return A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{df}.
 #' @author Sam Bashevkin
-#' @keywords Internal
+#' @keywords internal
 #' @examples
 #' #Find all unique taxonomic names in the crosswalk table.
 #' \dontrun{
@@ -197,7 +197,7 @@ Datareducer<-function(df, Reduced_vars){
 #' @details This function is designed to work on one ID at a time. To apply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.
 #' @return A comma-separated string of remaining Taxlifestages from \code{Taxlifestage_list[[ID]]}
 #' @author Sam Bashevkin
-#' @keywords Internal
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' Taxlifestage_list <- list(EMP = paste(crosswalk$EMP_Meso[!is.na(crosswalk$EMP_Meso)],
