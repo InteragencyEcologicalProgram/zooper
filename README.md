@@ -5,6 +5,8 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build
+status](https://travis-ci.org/InteragencyEcologicalProgram/zooper.svg?branch=master)](https://travis-ci.org/InteragencyEcologicalProgram/zooper)
 <!-- badges: end -->
 
 An R package to download and integrate zooplankton data from the
