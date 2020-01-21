@@ -300,7 +300,7 @@ Zoopsynther<-function(
     # not higher taxa that can be calculated by summing lower taxa, i.e.
     # "orphan taxa"
 
-    Orphans<-purrr::map(Size_classes, Wordremover, Taxlifestage_list=Lumped, Remove_taxa=Groups)
+    Orphans<-purrr::map(Size_classes, Taxaremover, Taxlifestage_list=Lumped, Remove_taxa=Groups)
 
     rm(Lumped)
 

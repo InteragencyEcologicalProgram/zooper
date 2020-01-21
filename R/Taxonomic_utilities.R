@@ -185,7 +185,7 @@ Datareducer<-function(df, Reduced_vars){
   return(out)
 }
 
-#' Remove words from a character vector list element
+#' Remove taxa from a list of taxlifestages
 #'
 #' Given 2 lists of character vectors and an ID corresponding to the name of an element in each list, this function will, for the named element, remove values in one character vector that correspond to values in the other and output a concatenated string of all remaining values.
 #'
@@ -203,11 +203,11 @@ Datareducer<-function(df, Reduced_vars){
 #' Taxlifestage_list <- list(EMP = paste(crosswalk$EMP_Meso[!is.na(crosswalk$EMP_Meso)],
 #'                           crosswalk$Lifestage[!is.na(crosswalk$EMP_Meso)]))
 #' Remove_taxa <- list(EMP = crosswalk$EMP_Micro[!is.na(crosswalk$EMP_Micro)])
-#' Meso_not_Micro <- Wordremover("EMP", Taxlifestage_list, Remove_taxa)
+#' Meso_not_Micro <- Taxaremover("EMP", Taxlifestage_list, Remove_taxa)
 #' }
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}
 
-Wordremover<-function(ID, Taxlifestage_list, Remove_taxa){
+Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
   Taxlifestage_list<-Taxlifestage_list[[ID]]
   Remove_taxa<-Remove_taxa[[ID]]
   Remove<-stringr::str_which(paste0("[", paste(Remove_taxa, collapse="|"), "]"), stringr::word(Taxlifestage_list, 1, -2))
