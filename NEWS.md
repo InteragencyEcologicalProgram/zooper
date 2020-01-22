@@ -1,5 +1,8 @@
 # zooper (development version)
 
+* Made all argument names start with a capital letter for consistency.
+* Changed all "Larvae" to "Larva" and "Pupae" to "Pupa" in crosswalk and elsewhere for consistency with other singular life stage names.
+
 # zooper 0.1.0
 
 * First stable release.
