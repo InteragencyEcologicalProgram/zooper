@@ -5,20 +5,20 @@
 \title{Apply LCD approach for "Taxa" option}
 \usage{
 LCD_Taxa(
-  df,
+  Data,
   Taxalevel,
   Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")
 )
 }
 \arguments{
-\item{df}{Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.}
+\item{Data}{Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.}
 
 \item{Taxalevel}{The value of Groupers on which to apply this function.}
 
 \item{Groupers}{A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.}
 }
 \value{
-A tibble with sums calculated for each unique value in \code{df$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
+A tibble with sums calculated for each unique value in \code{Data$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
 }
 \description{
 Sums to least common denominator taxa, one taxonomic level at a time

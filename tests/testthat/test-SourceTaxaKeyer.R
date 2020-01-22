@@ -19,7 +19,7 @@ Crosswalk <- tibble::tibble(
   Family = c("Fam1", "Fam2", "Fam3", "Fam1", "Fam2", "Fam3", "Fam4", "Fam5", "Fam6", "Fam7"),
   Genus = paste0("Gen", 1:10),
   Taxname = paste0("Spec", 1:10),
-  Lifestage = rep(c("Adult", "Larvae"), 5)
+  Lifestage = rep(c("Adult", "Larva"), 5)
 )
 
 SourceTaxaKey <- SourceTaxaKeyer(Data = Data, Crosswalk = Crosswalk)

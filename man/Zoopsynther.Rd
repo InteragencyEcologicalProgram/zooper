@@ -6,8 +6,8 @@
 \usage{
 Zoopsynther(
   Data_type = NULL,
-  zoop = zooper::zoopComb,
-  zoopEnv = zooper::zoopEnvComb,
+  Zoop = zooper::zoopComb,
+  ZoopEnv = zooper::zoopEnvComb,
   Zoop_path = NULL,
   Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
@@ -33,9 +33,9 @@ Zoopsynther(
 \arguments{
 \item{Data_type}{What type of data are you looking for? This option allows you to to choose a final output dataset for either community (\code{Data_type = "Community"}; the default) or Taxa-specific (\code{Data_type = "Taxa"}) analyses. NOTE: If you set \code{Data_type="Community"} we do not recommend utilizing the \code{Taxa} argument. See below for more explanation of this argument.}
 
-\item{zoop}{Zooplankton data. You must provide the "Zooplankton" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Zoop_path}.}
+\item{Zoop}{Zooplankton data. You must provide the "Zooplankton" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Zoop_path}.}
 
-\item{zoopEnv}{Accessory environmental data. You must provide the "Environment" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Env_path}.}
+\item{ZoopEnv}{Accessory environmental data. You must provide the "Environment" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Env_path}.}
 
 \item{Zoop_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.}
 

@@ -1,6 +1,6 @@
 library(zooper)
 
-Taxlifestage_list <- list(ID=c("Taxa 1 Adult", "Taxa 2 Adult", "Taxa 3 Adult", "Taxa 1 Larvae", "Taxa 4 Adult", "Taxa 5 Juvenile"))
+Taxlifestage_list <- list(ID=c("Taxa 1 Adult", "Taxa 2 Adult", "Taxa 3 Adult", "Taxa 1 Larva", "Taxa 4 Adult", "Taxa 5 Juvenile"))
 Remove_taxa <- list(ID=c("Taxa 1", "Taxa 3"))
 out <- Taxaremover("ID", Taxlifestage_list, Remove_taxa)
 

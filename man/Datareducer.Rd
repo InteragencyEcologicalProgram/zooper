@@ -4,15 +4,15 @@
 \alias{Datareducer}
 \title{Find all unique values within a tibble}
 \usage{
-Datareducer(df, Reduced_vars)
+Datareducer(Data, Reduced_vars)
 }
 \arguments{
-\item{df}{Data frame containing at least the columns specified in \code{Reduced_vars}.}
+\item{Data}{Data frame containing at least the columns specified in \code{Reduced_vars}.}
 
-\item{Reduced_vars}{Columns from which you would like to select all unique values. Must be quoted names of columns present in \code{df}.}
+\item{Reduced_vars}{Columns from which you would like to select all unique values. Must be quoted names of columns present in \code{Data}.}
 }
 \value{
-A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{df}.
+A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{Data}.
 }
 \description{
 Outputs a vector with all unique non-NA values in a subset of selected columns from a tibble

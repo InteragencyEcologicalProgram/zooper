@@ -115,14 +115,14 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #'
 #' Sums to least common denominator taxa, one taxonomic level at a time
 #'
-#' @param df Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.
+#' @param Data Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.
 #' @param Taxalevel The value of Groupers on which to apply this function.
 #' @param Groupers A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.
 #' @keywords Taxonomy zooplankton
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @details This function is designed to work on just one Taxalevel at a time. To apply to multiple Taxalevels, use \link[purrr]{map} or \link[base]{apply} functions to apply across taxonomic levels.
-#' @return A tibble with sums calculated for each unique value in \code{df$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
+#' @return A tibble with sums calculated for each unique value in \code{Data$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
 #' @author Sam Bashevkin
 #' @examples
 #' library(dplyr)
@@ -135,11 +135,11 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
 
-LCD_Taxa<-function(df, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
+LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
   Taxalevel2<-rlang::sym(Taxalevel) #unquote input
   Taxalevel2<-rlang::enquo(Taxalevel2) #capture expression to pass on to functions below
   Groupers <- Groupers[Groupers!=Taxalevel]
-  out<-df%>%
+  out<-Data%>%
     dplyr::filter(!is.na(!!Taxalevel2))%>% #filter to include only data belonging to the taxonomic grouping
     dplyr::group_by(!!Taxalevel2)%>%
     dplyr::mutate(N=length(unique(.data$Taxname)))%>%
@@ -160,11 +160,11 @@ LCD_Taxa<-function(df, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g",
 #'
 #' Outputs a vector with all unique non-NA values in a subset of selected columns from a tibble
 #'
-#' @param df Data frame containing at least the columns specified in \code{Reduced_vars}.
-#' @param Reduced_vars Columns from which you would like to select all unique values. Must be quoted names of columns present in \code{df}.
+#' @param Data Data frame containing at least the columns specified in \code{Reduced_vars}.
+#' @param Reduced_vars Columns from which you would like to select all unique values. Must be quoted names of columns present in \code{Data}.
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @return A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{df}.
+#' @return A vector of unique non-NA values from the \code{Reduced_vars} columns of \code{Data}.
 #' @author Sam Bashevkin
 #' @keywords internal
 #' @examples
@@ -174,8 +174,8 @@ LCD_Taxa<-function(df, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g",
 #'}
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 
-Datareducer<-function(df, Reduced_vars){
-  out<-df%>%
+Datareducer<-function(Data, Reduced_vars){
+  out<-Data%>%
     dplyr::select_at(Reduced_vars)%>%
     dplyr::distinct()%>%
     tidyr::pivot_longer(cols=Reduced_vars, names_to = "Level", values_to = "Taxa")%>%

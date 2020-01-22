@@ -15,7 +15,7 @@ Crosswalk <- tibble::tibble(
   Genus = paste0("Gen", 1:10),
   Species = paste0("Spec", 1:10),
   Taxname = paste0("Spec", 1:10),
-  Lifestage = rep(c("Adult", "Larvae"), 5)
+  Lifestage = rep(c("Adult", "Larva"), 5)
 )
 
 test1 <- Taxnamefinder(Crosswalk, "Phy1")

@@ -11,7 +11,7 @@ df <- tibble::tibble(
   ID = rep(c("A", "B"), 15)
 )
 
-Order_sums <- LCD_Taxa(df = df, Taxalevel = "Order", Groupers = c("Phylum", "Order"))
+Order_sums <- LCD_Taxa(Data = df, Taxalevel = "Order", Groupers = c("Phylum", "Order"))
 
 test_that("LCD_taxa removes groups with only 1 unique Taxname", {
   expect_false("Cyclopoida"%in%Order_sums$Order)
