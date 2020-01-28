@@ -23,6 +23,7 @@
 #' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
 #' @inheritParams Zoopdownloader
 #' @param Undersampled A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class). See \code{\link{undersampled}} (the default) for an example.
+#' @param CompleteTaxaList Character vector of all taxonomic names in source datasets. Defaults to \code{\link{completeTaxaList}}.
 #' @param ... Arguments passed to \code{\link{Zoopdownloader}}.
 #' @keywords integration synthesis zooplankton.
 #' @import data.table
@@ -66,6 +67,7 @@ Zoopsynther<-function(
   Shiny = F,
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
+  CompleteTaxaList = completeTaxaList,
   ...){
 
 
@@ -89,7 +91,7 @@ Zoopsynther<-function(
     stop("Taxa must be either a character vector of taxa to include or NA to include all taxa.")
   }
 
-  if(!is.null(Taxa) & !purrr::every(Taxa, ~.%in%completeTaxaList)){
+  if(!is.null(Taxa) & !purrr::every(Taxa, ~.%in%CompleteTaxaList)){
     warning("Check spelling of Taxa, some are not present in the completeTaxaList and are likely misspelled.")
   }
 

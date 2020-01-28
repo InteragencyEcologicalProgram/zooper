@@ -14,6 +14,7 @@ This package contains functions, lookup tables, and 2 built-in pre-combined data
   \item \code{\link{Zoopdownloader}}
   \item \code{\link{Taxnamefinder}}
   \item \code{\link{SourceTaxaKeyer}}
+  \item \code{\link{LCD_Taxa}}
 }
 }
 
@@ -23,6 +24,7 @@ This package contains functions, lookup tables, and 2 built-in pre-combined data
   \item \code{\link{crosswalk}}
   \item \code{\link{undersampled}}
   \item \code{\link{stations}}
+  \item \code{\link{completeTaxaList}}
   }
 }
 

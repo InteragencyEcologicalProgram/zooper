@@ -8,6 +8,7 @@
 #'   \item \code{\link{Zoopdownloader}}
 #'   \item \code{\link{Taxnamefinder}}
 #'   \item \code{\link{SourceTaxaKeyer}}
+#'   \item \code{\link{LCD_Taxa}}
 #' }
 #'
 #' @section zooper lookup tables:
@@ -15,6 +16,7 @@
 #'   \item \code{\link{crosswalk}}
 #'   \item \code{\link{undersampled}}
 #'   \item \code{\link{stations}}
+#'   \item \code{\link{completeTaxaList}}
 #'   }
 #'
 #' @section zooper pre-combined (with the \code{\link{Zoopdownloader}} function) zooplankton datasets. These may be out of date:

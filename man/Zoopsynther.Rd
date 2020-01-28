@@ -27,6 +27,7 @@ Zoopsynther(
   Shiny = F,
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
+  CompleteTaxaList = completeTaxaList,
   ...
 )
 }
@@ -74,6 +75,8 @@ Zoopsynther(
 \item{Crosswalk}{Crosswalk table to be used for conversions. Must have columns named for each unique combination of source and size class with an underscore separator, as well as all taxonomic levels Phylum through Species, Taxname (full scientific name) and Lifestage. See \code{\link{crosswalk}} (the default) for an example.}
 
 \item{Undersampled}{A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class). See \code{\link{undersampled}} (the default) for an example.}
+
+\item{CompleteTaxaList}{Character vector of all taxonomic names in source datasets. Defaults to \code{\link{completeTaxaList}}.}
 
 \item{...}{Arguments passed to \code{\link{Zoopdownloader}}.}
 }
