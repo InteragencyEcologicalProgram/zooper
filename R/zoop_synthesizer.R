@@ -95,9 +95,6 @@ Zoopsynther<-function(
     warning("Check spelling of Taxa, some are not present in the completeTaxaList and are likely misspelled.")
   }
 
-  # Load crosswalk key to add taxonomic info
-  crosswalk <- Crosswalk
-
   #Make it possible to re-download data if desired
   if(Reload_data | Redownload_data){
     Zoopdownloader(Redownload_data = Redownload_data, Zoop_path = Zoop_path, Env_path = Env_path, ...)
@@ -126,7 +123,7 @@ Zoopsynther<-function(
 
   if(!is.null(Taxa)){
     Zoop<-Zoop%>%
-      dplyr::filter(.data$Taxname%in%Taxnamefinder(crosswalk, Taxa))
+      dplyr::filter(.data$Taxname%in%Taxnamefinder(Crosswalk, Taxa))
   }
 
   #Filter by data sources and environment
@@ -209,7 +206,7 @@ Zoopsynther<-function(
   Taxcats<-c("Genus", "Family", "Order", "Class", "Phylum")
 
   # Make list of taxa x life stage combinations present in each source dataset
-  SourceTaxaKey<-SourceTaxaKeyer(Zoop, crosswalk)
+  SourceTaxaKey<-SourceTaxaKeyer(Zoop, Crosswalk)
 
   #Create variable for size classes present in dataset
   Size_classes<-Zoop%>%
@@ -241,7 +238,7 @@ Zoopsynther<-function(
   Lumped<-purrr::map(Size_classes, Lumper)
 
   #Create reduced versions of crosswalk
-  Crosswalk_reduced_stage<-crosswalk%>%
+  Crosswalk_reduced_stage<-Crosswalk%>%
     dplyr::select_at(dplyr::vars(.data$Taxname, Taxcats, .data$Lifestage))%>%
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     dplyr::distinct()
@@ -271,7 +268,7 @@ Zoopsynther<-function(
     UniqueTaxa<-Zoop%>%
       dplyr::select(.data$Taxname)%>%
       dplyr::distinct()%>%
-      dplyr::left_join(dplyr::select(crosswalk, .data$Taxname, .data$Level)%>%
+      dplyr::left_join(dplyr::select(Crosswalk, .data$Taxname, .data$Level)%>%
                          dplyr::distinct(),
                        by="Taxname")%>%
       dplyr::filter(.data$Level!="Species")%>%
@@ -384,7 +381,7 @@ Zoopsynther<-function(
       unique()
 
     #Create vector of species level taxa
-    UniqueSpecies<-crosswalk%>%
+    UniqueSpecies<-Crosswalk%>%
       dplyr::select(.data$Taxname, .data$Level)%>%
       dplyr::filter(.data$Level=="Species")%>%
       dplyr::pull(.data$Taxname)%>%
@@ -419,7 +416,7 @@ Zoopsynther<-function(
     }
 
     Lumpedkey<-purrr::map_dfr(Size_classes,
-                              ~LCD_Com(Lumped[[.]], crosswalk, dplyr::filter(Commontaxkey, .data$SizeClass==.)),
+                              ~LCD_Com(Lumped[[.]], Crosswalk, dplyr::filter(Commontaxkey, .data$SizeClass==.)),
                               .id = "SizeClass")
 
     rm(Lumped)
@@ -455,7 +452,7 @@ Zoopsynther<-function(
       dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::left_join(crosswalk%>%
+      dplyr::left_join(Crosswalk%>%
                          dplyr::select(.data$Taxname, .data$Lifestage, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>%
                          dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
                          dplyr::select(-.data$Taxname, -.data$Lifestage)%>%

@@ -58,7 +58,7 @@ Zoopdownloader <- function(
   # Load crosswalk key to convert each dataset's taxonomic codes to a
   # unified set of "Taxname" and "Lifestage" values.
 
-  crosswalk <- Crosswalk%>%
+  Crosswalk <- Crosswalk%>%
     dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2")), ~readr::parse_date(as.character(.), format="%Y"))%>%
     dplyr::mutate_at(dplyr::vars(c("EMPstart", "FMWTstart", "twentymmstart", "twentymmstart2", "EMPend", "FMWTend", "twentymmend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)
     dplyr::mutate(EMPend = dplyr::if_else(is.finite(.data$EMPend), .data$EMPend+lubridate::years(1), .data$EMPend))%>% #Change end dates to beginning of next year (first day it was not counted)
@@ -109,7 +109,7 @@ Zoopdownloader <- function(
       dplyr::select(.data$Source, .data$Year, .data$Date, .data$Datetime, Tide=.data$TideCode,
                     .data$Station, .data$Region, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
                     .data$Temperature, Volume = .data$CBVolume, .data$EMP_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
-      dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
                          dplyr::filter(!is.na(.data$EMP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
@@ -165,7 +165,7 @@ Zoopdownloader <- function(
                                  -.data$TotalMeter, -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, .data$Region, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
-      dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
                          dplyr::distinct(),
@@ -224,7 +224,7 @@ Zoopdownloader <- function(
                           names_to="twentymm_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Date=.data$SampleDate, .data$Station, Temperature = .data$Temp, CondSurf = .data$TopEC, CondBott = .data$BottomEC, .data$Secchi,
                     .data$Turbidity, .data$Tide, .data$BottomDepth, .data$Volume, .data$SampleID, .data$Datetime, .data$twentymm_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
-      dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$twentymm_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$twentymmstart, .data$twentymmend, .data$twentymmstart2)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$twentymm_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
                          dplyr::distinct(),
@@ -285,7 +285,7 @@ Zoopdownloader <- function(
                                  -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Tide, -.data$Microcystis, -.data$SizeClass,
                                  -.data$Temperature, -.data$Volume, -.data$SampleID),
                           names_to="FRP_Meso", values_to="CPUE")%>%
-      dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FRP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain FRP codes
                          dplyr::filter(!is.na(.data$FRP_Meso))%>% #Only retain Taxnames corresponding to FRP codes
                          dplyr::distinct(),
@@ -316,7 +316,7 @@ Zoopdownloader <- function(
   #           YBFMP=paste(.data$TaxonName, .data$LifeStage),
   #           SampleID=paste(.data$SampleDate, .data$StationCode))%>%
   #    select(.data$SampleID, Date = .data$SampleDate, Station = .data$StationCode, Temperature = .data$WaterTemperature, .data$Secchi, .data$Turbidity, CondSurf = .data$Conductivity, .data$SpCnd, .data$pH, .data$DO, .data$YBFMP, .data$Source, .data$Datetime, .data$NetSize, .data$CPUE)%>%
-  #    dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+  #    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
   #                select(.data$YBFMP, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain YBFMP codes
   #                dplyr::filter(!is.na(.data$YBFMP))%>% #Only retain Taxnames corresponding to YBFMP codes
   #                dplyr::distinct(),
@@ -361,7 +361,7 @@ if("EMP_Micro"%in%Data_sets) {
                   SizeClass="Micro")%>% #add variable for data source
     dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
                   .data$Temperature, .data$SizeClass, Volume = .data$PumpVolume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$EMP_Micro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
                        dplyr::filter(!is.na(.data$EMP_Micro))%>% #Only retain Taxnames corresponding to EMP codes
                        dplyr::distinct(),
@@ -421,7 +421,7 @@ if("FRP_Macro"%in%Data_sets) {
                                -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Tide, -.data$Microcystis, -.data$SizeClass,
                                -.data$Temperature, -.data$Volume, -.data$SampleID),
                         names_to="FRP_Macro", values_to="CPUE")%>%
-    dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$FRP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain FRP codes
                        dplyr::filter(!is.na(.data$FRP_Macro))%>% #Only retain Taxnames corresponding to FRP codes
                        dplyr::distinct(),
@@ -465,7 +465,7 @@ if("EMP_Macro"%in%Data_sets) {
                   SizeClass="Macro")%>% #add variable for data source
     dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
                   .data$Temperature, Volume = .data$MysidVolume, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$EMP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
                        dplyr::filter(!is.na(.data$EMP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                        dplyr::distinct(),
@@ -528,7 +528,7 @@ if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
                                -.data$TotalMeter, -.data$Volume, -.data$Tax),
                         names_to="FMWT_Macro", values_to="CPUE")%>% #transform from wide to long
     dplyr::select(Source = .data$Project, .data$Date, .data$Datetime, .data$Station, .data$SMSCG, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, CondSurf = .data$ConductivityTop, CondBott = .data$ConductivityBottom, Temperature = .data$WaterTemperature, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$FMWT_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                        dplyr::filter(!is.na(.data$FMWT_Macro))%>% #Only retain Taxnames corresponding to FMWT codes
                        dplyr::distinct(),
