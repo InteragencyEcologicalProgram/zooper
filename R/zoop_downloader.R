@@ -55,17 +55,6 @@ Zoopdownloader <- function(
     stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
   }
 
-  # Load crosswalk key to convert each dataset's taxonomic codes to a
-  # unified set of "Taxname" and "Lifestage" values.
-
-  Crosswalk <- Crosswalk%>%
-    dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2")), ~readr::parse_date(as.character(.), format="%Y"))%>%
-    dplyr::mutate_at(dplyr::vars(c("EMPstart", "FMWTstart", "twentymmstart", "twentymmstart2", "EMPend", "FMWTend", "twentymmend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)
-    dplyr::mutate(EMPend = dplyr::if_else(is.finite(.data$EMPend), .data$EMPend+lubridate::years(1), .data$EMPend))%>% #Change end dates to beginning of next year (first day it was not counted)
-    dplyr::mutate(FMWTend = dplyr::if_else(is.finite(.data$FMWTend), .data$FMWTend+lubridate::years(1), .data$FMWTend))%>% #Change end dates to beginning of next year (first day it was not counted)
-    dplyr::mutate(twentymmend = dplyr::if_else(is.finite(.data$twentymmend), .data$twentymmend+lubridate::years(1), .data$twentymmend))%>% #Change end dates to beginning of next year (first day it was not counted)
-    dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
-
   # Load station key to later incorporate latitudes and longitudes
 
   stations <- Stations
