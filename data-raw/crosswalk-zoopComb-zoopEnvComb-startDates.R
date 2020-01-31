@@ -1,4 +1,4 @@
-## code to prepare `crosswalk` dataset goes here
+## code to prepare `crosswalk, zoopComb, zoopEnvComb, and startDates` datasets goes here
 require(magrittr)
 
 crosswalk<-readxl::read_excel(file.path("data-raw", "crosswalk.xlsx"), sheet = "Hierarchy2")%>%
@@ -9,4 +9,18 @@ crosswalk<-readxl::read_excel(file.path("data-raw", "crosswalk.xlsx"), sheet = "
   dplyr::mutate(twentymmend = dplyr::if_else(is.finite(.data$twentymmend), .data$twentymmend+lubridate::years(1), .data$twentymmend))%>% #Change end dates to beginning of next year (first day it was not counted)
   dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
 
-usethis::use_data(crosswalk, overwrite = TRUE)
+zoop<-Zoopdownloader(Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE, Redownload_data=TRUE, Crosswalk=crosswalk)
+
+zoopComb <- zoop$Zooplankton
+zoopEnvComb <- zoop$Environment
+
+startDates<-zoopComb%>%
+  dplyr::left_join(zoopEnvComb%>%
+                     dplyr::select(Date, SampleID),
+                   by="SampleID")%>%
+  dplyr::select(Source, SizeClass, Date)%>%
+  dplyr::distinct()%>%
+  dplyr::group_by(Source, SizeClass)%>%
+  dplyr::summarise(Startdate = min(Date))
+
+usethis::use_data(zoopComb, zoopEnvComb, startDates, crosswalk, overwrite = TRUE)
