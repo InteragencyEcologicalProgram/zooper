@@ -12,6 +12,7 @@ Zoopsynther(
   Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
+  Time_consistency = FALSE,
   Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
@@ -45,6 +46,8 @@ Zoopsynther(
 \item{Sources}{Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.}
 
 \item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
+
+\item{Time_consistency}{Would you like to apply a fix to enforce consistent taxonomic resolution over time? Will be available soon, but only for the Community option.}
 
 \item{Taxa}{If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.}
 
