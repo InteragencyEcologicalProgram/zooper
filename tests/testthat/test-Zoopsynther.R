@@ -12,7 +12,16 @@ test_that("Community option produces messages", {
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
-                            Samples = list(unique(SampleID))), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            Samples = list(unique(SampleID)),
+                            CPUE_total=sum(CPUE)), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+  expect_output(comTime <<- Zoopsynther(Data_type="Community", Time_consistency = TRUE)%>%
+                  summarise(N = nrow(.),
+                            N_greater0 = nrow(filter(., CPUE>0)),
+                            Source = list(unique(paste(Source, SizeClass, sep="_"))),
+                            N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
+                            Samples = list(unique(SampleID)),
+                            CPUE_total=sum(CPUE)), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+
 })
 
 test_that("Taxa option produces messages", {
@@ -35,6 +44,12 @@ test_that("Community dataset is created and contains all sources", {
   expect_setequal(unlist(com$Source), Data_sets)
 })
 
+test_that("Community dataset with time consistency is created and contains all sources", {
+  expect_gt(comTime$N, 0)
+  expect_gt(comTime$N_greater0, 0)
+  expect_setequal(unlist(comTime$Source), Data_sets)
+})
+
 test_that("Taxa dataset is created and contains all sources", {
   expect_gt(tax$N, 0)
   expect_gt(tax$N_greater0, 0)
@@ -45,8 +60,16 @@ test_that("Community dataset contains no duplicated rows", {
   expect_equal(com$N, com$N_Taxsamples)
 })
 
+test_that("Community dataset with time consistency contains no duplicated rows", {
+  expect_equal(comTime$N, comTime$N_Taxsamples)
+})
+
 test_that("Taxa dataset contains no duplicated rows", {
   expect_equal(tax$N, tax$N_Taxsamples)
+})
+
+test_that("Community dataset with time consistency contains same total CPUE as normal community dataset", {
+  expect_equal(comTime$CPUE_total, com$CPUE_total)
 })
 
 

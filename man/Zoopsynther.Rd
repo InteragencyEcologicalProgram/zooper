@@ -13,6 +13,7 @@ Zoopsynther(
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
   Time_consistency = FALSE,
+  Intro_lag = 2,
   Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
@@ -29,6 +30,7 @@ Zoopsynther(
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
   CompleteTaxaList = zooper::completeTaxaList,
+  StartDates = zooper::startDates,
   ...
 )
 }
@@ -47,7 +49,9 @@ Zoopsynther(
 
 \item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
 
-\item{Time_consistency}{Would you like to apply a fix to enforce consistent taxonomic resolution over time? Will be available soon, but only for the Community option.}
+\item{Time_consistency}{Would you like to apply a fix to enforce consistent taxonomic resolution over time? Only available for the Community option.}
+
+\item{Intro_lag}{Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.}
 
 \item{Taxa}{If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.}
 
@@ -80,6 +84,8 @@ Zoopsynther(
 \item{Undersampled}{A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class). See \code{\link{undersampled}} (the default) for an example.}
 
 \item{CompleteTaxaList}{Character vector of all taxonomic names in source datasets. Defaults to \code{\link{completeTaxaList}}.}
+
+\item{StartDates}{Tibble with the starting dates of each source dataset. Defaults to \code{\link{startDates}}.}
 
 \item{...}{Arguments passed to \code{\link{Zoopdownloader}}.}
 }

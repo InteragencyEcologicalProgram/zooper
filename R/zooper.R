@@ -9,6 +9,7 @@
 #'   \item \code{\link{Taxnamefinder}}
 #'   \item \code{\link{SourceTaxaKeyer}}
 #'   \item \code{\link{LCD_Taxa}}
+#'   \item \code{\link{Uncountedyears}}
 #' }
 #'
 #' @section zooper lookup tables:
@@ -17,6 +18,7 @@
 #'   \item \code{\link{undersampled}}
 #'   \item \code{\link{stations}}
 #'   \item \code{\link{completeTaxaList}}
+#'   \item \code{\link{startDates}}
 #'   }
 #'
 #' @section zooper pre-combined (with the \code{\link{Zoopdownloader}} function) zooplankton datasets. These may be out of date:

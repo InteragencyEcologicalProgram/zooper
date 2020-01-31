@@ -125,3 +125,13 @@
 #' @seealso \code{\link{Taxnamefinder}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 #'
 "completeTaxaList"
+
+
+#' Start dates
+#'
+#' First dates sampled by each survey and size class
+#'
+#' @format a tibble with 3 columns and 10 rows
+#' @seealso \code{\link{Uncountedyears}}, \code{\link{Zoopsynther}}
+#'
+"startDates"

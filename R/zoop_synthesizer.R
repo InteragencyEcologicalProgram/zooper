@@ -8,7 +8,8 @@
 #' @param Env_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
 #' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
-#' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Will be available soon, but only for the Community option.
+#' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Only available for the Community option.
+#' @param Intro_lag Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.
 #' @param Taxa If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.
 #' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
 #' @param Months Months (as integers) to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the months you wish to be included. Defaults to \code{Months = NA}, which includes all months.
@@ -25,6 +26,7 @@
 #' @inheritParams Zoopdownloader
 #' @param Undersampled A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class). See \code{\link{undersampled}} (the default) for an example.
 #' @param CompleteTaxaList Character vector of all taxonomic names in source datasets. Defaults to \code{\link{completeTaxaList}}.
+#' @param StartDates Tibble with the starting dates of each source dataset. Defaults to \code{\link{startDates}}.
 #' @param ... Arguments passed to \code{\link{Zoopdownloader}}.
 #' @keywords integration synthesis zooplankton.
 #' @import data.table
@@ -54,6 +56,7 @@ Zoopsynther<-function(
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
   Time_consistency = FALSE,
+  Intro_lag = 2,
   Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
@@ -70,6 +73,7 @@ Zoopsynther<-function(
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
   CompleteTaxaList = zooper::completeTaxaList,
+  StartDates = zooper::startDates,
   ...){
 
 
@@ -85,8 +89,12 @@ Zoopsynther<-function(
     stop("Data_type must be either 'Taxa' or 'Community'")
   }
 
-  if(!purrr::every(list(Shiny, Reload_data, Redownload_data, All_env), is.logical)){
-    stop("Shiny, All_env, Reload_data, and Redownload_data must all have logical arguments.")
+  if(!purrr::every(list(Shiny, Reload_data, Redownload_data, All_env, Time_consistency), is.logical)){
+    stop("Shiny, All_env, Reload_data, Redownload_data, and Time_consistency must all have logical arguments.")
+  }
+
+  if(Data_type=="Taxa" & Time_consistency){
+    stop("Time_consistency can only applied if Data_type=='Community'. It is only designed to apply consistent taxonomic resolution across time for community-level analyses.")
   }
 
   if(!is.character(Taxa) & !is.null(Taxa)){
@@ -197,6 +205,10 @@ Zoopsynther<-function(
 
   #Retain remaining samples and filter to preferred size classes
   Zoop<-dplyr::filter(Zoop, .data$SampleID%in%Samples & .data$SizeClass%in%Size_class)
+
+  #Also filter zoopEnv to only contain samples in Zoop
+  ZoopEnv<-dplyr::filter(ZoopEnv, .data$SampleID%in%unique(Zoop$SampleID))
+
 
   if(!nrow(Zoop)>0){
     stop("Your filters were too strong and no data were returned.")
@@ -354,14 +366,32 @@ Zoopsynther<-function(
 
     if(Time_consistency){
       datasets<-Zoop%>%
-        dplyr::mutate(names=paste(Source, SizeClass, sep="_"))%>%
-        dplyr::select(names, Source, SizeClass)%>%
-        dplyr::filter(Source%in%c("EMP", "FMWT", "twentymm"))%>%
+        dplyr::select(.data$Source, .data$SizeClass)%>%
+        dplyr::filter(.data$Source%in%c("EMP", "TNS", "FMWT", "twentymm"))%>%
+        dplyr::mutate(Source=dplyr::recode(.data$Source, TNS="FMWT"))%>% #TNS currently represented as FMWT for start/end years
         dplyr::distinct()
 
-      Years<- Uncountedyears(datasets$Source, datasets$SizeClass, Crosswalk)
+      AllYears<-ZoopEnv%>%
+        dplyr::select(.data$Date)%>%
+        dplyr::distinct()%>%
+        dplyr::mutate(Year=as.integer(lubridate::year(.data$Date)))%>%
+        dplyr::pull(.data$Year)%>%
+        unique()
 
-      map(Size_classes, ~ Lumped[[.]])
+      BadYears<-purrr::map2_dfr(datasets$Source, datasets$SizeClass, ~ Uncountedyears(Source = .x,
+                                                                                      Size_class = .y,
+                                                                                      Crosswalk=Crosswalk,
+                                                                                      Start_year = StartDates%>%
+                                                                                        dplyr::filter(.data$Source==.x & .data$SizeClass==.y)%>%
+                                                                                        dplyr::pull(.data$Startdate)%>%
+                                                                                        lubridate::year(),
+                                                                                      Intro_lag = Intro_lag))%>%
+        dplyr::filter(purrr::map_lgl(.data$Years, function(x) any(x%in%AllYears)))%>%
+        dplyr::mutate(Taxlifesize = paste(.data$Taxlifestage, .data$SizeClass))
+
+      if(nrow(BadYears)>0){
+        Lumped<-purrr::map(Size_classes, ~ unique(c(Lumped[[.]], dplyr::filter(BadYears, .data$SizeClass%in%.)%>%dplyr::pull(.data$Taxlifestage)%>%unique())))
+      }
     }
 
     #Exit this process early if all studies are taxonomically consistent
@@ -391,6 +421,17 @@ Zoopsynther<-function(
     #Create vector of all unique taxlifestages
     UniqueTaxlifesize<-Zoop%>%
       dplyr::mutate(Taxlifesize = paste(.data$Taxlifestage, .data$SizeClass))%>%
+      {if(Time_consistency){ #To correct for time, remove all members of this list that were not counted in all years. This will ensure they do not appear in the Commontaxkey
+        if(nrow(BadYears)>0){
+          dplyr::select(., .data$Taxlifesize)%>%
+            dplyr::filter(!(.data$Taxlifesize%in%unique(BadYears$Taxlifesize)))
+        } else{
+          .
+        }
+      } else{
+        .
+      }
+      }%>%
       dplyr::pull(.data$Taxlifesize)%>%
       unique()
 

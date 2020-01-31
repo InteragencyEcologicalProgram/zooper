@@ -15,6 +15,7 @@ This package contains functions, lookup tables, and 2 built-in pre-combined data
   \item \code{\link{Taxnamefinder}}
   \item \code{\link{SourceTaxaKeyer}}
   \item \code{\link{LCD_Taxa}}
+  \item \code{\link{Uncountedyears}}
 }
 }
 
@@ -25,6 +26,7 @@ This package contains functions, lookup tables, and 2 built-in pre-combined data
   \item \code{\link{undersampled}}
   \item \code{\link{stations}}
   \item \code{\link{completeTaxaList}}
+  \item \code{\link{startDates}}
   }
 }
 

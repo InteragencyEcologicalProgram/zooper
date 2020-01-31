@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Added an option to the `Zoopsynther` function to correct for changes in taxonomic resolution over time by enforcing taxonomic consistency over time.
 * Made all argument names start with a capital letter for consistency.
 * Changed all "Larvae" to "Larva" and "Pupae" to "Pupa" in crosswalk and elsewhere for consistency with other singular life stage names.
 

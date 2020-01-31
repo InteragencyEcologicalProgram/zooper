@@ -4,14 +4,18 @@
 \alias{Uncountedyears}
 \title{Detect dates when a species was not counted}
 \usage{
-Uncountedyears(Source, SizeClass, Crosswalk)
+Uncountedyears(Source, Size_class, Crosswalk, Start_year, Intro_lag)
 }
 \arguments{
 \item{Source}{String with the name of the source dataset (e.g., \code{Source="EMP"}).}
 
-\item{SizeClass}{String with the name of the desired zooplankton size class (e.g., \code{Source="Meso"}).}
+\item{Size_class}{String with the name of the desired zooplankton size class (e.g., \code{Source="Meso"}).}
 
 \item{Crosswalk}{Crosswalk table like \code{\link{crosswalk}} or another table in the same format.}
+
+\item{Start_year}{First year the \code{Source} survey started sampling zooplankton.}
+
+\item{Intro_lag}{Number of years buffer after a species is introduced when we expect surveys to start recording them. Effectively adds \code{Intro_lag} years to the introduction year of each species.}
 }
 \value{
 A tibble with columns for the Taxlifestage, Taxname, Lifestage, Source, Sizeclass, and then a list-column of years in which that particular taxon was not counted in the specified study and size class. Taxa that were counted in all applicable years are not included in the tibble.
@@ -25,6 +29,7 @@ This function is designed to work on one source and size class at a time. To app
 \examples{
 require(purrr)
 require(dplyr)
+require(lubridate)
 
 datasets<-zooper::zoopComb\%>\%
  mutate(names=paste(Source, SizeClass, sep="_"))\%>\%
@@ -32,7 +37,17 @@ datasets<-zooper::zoopComb\%>\%
  filter(Source\%in\%c("EMP", "FMWT", "twentymm"))\%>\%
  distinct()
 
-BadYears<-map2_dfr(datasets$Source, datasets$SizeClass, Uncountedyears, Crosswalk=zooper::crosswalk)
+BadYears<-map2_dfr(datasets$Source, datasets$SizeClass, ~ Uncountedyears(Source = .x,
+Size_class = .y,
+Crosswalk = zooper::crosswalk,
+Start_year = zooper::startDates\%>\%
+ filter(Source==.x & SizeClass==.y)\%>\%
+ pull(Startdate)\%>\%
+ year(),
+ Intro_lag=2))
+}
+\seealso{
+\code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{startDates}}
 }
 \author{
 Sam Bashevkin
