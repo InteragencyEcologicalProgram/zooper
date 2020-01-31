@@ -14,8 +14,8 @@ Zoopdownloader(
   Redownload_data = FALSE,
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
-  Crosswalk = crosswalk,
-  Stations = stations
+  Crosswalk = zooper::crosswalk,
+  Stations = zooper::stations
 )
 }
 \arguments{

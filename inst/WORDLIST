@@ -5,6 +5,7 @@ Calanoida
 calanoids
 Carquinez
 cladocera
+Codecov
 Copepoda
 Copepods
 CPUE
@@ -40,13 +41,17 @@ redownloading
 rotifers
 salinities
 Secchi
+Sizeclass
 SizeClass
 STN
 Taxalevel
 Taxalevels
 Taxatype
-Taxcats
+Taxlifestage
+taxlifestages
+Taxlifestages
 Taxname
+testthat
 tibble
 TNS
 Townet

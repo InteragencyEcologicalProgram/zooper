@@ -14,10 +14,10 @@ Uncountedyears(Source, SizeClass, Crosswalk)
 \item{Crosswalk}{Crosswalk table like \code{\link{crosswalk}} or another table in the same format.}
 }
 \value{
-A tibble with columns for the Taxlifestage, Taxname, Lifestage, Source, Sizeclass, and then a list-column of years in which that particular taxon was not counted in the specifiied study and size class. Taxa that were counted in all applicable years are not included in the tibble.
+A tibble with columns for the Taxlifestage, Taxname, Lifestage, Source, Sizeclass, and then a list-column of years in which that particular taxon was not counted in the specified study and size class. Taxa that were counted in all applicable years are not included in the tibble.
 }
 \description{
-Detects years when a species was present in the system (i.e., post-invasion for invasives) but not counted in each zooplankton survey
+Detects years when a species was present in the system (i.e., post-invasion for invasive species) but not counted in each zooplankton survey
 }
 \details{
 This function is designed to work on one source and size class at a time. To apply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.

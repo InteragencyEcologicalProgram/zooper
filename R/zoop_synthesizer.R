@@ -8,6 +8,7 @@
 #' @param Env_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
 #' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey). Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
+#' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Will be available soon, but only for the Community option.
 #' @param Taxa If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.
 #' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
 #' @param Months Months (as integers) to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the months you wish to be included. Defaults to \code{Months = NA}, which includes all months.
@@ -52,6 +53,7 @@ Zoopsynther<-function(
   Env_path = NULL,
   Sources = c("EMP", "FRP", "FMWT", "TNS", "20mm"),
   Size_class = c("Micro", "Meso", "Macro"),
+  Time_consistency = FALSE,
   Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
@@ -67,7 +69,7 @@ Zoopsynther<-function(
   Shiny = F,
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
-  CompleteTaxaList = completeTaxaList,
+  CompleteTaxaList = zooper::completeTaxaList,
   ...){
 
 
@@ -285,7 +287,7 @@ Zoopsynther<-function(
     #### !!! THIS ENSURES THAT SUMMED GROUPS ARE REPRESENTATIVE ACROSS ALL DATASETS !!! ###
     Zoop<-Zoop%>%
       dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
-      dplyr::group_by(SizeClass)%>%
+      dplyr::group_by(.data$SizeClass)%>%
       dplyr::mutate_at(Taxcats_g, ~dplyr::if_else(.%in%All_groups[[unique(SizeClass)]], ., NA_character_))%>%
       dplyr::ungroup()
 
@@ -349,6 +351,18 @@ Zoopsynther<-function(
   # Apply LCD approach for community data user ------------------------------
 
   if(Data_type=="Community"){
+
+    if(Time_consistency){
+      datasets<-Zoop%>%
+        dplyr::mutate(names=paste(Source, SizeClass, sep="_"))%>%
+        dplyr::select(names, Source, SizeClass)%>%
+        dplyr::filter(Source%in%c("EMP", "FMWT", "twentymm"))%>%
+        dplyr::distinct()
+
+      Years<- Uncountedyears(datasets$Source, datasets$SizeClass, Crosswalk)
+
+      map(Size_classes, ~ Lumped[[.]])
+    }
 
     #Exit this process early if all studies are taxonomically consistent
     if(!purrr::some(purrr::map_dbl(Lumped, length), function(x) x>0)){

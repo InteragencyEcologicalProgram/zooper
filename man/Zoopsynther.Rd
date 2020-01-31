@@ -27,7 +27,7 @@ Zoopsynther(
   Shiny = F,
   Crosswalk = zooper::crosswalk,
   Undersampled = zooper::undersampled,
-  CompleteTaxaList = completeTaxaList,
+  CompleteTaxaList = zooper::completeTaxaList,
   ...
 )
 }

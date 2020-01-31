@@ -218,7 +218,7 @@ Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
 
 #' Detect dates when a species was not counted
 #'
-#' Detects years when a species was present in the system (i.e., post-invasion for invasives) but not counted in each zooplankton survey
+#' Detects years when a species was present in the system (i.e., post-invasion for invasive species) but not counted in each zooplankton survey
 #'
 #' @param Source String with the name of the source dataset (e.g., \code{Source="EMP"}).
 #' @param SizeClass String with the name of the desired zooplankton size class (e.g., \code{Source="Meso"}).
@@ -226,7 +226,7 @@ Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @details This function is designed to work on one source and size class at a time. To apply across multiple IDs, use the \link[purrr]{map} or \link[base]{apply} functions.
-#' @return A tibble with columns for the Taxlifestage, Taxname, Lifestage, Source, Sizeclass, and then a list-column of years in which that particular taxon was not counted in the specifiied study and size class. Taxa that were counted in all applicable years are not included in the tibble.
+#' @return A tibble with columns for the Taxlifestage, Taxname, Lifestage, Source, Sizeclass, and then a list-column of years in which that particular taxon was not counted in the specified study and size class. Taxa that were counted in all applicable years are not included in the tibble.
 #' @author Sam Bashevkin
 #' @examples
 #' require(purrr)
@@ -255,37 +255,37 @@ Uncountedyears<- function(Source, SizeClass, Crosswalk){
   out<-Crosswalk%>%
     dplyr::filter(!is.na(!!dataset))%>%
     dplyr::mutate(!!start := dplyr::if_else(!is.finite(!!start), Sys.Date(), !!start))%>%
-    dplyr::mutate(Intro = dplyr::if_else(!is.finite(Intro) | Intro > !!start, !!start, Intro),
+    dplyr::mutate(Intro = dplyr::if_else(!is.finite(.data$Intro) | .data$Intro > !!start, !!start, .data$Intro),
            !!end := dplyr::if_else(!is.finite(!!end), Sys.Date(), !!end))%>%
-    dplyr::mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     {if(rlang::quo_name(start2)%in%names(Crosswalk)){
-      dplyr::select(., Taxname, Lifestage, Taxlifestage, !!start, !!start2, !!end, Intro, !!dataset)%>%
-        dplyr::group_by(Taxname, Lifestage, !!dataset, Taxlifestage, !!start, !!start2, !!end, Intro, n = dplyr::row_number())%>%
+      dplyr::select(., .data$Taxname, .data$Lifestage, .data$Taxlifestage, !!start, !!start2, !!end, .data$Intro, !!dataset)%>%
+        dplyr::group_by(.data$Taxname, .data$Lifestage, !!dataset, .data$Taxlifestage, !!start, !!start2, !!end, .data$Intro, n = dplyr::row_number())%>%
         dplyr::do(tibble::tibble(Years = list(c(
           seq(lubridate::year(.$Intro), lubridate::year(.[[rlang::quo_name(start)]]), by = 1),
           seq(lubridate::year(.[[rlang::quo_name(end)]]),
               dplyr::if_else(is.finite(.[[rlang::quo_name(start2)]]), lubridate::year(.[[rlang::quo_name(start2)]])-1, lubridate::year(Sys.Date())), by=1)))))
     } else{
-      dplyr::select(., Taxname, Lifestage, Taxlifestage, !!start, !!end, Intro, !!dataset)%>%
-        dplyr::group_by(Taxname, Lifestage, !!dataset, Taxlifestage, !!start, !!end, Intro, n = dplyr::row_number())%>%
+      dplyr::select(., .data$Taxname, .data$Lifestage, .data$Taxlifestage, !!start, !!end, .data$Intro, !!dataset)%>%
+        dplyr::group_by(.data$Taxname, .data$Lifestage, !!dataset, .data$Taxlifestage, !!start, !!end, .data$Intro, n = dplyr::row_number())%>%
         dplyr::do(tibble::tibble(Years = list(c(
           seq(lubridate::year(.$Intro), lubridate::year(.[[rlang::quo_name(start)]]), by = 1),
           seq(lubridate::year(.[[rlang::quo_name(end)]]), lubridate::year(Sys.Date()), by=1)))))
     }}%>%
     dplyr::ungroup()%>%
-    dplyr::select(-n)%>%
-    tidyr::unnest(cols=c(Years))%>%
-    dplyr::mutate(Years=ifelse(Years==lubridate::year(Intro) | Years==lubridate::year(Sys.Date()), NA, Years))%>%
-    dplyr::group_by(Taxlifestage, Taxname, Lifestage, !!dataset)%>%
-    dplyr::summarise(Years=list(unique(Years)))%>%
-    dplyr::group_by(Taxlifestage, Taxname, Lifestage)%>%
-    dplyr::summarise(Years=list(Reduce(intersect, Years)))%>%
+    dplyr::select(-.data$n)%>%
+    tidyr::unnest(cols=c(.data$Years))%>%
+    dplyr::mutate(Years=ifelse(.data$Years==lubridate::year(.data$Intro) | .data$Years==lubridate::year(Sys.Date()), NA, .data$Years))%>%
+    dplyr::group_by(.data$Taxlifestage, .data$Taxname, .data$Lifestage, !!dataset)%>%
+    dplyr::summarise(Years=list(unique(.data$Years)))%>%
+    dplyr::group_by(.data$Taxlifestage, .data$Taxname, .data$Lifestage)%>%
+    dplyr::summarise(Years=list(Reduce(intersect, .data$Years)))%>%
     dplyr::ungroup()%>%
-    tidyr::unnest(cols=c(Years))%>%
-    dplyr::filter(!is.na(Years))%>%
+    tidyr::unnest(cols=c(.data$Years))%>%
+    dplyr::filter(!is.na(.data$Years))%>%
     dplyr::mutate(Source=Source,
            SizeClass=SizeClass)%>%
-    dplyr::group_by(Taxlifestage, Taxname, Lifestage, Source, SizeClass)%>%
-    dplyr::summarise(Years=list(unique(Years)))
+    dplyr::group_by(.data$Taxlifestage, .data$Taxname, .data$Lifestage, .data$Source, .data$SizeClass)%>%
+    dplyr::summarise(Years=list(unique(.data$Years)))
   return(out)
 }
