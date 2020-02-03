@@ -271,22 +271,22 @@ Zoopsynther<-function(
     dplyr::select(.data$SizeClass, .data$Taxlifestage, .data$Undersampled)%>%
     dplyr::distinct()
 
+  #Create vector of all unique taxa in dataset
+  UniqueTaxa<-Zoop%>%
+    dplyr::select(.data$Taxname)%>%
+    dplyr::distinct()%>%
+    dplyr::left_join(dplyr::select(Crosswalk, .data$Taxname, .data$Level)%>%
+                       dplyr::distinct(),
+                     by="Taxname")%>%
+    dplyr::filter(.data$Level!="Species")%>%
+    dplyr::pull(.data$Taxname)
+
   # Apply LCD approach for taxa-level data user ----------------------
 
   if(Data_type=="Taxa"){
 
     #Make vector of _g Taxonomic variables
     Taxcats_g<-paste0(Taxcats, "_g")
-
-    #Create vector of all unique taxa in dataset
-    UniqueTaxa<-Zoop%>%
-      dplyr::select(.data$Taxname)%>%
-      dplyr::distinct()%>%
-      dplyr::left_join(dplyr::select(Crosswalk, .data$Taxname, .data$Level)%>%
-                         dplyr::distinct(),
-                       by="Taxname")%>%
-      dplyr::filter(.data$Level!="Species")%>%
-      dplyr::pull(.data$Taxname)
 
     # Select higher level groupings that correspond to Taxnames, i.e., are a
     # classification category in one of the original datasets, and rename
@@ -364,6 +364,13 @@ Zoopsynther<-function(
 
   if(Data_type=="Community"){
 
+    #Create vector of species level taxa
+    UniqueSpecies<-Crosswalk%>%
+      dplyr::select(.data$Taxname, .data$Level)%>%
+      dplyr::filter(.data$Level=="Species")%>%
+      dplyr::pull(.data$Taxname)%>%
+      unique()
+
     if(Time_consistency){
       datasets<-Zoop%>%
         dplyr::select(.data$Source, .data$SizeClass)%>%
@@ -380,7 +387,8 @@ Zoopsynther<-function(
 
       BadYears<-purrr::map2_dfr(datasets$Source, datasets$SizeClass, ~ Uncountedyears(Source = .x,
                                                                                       Size_class = .y,
-                                                                                      Crosswalk=Crosswalk,
+                                                                                      Crosswalk=Crosswalk%>%
+                                                                                        dplyr::filter(Taxname%in%UniqueTaxa),
                                                                                       Start_year = StartDates%>%
                                                                                         dplyr::filter(.data$Source==.x & .data$SizeClass==.y)%>%
                                                                                         dplyr::pull(.data$Startdate)%>%
@@ -401,6 +409,8 @@ Zoopsynther<-function(
         dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>%
         dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
         dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm"))%>%
+        dplyr::mutate(Taxname=dplyr::if_else(.data$Taxname%in%UniqueSpecies, .data$Taxname, paste0(.data$Taxname, "_UnID")))%>%
+        dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
         dplyr::left_join(ZoopEnv%>%
                            {if(!All_env){
                              dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
@@ -433,13 +443,6 @@ Zoopsynther<-function(
       }
       }%>%
       dplyr::pull(.data$Taxlifesize)%>%
-      unique()
-
-    #Create vector of species level taxa
-    UniqueSpecies<-Crosswalk%>%
-      dplyr::select(.data$Taxname, .data$Level)%>%
-      dplyr::filter(.data$Level=="Species")%>%
-      dplyr::pull(.data$Taxname)%>%
       unique()
 
     #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
