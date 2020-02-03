@@ -116,8 +116,8 @@ Zoopdownloader <- function(
       dplyr::select(-.data$EMP_Meso, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
       dplyr::select(-.data$Datetime)%>% #Add this back in when other EMP data have time
       dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-      dplyr::group_by_at(dplyr::vars(-CPUE))%>%
-      dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
       #so we now add those categories together.
       dplyr::ungroup()%>%
       tibble::as_tibble() #required to finish operation after lazy_dt()
@@ -234,8 +234,8 @@ Zoopdownloader <- function(
       ))%>%
       dplyr::select(-.data$twentymmend, -.data$twentymmstart, -.data$twentymmstart2, -.data$Intro, -.data$twentymm_Meso)%>%
       dtplyr::lazy_dt()%>% #Speed up
-      dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #this just adds up those duplications
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
@@ -282,8 +282,8 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
       dplyr::select(-.data$FRP_Meso)%>% #Remove FRP taxa codes
       dtplyr::lazy_dt()%>% #Speed up code
-      dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #this just adds up those duplications
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       tibble::as_tibble()%>%
       dplyr::ungroup()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
@@ -313,8 +313,8 @@ Zoopdownloader <- function(
   #    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
   #    select(-.data$YBFMP)%>% #Remove YBFMP taxa codes
   #    dtplyr::lazy_dt()%>% #Speed up code
-  #    dplyr::group_by_at(dplyr::vars(-CPUE))%>% #In case some taxa names are repeated as in EMP so
-  #    dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #this just adds up those duplications
+  #    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #In case some taxa names are repeated as in EMP so
+  #    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
   #    dplyr::ungroup()%>%
   #    tibble::as_tibble()%>%
   #    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
@@ -368,8 +368,8 @@ if("EMP_Micro"%in%Data_sets) {
     ))%>%
     dplyr::select(-.data$EMP_Micro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
     dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-    dplyr::group_by_at(dplyr::vars(-CPUE))%>%
-    dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
+    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
     #so we now add those categories together.
     dplyr::ungroup()%>%
     tibble::as_tibble() #required to finish operation after lazy_dt()
@@ -418,8 +418,8 @@ if("FRP_Macro"%in%Data_sets) {
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
     dplyr::select(-.data$FRP_Macro)%>% #Remove FRP taxa codes
     dtplyr::lazy_dt()%>% #Speed up code
-    dplyr::group_by_at(dplyr::vars(-CPUE))%>% #Some taxa names are repeated as in EMP so
-    dplyr::summarise(CPUE=sum(CPUE, na.rm=T))%>% #this just adds up those duplications
+    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
     tibble::as_tibble()%>%
     dplyr::ungroup()%>%
     dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
@@ -472,8 +472,8 @@ if("EMP_Macro"%in%Data_sets) {
     ))%>%
     dplyr::select(-.data$EMP_Macro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
     dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-    dplyr::group_by_at(dplyr::vars(-CPUE))%>%
-    dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
+    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
     #so we now add those categories together.
     dplyr::ungroup()%>%
     tibble::as_tibble() #required to finish operation after lazy_dt()

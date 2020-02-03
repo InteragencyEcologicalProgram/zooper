@@ -506,8 +506,8 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species)%>%
       dtplyr::lazy_dt()%>%
-      dplyr::group_by_at(dplyr::vars(-CPUE))%>%
-      dplyr::summarise(CPUE=sum(CPUE, na.rm=TRUE))%>%
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%
