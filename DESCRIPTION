@@ -17,7 +17,7 @@ LazyData: true
 Imports: 
     lubridate,
     readxl,
-    dtplyr,
+    dtplyr (>= 1.0.1),
     dplyr,
     tidyr,
     readr,
