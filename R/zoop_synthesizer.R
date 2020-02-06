@@ -85,6 +85,11 @@ Zoopsynther<-function(
   }
 
 
+  if (is.null(Data_type)){
+    stop("You must set Data_type to either 'Taxa' or 'Community'")
+  }
+
+
   if (!(Data_type=="Taxa" | Data_type=="Community")){
     stop("Data_type must be either 'Taxa' or 'Community'")
   }
