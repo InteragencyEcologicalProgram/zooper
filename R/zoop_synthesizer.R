@@ -102,6 +102,10 @@ Zoopsynther<-function(
     stop("Time_consistency can only applied if Data_type=='Community'. It is only designed to apply consistent taxonomic resolution across time for community-level analyses.")
   }
 
+  if(!dplyr::near(Intro_lag, round(Intro_lag))){
+    stop("Intro_lag must be a whole number.")
+  }
+
   if(!is.character(Taxa) & !is.null(Taxa)){
     stop("Taxa must be either a character vector of taxa to include or NA to include all taxa.")
   }
