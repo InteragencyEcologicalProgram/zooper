@@ -575,7 +575,7 @@ if(Save_object){
 
 if(Return_object){
   if(Return_object_type=="Combined"){
-    zoop_full <- dplyr::left_join(zoop, dplyr::select(.data$zoopEnv, -.data$Source), by="SampleID")
+    zoop_full <- dplyr::left_join(zoop, dplyr::select(zoopEnv, -.data$Source), by="SampleID")
     return(zoop_full)
   }
   if(Return_object_type=="List"){
