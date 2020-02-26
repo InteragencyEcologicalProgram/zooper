@@ -36,7 +36,7 @@ devtools::install_github("InteragencyEcologicalProgram/zooper")
 
 This package has 2 main functions and a few accessory functions. The `Zoopdownloader` function downloads the zooplankton datasets from their respective online sources and converts them to a consistent format. The `Zoopsynther` function takes zooplankton data from different surveys and integrates the data according to user-specified parameter choices.
 
-This package is also accessible through a [shiny app](https://iepsynthesis.shinyapps.io/zoopsynth) [(code and installation instructions for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth). The app is a GUI (graphical user interface) that allows users without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app also allows users with all experience levels to easily visualize the data.
+This package is also accessible through a [shiny app](https://deltascience.shinyapps.io/zoopsynth) [(code and installation instructions for latest version available here)](https://github.com/InteragencyEcologicalProgram/ZoopSynth). The app is a GUI (graphical user interface) that allows users without R experience to run the zooplankton synthesizer function and download the resulting data. The shiny app also allows users with all experience levels to easily visualize the data.
 
 ## Community or taxon-specific analyses?
 
