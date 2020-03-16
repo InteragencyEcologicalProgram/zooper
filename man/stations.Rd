@@ -4,13 +4,15 @@
 \name{stations}
 \alias{stations}
 \title{Station locations}
-\format{a tibble with 430 rows and 4 columns
+\format{
+a tibble with 430 rows and 4 columns
 \describe{
   \item{Source}{Abbreviated name of the source dataset}
   \item{Station}{Sampling station name}
   \item{Latitude}{Latitude in decimal degrees}
   \item{Longitude}{Longitude in decimal degrees}
-}}
+}
+}
 \usage{
 stations
 }

@@ -4,7 +4,9 @@
 \name{completeTaxaList}
 \alias{completeTaxaList}
 \title{All taxonomic names}
-\format{a character vector of length 391.}
+\format{
+a character vector of length 391.
+}
 \usage{
 completeTaxaList
 }

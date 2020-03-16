@@ -4,7 +4,9 @@
 \name{startDates}
 \alias{startDates}
 \title{Start dates}
-\format{a tibble with 3 columns and 10 rows}
+\format{
+a tibble with 3 columns and 10 rows
+}
 \usage{
 startDates
 }

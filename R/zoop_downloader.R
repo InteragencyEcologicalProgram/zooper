@@ -70,8 +70,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "1972-2018CBMatrix.xlsx")) | Redownload_data) {
-      utils::download.file("ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/1972-2018CBMatrix.xlsx",
-                           file.path(Data_folder, "1972-2018CBMatrix.xlsx"), mode="wb", method="curl")
+      downloader::download("ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/1972-2018CBMatrix.xlsx",
+                           file.path(Data_folder, "1972-2018CBMatrix.xlsx"), mode="wb", method="libcurl")
     }
 
 
@@ -128,8 +128,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls")) | Redownload_data) {
-      utils::download.file("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSZooplanktonDataCPUEOct2017.xls",
-                           file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"), mode="wb", method="curl")
+      downloader::download("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSZooplanktonDataCPUEOct2017.xls",
+                           file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"), mode="wb", method="libcurl")
     }
 
     # Import the FMWT data
@@ -194,8 +194,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx")) | Redownload_data) {
-      utils::download.file("ftp://ftp.dfg.ca.gov/Delta%20Smelt/20mm%20Zooplankton%20Catch%20Matrix_1995-2017.xlsx",
-                           file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"), mode="wb", method="curl")
+      downloader::download("ftp://ftp.dfg.ca.gov/Delta%20Smelt/20mm%20Zooplankton%20Catch%20Matrix_1995-2017.xlsx",
+                           file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"), mode="wb", method="libcurl")
     }
 
     # Import and modify 20mm data
@@ -249,8 +249,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
-      utils::download.file("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
-                           file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+      downloader::download("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
+                           file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb")
     }
 
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
@@ -326,8 +326,8 @@ if("EMP_Micro"%in%Data_sets) {
 
   #download the file
   if (!file.exists(file.path(Data_folder, "1972-2018PumpMatrix.xlsx")) | Redownload_data) {
-    utils::download.file("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018Pump%20Matrix.xlsx",
-                         file.path(Data_folder, "1972-2018PumpMatrix.xlsx"), mode="wb", method="curl")
+    downloader::download("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018Pump%20Matrix.xlsx",
+                         file.path(Data_folder, "1972-2018PumpMatrix.xlsx"), mode="wb", method="libcurl")
   }
 
 
@@ -383,8 +383,8 @@ if("FRP_Macro"%in%Data_sets) {
 
   #download the file
   if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
-    utils::download.file("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
-                         file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+    downloader::download("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+                         file.path(Data_folder, "bugsFRP2018.csv"), mode="wb")
   }
 
   zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
@@ -431,8 +431,8 @@ if("EMP_Macro"%in%Data_sets) {
 
   #download the file
   if (!file.exists(file.path(Data_folder, "1972-2018MysidMatrix.xlsx")) | Redownload_data) {
-    utils::download.file("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018MysidMatrix.xlsx",
-                         file.path(Data_folder, "1972-2018MysidMatrix.xlsx"), mode="wb", method="curl")
+    downloader::download("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018MysidMatrix.xlsx",
+                         file.path(Data_folder, "1972-2018MysidMatrix.xlsx"), mode="wb", method="libcurl")
   }
 
 
@@ -485,14 +485,14 @@ if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
 
   #download the file
   if (!file.exists(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx")) | Redownload_data) {
-    utils::download.file("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSMysidCPUEJuly2019.xlsx",
-                         file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"), mode="wb", method="curl")
+    downloader::download("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSMysidCPUEJuly2019.xlsx",
+                         file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"), mode="wb", method="libcurl")
   }
 
   #download the file
   if (!file.exists(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls")) | Redownload_data) {
-    utils::download.file("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSAmphipodCPUEJuly2019.xls",
-                         file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"), mode="wb", method="curl")
+    downloader::download("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSAmphipodCPUEJuly2019.xls",
+                         file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"), mode="wb", method="libcurl")
   }
 
   zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"),
