@@ -554,8 +554,8 @@ if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
 
 zoop<-dplyr::bind_rows(data.list)%>% # Combine data
   dplyr::filter(!is.na(.data$Taxname))%>% #Remove NA taxnames (should only correspond to previously summed "all" categories from input datasets)
-  dplyr::mutate(SalSurf=((0.36966/(((.data$CondSurf*0.001)^(-1.07))-0.00074))*1.28156),
-                SalBott=((0.36966/(((.data$CondBott*0.001)^(-1.07))-0.00074))*1.28156),#Convert conductivity to salinity using formula in FMWT metadata
+  dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),
+                SalBott=wql::ec2pss(.data$CondBott/1000, t=25),
                 Year=lubridate::year(.data$Date))%>%
   dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
   dplyr::select(-.data$Region, -.data$CondBott, -.data$CondSurf)%>% #Remove some extraneous variables to save memory
