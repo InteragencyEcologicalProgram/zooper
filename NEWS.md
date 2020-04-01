@@ -1,3 +1,7 @@
+# zooper 0.2.1
+
+* Updated to newest FMWT & STN data. (04/01/2020)
+
 # zooper 0.2.0
 
 * Added an option to the `Zoopsynther` function to correct for changes in taxonomic resolution over time by enforcing taxonomic consistency over time.
