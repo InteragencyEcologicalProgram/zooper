@@ -67,7 +67,7 @@
 #'
 #' All source zooplankton datasets combined into one tibble.
 #'
-#' @format a tibble with 2,409,927 rows and 14 columns.
+#' @format a tibble with 2,443,691 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey. }
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
@@ -92,7 +92,7 @@
 #' Accessory environmental data from the combined zooplankton dataset. Not all datasets report all environmental parameters.
 #'
 #' @encoding UTF-8
-#' @format a tibble with 35,585 rows and 19 columns
+#' @format a tibble with 36,319 rows and 19 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey.}
 #'   \item{Year}{Year sample was collected}
