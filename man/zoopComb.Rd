@@ -9,7 +9,7 @@ a tibble with 2,443,691 rows and 14 columns.
 \describe{
   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "TNS"= Townet Survey, and "20mm" =20mm survey. }
   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh}
-  \item{Volume}{Volume (L) of the zooplankton sample}
+  \item{Volume}{Volume (\ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}}) of water sampled}
   \item{Lifestage}{Zooplankton life stage}
   \item{Taxname}{Scientific name}
   \item{Phylum}{Phylum}
@@ -19,8 +19,8 @@ a tibble with 2,443,691 rows and 14 columns.
   \item{Genus}{Genus}
   \item{Species}{Species}
   \item{Taxlifestage}{Combined Taxname and Lifestage}
-  \item{SampleID}{Unique ID of the zooplankton sample. This is the key that links to the \code{zoopEnvComb} dataset}
-  \item{CPUE}{Catch per unit effort (number per cubic meter of water)}
+  \item{SampleID}{Unique ID of the zooplankton sample. This key and \code{SizeClass} link to the \code{zoopEnvComb} dataset}
+  \item{CPUE}{Catch per unit effort (number \ifelse{html}{\out{m<sup>-3</sup>}}{\eqn{m^{-3}}})}
 }
 }
 \usage{
