@@ -1,5 +1,6 @@
 ## code to prepare `crosswalk, zoopComb, zoopEnvComb, and startDates` datasets goes here
 require(magrittr)
+require(zooper)
 
 crosswalk<-readxl::read_excel(file.path("data-raw", "crosswalk.xlsx"), sheet = "Hierarchy2")%>%
   dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2")), ~readr::parse_date(as.character(.), format="%Y"))%>%
