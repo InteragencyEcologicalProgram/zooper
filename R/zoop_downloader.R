@@ -261,8 +261,9 @@ Zoopdownloader <- function(
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr"))%>% #Rename inconsistent station names to match
       dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
-      dplyr::mutate(Source="FRP",
-                    SizeClass="Meso")%>% #add variable for data source
+      dplyr::mutate(Source="FRP", #add variable for data source
+                    SizeClass="Meso",
+                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
                     .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
                     Temperature = .data$Temp, Volume = .data$volume, FRP_Meso = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
@@ -398,7 +399,8 @@ if("FRP_Macro"%in%Data_sets) {
     dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
     dplyr::mutate(Source = "FRP",
                   SizeClass = "Macro",
-                  CPUE = .data$AdjCount/.data$volume)%>% #add variable for data source and calculate CPUE
+                  CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
+                  Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
     dplyr::select(.data$Source, .data$Date, .data$Datetime,
                   .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
                   Temperature = .data$Temp, Volume = .data$volume, FRP_Macro = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
