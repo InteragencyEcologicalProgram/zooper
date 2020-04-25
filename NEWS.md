@@ -1,3 +1,7 @@
+
+* Fixed inconsistent Microcystis values in FRP data.
+* Fixed type in Crosswalk table.
+
 # zooper 0.2.1
 
 * Updated to newest FMWT & STN data. (04/01/2020)
