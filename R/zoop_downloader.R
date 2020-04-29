@@ -71,7 +71,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "1972-2018CBMatrix.xlsx")) | Redownload_data) {
       Downloader("ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/1972-2018CBMatrix.xlsx",
-                           file.path(Data_folder, "1972-2018CBMatrix.xlsx"), mode="wb", method="libcurl")
+                 file.path(Data_folder, "1972-2018CBMatrix.xlsx"), mode="wb", method="libcurl")
     }
 
 
@@ -129,7 +129,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls")) | Redownload_data) {
       Downloader("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNS%20ZooplanktonDataCPUE01Apr2020.xls",
-                           file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"), mode="wb", method="libcurl")
+                 file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"), mode="wb", method="libcurl")
     }
 
     # Import the FMWT data
@@ -175,10 +175,10 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$CPUE))%>%
       dplyr::select(-.data$FMWT_Meso, -.data$FMWTstart, -.data$FMWTend, -.data$Intro)%>% #Remove FMWT taxa codes
       {if(!("FMWT_Meso"%in%Data_sets)){
-  dplyr::filter(., .data$Source != "FMWT")
+        dplyr::filter(., .data$Source != "FMWT")
       } else{
-  .
-}}%>%
+        .
+      }}%>%
       {if(!("TNS_Meso"%in%Data_sets)){
         dplyr::filter(., .data$Source != "TNS")
       } else{
@@ -195,7 +195,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx")) | Redownload_data) {
       Downloader("ftp://ftp.dfg.ca.gov/Delta%20Smelt/20mm%20Zooplankton%20Catch%20Matrix_1995-2017.xlsx",
-                           file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"), mode="wb", method="libcurl")
+                 file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"), mode="wb", method="libcurl")
     }
 
     # Import and modify 20mm data
@@ -250,7 +250,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
       Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
-                           file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+                 file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
@@ -319,270 +319,282 @@ Zoopdownloader <- function(
   #    dplyr::ungroup()%>%
   #    tibble::as_tibble()%>%
   #    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
-#}
+  #}
 
-# EMP Micro ---------------------------------------------------------------
+  # EMP Micro ---------------------------------------------------------------
 
-if("EMP_Micro"%in%Data_sets) {
+  if("EMP_Micro"%in%Data_sets) {
 
-  #download the file
-  if (!file.exists(file.path(Data_folder, "1972-2018PumpMatrix.xlsx")) | Redownload_data) {
-    Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018Pump%20Matrix.xlsx",
-                         file.path(Data_folder, "1972-2018PumpMatrix.xlsx"), mode="wb", method="libcurl")
+    #download the file
+    if (!file.exists(file.path(Data_folder, "1972-2018PumpMatrix.xlsx")) | Redownload_data) {
+      Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018Pump%20Matrix.xlsx",
+                 file.path(Data_folder, "1972-2018PumpMatrix.xlsx"), mode="wb", method="libcurl")
+    }
+
+
+    # Import the EMP data
+
+    zoo_EMP_Micro <- readxl::read_excel(file.path(Data_folder, "1972-2018PumpMatrix.xlsx"),
+                                        sheet = " Pump CPUE Matrix 1972-2018",
+                                        col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 36)))
+
+    # Tranform from "wide" to "long" format, add some variables,
+    # alter data to match other datasets
+
+    data.list[["EMP_Micro"]] <- zoo_EMP_Micro%>%
+      dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStationNo, -.data$Core, -.data$Region)%>%
+      dplyr::rename(OTHCYCADPUMP = .data$OTHCYCAD)%>%
+      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
+                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$PumpVolume),
+                          names_to="EMP_Micro", values_to="CPUE")%>% #transform from wide to long
+      dplyr::mutate(Source="EMP",
+                    SizeClass="Micro")%>% #add variable for data source
+      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
+                    .data$Temperature, .data$SizeClass, Volume = .data$PumpVolume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                         dplyr::select(.data$EMP_Micro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
+                         dplyr::filter(!is.na(.data$EMP_Micro))%>% #Only retain Taxnames corresponding to EMP codes
+                         dplyr::distinct(),
+                       by="EMP_Micro")%>%
+      dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+                    SampleID=paste(.data$Source, .data$Station, .data$Date),
+                    Tide="1")%>% #Create identifier for each sample
+      dplyr::mutate(CPUE=dplyr::case_when(
+        .data$CPUE!=0 ~ .data$CPUE,
+        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
+        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
+      ))%>%
+      dplyr::select(-.data$EMP_Micro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
+      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
+      #so we now add those categories together.
+      dplyr::ungroup()%>%
+      tibble::as_tibble() #required to finish operation after lazy_dt()
+
+  }
+  # FRP Macro ---------------------------------------------------------------
+
+  if("FRP_Macro"%in%Data_sets) {
+
+    # Import the FRP data
+
+    #download the file
+    if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
+      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+                 file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+    }
+
+    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
+                                     col_types = "cctcddddddddccdddcddc", na=c("", "NA"))
+
+    #Already in long format
+    data.list[["FRP_Macro"]] <- zoo_FRP_Macro%>%
+      dplyr::filter(.data$Sampletype=="trawl")%>%
+      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+      dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr", MINSLO1="MinSlo1", ProBR="ProBr", WinBR="WinBr"))%>% #Rename inconsistent station names to match
+      dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
+      dplyr::mutate(Source = "FRP",
+                    SizeClass = "Macro",
+                    CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
+                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
+      dplyr::select(.data$Source, .data$Date, .data$Datetime,
+                    .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
+                    Temperature = .data$Temp, Volume = .data$volume, FRP_Macro = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+      dplyr::ungroup()%>%
+      tidyr::pivot_wider(names_from=.data$FRP_Macro, values_from=.data$CPUE, values_fill=list(CPUE=0))%>%
+      tidyr::pivot_longer(cols=c(-.data$Source, -.data$Date, -.data$Datetime,
+                                 -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Tide, -.data$Microcystis, -.data$SizeClass,
+                                 -.data$Temperature, -.data$Volume, -.data$SampleID),
+                          names_to="FRP_Macro", values_to="CPUE")%>%
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                         dplyr::select(.data$FRP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain FRP codes
+                         dplyr::filter(!is.na(.data$FRP_Macro))%>% #Only retain Taxnames corresponding to FRP codes
+                         dplyr::distinct(),
+                       by = "FRP_Macro")%>%
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
+      dplyr::select(-.data$FRP_Macro)%>% #Remove FRP taxa codes
+      dtplyr::lazy_dt()%>% #Speed up code
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+      tibble::as_tibble()%>%
+      dplyr::ungroup()%>%
+      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
   }
 
+  # EMP Macro ---------------------------------------------------------------
 
-  # Import the EMP data
+  if("EMP_Macro"%in%Data_sets) {
 
-  zoo_EMP_Micro <- readxl::read_excel(file.path(Data_folder, "1972-2018PumpMatrix.xlsx"),
-                                      sheet = " Pump CPUE Matrix 1972-2018",
-                                      col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 36)))
+    #download the file
+    if (!file.exists(file.path(Data_folder, "1972-2018MysidMatrix.xlsx")) | Redownload_data) {
+      Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018MysidMatrix.xlsx",
+                 file.path(Data_folder, "1972-2018MysidMatrix.xlsx"), mode="wb", method="libcurl")
+    }
 
-  # Tranform from "wide" to "long" format, add some variables,
-  # alter data to match other datasets
 
-  data.list[["EMP_Micro"]] <- zoo_EMP_Micro%>%
-    dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStationNo, -.data$Core, -.data$Region)%>%
-    dplyr::rename(OTHCYCADPUMP = .data$OTHCYCAD)%>%
-    tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
-                               -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$PumpVolume),
-                        names_to="EMP_Micro", values_to="CPUE")%>% #transform from wide to long
-    dplyr::mutate(Source="EMP",
-                  SizeClass="Micro")%>% #add variable for data source
-    dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
-                  .data$Temperature, .data$SizeClass, Volume = .data$PumpVolume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select(.data$EMP_Micro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
-                       dplyr::filter(!is.na(.data$EMP_Micro))%>% #Only retain Taxnames corresponding to EMP codes
-                       dplyr::distinct(),
-                     by="EMP_Micro")%>%
-    dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
-    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                  SampleID=paste(.data$Source, .data$Station, .data$Date),
-                  Tide="1")%>% #Create identifier for each sample
-    dplyr::mutate(CPUE=dplyr::case_when(
-      .data$CPUE!=0 ~ .data$CPUE,
-      .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
-      .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
-    ))%>%
-    dplyr::select(-.data$EMP_Micro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
-    dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
-    #so we now add those categories together.
-    dplyr::ungroup()%>%
-    tibble::as_tibble() #required to finish operation after lazy_dt()
+    # Import the EMP data
 
-}
-# FRP Macro ---------------------------------------------------------------
+    zoo_EMP_Macro <- readxl::read_excel(file.path(Data_folder, "1972-2018MysidMatrix.xlsx"),
+                                        sheet = "Mysid CPUE Matrix 1972-2018 ",
+                                        col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 14)))
 
-if("FRP_Macro"%in%Data_sets) {
+    # Tranform from "wide" to "long" format, add some variables,
+    # alter data to match other datasets
 
-  # Import the FRP data
+    data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
+      dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStation, -.data$Core, -.data$Region)%>%
+      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
+                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$MysidVolume),
+                          names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
+      dplyr::mutate(Source="EMP",
+                    SizeClass="Macro")%>% #add variable for data source
+      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
+                    .data$Temperature, Volume = .data$MysidVolume, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                         dplyr::select(.data$EMP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
+                         dplyr::filter(!is.na(.data$EMP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
+                         dplyr::distinct(),
+                       by="EMP_Macro")%>%
+      dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                    Tide="1")%>%
+      dplyr::mutate(CPUE=dplyr::case_when(
+        .data$CPUE!=0 ~ .data$CPUE,
+        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
+        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
+      ))%>%
+      dplyr::select(-.data$EMP_Macro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
+      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
+      #so we now add those categories together.
+      dplyr::ungroup()%>%
+      tibble::as_tibble() #required to finish operation after lazy_dt()
 
-  #download the file
-  if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
-    Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
-                         file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+  }
+  # FMWT Macro --------------------------------------------------------------
+
+  if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
+
+    #download the file
+    if (!file.exists(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx")) | Redownload_data) {
+      Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSMysidCPUEJuly2019.xlsx",
+                 file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"), mode="wb", method="libcurl")
+    }
+
+    #download the file
+    if (!file.exists(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls")) | Redownload_data) {
+      Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSAmphipodCPUEJuly2019.xls",
+                 file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"), mode="wb", method="libcurl")
+    }
+
+    zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"),
+                                               sheet = "FMWT STN Mysid CPUE Matrix")
+
+    zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"),
+                                              sheet = "FMWT STN amphipod CPUE")
+
+    data.list[["FMWT_Macro"]] <- zoo_FMWT_Macro_Mysid%>%
+      dplyr::rename(Date = .data$SampleDate, `PPT Surface` = .data$PPTSurf)%>%
+      dplyr::mutate(Tax="Mysid")%>%
+      dplyr::bind_rows(zoo_FMWT_Macro_Amph%>%
+                         dplyr::mutate(Tax="Amph"))%>%
+      dplyr::mutate(Datetime = lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$Time), ":", lubridate::minute(.data$Time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"),
+                    Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime
+      tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
+                                 -.data$Station, -.data$Index, -.data$SMSCG, -.data$Time, -.data$TowDuration,
+                                 -.data$Region, -.data$FLaSHRegionGroup, -.data$TideCode,
+                                 -.data$DepthBottom, -.data$ConductivityTop, -.data$`PPT Surface`,
+                                 -.data$ConductivityBottom, -.data$`PPT Bottom`,
+                                 -.data$WaterTemperature, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,
+                                 -.data$TotalMeter, -.data$Volume, -.data$Tax),
+                          names_to="FMWT_Macro", values_to="CPUE")%>% #transform from wide to long
+      dplyr::select(Source = .data$Project, .data$Date, .data$Datetime, .data$Station, .data$SMSCG, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, CondSurf = .data$ConductivityTop, CondBott = .data$ConductivityBottom, Temperature = .data$WaterTemperature, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                         dplyr::select(.data$FMWT_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
+                         dplyr::filter(!is.na(.data$FMWT_Macro))%>% #Only retain Taxnames corresponding to FMWT codes
+                         dplyr::distinct(),
+                       by = "FMWT_Macro")%>%
+      dplyr::filter(!is.na(.data$Taxname))%>%
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+                    Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
+                    SampleID=paste(.data$Source, .data$Station, .data$SMSCG, .data$Datetime), #Create identifier for each sample
+                    SizeClass="Macro",
+                    Tide=as.character(.data$Tide))%>%
+      dplyr::mutate(CPUE=dplyr::case_when(
+        .data$CPUE!=0 ~ .data$CPUE,
+        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$FMWTstart ~ NA_real_,
+        .data$CPUE==0 & .data$Date >= .data$FMWTstart & .data$Date < .data$FMWTend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$FMWTend ~ NA_real_
+      ))%>%
+      dplyr::filter(!is.na(.data$CPUE))%>%
+      dplyr::select(-.data$FMWT_Macro, -.data$FMWTstart, -.data$FMWTend, -.data$Intro, -.data$SMSCG)%>% #Remove FMWT taxa codes
+      dplyr::mutate(Source=dplyr::recode(.data$Source, STN="TNS"))%>%
+      {if(!("FMWT_Macro"%in%Data_sets)){
+        dplyr::filter(., .data$Source != "FMWT")
+      } else{
+        .
+      }}%>%
+      {if(!("TNS_Macro"%in%Data_sets)){
+        dplyr::filter(., .data$Source != "TNS")
+      } else{
+        .
+      }}
   }
 
-  zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
-                                   col_types = "cctcddddddddccdddcddc", na=c("", "NA"))
+  # Combine data ----------------------------------------
 
-  #Already in long format
-  data.list[["FRP_Macro"]] <- zoo_FRP_Macro%>%
-    dplyr::filter(.data$Sampletype=="trawl")%>%
-    dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
-    dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr", MINSLO1="MinSlo1", ProBR="ProBr", WinBR="WinBr"))%>% #Rename inconsistent station names to match
-    dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
-    dplyr::mutate(Source = "FRP",
-                  SizeClass = "Macro",
-                  CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
-                  Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
-    dplyr::select(.data$Source, .data$Date, .data$Datetime,
-                  .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
-                  Temperature = .data$Temp, Volume = .data$volume, FRP_Macro = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
-    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
-    dplyr::ungroup()%>%
-    tidyr::pivot_wider(names_from=.data$FRP_Macro, values_from=.data$CPUE, values_fill=list(CPUE=0))%>%
-    tidyr::pivot_longer(cols=c(-.data$Source, -.data$Date, -.data$Datetime,
-                               -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Tide, -.data$Microcystis, -.data$SizeClass,
-                               -.data$Temperature, -.data$Volume, -.data$SampleID),
-                        names_to="FRP_Macro", values_to="CPUE")%>%
-    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select(.data$FRP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain FRP codes
-                       dplyr::filter(!is.na(.data$FRP_Macro))%>% #Only retain Taxnames corresponding to FRP codes
-                       dplyr::distinct(),
-                     by = "FRP_Macro")%>%
-    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
-    dplyr::select(-.data$FRP_Macro)%>% #Remove FRP taxa codes
-    dtplyr::lazy_dt()%>% #Speed up code
-    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
-    tibble::as_tibble()%>%
-    dplyr::ungroup()%>%
-    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
-}
+  zoop<-dplyr::bind_rows(data.list)%>% # Combine data
+    dplyr::filter(!is.na(.data$Taxname))%>% #Remove NA taxnames (should only correspond to previously summed "all" categories from input datasets)
+    dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),
+                  SalBott=wql::ec2pss(.data$CondBott/1000, t=25),
+                  Year=lubridate::year(.data$Date))%>%
+    dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
+    dplyr::select(-.data$Region, -.data$CondBott, -.data$CondSurf)%>% #Remove some extraneous variables to save memory
+    dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood"), #Rename tide codes to be consistent
+                  Date=lubridate::force_tz(.data$Date, "America/Los_Angeles")) #Make all timezones PST/PDT
 
-# EMP Macro ---------------------------------------------------------------
+  stationsEMPEZ<-zooper::stationsEMPEZ
 
-if("EMP_Macro"%in%Data_sets) {
-
-  #download the file
-  if (!file.exists(file.path(Data_folder, "1972-2018MysidMatrix.xlsx")) | Redownload_data) {
-    Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018MysidMatrix.xlsx",
-                         file.path(Data_folder, "1972-2018MysidMatrix.xlsx"), mode="wb", method="libcurl")
+  if(any(unique(stationsEMPEZ$Station)%in%unique(zoop$Station))){
+    zoop<-zoop%>%
+      dplyr::filter(.data$Station%in%unique(stationsEMPEZ$Station))%>%
+      dplyr::select(-.data$Latitude, -.data$Longitude)%>%
+      dplyr::left_join(stationsEMPEZ, by=c("Date", "Station"))%>%
+      dplyr::bind_rows(zoop%>%
+                         dplyr::filter(!.data$Station%in%unique(stationsEMPEZ$Station)))
   }
 
+  zoopEnv<-zoop%>%
+    dplyr::select(-.data$SizeClass, -.data$Volume, -.data$Lifestage, -.data$Taxname, -.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species, -.data$Taxlifestage, -.data$CPUE)%>%
+    dplyr::distinct()
 
-  # Import the EMP data
+  zoop<-zoop%>%
+    dplyr::select(.data$Source, .data$SizeClass, .data$Volume, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxlifestage, .data$SampleID, .data$CPUE)
 
-  zoo_EMP_Macro <- readxl::read_excel(file.path(Data_folder, "1972-2018MysidMatrix.xlsx"),
-                                      sheet = "Mysid CPUE Matrix 1972-2018 ",
-                                      col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 14)))
-
-  # Tranform from "wide" to "long" format, add some variables,
-  # alter data to match other datasets
-
-  data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
-    dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStation, -.data$Core, -.data$Region)%>%
-    tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
-                               -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$MysidVolume),
-                        names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
-    dplyr::mutate(Source="EMP",
-                  SizeClass="Macro")%>% #add variable for data source
-    dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
-                  .data$Temperature, Volume = .data$MysidVolume, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select(.data$EMP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
-                       dplyr::filter(!is.na(.data$EMP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
-                       dplyr::distinct(),
-                     by="EMP_Macro")%>%
-    dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
-    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                  SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                  Tide="1")%>%
-    dplyr::mutate(CPUE=dplyr::case_when(
-      .data$CPUE!=0 ~ .data$CPUE,
-      .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
-      .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
-    ))%>%
-    dplyr::select(-.data$EMP_Macro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
-    dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
-    #so we now add those categories together.
-    dplyr::ungroup()%>%
-    tibble::as_tibble() #required to finish operation after lazy_dt()
-
-}
-# FMWT Macro --------------------------------------------------------------
-
-if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
-
-  #download the file
-  if (!file.exists(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx")) | Redownload_data) {
-    Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSMysidCPUEJuly2019.xlsx",
-                         file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"), mode="wb", method="libcurl")
+  if(Save_object){
+    saveRDS(zoop, file=paste0(Zoop_path, ".Rds"))
+    saveRDS(zoopEnv, file=paste0(Env_path, ".Rds"))
   }
 
-  #download the file
-  if (!file.exists(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls")) | Redownload_data) {
-    Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSAmphipodCPUEJuly2019.xls",
-                         file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"), mode="wb", method="libcurl")
+  if(Return_object){
+    if(Return_object_type=="Combined"){
+      zoop_full <- dplyr::left_join(zoop, dplyr::select(zoopEnv, -.data$Source), by="SampleID")
+      return(zoop_full)
+    }
+    if(Return_object_type=="List"){
+      return(list(Zooplankton = zoop, Environment = zoopEnv))
+    }
   }
-
-  zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"),
-                                             sheet = "FMWT STN Mysid CPUE Matrix")
-
-  zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"),
-                                            sheet = "FMWT STN amphipod CPUE")
-
-  data.list[["FMWT_Macro"]] <- zoo_FMWT_Macro_Mysid%>%
-    dplyr::rename(Date = .data$SampleDate, `PPT Surface` = .data$PPTSurf)%>%
-    dplyr::mutate(Tax="Mysid")%>%
-    dplyr::bind_rows(zoo_FMWT_Macro_Amph%>%
-                       dplyr::mutate(Tax="Amph"))%>%
-    dplyr::mutate(Datetime = lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$Time), ":", lubridate::minute(.data$Time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"),
-                  Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime
-    tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
-                               -.data$Station, -.data$Index, -.data$SMSCG, -.data$Time, -.data$TowDuration,
-                               -.data$Region, -.data$FLaSHRegionGroup, -.data$TideCode,
-                               -.data$DepthBottom, -.data$ConductivityTop, -.data$`PPT Surface`,
-                               -.data$ConductivityBottom, -.data$`PPT Bottom`,
-                               -.data$WaterTemperature, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,
-                               -.data$TotalMeter, -.data$Volume, -.data$Tax),
-                        names_to="FMWT_Macro", values_to="CPUE")%>% #transform from wide to long
-    dplyr::select(Source = .data$Project, .data$Date, .data$Datetime, .data$Station, .data$SMSCG, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, CondSurf = .data$ConductivityTop, CondBott = .data$ConductivityBottom, Temperature = .data$WaterTemperature, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
-    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select(.data$FMWT_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
-                       dplyr::filter(!is.na(.data$FMWT_Macro))%>% #Only retain Taxnames corresponding to FMWT codes
-                       dplyr::distinct(),
-                     by = "FMWT_Macro")%>%
-    dplyr::filter(!is.na(.data$Taxname))%>%
-    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                  Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
-                  SampleID=paste(.data$Source, .data$Station, .data$SMSCG, .data$Datetime), #Create identifier for each sample
-                  SizeClass="Macro",
-                  Tide=as.character(.data$Tide))%>%
-    dplyr::mutate(CPUE=dplyr::case_when(
-      .data$CPUE!=0 ~ .data$CPUE,
-      .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$FMWTstart ~ NA_real_,
-      .data$CPUE==0 & .data$Date >= .data$FMWTstart & .data$Date < .data$FMWTend ~ 0,
-      .data$CPUE==0 & .data$Date >= .data$FMWTend ~ NA_real_
-    ))%>%
-    dplyr::filter(!is.na(.data$CPUE))%>%
-    dplyr::select(-.data$FMWT_Macro, -.data$FMWTstart, -.data$FMWTend, -.data$Intro, -.data$SMSCG)%>% #Remove FMWT taxa codes
-    dplyr::mutate(Source=dplyr::recode(.data$Source, STN="TNS"))%>%
-    {if(!("FMWT_Macro"%in%Data_sets)){
-      dplyr::filter(., .data$Source != "FMWT")
-    } else{
-      .
-    }}%>%
-    {if(!("TNS_Macro"%in%Data_sets)){
-      dplyr::filter(., .data$Source != "TNS")
-    } else{
-      .
-    }}
-}
-
-# Combine data ----------------------------------------
-
-zoop<-dplyr::bind_rows(data.list)%>% # Combine data
-  dplyr::filter(!is.na(.data$Taxname))%>% #Remove NA taxnames (should only correspond to previously summed "all" categories from input datasets)
-  dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),
-                SalBott=wql::ec2pss(.data$CondBott/1000, t=25),
-                Year=lubridate::year(.data$Date))%>%
-  dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
-  dplyr::select(-.data$Region, -.data$CondBott, -.data$CondSurf)%>% #Remove some extraneous variables to save memory
-  dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood"))#Rename tide codes to be consistent
-
-zoopEnv<-zoop%>%
-  dplyr::select(-.data$SizeClass, -.data$Volume, -.data$Lifestage, -.data$Taxname, -.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species, -.data$Taxlifestage, -.data$CPUE)%>%
-  dplyr::distinct()
-
-zoop<-zoop%>%
-  dplyr::select(.data$Source, .data$SizeClass, .data$Volume, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxlifestage, .data$SampleID, .data$CPUE)
-
-if(Save_object){
-  saveRDS(zoop, file=paste0(Zoop_path, ".Rds"))
-  saveRDS(zoopEnv, file=paste0(Env_path, ".Rds"))
-}
-
-if(Return_object){
-  if(Return_object_type=="Combined"){
-    zoop_full <- dplyr::left_join(zoop, dplyr::select(zoopEnv, -.data$Source), by="SampleID")
-    return(zoop_full)
-  }
-  if(Return_object_type=="List"){
-    return(list(Zooplankton = zoop, Environment = zoopEnv))
-  }
-}
 
 }

@@ -1,6 +1,7 @@
 
+* Added EMP EZ station latitude and longitude locations for 2004-present.
 * Fixed inconsistent Microcystis values in FRP data.
-* Fixed type in Crosswalk table.
+* Fixed typo in Crosswalk table.
 
 # zooper 0.2.1
 

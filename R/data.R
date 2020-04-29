@@ -63,6 +63,20 @@
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{zooper}}
 "stations"
 
+#' EMP EZ Station locations
+#'
+#' Latitudes and longitudes for EMP EZ stations on each sampling date from 2004 to present.
+#'
+#' @format a tibble with 412 rows and 4 columns
+#' \describe{
+#'   \item{Date}{Date sample was collected}
+#'   \item{Station}{Sampling station name}
+#'   \item{Latitude}{Latitude in decimal degrees}
+#'   \item{Longitude}{Longitude in decimal degrees}
+#' }
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{zooper}}
+"stationsEMPEZ"
+
 #' Combined zooplankton dataset
 #'
 #' All source zooplankton datasets combined into one tibble.
