@@ -16,9 +16,7 @@ knitr::opts_chunk$set(
 # zooper <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
-
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build status](https://travis-ci.org/InteragencyEcologicalProgram/zooper.svg?branch=master)](https://travis-ci.org/InteragencyEcologicalProgram/zooper)
+[![R build status](https://github.com/InteragencyEcologicalProgram/zooper/workflows/R-CMD-check/badge.svg)](https://github.com/InteragencyEcologicalProgram/zooper/actions)
 [![Codecov test coverage](https://codecov.io/gh/InteragencyEcologicalProgram/zooper/branch/master/graph/badge.svg)](https://codecov.io/gh/InteragencyEcologicalProgram/zooper?branch=master)
 <!-- badges: end -->
 
