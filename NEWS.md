@@ -1,4 +1,6 @@
+# zooper 0.3.0
 
+* Moved to github actions for continuous integration testing. 
 * Added EMP EZ station latitude and longitude locations for 2004-present.
 * Fixed inconsistent Microcystis values in FRP data.
 * Fixed typo in Crosswalk table.
