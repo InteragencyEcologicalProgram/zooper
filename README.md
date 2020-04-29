@@ -7,6 +7,7 @@
 status](https://github.com/InteragencyEcologicalProgram/zooper/workflows/R-CMD-check/badge.svg)](https://github.com/InteragencyEcologicalProgram/zooper/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/InteragencyEcologicalProgram/zooper/branch/master/graph/badge.svg)](https://codecov.io/gh/InteragencyEcologicalProgram/zooper?branch=master)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3776868.svg)](https://doi.org/10.5281/zenodo.3776868)
 <!-- badges: end -->
 
 An R package to download and integrate zooplankton data from the
