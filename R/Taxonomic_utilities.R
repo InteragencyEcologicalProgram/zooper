@@ -17,7 +17,7 @@
 
 Taxnamefinder <- function(Crosswalk, Taxa){
   Taxnames<-Crosswalk%>%
-    dplyr::filter_at(dplyr::vars(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), dplyr::any_vars(.%in%Taxa))%>%
+    dplyr::filter(rowAny(dplyr::across(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa)))%>%
     dplyr::select(.data$Taxname)%>%
     dplyr::distinct()%>%
     dplyr::pull()
@@ -81,11 +81,13 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
 #' @return A tibble with a column for \code{Taxa_level} and another for \code{Lifestage} representing all combinations of these values present in all source datasets.
 #' @author Sam Bashevkin
 #' @examples
+#' \dontrun{
 #' library(rlang)
 #' library(purrr)
 #' SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)
 #' Size_classes <- set_names(c("Micro", "Meso", "Macro"))
 #' Commontax <- map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .))
+#' }
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{SourceTaxaKeyer}}
 #' @export
 #'
@@ -104,8 +106,7 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
     dplyr::select(!!Taxa_level, .data$Lifestage, .data$Source)%>%
     dplyr::distinct()%>%
     dplyr::group_by(!!Taxa_level, .data$Lifestage)%>%
-    dplyr::summarise(n=dplyr::n())%>% #Create index of number of data sources in which each Taxa_level x lifestage combo appears
-    dplyr::ungroup()%>%
+    dplyr::summarise(n=dplyr::n(), .groups="drop")%>% #Create index of number of data sources in which each Taxa_level x lifestage combo appears
     dplyr::filter(.data$n==N)%>% #only retain Taxa_level x lifestage combos that appear in all datasets
     dplyr::select(!!Taxa_level, .data$Lifestage)
 }
@@ -125,12 +126,14 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @return A tibble with sums calculated for each unique value in \code{Data$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.
 #' @author Sam Bashevkin
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' df <- zoopComb%>%
-#'   mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-#'                    list(g=~if_else(.%in%completeTaxaList, ., NA_character_)))%>%
+#'   mutate(dplyr::across(tidyselect::all_of(c("Genus", "Family", "Order", "Class", "Phylum")),
+#'                    list(g=~if_else(.%in%completeTaxaList, ., NA_character_))))%>%
 #'   select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 #' family_sums <- LCD_Taxa(df, "Family_g")
+#' }
 #'
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
@@ -145,12 +148,12 @@ LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g
     dplyr::mutate(N=length(unique(.data$Taxname)))%>%
     dplyr::filter(.data$N>1)%>% # No need to sum up categories if there is only 1 taxa in the category
     dplyr::ungroup()%>%
-    dplyr::select_at(dplyr::vars(-c("N", "Taxname", Groupers)))%>%
-    dtplyr::lazy_dt()%>%
-    dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
+    dplyr::select(-tidyselect::all_of(c("N", "Taxname", Groupers)))%>%
+    #dtplyr::lazy_dt()%>%
+    dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")%>% #Add up all members of each grouping taxon
     dplyr::ungroup()%>%
-    tibble::as_tibble()%>%
+    #tibble::as_tibble()%>%
     dplyr::mutate(Taxname=!!Taxalevel2) #Add summarized group names to Taxname
   return(out)
 }
@@ -176,7 +179,7 @@ LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g
 
 Datareducer<-function(Data, Reduced_vars){
   out<-Data%>%
-    dplyr::select_at(Reduced_vars)%>%
+    dplyr::select(tidyselect::all_of(Reduced_vars))%>%
     dplyr::distinct()%>%
     tidyr::pivot_longer(cols=Reduced_vars, names_to = "Level", values_to = "Taxa")%>%
     tidyr::drop_na()%>%
@@ -216,3 +219,11 @@ Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
   return(out)
 }
 
+#' Find rows with any TRUE values
+#'
+#' Helper function to replace \code{dplyr::any_vars}, copied from the \code{dplyr} "colwise" vignette
+#' @param x Row.
+#'
+#' @keywords internal
+
+rowAny <- function(x) rowSums(x) > 0

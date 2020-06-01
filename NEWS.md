@@ -1,3 +1,5 @@
+* Updated to `dplyr` 1.0, had to remove `dtplyr` usage due to incompatability with `dplyr` 1.0 "_at" functions and new "across" function. Everything will be slower until `dtplyr` is updated.
+
 # zooper 0.3.0
 
 * Moved to github actions for continuous integration testing. 

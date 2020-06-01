@@ -27,12 +27,14 @@ Sums to least common denominator taxa, one taxonomic level at a time
 This function is designed to work on just one Taxalevel at a time. To apply to multiple Taxalevels, use \link[purrr]{map} or \link[base]{apply} functions to apply across taxonomic levels.
 }
 \examples{
+\dontrun{
 library(dplyr)
 df <- zoopComb\%>\%
-  mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"),
-                   list(g=~if_else(.\%in\%completeTaxaList, ., NA_character_)))\%>\%
+  mutate(dplyr::across(tidyselect::all_of(c("Genus", "Family", "Order", "Class", "Phylum")),
+                   list(g=~if_else(.\%in\%completeTaxaList, ., NA_character_))))\%>\%
   select(-Phylum, -Class, -Order, -Family, -Genus, -Species, -Taxlifestage)
 family_sums <- LCD_Taxa(df, "Family_g")
+}
 
 }
 \seealso{

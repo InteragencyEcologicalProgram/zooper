@@ -262,7 +262,7 @@ Zoopsynther<-function(
 
   #Create reduced versions of crosswalk
   Crosswalk_reduced_stage<-Crosswalk%>%
-    dplyr::select_at(dplyr::vars(.data$Taxname, Taxcats, .data$Lifestage))%>%
+    dplyr::select(c(.data$Taxname, tidyselect::all_of(Taxcats), .data$Lifestage))%>%
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     dplyr::distinct()
 
@@ -307,9 +307,9 @@ Zoopsynther<-function(
     #Only retain groups if that taxa is present in all datasets (Must be present in the genus, family, order, class, or phylum column of all datasets)
     #### !!! THIS ENSURES THAT SUMMED GROUPS ARE REPRESENTATIVE ACROSS ALL DATASETS !!! ###
     Zoop<-Zoop%>%
-      dplyr::mutate_at(Taxcats, list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_)))%>%
+      dplyr::mutate(dplyr::across(tidyselect::all_of(Taxcats), list(g=~dplyr::if_else(.%in%UniqueTaxa, ., NA_character_))))%>%
       dplyr::group_by(.data$SizeClass)%>%
-      dplyr::mutate_at(Taxcats_g, ~dplyr::if_else(.%in%All_groups[[unique(SizeClass)]], ., NA_character_))%>%
+      dplyr::mutate(dplyr::across(tidyselect::all_of(Taxcats_g), ~dplyr::if_else(.%in%All_groups[[unique(SizeClass)]], ., NA_character_)))%>%
       dplyr::ungroup()
 
     #Extract vector of grouping taxa (i.e. all unique taxa retained in the above step)
@@ -356,7 +356,7 @@ Zoopsynther<-function(
         dplyr::mutate(., Orphan=FALSE)
       }}%>%
       dplyr::mutate(Taxname = dplyr::if_else(.data$Taxatype=="UnID species", paste0(.data$Taxname, "_UnID"), .data$Taxname))%>%
-      dplyr::select_at(dplyr::vars(-Taxcats_g))%>%
+      dplyr::select(-tidyselect::all_of(Taxcats_g))%>%
       dplyr::left_join(ZoopEnv%>%
                          {if(!All_env){
                            dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
@@ -456,16 +456,16 @@ Zoopsynther<-function(
 
     #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
     Commontaxkey<-Commontaxkey%>%
-      dplyr::mutate_at(Taxcats, list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
-      dplyr::mutate_at(paste0(Taxcats, "_lifestage"), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_))%>%
+      dplyr::mutate(dplyr::across(tidyselect::all_of(Taxcats), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage)))))%>% #Create taxa x life stage variable for each taxonomic level
+      dplyr::mutate(dplyr::across(tidyselect::all_of(paste0(Taxcats, "_lifestage")), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_)))%>%
       dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass)%>% #only retain columns we need
-      dplyr::filter_at(dplyr::vars(-.data$SizeClass), dplyr::any_vars(!is.na(.)))
+      dplyr::filter(rowAny(dplyr::across(-c(.data$SizeClass), ~!is.na(.x))))
 
     #Create taxonomy table for taxa not present in all datasets, then select their new names corresponding to taxa x life stage combinations that are measured in all datasets
     LCD_Com<-function(Lumped, crosswalk, Commontaxkey){
       tibble::tibble(Taxlifestage = Lumped)%>%
         dplyr::left_join(Crosswalk_reduced_stage, by="Taxlifestage")%>%
-        dplyr::mutate_at(c("Genus", "Family", "Order", "Class", "Phylum"), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage))))%>% #Create taxa x life stage variable for each taxonomic level
+        dplyr::mutate(dplyr::across(tidyselect::all_of(c("Genus", "Family", "Order", "Class", "Phylum")), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage)))))%>% #Create taxa x life stage variable for each taxonomic level
         dplyr::mutate(Taxname_new = dplyr::case_when( #This will go level by level, look for matches with the Commontaxkey, and assign the taxonomic level that matches. The "TRUE" at end specifies what to do if no conditions are met.
           !is.na(.data$Genus_lifestage) & .data$Genus_lifestage%in%Commontaxkey$Genus_lifestage ~ paste0(.data$Genus, "_Genus"),
           !is.na(.data$Family_lifestage) & .data$Family_lifestage%in%Commontaxkey$Family_lifestage ~ paste0(.data$Family, "_Family"),
@@ -514,11 +514,11 @@ Zoopsynther<-function(
       dplyr::filter(.data$Taxname!="REMOVE")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species)%>%
-      dtplyr::lazy_dt()%>%
-      dplyr::group_by_at(dplyr::vars(-.data$CPUE))%>%
+      #dtplyr::lazy_dt()%>%
+      dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
-      tibble::as_tibble()%>%
+      #tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%
                          dplyr::select(.data$Taxname, .data$Lifestage, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>%
                          dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%

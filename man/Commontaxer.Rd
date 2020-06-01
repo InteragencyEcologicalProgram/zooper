@@ -23,11 +23,13 @@ Calculates taxa by life stage combos present in all source datasets
 This function is designed to work on just one size class. To apply to multiple size classes, use \link[purrr]{map} or \link[base]{apply} functions to apply across size classes.
 }
 \examples{
+\dontrun{
 library(rlang)
 library(purrr)
 SourceTaxaKey <- SourceTaxaKeyer(zoopComb, crosswalk)
 Size_classes <- set_names(c("Micro", "Meso", "Macro"))
 Commontax <- map(Size_classes, ~ Commontaxer(SourceTaxaKey, "Taxname", .))
+}
 }
 \seealso{
 \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{SourceTaxaKeyer}}

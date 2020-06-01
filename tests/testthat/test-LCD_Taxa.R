@@ -31,5 +31,5 @@ test_that("LCD_taxa produces correct total CPUE", {
 })
 
 test_that("LCD_taxa returns correct output", {
-  expect_equal(Order_sums, tibble::tibble(Order=rep(c("Calanoida", "Cladocera"), each=2), CPUE = rep(c(10,25), each=2), Taxname = Order, ID = rep(c("A", "B"), 2)))
+  expect_equal(Order_sums, tibble::tibble(Order=rep(c("Calanoida", "Cladocera"), each=2), ID = rep(c("A", "B"), 2), CPUE = rep(c(10,25), each=2), Taxname = Order))
 })
