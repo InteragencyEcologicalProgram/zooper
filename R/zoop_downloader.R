@@ -1,7 +1,7 @@
 #' Downloads and combines zooplankton datasets collected by the Interagency Ecological Program from the Sacramento-San Joaquin Delta
 #'
-#' This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "TNS" (Townet Survey), and "20mm" (20mm survey).
-#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "TNS_Meso", "20mm_Meso", "FRP_Meso","EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "TNS_Macro". Defaults to including all datasets.
+#' This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey).
+#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso","EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro". Defaults to including all datasets.
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
@@ -26,9 +26,9 @@
 #' @export
 
 Zoopdownloader <- function(
-  Data_sets = c("EMP_Meso", "FMWT_Meso", "TNS_Meso",
+  Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                 "20mm_Meso", "FRP_Meso","EMP_Micro",
-                "FRP_Macro", "EMP_Macro", "FMWT_Macro", "TNS_Macro"),
+                "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"),
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
@@ -43,10 +43,10 @@ Zoopdownloader <- function(
 
   # Check arguments
 
-  if (!purrr::every(Data_sets, ~.%in%c("EMP_Meso", "FMWT_Meso", "TNS_Meso",
+  if (!purrr::every(Data_sets, ~.%in%c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                        "20mm_Meso", "FRP_Meso","EMP_Micro",
-                                       "FRP_Macro", "EMP_Macro", "FMWT_Macro", "TNS_Macro"))){
-    stop("Data_sets must contain one or more of the following options: 'EMP_Meso', 'FMWT_Meso', 'TNS_Meso', '20mm_Meso', 'FRP_Meso', 'EMP_Micro', 'FRP_Macro', 'EMP_Macro', 'FMWT_Macro', 'TNS_Macro'.")
+                                       "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"))){
+    stop("Data_sets must contain one or more of the following options: 'EMP_Meso', 'FMWT_Meso', 'STN_Meso', '20mm_Meso', 'FRP_Meso', 'EMP_Micro', 'FRP_Macro', 'EMP_Macro', 'FMWT_Macro', 'STN_Macro'.")
   }
 
   if (!Return_object_type%in%c("List", "Combined")){
@@ -66,21 +66,53 @@ Zoopdownloader <- function(
   data.list<-list()
 
 
+# Find URLs ---------------------------------------------------------------
+
+  if(any(c("EMP_Micro", "EMP_Meso", "EMP_Macro")%in%Data_sets)){
+    EMP_URL<-"ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/"
+    EMP_files<-RCurl::getURL(EMP_URL,
+                           ftp.use.epsv = F,
+                           dirlistonly = TRUE)
+    EMP_files<-as.character(stringr::str_split(EMP_files, "\\r\n", simplify=T))
+  }
+
+  if(any(c("FMWT_Meso", "FMWT_Macro", "STN_Meso", "STN_Macro")%in%Data_sets)){
+    FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
+    FMWTSTN_files<-RCurl::getURL(FMWTSTN_URL,
+                           ftp.use.epsv = F,
+                           dirlistonly = TRUE)
+    FMWTSTN_files<-as.character(stringr::str_split(FMWTSTN_files, "\\r\n", simplify=T))
+  }
+
+  if(any(c("20mm_Meso")%in%Data_sets)){
+    twentymm_URL<-"ftp://ftp.dfg.ca.gov/Delta%20Smelt/"
+    twentymm_files<-RCurl::getURL(twentymm_URL,
+                               ftp.use.epsv = F,
+                               dirlistonly = TRUE)
+    twentymm_files<-as.character(stringr::str_split(twentymm_files, "\\r\n", simplify=T))
+  }
+
 
   # EMP Meso ---------------------------------------------------------------------
   if("EMP_Meso"%in%Data_sets) {
 
+    EMP_Meso_file<-EMP_files[grep("CBMatrix", EMP_files)]
+
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "1972-2018CBMatrix.xlsx")) | Redownload_data) {
-      Downloader("ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/1972-2018CBMatrix.xlsx",
-                 file.path(Data_folder, "1972-2018CBMatrix.xlsx"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
+      Downloader(paste0(EMP_URL, EMP_Meso_file),
+                 file.path(Data_folder, EMP_Meso_file), mode="wb", method="libcurl")
     }
 
 
     # Import the EMP data
 
-    zoo_EMP_Meso <- readxl::read_excel(file.path(Data_folder, "1972-2018CBMatrix.xlsx"),
-                                       sheet = "CB CPUE Matrix 1972-2018",
+    EMP_Meso_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Meso_file))
+    EMP_Meso_sheet<-EMP_Meso_sheet[grep("CB CPUE Matrix", EMP_Meso_sheet)]
+
+    zoo_EMP_Meso <- readxl::read_excel(file.path(Data_folder, EMP_Meso_file),
+                                       sheet = EMP_Meso_sheet,
                                        col_types = c("numeric","numeric", "numeric", "numeric", "date",
                                                      "text", "text", "text", "numeric", "text", "text",
                                                      "text", rep("numeric", 62)))
@@ -124,18 +156,20 @@ Zoopdownloader <- function(
       #tibble::as_tibble() #required to finish operation after lazy_dt()
 
   }
-  # FMWT Meso --------------------------------------------------------------------
-  if("FMWT_Meso"%in%Data_sets | "TNS_Meso"%in%Data_sets) {
+  # FMWTSTN Meso --------------------------------------------------------------------
+  if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
+
+    FMWTSTN_Meso_file<-FMWTSTN_files[grep("CBNet", FMWTSTN_files)]
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls")) | Redownload_data) {
-      Downloader("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls",
-                 file.path(Data_folder, "FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
+      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
+                 file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
     }
 
     # Import the FMWT data
 
-    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, "FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls"),
+    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Meso_file),
                                                          sheet = "FMWT&STN ZP CPUE",
                                                          col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                                      "text", "numeric", rep("text", 3), rep("numeric", 3),
@@ -164,8 +198,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Datetime),
-                    SizeClass="Meso",
-                    Source=dplyr::recode(.data$Source, STN="TNS"))%>% #Create identifier for each sample
+                    SizeClass="Meso")%>% #Create identifier for each sample
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
@@ -180,8 +213,8 @@ Zoopdownloader <- function(
       } else{
         .
       }}%>%
-      {if(!("TNS_Meso"%in%Data_sets)){
-        dplyr::filter(., .data$Source != "TNS")
+      {if(!("STN_Meso"%in%Data_sets)){
+        dplyr::filter(., .data$Source != "STN")
       } else{
         .
       }}
@@ -193,15 +226,17 @@ Zoopdownloader <- function(
 
   if("20mm_Meso"%in%Data_sets) {
 
+    twentymm_Meso_file<-twentymm_files[grep("Zooplankton Catch Matrix", twentymm_files)]
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx")) | Redownload_data) {
-      Downloader("ftp://ftp.dfg.ca.gov/Delta%20Smelt/20mm%20Zooplankton%20Catch%20Matrix_1995-2017.xlsx",
-                 file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, twentymm_Meso_file)) | Redownload_data) {
+      Downloader(paste0(twentymm_URL, twentymm_Meso_file),
+                 file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
     }
 
     # Import and modify 20mm data
 
-    zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, "CDFW 20-mm Zooplankton Catch Matrix.xlsx"),
+    zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, twentymm_Meso_file),
                                       sheet="20-mm CB CPUE Data",
                                       col_types = c("date", rep("numeric", 3), "date", rep("numeric", 80)))
 
@@ -322,17 +357,21 @@ Zoopdownloader <- function(
 
   if("EMP_Micro"%in%Data_sets) {
 
+    EMP_Micro_file<-EMP_files[grep("Pump Matrix", EMP_files)]
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "1972-2018PumpMatrix.xlsx")) | Redownload_data) {
-      Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018Pump%20Matrix.xlsx",
-                 file.path(Data_folder, "1972-2018PumpMatrix.xlsx"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
+      Downloader(paste0(EMP_URL, EMP_Micro_file),
+                 file.path(Data_folder, EMP_Micro_file), mode="wb", method="libcurl")
     }
 
+    EMP_Micro_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Micro_file))
+    EMP_Micro_sheet<-EMP_Micro_sheet[grep("Pump CPUE Matrix", EMP_Micro_sheet)]
 
     # Import the EMP data
 
-    zoo_EMP_Micro <- readxl::read_excel(file.path(Data_folder, "1972-2018PumpMatrix.xlsx"),
-                                        sheet = " Pump CPUE Matrix 1972-2018",
+    zoo_EMP_Micro <- readxl::read_excel(file.path(Data_folder, EMP_Micro_file),
+                                        sheet = EMP_Micro_sheet,
                                         col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 36)))
 
     # Tranform from "wide" to "long" format, add some variables,
@@ -425,17 +464,22 @@ Zoopdownloader <- function(
 
   if("EMP_Macro"%in%Data_sets) {
 
+    EMP_Macro_file<-EMP_files[grep("MysidMatrix", EMP_files)]
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "1972-2018MysidMatrix.xlsx")) | Redownload_data) {
-      Downloader("ftp://ftp.dfg.ca.gov/IEP_Zooplankton/1972-2018MysidMatrix.xlsx",
-                 file.path(Data_folder, "1972-2018MysidMatrix.xlsx"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
+      Downloader(paste0(EMP_URL, EMP_Macro_file),
+                 file.path(Data_folder, EMP_Macro_file), mode="wb", method="libcurl")
     }
 
 
     # Import the EMP data
 
-    zoo_EMP_Macro <- readxl::read_excel(file.path(Data_folder, "1972-2018MysidMatrix.xlsx"),
-                                        sheet = "Mysid CPUE Matrix 1972-2018 ",
+    EMP_Macro_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Macro_file))
+    EMP_Macro_sheet<-EMP_Macro_sheet[grep("Mysid CPUE Matrix", EMP_Macro_sheet)]
+
+    zoo_EMP_Macro <- readxl::read_excel(file.path(Data_folder, EMP_Macro_file),
+                                        sheet = EMP_Macro_sheet,
                                         col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 14)))
 
     # Tranform from "wide" to "long" format, add some variables,
@@ -476,24 +520,27 @@ Zoopdownloader <- function(
   }
   # FMWT Macro --------------------------------------------------------------
 
-  if("FMWT_Macro"%in%Data_sets | "TNS_Macro"%in%Data_sets) {
+  if("FMWT_Macro"%in%Data_sets | "STN_Macro"%in%Data_sets) {
+
+    FMWTSTN_Macro_mysfile<-FMWTSTN_files[grep("MysidCPUE", FMWTSTN_files)]
+    FMWTSTN_Macro_amphfile<-FMWTSTN_files[grep("AmphipodCPUE", FMWTSTN_files)]
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx")) | Redownload_data) {
-      Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSMysidCPUEJuly2019.xlsx",
-                 file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_mysfile)) | Redownload_data) {
+      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
+                 file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
     }
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls")) | Redownload_data) {
-      Downloader("ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNSAmphipodCPUEJuly2019.xls",
-                 file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_amphfile)) | Redownload_data) {
+      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
+                 file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
     }
 
-    zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSMysidCPUEJuly2019.xlsx"),
+    zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
                                                sheet = "FMWT STN Mysid CPUE Matrix")
 
-    zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSAmphipodCPUEJuly2019.xls"),
+    zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_amphfile),
                                               sheet = "FMWT STN amphipod CPUE")
 
     data.list[["FMWT_Macro"]] <- zoo_FMWT_Macro_Mysid%>%
@@ -532,14 +579,13 @@ Zoopdownloader <- function(
       ))%>%
       dplyr::filter(!is.na(.data$CPUE))%>%
       dplyr::select(-.data$FMWT_Macro, -.data$FMWTstart, -.data$FMWTend, -.data$Intro, -.data$SMSCG)%>% #Remove FMWT taxa codes
-      dplyr::mutate(Source=dplyr::recode(.data$Source, STN="TNS"))%>%
       {if(!("FMWT_Macro"%in%Data_sets)){
         dplyr::filter(., .data$Source != "FMWT")
       } else{
         .
       }}%>%
-      {if(!("TNS_Macro"%in%Data_sets)){
-        dplyr::filter(., .data$Source != "TNS")
+      {if(!("STN_Macro"%in%Data_sets)){
+        dplyr::filter(., .data$Source != "STN")
       } else{
         .
       }}

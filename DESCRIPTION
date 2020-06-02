@@ -29,6 +29,7 @@ Imports:
     magrittr,
     data.table,
     tidyselect,
+    RCurl,
     stats,
     utils,
     wql

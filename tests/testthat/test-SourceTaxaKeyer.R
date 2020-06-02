@@ -2,7 +2,7 @@ library(zooper)
 library(dplyr)
 
 Data <-tibble::tibble(
-  Source = c("EMP", "EMP", "EMP", "FMWT", "FMWT", "TNS"),
+  Source = c("EMP", "EMP", "EMP", "FMWT", "FMWT", "STN"),
   SizeClass = c("Micro", "Meso", "Macro", "Macro", "Meso", "Macro"))
 
 Crosswalk <- tibble::tibble(
@@ -11,8 +11,8 @@ Crosswalk <- tibble::tibble(
   EMP_Macro = c(rep(NA, 5), "Tax6", "Tax7", "Tax8", NA, NA),
   FMWT_Macro = c(rep(NA, 5), "Tax6", "Tax7", NA, "Tax9", NA),
   FMWT_Meso = c(rep(NA, 3), "Tax4", "Tax5", rep(NA, 4), "Tax10"),
-  TNS_Macro = c(rep(NA, 6), "Tax7", NA, "Tax9", NA),
-  TNS_Meso = c(rep(NA, 2), "Tax3", "Tax4", "Tax5", rep(NA, 5)),
+  STN_Macro = c(rep(NA, 6), "Tax7", NA, "Tax9", NA),
+  STN_Meso = c(rep(NA, 2), "Tax3", "Tax4", "Tax5", rep(NA, 5)),
   Phylum = "Phy1",
   Class = c("Class1", "Class2", "Class3", "Class1", "Class2", "Class3", "Class1", "Class2", "Class3", "Class4"),
   Order = c("Order1", "Order2", "Order3", "Order1", "Order2", "Order3", "Order1", "Order2", "Order3", "Order4"),
@@ -39,6 +39,6 @@ test_that("SourceTaxaKeyer returns correct number of rows for each Source x Size
 test_that("SourceTaxaKeyer returns correct number Taxnames", {
   expect_equal(SourceTaxaKey%>%select(Taxname, Source, SizeClass),
                tibble::tibble(Taxname=paste0("Spec", c(1,2,3,3,4,5,6,7,8,6,7,9,4,5,10,7,9)),
-                              Source=c(rep("EMP", 9), rep("FMWT", 6), rep("TNS",2)),
+                              Source=c(rep("EMP", 9), rep("FMWT", 6), rep("STN",2)),
                               SizeClass=c(rep("Micro", 3), rep("Meso", 3), rep("Macro", 3), rep("Macro", 3), rep("Meso", 3), rep("Macro", 2))))
 })

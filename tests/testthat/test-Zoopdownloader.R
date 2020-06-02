@@ -1,8 +1,8 @@
 library(zooper)
 
-Data_sets <- c("EMP_Meso", "FMWT_Meso", "TNS_Meso",
+Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
               "20mm_Meso", "FRP_Meso","EMP_Micro",
-              "FRP_Macro", "EMP_Macro", "FMWT_Macro", "TNS_Macro")
+              "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro")
 Data_sets2 <- Data_sets
 Data_sets2[which(Data_sets2=="20mm_Meso")] <- "twentymm_Meso"
 

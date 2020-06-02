@@ -10,8 +10,8 @@ a tibble with 317 rows and 28 variables
   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}
   \item{EMP_Macro}{Taxonomic codes used in the Environmental Monitoring Program macrozooplankton (505 \eqn{\mu}m mesh) dataset}
-  \item{TNS_Meso}{Taxonomic codes used in the Townet Survey mesozooplankton (160 \eqn{\mu}m mesh) dataset}
-  \item{TNS_Macro}{Taxonomic codes used in the Townet Survey macrozooplankton (505 \eqn{\mu}m mesh) dataset}
+  \item{STN_Meso}{Taxonomic codes used in the Townet Survey mesozooplankton (160 \eqn{\mu}m mesh) dataset}
+  \item{STN_Macro}{Taxonomic codes used in the Townet Survey macrozooplankton (505 \eqn{\mu}m mesh) dataset}
   \item{FMWT_Meso}{Taxonomic codes used in the Fall Midwater Trawl mesozooplankton (160 \eqn{\mu}m mesh) dataset}
   \item{FMWT_Macro}{Taxonomic codes used in the Fall Midwater Trawl macrozooplankton (505 \eqn{\mu}m mesh) dataset}
   \item{twentymm_Meso}{Taxonomic codes used in the 20mm Survey mesozooplankton (160 \eqn{\mu}m mesh) dataset}

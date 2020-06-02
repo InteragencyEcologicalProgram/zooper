@@ -33,7 +33,7 @@ test_that("Taxa option produces messages", {
                             Samples = list(unique(SampleID[which(Order!="Amphipoda")]))), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
-Data_source <- c("EMP", "FMWT", "TNS", "20mm", "FRP", "EMP", "FRP", "EMP", "FMWT", "TNS")
+Data_source <- c("EMP", "FMWT", "STN", "20mm", "FRP", "EMP", "FRP", "EMP", "FMWT", "STN")
 Size_class <- c(rep("Meso", 5), "Micro", rep("Macro", 4))
 
 Data_sets <- paste(Data_source, Size_class, sep="_")
