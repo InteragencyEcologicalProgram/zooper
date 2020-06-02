@@ -129,14 +129,14 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls")) | Redownload_data) {
-      Downloader("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT%20TNS%20ZooplanktonDataCPUE01Apr2020.xls",
-                 file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"), mode="wb", method="libcurl")
+      Downloader("ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls",
+                 file.path(Data_folder, "FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls"), mode="wb", method="libcurl")
     }
 
     # Import the FMWT data
 
-    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, "FMWT_TNSZooplanktonDataCPUEOct2017.xls"),
-                                                         sheet = "FMWT&TNS ZP CPUE",
+    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, "FMWT_STN_CBNetCPUE_2005to2018_01June2020.xls"),
+                                                         sheet = "FMWT&STN ZP CPUE",
                                                          col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                                      "text", "numeric", rep("text", 3), rep("numeric", 3),
                                                                      "text", rep("numeric", 5), "text", rep("numeric", 55))))
@@ -164,7 +164,8 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Datetime),
-                    SizeClass="Meso")%>% #Create identifier for each sample
+                    SizeClass="Meso",
+                    Source=dplyr::recode(.data$Source, STN="TNS"))%>% #Create identifier for each sample
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,

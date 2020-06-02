@@ -22,6 +22,6 @@ startDates<-zoopComb%>%
   dplyr::select(Source, SizeClass, Date)%>%
   dplyr::distinct()%>%
   dplyr::group_by(Source, SizeClass)%>%
-  dplyr::summarise(Startdate = min(Date))
+  dplyr::summarise(Startdate = min(Date), .groups="drop")
 
 usethis::use_data(zoopComb, zoopEnvComb, startDates, crosswalk, overwrite = TRUE)
