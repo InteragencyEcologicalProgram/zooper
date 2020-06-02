@@ -68,28 +68,26 @@ Zoopdownloader <- function(
 
 # Find URLs ---------------------------------------------------------------
 
+  ftp_file_list<-function(URL){
+    con <- curl::curl(url = URL, "r",
+                     handle = curl::new_handle(dirlistonly = TRUE))
+    on.exit(close(con))
+    return(readLines(con))
+  }
+
   if(any(c("EMP_Micro", "EMP_Meso", "EMP_Macro")%in%Data_sets)){
     EMP_URL<-"ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/"
-    EMP_files<-RCurl::getURL(EMP_URL,
-                           ftp.use.epsv = F,
-                           dirlistonly = TRUE)
-    EMP_files<-as.character(stringr::str_split(EMP_files, "\\r\n", simplify=T))
+    EMP_files<-ftp_file_list(EMP_URL)
   }
 
   if(any(c("FMWT_Meso", "FMWT_Macro", "STN_Meso", "STN_Macro")%in%Data_sets)){
     FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
-    FMWTSTN_files<-RCurl::getURL(FMWTSTN_URL,
-                           ftp.use.epsv = F,
-                           dirlistonly = TRUE)
-    FMWTSTN_files<-as.character(stringr::str_split(FMWTSTN_files, "\\r\n", simplify=T))
+    FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
   }
 
   if(any(c("20mm_Meso")%in%Data_sets)){
     twentymm_URL<-"ftp://ftp.dfg.ca.gov/Delta%20Smelt/"
-    twentymm_files<-RCurl::getURL(twentymm_URL,
-                               ftp.use.epsv = F,
-                               dirlistonly = TRUE)
-    twentymm_files<-as.character(stringr::str_split(twentymm_files, "\\r\n", simplify=T))
+    twentymm_files<-ftp_file_list(twentymm_URL)
   }
 
 
