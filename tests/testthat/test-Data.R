@@ -2,7 +2,8 @@ library(zooper)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "twentymm_Meso", "FRP_Meso","EMP_Micro",
-               "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro")
+               "FRP_Macro", "EMP_Macro", "FMWT_Macro"#, "STN_Macro"
+               )
 
 test_that("zoopComb includes all datasets", {
   expect_setequal(unique(paste(zoopComb$Source, zoopComb$SizeClass, sep="_")), Data_sets)
