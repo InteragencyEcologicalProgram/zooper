@@ -40,6 +40,7 @@ Zoopdownloader <- function(
   Stations = zooper::stations){
 
   # Setup -------------------------------------------------------------------
+  where <- utils::getFromNamespace("where", "tidyselect")
 
   # Check arguments
 
@@ -96,41 +97,50 @@ Zoopdownloader <- function(
   # EMP Meso ---------------------------------------------------------------------
   if("EMP_Meso"%in%Data_sets) {
 
-    EMP_Meso_file<-EMP_files[grep("CBMatrix", EMP_files)]
-
-
     #download the file
-    if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
-      Downloader(paste0(EMP_URL, EMP_Meso_file),
-                 file.path(Data_folder, EMP_Meso_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, "EMP_Meso.csv")) | Redownload_data) {
+      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=c0916b64396edab85b07038e32ff0342",
+                 file.path(Data_folder, "EMP_Meso.csv"), mode="wb", method="curl")
     }
 
 
     # Import the EMP data
 
-    EMP_Meso_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Meso_file))
-    EMP_Meso_sheet<-EMP_Meso_sheet[grep("CB CPUE Matrix", EMP_Meso_sheet)]
-
-    zoo_EMP_Meso <- readxl::read_excel(file.path(Data_folder, EMP_Meso_file),
-                                       sheet = EMP_Meso_sheet,
-                                       col_types = c("numeric","numeric", "numeric", "numeric", "date",
-                                                     "text", "text", "text", "numeric", "text", "text",
-                                                     "text", rep("numeric", 62)))
+    zoo_EMP_Meso<-readr::read_csv(file.path(Data_folder, "EMP_Meso.csv"),
+                                  col_types=readr::cols_only(Date="c", Time="c", Station="c",
+                                                      Chl_a="d", Secchi="d", Temperature="d",
+                                                      ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                      CBVolume="d", ACARTELA="d", ACARTIA="d",
+                                                      DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
+                                                      PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
+                                                      TORTANUS="d", AVERNAL="d", LIMNOSPP="d",
+                                                      LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
+                                                      OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
+                                                      HARPACT="d", CALJUV="d", EURYJUV="d",
+                                                      OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
+                                                      ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
+                                                      TORTJUV="d", CYCJUV="d", LIMNOJUV="d",
+                                                      OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
+                                                      EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
+                                                      SINONAUP="d", BOSMINA="d", DAPHNIA="d",
+                                                      DIAPHAN="d",OTHCLADO="d", ASPLANCH="d",
+                                                      KERATELA="d",OTHROT="d", POLYARTH="d",
+                                                      SYNCH="d",SYNCHBIC="d", TRICHO="d",
+                                                      BARNNAUP="d", CRABZOEA="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
-      dplyr::mutate(Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>% #create a variable for datetime
-      tidyr::pivot_longer(cols=c(-.data$SurveyCode, -.data$Year, -.data$Survey, -.data$SurveyRep,
-                                 -.data$Date, -.data$Station, -.data$EZStation, -.data$DWRStation,
-                                 -.data$Core, -.data$Region, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
-                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$CBVolume, -.data$Datetime, -.data$Time, -.data$TideCode),
+      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"),
+                    Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>% #create a variable for datetime
+      tidyr::pivot_longer(cols=c(-.data$Date, -.data$Station, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
+                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$CBVolume, -.data$Datetime),
                           names_to="EMP_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::mutate(Source="EMP",
                     SizeClass="Meso")%>% #add variable for data source
-      dplyr::select(.data$Source, .data$Year, .data$Date, .data$Datetime, Tide=.data$TideCode,
-                    .data$Station, .data$Region, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
+      dplyr::select(.data$Source, .data$Date, .data$Datetime,
+                    .data$Station, Chl = .data$Chl_a, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
                     .data$Temperature, Volume = .data$CBVolume, .data$EMP_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
@@ -139,7 +149,8 @@ Zoopdownloader <- function(
                        by="EMP_Meso")%>%
       dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                    SampleID=paste(.data$Source, .data$Station, .data$Date))%>% #Create identifier for each sample
+                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                    Tide="1")%>% # All EMP samples collected at high slack
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
@@ -377,35 +388,40 @@ Zoopdownloader <- function(
 
   if("EMP_Micro"%in%Data_sets) {
 
-    EMP_Micro_file<-EMP_files[grep("Pump Matrix", EMP_files)]
-
     #download the file
-    if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
-      Downloader(paste0(EMP_URL, EMP_Micro_file),
-                 file.path(Data_folder, EMP_Micro_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, "EMP_Micro.csv")) | Redownload_data) {
+      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=0f7ffacf41372643865af053c0b07663",
+                 file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method="curl")
     }
 
-    EMP_Micro_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Micro_file))
-    EMP_Micro_sheet<-EMP_Micro_sheet[grep("Pump CPUE Matrix", EMP_Micro_sheet)]
-
     # Import the EMP data
-
-    zoo_EMP_Micro <- readxl::read_excel(file.path(Data_folder, EMP_Micro_file),
-                                        sheet = EMP_Micro_sheet,
-                                        col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 36)))
+    zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, "EMP_Micro.csv"),
+                                  col_types=readr::cols_only(SampleDate="c", Station="c",
+                                                             Chl_a="d", Secchi="d", Temperature="d",
+                                                             ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                             PumpVolume="d", LIMNOSPP="d",
+                                                             LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
+                                                             OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
+                                                             HARPACT="d", CYCJUV="d", LIMNOJUV="d",
+                                                             OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
+                                                             EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
+                                                             SINONAUP="d", ASPLANCH="d",
+                                                             KERATELA="d",OTHROT="d", POLYARTH="d",
+                                                             SYNCH="d",SYNCHBIC="d", TRICHO="d",
+                                                             BARNNAUP="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["EMP_Micro"]] <- zoo_EMP_Micro%>%
-      dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStationNo, -.data$Core, -.data$Region)%>%
+      dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::rename(OTHCYCADPUMP = .data$OTHCYCAD)%>%
-      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
+      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$PumpVolume),
                           names_to="EMP_Micro", values_to="CPUE")%>% #transform from wide to long
       dplyr::mutate(Source="EMP",
                     SizeClass="Micro")%>% #add variable for data source
-      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
+      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$Chl_a, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
                     .data$Temperature, .data$SizeClass, Volume = .data$PumpVolume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Micro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
@@ -414,8 +430,8 @@ Zoopdownloader <- function(
                        by="EMP_Micro")%>%
       dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                    SampleID=paste(.data$Source, .data$Station, .data$Date),
-                    Tide="1")%>% #Create identifier for each sample
+                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                    Tide="1")%>% # All EMP samples collected at high slack
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
@@ -484,35 +500,34 @@ Zoopdownloader <- function(
 
   if("EMP_Macro"%in%Data_sets) {
 
-    EMP_Macro_file<-EMP_files[grep("MysidMatrix", EMP_files)]
-
     #download the file
-    if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
-      Downloader(paste0(EMP_URL, EMP_Macro_file),
-                 file.path(Data_folder, EMP_Macro_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, "EMP_Macro.csv")) | Redownload_data) {
+      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=0080191932b0987243936eff1bb54ee8",
+                 file.path(Data_folder, "EMP_Macro.csv"), mode="wb", method="curl")
     }
-
 
     # Import the EMP data
 
-    EMP_Macro_sheet<-readxl::excel_sheets(file.path(Data_folder, EMP_Macro_file))
-    EMP_Macro_sheet<-EMP_Macro_sheet[grep("Mysid CPUE Matrix", EMP_Macro_sheet)]
-
-    zoo_EMP_Macro <- readxl::read_excel(file.path(Data_folder, EMP_Macro_file),
-                                        sheet = EMP_Macro_sheet,
-                                        col_types = c(rep("numeric", 4), "date", rep("text", 3), "numeric", "text", rep("numeric", 14)))
+    zoo_EMP_Macro<-readr::read_csv(file.path(Data_folder, "EMP_Macro.csv"),
+                                   col_types=readr::cols_only(SampleDate="c", Station="c",
+                                                              Chl_a="d", Secchi="d", Temperature="d",
+                                                              ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                              MysidVolume="d", A_aspera="d",
+                                                              A_hwanhaiensis="d", A_macropsis="d", D_holmquistae="d",
+                                                              H_longirostris="d", N_kadiakensis="d", N_mercedis="d",
+                                                              Unidentified_mysid="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
-      dplyr::select(-.data$Year, -.data$SurveyCode, -.data$Survey, -.data$SurveyRep, -.data$EZStation, -.data$DWRStation, -.data$Core, -.data$Region)%>%
-      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$`Chl-a`, -.data$Temperature,
+      dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+      tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Station, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$MysidVolume),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
       dplyr::mutate(Source="EMP",
                     SizeClass="Macro")%>% #add variable for data source
-      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$`Chl-a`, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
+      dplyr::select(.data$Source, Date = .data$SampleDate, .data$Station, Chl = .data$Chl_a, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
                     .data$Temperature, Volume = .data$MysidVolume, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
@@ -522,7 +537,7 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                    Tide="1")%>%
+                    Tide="1")%>% # All EMP samples collected at high slack
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
@@ -657,7 +672,8 @@ Zoopdownloader <- function(
 
   zoopEnv<-zoopEnv%>%
     dplyr::filter(!.data$SampleID%in%dups$SampleID)%>%
-    dplyr::bind_rows(dups)
+    dplyr::bind_rows(dups)%>%
+    dplyr::mutate(dplyr::across(where(is.numeric), ~ dplyr::if_else(is.nan(.x), NA_real_, .x)))
 
 
   zoop<-zoop%>%
