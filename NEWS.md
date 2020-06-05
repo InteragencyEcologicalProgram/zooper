@@ -1,3 +1,5 @@
+# zooper 1.0.0
+
 * Added SMSCG data
 * Changed EMP source to the Environmental Data Initiative instead of the FTP site.
 * Updated to newest versions of FMWT and STN data
