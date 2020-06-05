@@ -45,6 +45,9 @@ If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble
 \description{
 This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey).
 }
+\details{
+For more information on the source datasets see \code{\link{zooper}}.
+}
 \examples{
 \dontrun{
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,

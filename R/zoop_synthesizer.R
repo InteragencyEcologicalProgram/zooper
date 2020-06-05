@@ -33,7 +33,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @return An integrated zooplankton dataset.
-#' @details This function combines any combination of the zooplankton datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution.
+#' @details This function combines any combination of the zooplankton datasets (included as parameters) and calculates least common denominator taxa to facilitate comparisons across datasets with differing levels of taxonomic resolution. For more information on the source datasets see \code{\link{zooper}}.
 #' @section Data type:
 #' The \code{Data_type} parameter toggles between two approaches to resolving differences in taxonomic resolution. If you want all available data on given Taxa, use \code{Data_type="Taxa"} but if you want to conduct a community analysis, use \code{Data_type = "Community"}.
 #' Briefly, \code{Data_type = "Community"} optimizes for community-level analyses by taking all taxa x life stage combinations that are not measured in every input dataset, and summing them up taxonomic levels to the lowest taxonomic level they belong to that is covered by all datasets. Remaining Taxa x life stage combos that are not covered in all datasets up to the phylum level (usually something like Annelida or Nematoda or Insect Pupae) are removed from the final dataset.

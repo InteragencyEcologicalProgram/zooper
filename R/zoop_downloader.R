@@ -17,6 +17,7 @@
 #' @importFrom rlang .data
 #' @return If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.
 #' @author Sam Bashevkin
+#' @details For more information on the source datasets see \code{\link{zooper}}.
 #' @examples
 #' \dontrun{
 #' Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
@@ -560,6 +561,9 @@ Zoopdownloader <- function(
     FMWTSTN_Macro_mysfile<-FMWTSTN_files[grep("MysidCPUE", FMWTSTN_files)]
     FMWTSTN_Macro_amphfile<-FMWTSTN_files[grep("AmphipodCPUE", FMWTSTN_files)]
 
+    SMSCG_Macro_mysfile<-SMSCG_files[grep("MysidCPUE", SMSCG_files)]
+    SMSCG_Macro_amphfile<-SMSCG_files[grep("AmphipodCPUE", SMSCG_files)]
+
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_mysfile)) | Redownload_data) {
       Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
@@ -572,22 +576,55 @@ Zoopdownloader <- function(
                  file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
     }
 
+    #download the file
+    if (!file.exists(file.path(Data_folder, SMSCG_Macro_mysfile)) | Redownload_data) {
+      Downloader(paste0(SMSCG_URL, SMSCG_Macro_mysfile),
+                 file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
+    }
+
+    #download the file
+    if (!file.exists(file.path(Data_folder, SMSCG_Macro_amphfile)) | Redownload_data) {
+      Downloader(paste0(SMSCG_URL, SMSCG_Macro_amphfile),
+                 file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
+    }
+
     zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
-                                               sheet = "FMWT Mysid CPUE Matrix")
+                                               sheet = "FMWT Mysid CPUE Matrix")%>%
+      dplyr::mutate(Station=as.character(.data$Station),
+                    ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
 
     zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_amphfile),
-                                              sheet = "FMWT amphipod CPUE")
+                                              sheet = "FMWT amphipod CPUE")%>%
+      dplyr::mutate(Station=as.character(.data$Station),
+                    ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
 
-    data.list[["FMWT_Macro"]] <- zoo_FMWT_Macro_Mysid%>%
+    zoo_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_mysfile),
+                                               sheet = "SMSCG Mysid CPUE")%>%
+      dplyr::rename(`Unidentified Mysid`=.data$Unidentified)%>%
+      dplyr::select(-.data$SMSCG)%>%
+      dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
+      dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro_Mysid$ID) & .data$Project%in%c("FMWT", "STN"))
+
+    zoo_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_amphfile),
+                                              sheet = "AmphipodCPUE")%>%
+      dplyr::rename(Date=.data$SampleDate, TideCode=.data$Tide, DepthBottom=.data$`Depth in Meters`,
+                    TempSurf=.data$WaterTemperature, Turbidity=.data$`Turbidity(NTU)`)%>%
+      dplyr::select(-.data$SMSCG, -.data$RegionFLaSH)%>%
+      dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
+                    Time=dplyr::if_else(is.na(.data$Time), NA_character_, paste(lubridate::hour(.data$Time), lubridate::minute(.data$Time), sep=":")))%>%
+      dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro_Amph$ID))
+
+    data.list[["FMWT_Macro"]] <- dplyr::bind_rows(zoo_FMWT_Macro_Mysid, zoo_SMSCG_Macro_Mysid)%>%
       dplyr::mutate(Tax="Mysid")%>%
-      dplyr::bind_rows(zoo_FMWT_Macro_Amph%>%
+      dplyr::bind_rows(dplyr::bind_rows(zoo_FMWT_Macro_Amph, zoo_SMSCG_Macro_Amph)%>%
                          dplyr::mutate(Tax="Amph"))%>%
+      dplyr::select(-.data$ID)%>%
       dplyr::mutate(Time2=dplyr::if_else(stringr::str_detect(.data$Time, ":"), .data$Time, NA_character_),
                     Time=dplyr::if_else(!is.na(.data$Time2), NA_character_, .data$Time),
                     Time2=readr::parse_double(stringr::str_split(.data$Time2, ":", simplify=T)[,2])/60 + readr::parse_double(stringr::str_split(.data$Time2, ":", simplify=T)[,1]),
                     Time=dplyr::if_else(!is.na(.data$Time2), .data$Time2, readr::parse_double(.data$Time)*24),
-                    Time=paste(floor(.data$Time), round((.data$Time-floor(.data$Time))*60), sep=":"),
-                    Datetime = lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"),
+                    Time=dplyr::if_else(is.na(.data$Time), NA_character_, paste(floor(.data$Time), round((.data$Time-floor(.data$Time))*60), sep=":")),
+                    Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"),
                     Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Month, -.data$Date, -.data$Datetime,
                                  -.data$Station, -.data$Index, -.data$Time, -.data$TowDuration,

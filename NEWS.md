@@ -1,3 +1,4 @@
+* Added SMSCG data
 * Changed EMP source to the Environmental Data Initiative instead of the FTP site.
 * Updated to newest versions of FMWT and STN data
 * Added more flexibility to `zoop_downloader` so the package will not break when dates are changed in the source dataset filenames.
