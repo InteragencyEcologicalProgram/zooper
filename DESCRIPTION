@@ -1,9 +1,9 @@
 Package: zooper
-Title: Integrate Zooplankton Datasets from the Sacramento San Joaquin Delta
+Title: Download and Integrate Zooplankton Datasets from the Upper San Francisco Estuary
 Version: 1.0.0
 Date: 2019-12-13
 Authors@R: 
-    person(given = "Sam",
+    person(given = c("Samuel", "M"),
            family = "Bashevkin",
            role = c("aut", "cre"),
            email = "sam.bashevkin@deltacouncil.ca.gov",

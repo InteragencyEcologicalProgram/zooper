@@ -1,0 +1,47 @@
+citHeader("To cite zooper in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "zooper: an R package to download and integrate zooplankton datasets from the Upper San Francisco Estuary",
+  author   = person(given = c("Samuel", "M"),
+             family = "Bashevkin",
+             role = c("aut", "cre"),
+             email = "sam.bashevkin@deltacouncil.ca.gov",
+             comment = c(ORCID = "0000-0001-7406-7089")),
+  journal  = "Zenodo",
+  year     = "2020",
+  url      = "https://zenodo.org/record/3885646",
+  doi      = "10.5281/zenodo.3885646",
+    textVersion = "Bashevkin, S. M. 2020. zooper: an R package to download and integrate zooplankton datasets from the Upper San Francisco Estuary. Zenodo. doi:10.5281/zenodo.3885646"
+)
+
+citEntry(
+  entry    = "Article",
+  title    = "Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2018, an integration of 5 long-term monitoring programs",
+  author   = c(person(given = c("Samuel", "M"),
+                      family = "Bashevkin",
+                      role = c("aut", "cre"),
+                      email = "sam.bashevkin@deltacouncil.ca.gov",
+                      comment = c(ORCID = "0000-0001-7406-7089")),
+               person(given = "Rosemary",
+                      family = "Hartman",
+                      comment = c(ORCID = "0000-0002-0642-183X")),
+               person(given = "Madison",
+                      family = "Thomas"),
+               person(given = "Arthur",
+                      family = "Barros"),
+               person(given = c("Christina", "E"),
+                      family = "Burdi"),
+               person(given = "April",
+                      family = "Hennessy"),
+               person(given = "Trishelle",
+                      family = "Tempel"),
+               person(given = "Karen",
+                      family = "Kayfetz")
+               ),
+  journal  = "Environmental Data Initiative",
+  year     = "2020",
+  url      = "https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539",
+  doi      = "10.6073/pasta/0c400c670830e4c8f7fd45c187efdcb9",
+    textVersion = "Bashevkin, S. M., R. Hartman, M. Thomas, A. Barros, C. Burdi, A. Hennessy, T. Tempel, and K. Kayfetz. 2020. Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2018, an integration of 5 long-term monitoring programs. Environmental Data Initiative. doi:10.6073/PASTA/0C400C670830E4C8F7FD45C187EFDCB9"
+)

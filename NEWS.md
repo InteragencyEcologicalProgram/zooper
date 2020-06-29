@@ -1,3 +1,5 @@
+* Updated citation info
+
 # zooper 1.0.0
 
 * Added SMSCG data
