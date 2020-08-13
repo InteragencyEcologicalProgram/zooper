@@ -1,4 +1,6 @@
 * Updated citation info
+* Added 2018 20mm data
+* Added tests to ensure column names have not changed.
 
 # zooper 1.0.0
 
