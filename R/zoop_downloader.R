@@ -192,13 +192,14 @@ Zoopdownloader <- function(
                                                          sheet = "FMWT&STN ZP CPUE",
                                                          col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                                      "text", "numeric", rep("text", 3), rep("numeric", 3),
-                                                                     "text", rep("numeric", 5), "text", rep("numeric", 55)))%>%
+                                                                     "text", rep("numeric", 6), "text", rep("numeric", 55)))%>%
                        dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station)))
 
     zoo_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, SMSCG_Meso_file),
                                        sheet="SMSCGZoopCPUE",
-                                       col_types=c("numeric", "text", "numeric", "numeric", "date", rep("text", 3), "numeric", rep("text", 3),
-                                                   rep("numeric", 3), "text", rep("numeric", 5), "text", rep("numeric", 55)))%>%
+                                       col_types=c("text", rep("numeric", 3), "date", "text", "text",
+                                                   "text", "numeric", rep("text", 3), rep("numeric", 3),
+                                                   "text", rep("numeric", 6), "text", rep("numeric", 55)))%>%
       dplyr::mutate(Project=dplyr::recode(.data$Project, TNS="STN"),
                     ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
       dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Meso$ID) & .data$Project!="EMP")%>%

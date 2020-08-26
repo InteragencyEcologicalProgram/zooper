@@ -161,7 +161,7 @@ test_that("EMP Meso column names have not changed", {
 test_that("FMWTSTN Meso column names have not changed", {
   expect_setequal(names_FMWTSTN_Meso, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time', 'TowDuration', 'Region',
                                         'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'SurfSalinityGroup',
-                                        'CondBott', 'PPTBott', 'TempSurf', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
+                                        'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
                                         'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR', 'SINOCAL',
                                         'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM',
                                         'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'EURYJUV', 'OTHCALJUV', 'PDIAPJUV', 'SINOCALJUV',
@@ -174,7 +174,7 @@ test_that("FMWTSTN Meso column names have not changed", {
 test_that("SMSCG Meso column names have not changed", {
   expect_setequal(names_SMSCG_Meso, c('Year', 'Project', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time', 'TowDuration',
                                       'Region', 'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'SurfSalinityGroup',
-                                      'CondBott', 'PPTBott', 'TempSurf', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
+                                      'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
                                       'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR', 'SINOCAL',
                                       'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM',
                                       'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'EURYJUV', 'OTHCALJUV', 'PDIAPJUV', 'SINOCALJUV',
