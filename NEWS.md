@@ -1,6 +1,7 @@
 * Updated citation info
 * Added 2018 20mm data
 * Added tests to ensure column names have not changed.
+* Added 2019 EMP, FMWT, and STN data
 
 # zooper 1.0.0
 
