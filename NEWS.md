@@ -1,3 +1,5 @@
+* Removed EMP Meso Sample corresponding to a mostly empty line at the end of the csv.
+
 # zooper 1.1.0
 
 * Updated citation info
@@ -12,7 +14,7 @@
 * Updated to newest versions of FMWT and STN data
 * Added more flexibility to `zoop_downloader` so the package will not break when dates are changed in the source dataset filenames.
 * Changed Summer Townet acronym from TNS to STN.
-* Updated to `dplyr` 1.0, had to remove `dtplyr` usage due to incompatability with `dplyr` 1.0 "_at" functions and new "across" function. Everything will be slower until `dtplyr` is updated.
+* Updated to `dplyr` 1.0, had to remove `dtplyr` usage due to incompatibility with `dplyr` 1.0 "_at" functions and new "across" function. Everything will be slower until `dtplyr` is updated.
 
 # zooper 0.3.0
 

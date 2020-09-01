@@ -141,6 +141,7 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
+      dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$SampleDate, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>% #create a variable for datetime
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
