@@ -8,9 +8,12 @@ ftp_file_list<-function(URL){
   return(readLines(con))
 }
 
-EMP_URL<-"ftp://ftp.wildlife.ca.gov/IEP_Zooplankton/"
-EMP_files<-ftp_file_list(EMP_URL)
-
+revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
+EMP_latest_revision <- tail(readLines(revision_url, warn = FALSE), 1)
+pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
+EMP_entities <- readLines(pkg_url, warn = FALSE)
+name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
+names(EMP_entities) <- purrr:::map_chr(name_urls, readLines, warn = FALSE)
 
 FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
 FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
@@ -26,10 +29,12 @@ Data_folder<-tempdir()
 
 # EMP Meso ----------------------------------------------------------------
 
-Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=c0916b64396edab85b07038e32ff0342",
-           file.path(Data_folder, "EMP_Meso.csv"), mode="wb", method="curl")
+EMP_Meso_file<-"cb_matrix.csv"
+EMP_Meso_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Meso_file])
+Downloader(EMP_Meso_URL, file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
 
-names_EMP_Meso<-readr::read_csv(file.path(Data_folder, "EMP_Meso.csv"), col_types = cols(.default=col_character()))%>%
+
+names_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file), col_types = cols(.default=col_character()))%>%
   names()
 
 
@@ -80,10 +85,12 @@ names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
 
 # EMP Micro ---------------------------------------------------------------
 
-Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=0f7ffacf41372643865af053c0b07663",
-           file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method="curl")
+EMP_Micro_file<-"pump_matrix.csv"
+EMP_Micro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Micro_file])
+Downloader(EMP_Micro_URL,
+             file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
 
-names_EMP_Micro<-readr::read_csv(file.path(Data_folder, "EMP_Micro.csv"),
+names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                  col_types=cols(.default=col_character()))%>%
   names()
 
@@ -100,10 +107,14 @@ names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
 
 # EMP Macro ---------------------------------------------------------------
 
-Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.1&entityid=0080191932b0987243936eff1bb54ee8",
-           file.path(Data_folder, "EMP_Macro.csv"), mode="wb", method="curl")
+EMP_Macro_file<-"mysid_matrix.csv"
+EMP_Macro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Macro_file])
 
-names_EMP_Macro<-readr::read_csv(file.path(Data_folder, "EMP_Macro.csv"),
+Downloader(EMP_Macro_URL,
+             file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
+
+
+names_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
                                  col_types=cols(.default=col_character()))%>%
   names()
 
@@ -146,9 +157,9 @@ names_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_
 
 
 test_that("EMP Meso column names have not changed", {
-  expect_setequal(names_EMP_Meso, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'Date', 'Station', 'EZStation', 'DWRStation',
+  expect_setequal(names_EMP_Meso, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation', 'DWRStationNo',
                                     'Core', 'Time', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow', 'ECBottomPreTow',
-                                    'CBVolume', 'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR',
+                                    'Volume', 'TowDuration', 'Depth', 'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR',
                                     'SINOCAL', 'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV',
                                     'OITHSIM', 'OITHSPP', 'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'CALJUV', 'EURYJUV', 'OTHCALJUV',
                                     'PDIAPJUV', 'SINOCALJUV', 'ASINEJUV', 'ACARJUV', 'DIAPTJUV', 'TORTJUV', 'ALLCALJUV', 'CYCJUV',
@@ -212,7 +223,7 @@ test_that("FRP Meso column names have not changed", {
 })
 
 test_that("EMP Micro column names have not changed", {
-  expect_setequal(names_EMP_Micro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'Station', 'EZStation',
+  expect_setequal(names_EMP_Micro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation',
                                      'DWRStationNo', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
                                      'ECBottomPreTow', 'PumpVolume', 'LIMNOSINE', 'LIMNOSPP', 'LIMNOTET', 'TotalLimno',
                                      'OITHDAV', 'OITHSIM', 'OITHSPP', 'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'CYCJUV',
@@ -228,9 +239,9 @@ test_that("FRP Macro column names have not changed", {
 })
 
 test_that("EMP Macro column names have not changed", {
-  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'Station', 'EZStation',
-                                     'DWRStation', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
-                                     'ECBottomPreTow', 'MysidVolume', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
+  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'Time', 'TowDuration', 'StationNZ', 'EZStation',
+                                     'DWRStationNo', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
+                                     'ECBottomPreTow', 'Volume', 'Depth', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
                                      'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid'))
 })
 
