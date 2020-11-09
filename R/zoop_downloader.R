@@ -222,7 +222,8 @@ Zoopdownloader <- function(
     data.list[["FMWT_Meso"]] <- zoo_FMWT_Meso%>%
       dplyr::bind_rows(zoo_SMSCG_Meso)%>%
       dplyr::select(-.data$ID)%>%
-      dplyr::mutate(Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>% #create a variable for datetime
+      dplyr::mutate(Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")), #create a variable for datetime
+                    Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Month, -.data$Date, -.data$Datetime,
                                  -.data$Station, -.data$Index, -.data$Time, -.data$TowDuration,
                                  -.data$Region, -.data$FLaSHRegionGroup, -.data$TideCode,
@@ -286,6 +287,7 @@ Zoopdownloader <- function(
 
     data.list[["twentymm_Meso"]]<-zoo_20mm_Meso%>%
       dplyr::mutate(SampleID = paste(.data$Station, .data$SampleDate, .data$TowNum),
+                    SampleDate=lubridate::force_tz(.data$SampleDate, "America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Survey, -.data$Station, -.data$TowTime, -.data$Temp, -.data$TopEC,
                                  -.data$BottomEC, -.data$Secchi, -.data$Turbidity, -.data$Tide, -.data$BottomDepth, -.data$Duration, -.data$MeterCheck, -.data$Volume,
@@ -645,6 +647,7 @@ Zoopdownloader <- function(
                     Time=dplyr::if_else(!is.na(.data$Time2), .data$Time2, readr::parse_double(.data$Time)*24),
                     Time=dplyr::if_else(is.na(.data$Time), NA_character_, paste(floor(.data$Time), round((.data$Time-floor(.data$Time))*60), sep=":")),
                     Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"),
+                    Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"),
                     Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Month, -.data$Date, -.data$Datetime,
                                  -.data$Station, -.data$Index, -.data$Time, -.data$TowDuration,
@@ -700,8 +703,7 @@ Zoopdownloader <- function(
                   Year=lubridate::year(.data$Date))%>%
     dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
     dplyr::select(-.data$Region, -.data$CondBott, -.data$CondSurf)%>% #Remove some extraneous variables to save memory
-    dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood"), #Rename tide codes to be consistent
-                  Date=lubridate::force_tz(.data$Date, "America/Los_Angeles")) #Make all timezones PST/PDT
+    dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
 
   stationsEMPEZ<-zooper::stationsEMPEZ
 

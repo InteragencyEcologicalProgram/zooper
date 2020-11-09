@@ -1,6 +1,7 @@
 library(zooper)
 require(dplyr)
 require(stringr)
+require(lubridate)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "twentymm_Meso", "FRP_Meso","EMP_Micro",
@@ -32,4 +33,8 @@ test_that("Not all CPUEs are 0", {
 
 test_that("Only the expected stations are missing coordinates", {
   expect_setequal(unique(No_coords$Station), c("FMWT 520", "twentymm 798", "twentymm 799", "twentymm 794", "twentymm 795", "twentymm 796", "twentymm 797"))
+})
+
+test_that("Date and Datetime and displaying the same dates", {
+  expect_true(all(as_date(zoopEnvComb$Date)==as_date(zoopEnvComb$Datetime) | is.na(zoopEnvComb$Datetime)))
 })
