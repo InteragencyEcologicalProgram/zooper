@@ -85,7 +85,7 @@ Zoopdownloader <- function(
     name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
     names(EMP_entities) <- purrr::map_chr(name_urls, readLines, warn = FALSE)
 
-    }
+  }
 
   if(any(c("FMWT_Meso", "FMWT_Macro", "STN_Meso", "STN_Macro")%in%Data_sets)){
     FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
@@ -117,25 +117,25 @@ Zoopdownloader <- function(
 
     zoo_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file),
                                   col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
-                                                      Chl_a="d", Secchi="d", Temperature="d",
-                                                      ECSurfacePreTow="d", ECBottomPreTow="d",
-                                                      Volume="d", Depth="d", ACARTELA="d", ACARTIA="d",
-                                                      DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
-                                                      PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
-                                                      TORTANUS="d", AVERNAL="d", LIMNOSPP="d",
-                                                      LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
-                                                      OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
-                                                      HARPACT="d", CALJUV="d", EURYJUV="d",
-                                                      OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
-                                                      ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
-                                                      TORTJUV="d", CYCJUV="d", LIMNOJUV="d",
-                                                      OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
-                                                      EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
-                                                      SINONAUP="d", BOSMINA="d", DAPHNIA="d",
-                                                      DIAPHAN="d",OTHCLADO="d", ASPLANCH="d",
-                                                      KERATELA="d",OTHROT="d", POLYARTH="d",
-                                                      SYNCH="d",SYNCHBIC="d", TRICHO="d",
-                                                      BARNNAUP="d", CRABZOEA="d"))
+                                                             Chl_a="d", Secchi="d", Temperature="d",
+                                                             ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                             Volume="d", Depth="d", ACARTELA="d", ACARTIA="d",
+                                                             DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
+                                                             PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
+                                                             TORTANUS="d", AVERNAL="d", LIMNOSPP="d",
+                                                             LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
+                                                             OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
+                                                             HARPACT="d", CALJUV="d", EURYJUV="d",
+                                                             OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
+                                                             ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
+                                                             TORTJUV="d", CYCJUV="d", LIMNOJUV="d",
+                                                             OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
+                                                             EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
+                                                             SINONAUP="d", BOSMINA="d", DAPHNIA="d",
+                                                             DIAPHAN="d",OTHCLADO="d", ASPLANCH="d",
+                                                             KERATELA="d",OTHROT="d", POLYARTH="d",
+                                                             SYNCH="d",SYNCHBIC="d", TRICHO="d",
+                                                             BARNNAUP="d", CRABZOEA="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -238,7 +238,8 @@ Zoopdownloader <- function(
                          dplyr::distinct(),
                        by = "FMWT_Meso")%>%
       dplyr::filter(!is.na(.data$Taxname))%>%
-      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+      dplyr::mutate(Station=dplyr::recode(.data$Station, MONT="Mont", HONK="Honk"),
+                    Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Date),
                     SizeClass="Meso")%>% #Create identifier for each sample
@@ -411,19 +412,19 @@ Zoopdownloader <- function(
 
     # Import the EMP data
     zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
-                                  col_types=readr::cols_only(SampleDate="c", StationNZ="c",
-                                                             Chl_a="d", Secchi="d", Temperature="d",
-                                                             ECSurfacePreTow="d", ECBottomPreTow="d",
-                                                             PumpVolume="d", LIMNOSPP="d",
-                                                             LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
-                                                             OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
-                                                             HARPACT="d", CYCJUV="d", LIMNOJUV="d",
-                                                             OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
-                                                             EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
-                                                             SINONAUP="d", ASPLANCH="d",
-                                                             KERATELA="d",OTHROT="d", POLYARTH="d",
-                                                             SYNCH="d",SYNCHBIC="d", TRICHO="d",
-                                                             BARNNAUP="d"))
+                                   col_types=readr::cols_only(SampleDate="c", StationNZ="c",
+                                                              Chl_a="d", Secchi="d", Temperature="d",
+                                                              ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                              PumpVolume="d", LIMNOSPP="d",
+                                                              LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
+                                                              OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
+                                                              HARPACT="d", CYCJUV="d", LIMNOJUV="d",
+                                                              OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
+                                                              EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
+                                                              SINONAUP="d", ASPLANCH="d",
+                                                              KERATELA="d",OTHROT="d", POLYARTH="d",
+                                                              SYNCH="d",SYNCHBIC="d", TRICHO="d",
+                                                              BARNNAUP="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -618,14 +619,14 @@ Zoopdownloader <- function(
                     ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
 
     zoo_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_mysfile),
-                                               sheet = "SMSCG Mysid CPUE")%>%
+                                                sheet = "SMSCG Mysid CPUE")%>%
       dplyr::rename(`Unidentified Mysid`=.data$Unidentified)%>%
       dplyr::select(-.data$SMSCG)%>%
       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
       dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro_Mysid$ID) & .data$Project%in%c("FMWT", "STN"))
 
     zoo_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_amphfile),
-                                              sheet = "AmphipodCPUE")%>%
+                                               sheet = "AmphipodCPUE")%>%
       dplyr::rename(Date=.data$SampleDate, TideCode=.data$Tide, DepthBottom=.data$`Depth in Meters`,
                     TempSurf=.data$WaterTemperature, Turbidity=.data$`Turbidity(NTU)`)%>%
       dplyr::select(-.data$SMSCG, -.data$RegionFLaSH)%>%
@@ -662,12 +663,13 @@ Zoopdownloader <- function(
                          dplyr::distinct(),
                        by = "FMWT_Macro")%>%
       dplyr::filter(!is.na(.data$Taxname))%>%
-      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+      dplyr::mutate(Station=as.character(.data$Station),
+                    Station=dplyr::recode(.data$Station, MONT="Mont", HONK="Honk"),
+                    Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     SizeClass="Macro",
-                    Tide=as.character(.data$Tide),
-                    Station=as.character(.data$Station))%>%
+                    Tide=as.character(.data$Tide))%>%
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,

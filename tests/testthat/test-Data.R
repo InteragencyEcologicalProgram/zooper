@@ -1,9 +1,14 @@
 library(zooper)
+require(dplyr)
+require(stringr)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "twentymm_Meso", "FRP_Meso","EMP_Micro",
                "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"
                )
+
+No_coords<-filter(zoopEnvComb, is.na(Latitude) & !str_detect(Station, "NZEZ"))%>%
+  mutate(Station=paste(Source, Station))
 
 test_that("zoopComb includes all datasets", {
   expect_setequal(unique(paste(zoopComb$Source, zoopComb$SizeClass, sep="_")), Data_sets)
@@ -23,4 +28,8 @@ test_that("Same samples present in Zooplankton and Environment datasets", {
 
 test_that("Not all CPUEs are 0", {
   expect_gt(nrow(dplyr::filter(zoopComb, CPUE>0)), 0)
+})
+
+test_that("Only the expected stations are missing coordinates", {
+  expect_setequal(unique(No_coords$Station), c("FMWT 520", "twentymm 798", "twentymm 799", "twentymm 794", "twentymm 795", "twentymm 796", "twentymm 797"))
 })

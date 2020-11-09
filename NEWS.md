@@ -1,3 +1,5 @@
+* Updated FMWT station location coordinates to the newest version from the FMWT database.
+* Corrected inconsistent capitalization of the STN Mont and Honk stations, resulting in correct coordinates for all those samples.
 * Removed EMP Meso Sample corresponding to a mostly empty line at the end of the csv.
 
 # zooper 1.1.0
