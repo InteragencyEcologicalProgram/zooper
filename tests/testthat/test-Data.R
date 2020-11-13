@@ -32,7 +32,7 @@ test_that("Not all CPUEs are 0", {
 })
 
 test_that("Only the expected stations are missing coordinates", {
-  expect_setequal(unique(No_coords$Station), c("FMWT 520", "twentymm 798", "twentymm 799", "twentymm 794", "twentymm 795", "twentymm 796", "twentymm 797"))
+  expect_setequal(unique(No_coords$Station), c("twentymm 798", "twentymm 799", "twentymm 794", "twentymm 795", "twentymm 796", "twentymm 797"))
 })
 
 test_that("Date and Datetime and displaying the same dates", {
