@@ -417,7 +417,7 @@ Zoopdownloader <- function(
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
                                                               Chl_a="d", Secchi="d", Temperature="d",
                                                               ECSurfacePreTow="d", ECBottomPreTow="d",
-                                                              PumpVolume="d", LIMNOSPP="d",
+                                                              Volume="d", Depth="d", LIMNOSPP="d",
                                                               LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
                                                               OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
                                                               HARPACT="d", CYCJUV="d", LIMNOJUV="d",
@@ -435,12 +435,12 @@ Zoopdownloader <- function(
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::rename(OTHCYCADPUMP = .data$OTHCYCAD)%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
-                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$PumpVolume),
+                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Depth, -.data$Volume),
                           names_to="EMP_Micro", values_to="CPUE")%>% #transform from wide to long
       dplyr::mutate(Source="EMP",
                     SizeClass="Micro")%>% #add variable for data source
       dplyr::select(.data$Source, Date = .data$SampleDate, Station=.data$StationNZ, Chl = .data$Chl_a, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi,
-                    .data$Temperature, .data$SizeClass, Volume = .data$PumpVolume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
+                    .data$Temperature, BottomDepth=.data$Depth, .data$SizeClass, .data$Volume, .data$EMP_Micro, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Micro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
                          dplyr::filter(!is.na(.data$EMP_Micro))%>% #Only retain Taxnames corresponding to EMP codes
@@ -449,7 +449,8 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                    Tide="1")%>% # All EMP samples collected at high slack
+                    Tide="1", # All EMP samples collected at high slack
+                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
@@ -560,7 +561,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     Tide="1", # All EMP samples collected at high slack
-                    BottomDepth=.data$BottomDepth*0.3048)%>% # Conver to meters
+                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
