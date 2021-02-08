@@ -3,6 +3,7 @@ library(dplyr)
 library(purrr)
 library(tibble)
 library(tidyr)
+require(stringr)
 
 #Test on all datasets
 
@@ -76,6 +77,29 @@ test_that("Community dataset with time consistency contains same total CPUE as n
 ### !!! AMPHIPODS WERE EXCLUDED BECAUSE THEY ARE REMOVED FROM COMMUNITY DATASET SINCE THEY ARE NOT SAMPLED IN ALL MACRO DATASETS !!! ###
 test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
+})
+
+# Test that zoopsynther community approach does not change overall CPUE
+
+data_com<-Zoopsynther("Community", Shiny = T)
+Removed<-unlist(str_split(str_split(data_com$Caveats, ", ")[[1]], ": "))
+Data_base_filtered<-zooper::zoopComb%>%
+  filter(!Taxlifestage%in%Removed)
+
+test_that("Zoopsynther with community option and problematic taxa removed produces expected message", {
+  expect_output(data_com_filtered<<-Zoopsynther("Community", Zoop=Data_base_filtered), "No disclaimers here")
+})
+
+Data_filtered<-data_com_filtered%>%
+  group_by(SampleID)%>%
+  summarise(CPUE_com=sum(CPUE), .groups="drop")%>%
+  full_join(Data_base_filtered%>%
+              group_by(SampleID)%>%
+              summarise(CPUE_base=sum(CPUE), .groups="drop"),
+            by="SampleID")
+
+test_that("Community approach does not change overall CPUE", {
+  expect_equal(Data_filtered$CPUE_base, Data_filtered$CPUE_com)
 })
 
 #Test on each individual dataset
