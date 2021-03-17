@@ -1,5 +1,6 @@
 # zooper 1.1.1
 
+* Updating with newest 20mm data.
 * Corrected timezone error that was shifting the date of some STN, FMWT, and 20mm samples by 1 day relative to the datetime.
 * Updated FMWT station location coordinates to the newest version from the FMWT database.
 * Corrected inconsistent capitalization of the STN Mont and Honk stations, resulting in correct coordinates for all those samples.
