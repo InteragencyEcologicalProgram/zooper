@@ -38,3 +38,8 @@ test_that("Only the expected stations are missing coordinates", {
 test_that("Date and Datetime and displaying the same dates", {
   expect_true(all(as_date(zoopEnvComb$Date)==as_date(zoopEnvComb$Datetime) | is.na(zoopEnvComb$Datetime)))
 })
+
+test_that("Bottom depths are within reasonable limits", {
+  expect_true(all(zoopEnvComb$BottomDepth > 0.5 | is.na(zoopEnvComb$BottomDepth)))
+  expect_true(all(zoopEnvComb$BottomDepth < 35 | is.na(zoopEnvComb$BottomDepth)))
+})

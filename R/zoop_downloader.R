@@ -305,7 +305,8 @@ Zoopdownloader <- function(
                     SizeClass="Meso",
                     Station=as.character(.data$Station),
                     Tide=as.character(.data$Tide),
-                    Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #add variable for data source, create variable for combo taxonomy x life stage
+                    Taxlifestage=paste(.data$Taxname, .data$Lifestage),#add variable for data source, create variable for combo taxonomy x life stage
+                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
