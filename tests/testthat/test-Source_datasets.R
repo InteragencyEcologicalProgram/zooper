@@ -1,28 +1,22 @@
 require(zooper)
 require(readr)
 
-ftp_file_list<-function(URL){
-  con <- curl::curl(url = URL, "r",
-                    handle = curl::new_handle(dirlistonly = TRUE))
-  on.exit(close(con))
-  return(readLines(con))
-}
 
 revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-EMP_latest_revision <- tail(readLines(revision_url, warn = FALSE), 1)
+EMP_latest_revision <- tail(zooper:::Tryer(n=3, fun=readLines, con=revision_url, warn = FALSE), 1)
 pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
-EMP_entities <- readLines(pkg_url, warn = FALSE)
+EMP_entities <- zooper:::Tryer(n=3, fun=readLines, con=pkg_url, warn = FALSE)
 name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
-names(EMP_entities) <- purrr:::map_chr(name_urls, readLines, warn = FALSE)
+names(EMP_entities) <- purrr::map_chr(name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
 FMWTSTN_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
-FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
+FMWTSTN_files<-zooper:::ftp_file_list(FMWTSTN_URL)
 SMSCG_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
-SMSCG_files<-ftp_file_list(SMSCG_URL)
+SMSCG_files<-zooper:::ftp_file_list(SMSCG_URL)
 
 
 twentymm_URL<-"ftp://ftp.wildlife.ca.gov/Delta%20Smelt/"
-twentymm_files<-ftp_file_list(twentymm_URL)
+twentymm_files<-zooper:::ftp_file_list(twentymm_URL)
 
 Data_folder<-tempdir()
 
@@ -31,7 +25,7 @@ Data_folder<-tempdir()
 
 EMP_Meso_file<-"cb_matrix.csv"
 EMP_Meso_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Meso_file])
-Downloader(EMP_Meso_URL, file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=EMP_Meso_URL, destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
 
 
 names_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file), col_types = cols(.default=col_character()))%>%
@@ -43,11 +37,11 @@ names_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file), col_types
 FMWTSTN_Meso_file<-FMWTSTN_files[grep("CBNet", FMWTSTN_files)]
 SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
-Downloader(paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
-           file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
+           destfile=file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
 
-Downloader(paste0(SMSCG_URL, SMSCG_Meso_file),
-           file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Meso_file),
+           destfile=file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
 
 names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, FMWTSTN_Meso_file),
                                        sheet = "FMWT&STN ZP CPUE",
@@ -64,8 +58,8 @@ names_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, SMSCG_Meso_file),
 
 twentymm_Meso_file<-twentymm_files[grep("Zooplankton Catch Matrix", twentymm_files)]
 
-Downloader(paste0(twentymm_URL, twentymm_Meso_file),
-           file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(twentymm_URL, twentymm_Meso_file),
+           destfile=file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
 
 names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, twentymm_Meso_file),
                                     sheet="20-mm CB CPUE Data",
@@ -75,8 +69,8 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, twentymm_Meso_file),
 
 # FRP Meso ----------------------------------------------------------------
 
-Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
-           file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
+           destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
 
 names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
                                   col_types = cols(.default=col_character()))%>%
@@ -87,8 +81,8 @@ names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
 
 EMP_Micro_file<-"pump_matrix.csv"
 EMP_Micro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Micro_file])
-Downloader(EMP_Micro_URL,
-             file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=EMP_Micro_URL,
+             destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
 
 names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                  col_types=cols(.default=col_character()))%>%
@@ -97,8 +91,8 @@ names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
 
 # FRP Macro ---------------------------------------------------------------
 
-Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
-           file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+           destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
 
 names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
                                    col_types = cols(.default=col_character()))%>%
@@ -110,8 +104,8 @@ names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
 EMP_Macro_file<-"mysid_matrix.csv"
 EMP_Macro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Macro_file])
 
-Downloader(EMP_Macro_URL,
-             file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=EMP_Macro_URL,
+             destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
 
 
 names_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
@@ -127,14 +121,14 @@ FMWTSTN_Macro_amphfile<-FMWTSTN_files[grep("AmphipodCPUE", FMWTSTN_files)]
 SMSCG_Macro_mysfile<-SMSCG_files[grep("MysidCPUE", SMSCG_files)]
 SMSCG_Macro_amphfile<-SMSCG_files[grep("AmphipodCPUE", SMSCG_files)]
 
-Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
-           file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
-Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
-           file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
-Downloader(paste0(SMSCG_URL, SMSCG_Macro_mysfile),
-           file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
-Downloader(paste0(SMSCG_URL, SMSCG_Macro_amphfile),
-           file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
+           destfile=file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
+           destfile=file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Macro_mysfile),
+           destfile=file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Macro_amphfile),
+           destfile=file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
 
 names_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
                                              sheet = "FMWT Mysid CPUE Matrix", col_types = "text")%>%

@@ -70,20 +70,13 @@ Zoopdownloader <- function(
 
   # Find URLs ---------------------------------------------------------------
 
-  ftp_file_list<-function(URL){
-    con <- curl::curl(url = URL, "r",
-                      handle = curl::new_handle(dirlistonly = TRUE))
-    on.exit(close(con))
-    return(readLines(con))
-  }
-
   if(any(c("EMP_Meso", "EMP_Macro", "EMP_Micro")%in%Data_sets)){
     revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-    EMP_latest_revision <- utils::tail(readLines(revision_url, warn = FALSE), 1)
+    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=revision_url, warn = FALSE), 1)
     pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
-    EMP_entities <- readLines(pkg_url, warn = FALSE)
+    EMP_entities <- Tryer(n=3, fun=readLines, con=pkg_url, warn = FALSE)
     name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
-    names(EMP_entities) <- purrr::map_chr(name_urls, readLines, warn = FALSE)
+    names(EMP_entities) <- purrr::map_chr(name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
   }
 
@@ -108,8 +101,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
-      Downloader(EMP_Meso_URL,
-                 file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
+      Tryer(n=3, fun=utils::download.file, url=EMP_Meso_URL,
+                 destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
     }
 
 
@@ -187,13 +180,13 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
-      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
-                 file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
+                 destfile=file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
     }
 
     if (!file.exists(file.path(Data_folder, SMSCG_Meso_file)) | Redownload_data) {
-      Downloader(paste0(SMSCG_URL, SMSCG_Meso_file),
-                 file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Meso_file),
+                 destfile=file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
     }
 
     # Import the FMWT data
@@ -275,8 +268,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, twentymm_Meso_file)) | Redownload_data) {
-      Downloader(paste0(twentymm_URL, twentymm_Meso_file),
-                 file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(twentymm_URL, twentymm_Meso_file),
+                 destfile=file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
     }
 
     # Import and modify 20mm data
@@ -331,8 +324,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
-      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
-                 file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
+                 destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
@@ -409,8 +402,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
-      Downloader(EMP_Micro_URL,
-                 file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
+      Tryer(n=3, fun=utils::download.file, url=EMP_Micro_URL,
+                 destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
     }
 
     # Import the EMP data
@@ -475,8 +468,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
-      Downloader("https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
-                 file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+                 destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
@@ -525,8 +518,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
-      Downloader(EMP_Macro_URL,
-                 file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
+      Tryer(n=3, fun=utils::download.file, url=EMP_Macro_URL,
+                 destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
     }
 
     # Import the EMP data
@@ -590,26 +583,26 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_mysfile)) | Redownload_data) {
-      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
-                 file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
+                 destfile=file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
     }
 
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_amphfile)) | Redownload_data) {
-      Downloader(paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
-                 file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
+                 destfile=file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
     }
 
     #download the file
     if (!file.exists(file.path(Data_folder, SMSCG_Macro_mysfile)) | Redownload_data) {
-      Downloader(paste0(SMSCG_URL, SMSCG_Macro_mysfile),
-                 file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Macro_mysfile),
+                 destfile=file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
     }
 
     #download the file
     if (!file.exists(file.path(Data_folder, SMSCG_Macro_amphfile)) | Redownload_data) {
-      Downloader(paste0(SMSCG_URL, SMSCG_Macro_amphfile),
-                 file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
+      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Macro_amphfile),
+                 destfile=file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
     }
 
     zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
