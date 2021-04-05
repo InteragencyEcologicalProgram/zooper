@@ -88,14 +88,14 @@ Zoopdownloader <- function(
   }
 
   if(any(c("FMWT_Meso", "FMWT_Macro", "STN_Meso", "STN_Macro")%in%Data_sets)){
-    FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
+    FMWTSTN_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
     FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
-    SMSCG_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
+    SMSCG_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
     SMSCG_files<-ftp_file_list(SMSCG_URL)
   }
 
   if(any(c("20mm_Meso")%in%Data_sets)){
-    twentymm_URL<-"ftp://ftp.dfg.ca.gov/Delta%20Smelt/"
+    twentymm_URL<-"ftp://ftp.wildlife.ca.gov/Delta%20Smelt/"
     twentymm_files<-ftp_file_list(twentymm_URL)
   }
 

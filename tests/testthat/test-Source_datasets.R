@@ -15,13 +15,13 @@ EMP_entities <- readLines(pkg_url, warn = FALSE)
 name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
 names(EMP_entities) <- purrr:::map_chr(name_urls, readLines, warn = FALSE)
 
-FMWTSTN_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
+FMWTSTN_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
 FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
-SMSCG_URL<-"ftp://ftp.dfg.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
+SMSCG_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
 SMSCG_files<-ftp_file_list(SMSCG_URL)
 
 
-twentymm_URL<-"ftp://ftp.dfg.ca.gov/Delta%20Smelt/"
+twentymm_URL<-"ftp://ftp.wildlife.ca.gov/Delta%20Smelt/"
 twentymm_files<-ftp_file_list(twentymm_URL)
 
 Data_folder<-tempdir()
