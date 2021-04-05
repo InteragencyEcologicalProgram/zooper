@@ -1,4 +1,6 @@
 
+* Changed internals to apply 3 tries to each attempt to access a URL
+* Fixed CDFW FTP URL
 * Fixing 20mm bottom depths (formally in feet, now correcting to meters like all other studies are converted).
 * Updating with newest 20mm data.
 * Added station location for FMWT 520 (=STN 520)
