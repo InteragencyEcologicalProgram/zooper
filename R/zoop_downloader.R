@@ -81,15 +81,15 @@ Zoopdownloader <- function(
   }
 
   if(any(c("FMWT_Meso", "FMWT_Macro", "STN_Meso", "STN_Macro")%in%Data_sets)){
-    FMWTSTN_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
-    FMWTSTN_files<-ftp_file_list(FMWTSTN_URL)
-    SMSCG_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
-    SMSCG_files<-ftp_file_list(SMSCG_URL)
+    FMWTSTN_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
+    FMWTSTN_files<-html_file_list(FMWTSTN_URL)
+    SMSCG_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
+    SMSCG_files<-html_file_list(SMSCG_URL)
   }
 
   if(any(c("20mm_Meso")%in%Data_sets)){
-    twentymm_URL<-"ftp://ftp.wildlife.ca.gov/Delta%20Smelt/"
-    twentymm_files<-ftp_file_list(twentymm_URL)
+    twentymm_URL<-"https://filelib.wildlife.ca.gov/Public/Delta%20Smelt/"
+    twentymm_files<-html_file_list(twentymm_URL)
   }
 
 
@@ -102,7 +102,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Meso_URL,
-                 destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
+            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
     }
 
 
@@ -164,12 +164,13 @@ Zoopdownloader <- function(
       ))%>%
       dplyr::select(-.data$EMP_Meso, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
       dplyr::select(-.data$Datetime)%>% #Add this back in when other EMP data have time
-      #dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")#%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
-    #so we now add those categories together.
-    #tibble::as_tibble() #required to finish operation after lazy_dt()
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
+      dplyr::ungroup()%>%
+      tibble::as_tibble() #required to finish operation after lazy_dt()
 
+    cat("\nEMP_Meso finished!\n\n")
   }
   # FMWTSTN Meso --------------------------------------------------------------------
   if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
@@ -179,26 +180,26 @@ Zoopdownloader <- function(
 
 
     #download the file
-    if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
-                 destfile=file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(FMWTSTN_Meso_file))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_file,
+            destfile=file.path(Data_folder, names(FMWTSTN_Meso_file)), mode="wb", method="curl")
     }
 
-    if (!file.exists(file.path(Data_folder, SMSCG_Meso_file)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Meso_file),
-                 destfile=file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
     }
 
     # Import the FMWT data
 
-    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Meso_file),
+    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
                                                          sheet = "FMWT&STN ZP CPUE",
                                                          col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                                      "text", "numeric", rep("text", 3), rep("numeric", 3),
                                                                      "text", rep("numeric", 6), "text", rep("numeric", 55)))%>%
                        dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station)))
 
-    zoo_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, SMSCG_Meso_file),
+    zoo_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, names(SMSCG_Meso_file)),
                                        sheet="SMSCGZoopCPUE",
                                        col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                    "text", "numeric", rep("text", 3), rep("numeric", 3),
@@ -209,7 +210,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Station=dplyr::if_else(.data$Project=="FRP", paste(.data$Project, .data$Station), .data$Station),
                     Project=dplyr::recode(.data$Project, FRP="STN"))
 
-    # Tranform from "wide" to "long" format, add some variables,
+    # Transform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["FMWT_Meso"]] <- zoo_FMWT_Meso%>%
@@ -257,31 +258,34 @@ Zoopdownloader <- function(
         .
       }}
 
-
+    cat("\nFMWT_Meso and/or STN_Meso finished!\n\n")
 
   }
   # twentymm Meso ----------------------------------------------------------------
 
   if("20mm_Meso"%in%Data_sets) {
 
-    twentymm_Meso_file<-twentymm_files[grep("Zooplankton Catch Matrix", twentymm_files)]
+    twentymm_Meso_file<-twentymm_files[grep("Zooplankton%20Catch%20Matrix", twentymm_files)]
 
     #download the file
-    if (!file.exists(file.path(Data_folder, twentymm_Meso_file)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(twentymm_URL, twentymm_Meso_file),
-                 destfile=file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(twentymm_Meso_file))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=twentymm_Meso_file,
+            destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method="curl")
     }
 
     # Import and modify 20mm data
 
-    zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, twentymm_Meso_file),
+    zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_file)),
                                       sheet="20-mm CB CPUE Data",
                                       col_types = c("date", rep("numeric", 3), "date", rep("numeric", 80)))
 
     data.list[["twentymm_Meso"]]<-zoo_20mm_Meso%>%
       dplyr::mutate(SampleID = paste(.data$Station, .data$SampleDate, .data$TowNum),
                     SampleDate=lubridate::force_tz(.data$SampleDate, "America/Los_Angeles"),
-                    Datetime=lubridate::parse_date_time(paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$TowTime),
+                                                                       NA_character_,
+                                                                       paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime))),
+                                                                       "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Survey, -.data$Station, -.data$TowTime, -.data$Temp, -.data$TopEC,
                                  -.data$BottomEC, -.data$Secchi, -.data$Turbidity, -.data$Tide, -.data$BottomDepth, -.data$Duration, -.data$MeterCheck, -.data$Volume,
                                  -.data$Dilution, -.data$SampleID, -.data$Datetime),
@@ -309,11 +313,14 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$twentymmstart2 ~ 0 #20mm dataset had one case of a taxa starting, ending, and starting again
       ))%>%
       dplyr::select(-.data$twentymmend, -.data$twentymmstart, -.data$twentymmstart2, -.data$Intro, -.data$twentymm_Meso)%>%
-      #dtplyr::lazy_dt()%>% #Speed up
+      dtplyr::lazy_dt()%>% #Speed up
       dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")%>% #this just adds up those duplications
-      #tibble::as_tibble()%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
+      dplyr::ungroup()%>%
+      tibble::as_tibble()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+
+    cat("\n20mm_Meso finished!\n\n")
   }
 
   # FRP Meso ---------------------------------------------------------------------
@@ -325,7 +332,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
-                 destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+            destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
@@ -356,12 +363,13 @@ Zoopdownloader <- function(
                        by = "FRP_Meso")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
       dplyr::select(-.data$FRP_Meso)%>% #Remove FRP taxa codes
-      #dtplyr::lazy_dt()%>% #Speed up code
+      dtplyr::lazy_dt()%>% #Speed up code
       dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")%>% #this just adds up those duplications
-      #tibble::as_tibble()%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
+      dplyr::ungroup()%>%
+      tibble::as_tibble()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
-
+    cat("\nFRP_Meso finished!\n\n")
   }
 
   # YBFMP Meso/Micro -------------------------------------------------------------
@@ -403,7 +411,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Micro_URL,
-                 destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
+            destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
     }
 
     # Import the EMP data
@@ -453,12 +461,12 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
       ))%>%
       dplyr::select(-.data$EMP_Micro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
-      #dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")#%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
-    #so we now add those categories together.
-    #tibble::as_tibble() #required to finish operation after lazy_dt()
-
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
+      dplyr::ungroup()%>%
+      tibble::as_tibble() #required to finish operation after lazy_dt()
+    cat("\nEMP_Micro finished!\n\n")
   }
   # FRP Macro ---------------------------------------------------------------
 
@@ -469,7 +477,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
-                 destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
+            destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
@@ -502,11 +510,13 @@ Zoopdownloader <- function(
                        by = "FRP_Macro")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
       dplyr::select(-.data$FRP_Macro)%>% #Remove FRP taxa codes
-      #dtplyr::lazy_dt()%>% #Speed up code
+      dtplyr::lazy_dt()%>% #Speed up code
       dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
-      #tibble::as_tibble()%>%
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+      dplyr::ungroup()%>%
+      tibble::as_tibble()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+    cat("\nFRP_Macro finished!\n\n")
   }
 
   # EMP Macro ---------------------------------------------------------------
@@ -519,7 +529,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Macro_URL,
-                 destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
+            destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
     }
 
     # Import the EMP data
@@ -564,12 +574,12 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
       ))%>%
       dplyr::select(-.data$EMP_Macro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
-      #dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")#%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV)
-    #so we now add those categories together.
-    #tibble::as_tibble() #required to finish operation after lazy_dt()
-
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
+      dplyr::ungroup()%>%
+      tibble::as_tibble() #required to finish operation after lazy_dt()
+    cat("\nEMP_Macro finished!\n\n")
   }
   # FMWT Macro --------------------------------------------------------------
 
@@ -582,47 +592,47 @@ Zoopdownloader <- function(
     SMSCG_Macro_amphfile<-SMSCG_files[grep("AmphipodCPUE", SMSCG_files)]
 
     #download the file
-    if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_mysfile)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
-                 destfile=file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(FMWTSTN_Macro_mysfile))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Macro_mysfile,
+            destfile=file.path(Data_folder, names(FMWTSTN_Macro_mysfile)), mode="wb", method="curl")
     }
 
     #download the file
-    if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_amphfile)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
-                 destfile=file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(FMWTSTN_Macro_amphfile))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Macro_amphfile,
+            destfile=file.path(Data_folder, names(FMWTSTN_Macro_amphfile)), mode="wb", method="curl")
     }
 
     #download the file
-    if (!file.exists(file.path(Data_folder, SMSCG_Macro_mysfile)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Macro_mysfile),
-                 destfile=file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(SMSCG_Macro_mysfile))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=SMSCG_Macro_mysfile,
+            destfile=file.path(Data_folder, names(SMSCG_Macro_mysfile)), mode="wb", method="curl")
     }
 
     #download the file
-    if (!file.exists(file.path(Data_folder, SMSCG_Macro_amphfile)) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=paste0(SMSCG_URL, SMSCG_Macro_amphfile),
-                 destfile=file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
+    if (!file.exists(file.path(Data_folder, names(SMSCG_Macro_amphfile))) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=SMSCG_Macro_amphfile,
+            destfile=file.path(Data_folder, names(SMSCG_Macro_amphfile)), mode="wb", method="curl")
     }
 
-    zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
+    zoo_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_mysfile)),
                                                sheet = "FMWT Mysid CPUE Matrix")%>%
       dplyr::mutate(Station=as.character(.data$Station),
                     ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
 
-    zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_amphfile),
+    zoo_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_amphfile)),
                                               sheet = "FMWT amphipod CPUE")%>%
       dplyr::mutate(Station=as.character(.data$Station),
                     ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
 
-    zoo_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_mysfile),
+    zoo_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_mysfile)),
                                                 sheet = "SMSCG Mysid CPUE")%>%
       dplyr::rename(`Unidentified Mysid`=.data$Unidentified)%>%
       dplyr::select(-.data$SMSCG)%>%
       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
       dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro_Mysid$ID) & .data$Project%in%c("FMWT", "STN"))
 
-    zoo_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_amphfile),
+    zoo_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_amphfile)),
                                                sheet = "AmphipodCPUE")%>%
       dplyr::rename(Date=.data$SampleDate, TideCode=.data$Tide, DepthBottom=.data$`Depth in Meters`,
                     TempSurf=.data$WaterTemperature, Turbidity=.data$`Turbidity(NTU)`)%>%
@@ -687,10 +697,12 @@ Zoopdownloader <- function(
       } else{
         .
       }}
+
+    cat("\nFMWT_Macro and/or STN_Macro finished!\n\n")
   }
 
   # Combine data ----------------------------------------
-
+  cat("\nCombining datasets...\n")
   zoop<-dplyr::bind_rows(data.list)%>% # Combine data
     dplyr::filter(!is.na(.data$Taxname))%>% #Remove NA taxnames (should only correspond to previously summed "all" categories from input datasets)
     dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),

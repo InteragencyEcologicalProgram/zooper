@@ -514,11 +514,11 @@ Zoopsynther<-function(
       dplyr::filter(.data$Taxname!="REMOVE")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species)%>%
-      #dtplyr::lazy_dt()%>%
+      dtplyr::lazy_dt()%>%
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
-      #tibble::as_tibble()%>%
+      tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%
                          dplyr::select(.data$Taxname, .data$Lifestage, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>%
                          dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%

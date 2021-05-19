@@ -6,7 +6,7 @@
 #' @param fun Function to try
 #' @param ... parameters for function
 #' @keywords internal
-#'
+#' @importFrom magrittr %>%
 
 Tryer <- function(n, fun, ...){
 try_number <- 1
@@ -27,18 +27,27 @@ while(rlang::is_string(out) & all(stringr::str_starts(out, "Error")) & try_numbe
   invisible(out)
 }
 
-#' Create a list of files on an FTP
+#' Create a list of files from an HTML site
 #'
-#' This function lists all files from a given FTP URL
+#' This function lists all files from a given URL. It has only been tested for the CDFW filelib https://filelib.wildlife.ca.gov/Public/
 #'
-#' @param URL URL of the FTP site
+#' @param URL URL of the site
 #' @keywords internal
+#' @importFrom magrittr %>%
 #'
 
-ftp_file_list<-function(URL){
-  con <- Tryer(n=3, fun=curl::curl, url = URL, "r",
-               handle = curl::new_handle(dirlistonly = TRUE))
-  on.exit(close(con))
-  out<-Tryer(n=3, fun=readLines, con=con)
-  return(out)
+html_file_list<-function(URL){
+
+  html_file_extract<-function(URL){
+    page <- rvest::read_html(URL)%>%
+                    rvest::html_elements("a")
+    files<-rlang::set_names(x=rvest::html_attr(page, "href")%>%
+                              rvest::url_absolute(URL),
+                            nm=rvest::html_text(page))
+    return(files)
+  }
+
+  files <- Tryer(n=3, fun=html_file_extract, URL=URL)
+
+  return(files)
 }

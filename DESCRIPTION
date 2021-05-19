@@ -18,7 +18,7 @@ Imports:
     lubridate,
     pillar,
     readxl,
-    dtplyr (>= 1.0.1),
+    dtplyr (>= 1.1.0),
     dplyr (>= 1.0.0),
     tidyr,
     readr,
@@ -32,7 +32,8 @@ Imports:
     curl,
     stats,
     utils,
-    wql
+    wql,
+    rvest
 URL: https://github.com/InteragencyEcologicalProgram/zooper
 BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
 RoxygenNote: 7.1.1

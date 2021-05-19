@@ -9,14 +9,14 @@ EMP_entities <- zooper:::Tryer(n=3, fun=readLines, con=pkg_url, warn = FALSE)
 name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
 names(EMP_entities) <- purrr::map_chr(name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
-FMWTSTN_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
-FMWTSTN_files<-zooper:::ftp_file_list(FMWTSTN_URL)
-SMSCG_URL<-"ftp://ftp.wildlife.ca.gov/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
-SMSCG_files<-zooper:::ftp_file_list(SMSCG_URL)
+FMWTSTN_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zoopl_TownetFMWT/"
+FMWTSTN_files<-zooper:::html_file_list(FMWTSTN_URL)
+SMSCG_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
+SMSCG_files<-zooper:::html_file_list(SMSCG_URL)
 
 
-twentymm_URL<-"ftp://ftp.wildlife.ca.gov/Delta%20Smelt/"
-twentymm_files<-zooper:::ftp_file_list(twentymm_URL)
+twentymm_URL<-"https://filelib.wildlife.ca.gov/Public/Delta%20Smelt/"
+twentymm_files<-zooper:::html_file_list(twentymm_URL)
 
 Data_folder<-tempdir()
 
@@ -37,18 +37,18 @@ names_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file), col_types
 FMWTSTN_Meso_file<-FMWTSTN_files[grep("CBNet", FMWTSTN_files)]
 SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
-Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Meso_file),
-           destfile=file.path(Data_folder, FMWTSTN_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=FMWTSTN_Meso_file,
+           destfile=file.path(Data_folder, names(FMWTSTN_Meso_file)), mode="wb", method="curl")
 
-Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Meso_file),
-           destfile=file.path(Data_folder, SMSCG_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=SMSCG_Meso_file,
+           destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
 
-names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, FMWTSTN_Meso_file),
+names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
                                        sheet = "FMWT&STN ZP CPUE",
                                        col_types = "text")%>%
   names()
 
-names_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, SMSCG_Meso_file),
+names_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, names(SMSCG_Meso_file)),
                                      sheet = "SMSCGZoopCPUE",
                                      col_types = "text")%>%
   names()
@@ -56,12 +56,12 @@ names_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, SMSCG_Meso_file),
 
 # 20mm Meso ---------------------------------------------------------------
 
-twentymm_Meso_file<-twentymm_files[grep("Zooplankton Catch Matrix", twentymm_files)]
+twentymm_Meso_file<-twentymm_files[grep("Zooplankton%20Catch%20Matrix", twentymm_files)]
 
-Tryer(n=3, fun=download.file, url=paste0(twentymm_URL, twentymm_Meso_file),
-           destfile=file.path(Data_folder, twentymm_Meso_file), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=twentymm_Meso_file,
+           destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method="curl")
 
-names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, twentymm_Meso_file),
+names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_file)),
                                     sheet="20-mm CB CPUE Data",
                                     col_types = "text")%>%
   names()
@@ -121,28 +121,28 @@ FMWTSTN_Macro_amphfile<-FMWTSTN_files[grep("AmphipodCPUE", FMWTSTN_files)]
 SMSCG_Macro_mysfile<-SMSCG_files[grep("MysidCPUE", SMSCG_files)]
 SMSCG_Macro_amphfile<-SMSCG_files[grep("AmphipodCPUE", SMSCG_files)]
 
-Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_mysfile),
-           destfile=file.path(Data_folder, FMWTSTN_Macro_mysfile), mode="wb", method="libcurl")
-Tryer(n=3, fun=download.file, url=paste0(FMWTSTN_URL, FMWTSTN_Macro_amphfile),
-           destfile=file.path(Data_folder, FMWTSTN_Macro_amphfile), mode="wb", method="libcurl")
-Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Macro_mysfile),
-           destfile=file.path(Data_folder, SMSCG_Macro_mysfile), mode="wb", method="libcurl")
-Tryer(n=3, fun=download.file, url=paste0(SMSCG_URL, SMSCG_Macro_amphfile),
-           destfile=file.path(Data_folder, SMSCG_Macro_amphfile), mode="wb", method="libcurl")
+Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_mysfile,
+           destfile=file.path(Data_folder, names(FMWTSTN_Macro_mysfile)), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_amphfile,
+           destfile=file.path(Data_folder, names(FMWTSTN_Macro_amphfile)), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=SMSCG_Macro_mysfile,
+           destfile=file.path(Data_folder, names(SMSCG_Macro_mysfile)), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=SMSCG_Macro_amphfile,
+           destfile=file.path(Data_folder, names(SMSCG_Macro_amphfile)), mode="wb", method="curl")
 
-names_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_mysfile),
+names_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_mysfile)),
                                              sheet = "FMWT Mysid CPUE Matrix", col_types = "text")%>%
   names()
 
-names_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, FMWTSTN_Macro_amphfile),
+names_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_amphfile)),
                                             sheet = "FMWT amphipod CPUE", col_types = "text")%>%
   names()
 
-names_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_mysfile),
+names_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_mysfile)),
                                               sheet = "SMSCG Mysid CPUE", col_types = "text")%>%
   names()
 
-names_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, SMSCG_Macro_amphfile),
+names_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_amphfile)),
                                              sheet = "AmphipodCPUE", col_types = "text")%>%
   names()
 

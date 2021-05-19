@@ -1,4 +1,8 @@
 
+* Added some simple progress messages to `Zoopdownloader`.
+* Re-implemented use of the dtplyr package to greatly speed up computation, now that support for `dplyr::across` has been implemented. dtplyr >1.1.0 must be used for this to work.
+* Fixed annoying warning message from `Zoopdownloader` function that 2 Datetimes failed to parse. Resulting dataset unchanged
+* Redirected data downloads (for those datasets not on EDI) toward the new CDFW filelib website (https://filelib.wildlife.ca.gov/Public) instead of the old FTP (ftp://ftp.wildlife.ca.gov) by creating a new function to pull file lists from HTMLs (and a new dependency on rvest), replacing the old function to do the same with FTPs
 * Changed internals to apply 3 tries to each attempt to access a URL
 * Fixed CDFW FTP URL
 * Fixing 20mm bottom depths (formally in feet, now correcting to meters like all other studies are converted).

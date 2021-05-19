@@ -149,11 +149,11 @@ LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g
     dplyr::filter(.data$N>1)%>% # No need to sum up categories if there is only 1 taxa in the category
     dplyr::ungroup()%>%
     dplyr::select(-tidyselect::all_of(c("N", "Taxname", Groupers)))%>%
-    #dtplyr::lazy_dt()%>%
+    dtplyr::lazy_dt()%>%
     dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")%>% #Add up all members of each grouping taxon
+    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
     dplyr::ungroup()%>%
-    #tibble::as_tibble()%>%
+    tibble::as_tibble()%>%
     dplyr::mutate(Taxname=!!Taxalevel2) #Add summarized group names to Taxname
   return(out)
 }
