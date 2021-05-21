@@ -1,3 +1,4 @@
+# zooper 2.0.0
 
 * Added some simple progress messages to `Zoopdownloader`.
 * Re-implemented use of the dtplyr package to greatly speed up computation, now that support for `dplyr::across` has been implemented. dtplyr >1.1.0 must be used for this to work.
