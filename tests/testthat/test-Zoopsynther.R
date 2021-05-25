@@ -12,6 +12,7 @@ test_that("Community option produces messages", {
                   summarise(N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
+                            N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
                             CPUE_total=sum(CPUE)), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
@@ -30,6 +31,7 @@ test_that("Taxa option produces messages", {
                   summarise(N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
+                            N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID[which(Order!="Amphipoda")]))), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
@@ -61,12 +63,20 @@ test_that("Community dataset contains no duplicated rows", {
   expect_equal(com$N, com$N_Taxsamples)
 })
 
+test_that("Community dataset contains no NA Volumes", {
+  expect_equal(com$N_Volume_NA, 0)
+})
+
 test_that("Community dataset with time consistency contains no duplicated rows", {
   expect_equal(comTime$N, comTime$N_Taxsamples)
 })
 
 test_that("Taxa dataset contains no duplicated rows", {
   expect_equal(tax$N, tax$N_Taxsamples)
+})
+
+test_that("Taxa dataset contains no NA Volumes", {
+  expect_equal(tax$N_Volume_NA, 0)
 })
 
 test_that("Community dataset with time consistency contains same total CPUE as normal community dataset", {

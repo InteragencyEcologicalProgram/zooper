@@ -285,7 +285,7 @@ Zoopdownloader <- function(
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$TowTime),
                                                                        NA_character_,
                                                                        paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime))),
-                                                                       "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
+                                                        "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Survey, -.data$Station, -.data$TowTime, -.data$Temp, -.data$TopEC,
                                  -.data$BottomEC, -.data$Secchi, -.data$Turbidity, -.data$Tide, -.data$BottomDepth, -.data$Duration, -.data$MeterCheck, -.data$Volume,
                                  -.data$Dilution, -.data$SampleID, -.data$Datetime),
@@ -318,7 +318,8 @@ Zoopdownloader <- function(
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+      dplyr::mutate(Source="20mm",
+                    SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
 
     cat("\n20mm_Meso finished!\n\n")
   }

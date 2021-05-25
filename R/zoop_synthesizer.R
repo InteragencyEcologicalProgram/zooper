@@ -145,6 +145,11 @@ Zoopsynther<-function(
       dplyr::filter(.data$Taxname%in%Taxnamefinder(Crosswalk, Taxa))
   }
 
+  # Recode 20mm to twentymm to keep this script running correctly
+
+  ZoopEnv<-dplyr::mutate(ZoopEnv, Source=dplyr::recode(.data$Source, "20mm"= "twentymm"))
+  Zoop<-dplyr::mutate(Zoop, Source=dplyr::recode(.data$Source, "20mm"= "twentymm"))
+
   #Filter by data sources and environment
 
   ZoopEnv<-dplyr::filter(ZoopEnv, .data$Source%in%Sources)
@@ -393,6 +398,8 @@ Zoopsynther<-function(
         dplyr::mutate(Year=as.integer(lubridate::year(.data$Date)))%>%
         dplyr::pull(.data$Year)%>%
         unique()
+
+      StartDates<-dplyr::mutate(StartDates, Source=dplyr::recode(.data$Source, "20mm"= "twentymm"))
 
       BadYears<-purrr::map2_dfr(datasets$Source, datasets$SizeClass, ~ Uncountedyears(Source = .x,
                                                                                       Size_class = .y,

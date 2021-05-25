@@ -1,3 +1,7 @@
+* Added tests to ensure no volume values are ever NA.
+* Changed the name of the 20mm dataset to "20mm" everywhere for consistency. Previously, the output of `Zoopdownloader` would have the name as "twentymm", as would the built-in datasets, and the stations dataset.
+* Added 2020 20mm data
+
 # zooper 2.0.0
 
 * Added some simple progress messages to `Zoopdownloader`.

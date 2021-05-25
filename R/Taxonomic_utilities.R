@@ -56,7 +56,7 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
   }
 
   #Find all combinations of source and sizeclass present in the zooplankton dataset
-  Sources<-unique(paste(Data$Source, Data$SizeClass, sep="_"))
+  Sources<-unique(paste(dplyr::recode(Data$Source, "20mm"= "twentymm"), Data$SizeClass, sep="_"))
 
   #apply above function across all unique combos of source and size class
   SourceTaxaKey<-purrr::map_dfr(Sources, SourceTaxaLister, Crosswalk)%>%
