@@ -1,3 +1,5 @@
+# zooper 2.2.0
+
 * Updated to a corrected version of the 20mm dataset.
 
 # zooper 2.1.0
