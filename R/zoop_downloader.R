@@ -277,7 +277,7 @@ Zoopdownloader <- function(
 
     zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_file)),
                                       sheet="20-mm CB CPUE Data",
-                                      col_types = c("date", rep("numeric", 3), "date", rep("numeric", 80)))
+                                      col_types = c("date", rep("numeric", 3), "date", rep("numeric", 5), "text", rep("numeric", 74)))
 
     data.list[["twentymm_Meso"]]<-zoo_20mm_Meso%>%
       dplyr::mutate(SampleID = paste(.data$Station, .data$SampleDate, .data$TowNum),
@@ -301,7 +301,6 @@ Zoopdownloader <- function(
       dplyr::mutate(Source="twentymm",
                     SizeClass="Meso",
                     Station=as.character(.data$Station),
-                    Tide=as.character(.data$Tide),
                     Taxlifestage=paste(.data$Taxname, .data$Lifestage),#add variable for data source, create variable for combo taxonomy x life stage
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
