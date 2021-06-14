@@ -5,7 +5,7 @@
 \alias{crosswalk}
 \title{Taxonomic crosswalk among datasets}
 \format{
-a tibble with 317 rows and 28 variables
+a tibble with 318 rows and 28 variables
 \describe{
   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}

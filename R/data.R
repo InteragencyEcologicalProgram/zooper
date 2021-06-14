@@ -2,7 +2,7 @@
 #'
 #' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic hierarchies.
 #'
-#' @format a tibble with 317 rows and 28 variables
+#' @format a tibble with 318 rows and 28 variables
 #' \describe{
 #'   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
 #'   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}
