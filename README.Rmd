@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/InteragencyEcologicalProgram/zooper/workflows/R-CMD-check/badge.svg)](https://github.com/InteragencyEcologicalProgram/zooper/actions)
 [![Codecov test coverage](https://codecov.io/gh/InteragencyEcologicalProgram/zooper/branch/master/graph/badge.svg)](https://codecov.io/gh/InteragencyEcologicalProgram/zooper?branch=master)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3776867.svg)](https://doi.org/10.5281/zenodo.3776867)
+[![Data DOI](https://img.shields.io/badge/Data%20publication%20DOI-10.6073/pasta/e67851d690088a1244f69fb38d6659d6-blue.svg)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539)
 <!-- badges: end -->
 
 An R package to download and integrate zooplankton data from the Sacramento San Joaquin Delta.
