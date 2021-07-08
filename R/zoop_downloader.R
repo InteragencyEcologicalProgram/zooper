@@ -136,8 +136,12 @@ Zoopdownloader <- function(
     data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"))%>% #create a variable for datetime
+                    Datetime=dplyr::if_else(lubridate::year(.data$SampleDate)<1994, # Times are in local time (PDT/PST) before 1994 and just PST (Etc/GMT+8) after
+                                     lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"),
+                                     lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8")), #create a variable for datetime
+                    Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Datetime, -.data$Depth),
                           names_to="EMP_Meso", values_to="CPUE")%>% #transform from wide to long
@@ -549,8 +553,12 @@ Zoopdownloader <- function(
 
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"))%>%
+                    Datetime=dplyr::if_else(lubridate::year(.data$SampleDate)<1994, # Times are in local time (PDT/PST) before 1994 and just PST (Etc/GMT+8) after
+                                            lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                       c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"),
+                                            lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                       c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8")), #create a variable for datetime
+                    Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Time, -.data$Datetime, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
