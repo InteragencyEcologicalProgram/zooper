@@ -115,7 +115,7 @@ Zoopdownloader <- function(
                                                              Volume="d", Depth="d", ACARTELA="d", ACARTIA="d",
                                                              DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
                                                              PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
-                                                             TORTANUS="d", AVERNAL="d", LIMNOSPP="d",
+                                                             TORTANUS="d", ACANTHO="d", LIMNOSPP="d",
                                                              LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
                                                              OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
                                                              HARPACT="d", CALJUV="d", EURYJUV="d",
@@ -136,7 +136,8 @@ Zoopdownloader <- function(
     data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$SampleDate, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>% #create a variable for datetime
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"))%>% #create a variable for datetime
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Datetime, -.data$Depth),
                           names_to="EMP_Meso", values_to="CPUE")%>% #transform from wide to long
@@ -548,7 +549,8 @@ Zoopdownloader <- function(
 
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$SampleDate, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")))%>%
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Time, -.data$Datetime, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
@@ -709,7 +711,7 @@ Zoopdownloader <- function(
                   SalBott=wql::ec2pss(.data$CondBott/1000, t=25),
                   Year=lubridate::year(.data$Date))%>%
     dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
-    dplyr::select(-.data$Region, -.data$CondBott, -.data$CondSurf)%>% #Remove some extraneous variables to save memory
+    dplyr::select(-tidyselect::any_of(c("Region", "CondBott", "CondSurf")))%>% #Remove some extraneous variables to save memory
     dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
 
   stationsEMPEZ<-zooper::stationsEMPEZ

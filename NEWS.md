@@ -1,3 +1,5 @@
+# Added 2020 EMP data (NOTE there are outstanding issues with the EMP times, which may be off by 1 hour, and the bottom depth values, two of which are 0 which should be incorrect).
+
 # zooper 2.2.0
 
 * Updated to a corrected version of the 20mm dataset.
