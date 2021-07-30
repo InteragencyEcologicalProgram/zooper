@@ -24,7 +24,7 @@ Data_folder<-tempdir()
 # EMP Meso ----------------------------------------------------------------
 
 EMP_Meso_file<-"cb_matrix.csv"
-EMP_Meso_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Meso_file])
+EMP_Meso_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Meso_file])
 Tryer(n=3, fun=download.file, url=EMP_Meso_URL, destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
 
 
@@ -48,9 +48,8 @@ names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso
                                        col_types = "text")%>%
   names()
 
-names_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, names(SMSCG_Meso_file)),
-                                     sheet = "SMSCGZoopCPUE",
-                                     col_types = "text")%>%
+names_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file)),
+                                     col_types = "c")%>%
   names()
 
 
@@ -69,7 +68,7 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_f
 
 # FRP Meso ----------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
+Tryer(n=3, fun=download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
            destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
 
 names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
@@ -80,7 +79,7 @@ names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
 # EMP Micro ---------------------------------------------------------------
 
 EMP_Micro_file<-"pump_matrix.csv"
-EMP_Micro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Micro_file])
+EMP_Micro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Micro_file])
 Tryer(n=3, fun=download.file, url=EMP_Micro_URL,
              destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
 
@@ -91,7 +90,7 @@ names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
 
 # FRP Macro ---------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+Tryer(n=3, fun=download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
            destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
 
 names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
@@ -102,7 +101,7 @@ names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
 # EMP Macro ---------------------------------------------------------------
 
 EMP_Macro_file<-"mysid_matrix.csv"
-EMP_Macro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Macro_file])
+EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
 Tryer(n=3, fun=download.file, url=EMP_Macro_URL,
              destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
@@ -177,16 +176,17 @@ test_that("FMWTSTN Meso column names have not changed", {
 })
 
 test_that("SMSCG Meso column names have not changed", {
-  expect_setequal(names_SMSCG_Meso, c('Year', 'Project', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time', 'TowDuration',
-                                      'Region', 'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'SurfSalinityGroup',
-                                      'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
-                                      'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR', 'SINOCAL',
-                                      'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM',
-                                      'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'EURYJUV', 'OTHCALJUV', 'PDIAPJUV', 'SINOCALJUV',
-                                      'ASINEJUV', 'ACARJUV', 'DIAPTJUV', 'TORTJUV', 'ALLCALJUV', 'LIMNOJUV', 'OITHJUV', 'OTHCYCJUV',
-                                      'ALLCYCJUV', 'EURYNAUP', 'OTHCOPNAUP', 'PDIAPNAUP', 'SINONAUP', 'ALLCOPNAUP', 'BOSMINA',
-                                      'DAPHNIA', 'DIAPHAN', 'OTHCLADO', 'ALLCLADOCERA', 'ASPLANCH', 'KERATELA', 'OTHROT',
-                                      'POLYARTH', 'SYNCH', 'TRICHO', 'ALLROTIFERS', 'BARNNAUP', 'CRABZOEA', 'OSTRACOD', 'CUMAC'))
+  expect_setequal(names_SMSCG_Meso, c('Project' , 'Year' , 'Survey' , 'Month' , 'Date' , 'Station' , 'Time' , 'TowDuration' , 'Region' ,
+                                      'TideCode' , 'DepthBottom' , 'CondSurf' , 'PPTSurf' , 'CondBott' , 'PPTBott' , 'TempSurf' ,
+                                      'TempBottom' , 'Secchi' , 'Turbidity' , 'Microcystis' , 'TotalMeter' , 'Volume' , 'ACARTELA' ,
+                                      'ACARTIA' , 'DIAPTOM' , 'EURYTEM' , 'OTHCALAD' , 'PDIAPFOR' , 'PDIAPMAR' , 'SINOCAL' , 'TORTANUS' ,
+                                      'ALLCALADULTS' , 'ACANTHO' , 'LIMNOSPP' , 'LIMNOSINE' , 'LIMNOTET' , 'OITHDAV' , 'OITHSIM' ,
+                                      'OITHSPP' , 'OTHCYCAD' , 'ALLCYCADULTS' , 'HARPACT' , 'EURYJUV' , 'OTHCALJUV' , 'PDIAPJUV' ,
+                                      'SINOCALJUV' , 'ASINEJUV' , 'ACARJUV' , 'DIAPTJUV' , 'TORTJUV' , 'ALLCALJUV' , 'LIMNOJUV' ,
+                                      'OITHJUV' , 'OTHCYCJUV' , 'ALLCYCJUV' , 'EURYNAUP' , 'OTHCOPNAUP' , 'PDIAPNAUP' , 'SINONAUP' ,
+                                      'ALLCOPNAUP' , 'BOSMINA' , 'DAPHNIA' , 'DIAPHAN' , 'OTHCLADO' , 'ALLCLADOCERA' , 'ASPLANCH' ,
+                                      'KERATELA' , 'OTHROT' , 'POLYARTH' , 'SYNCH' , 'TRICHO' , 'ALLROTIFERS' , 'BARNNAUP' , 'CRABZOEA' ,
+                                      'OSTRACOD' , 'CUMAC'))
 })
 
 test_that("20mm Meso column names have not changed", {

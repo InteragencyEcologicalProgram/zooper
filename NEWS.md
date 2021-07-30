@@ -1,3 +1,6 @@
+# Updated EDI download URLs to use pasta links
+# Added 2020 SMSCG data
+# Added updated 2020 EMP data with corrected depth values and corrected timezones
 # Added 2020 EMP data (NOTE there is an outstanding issues with the EMP bottom depth values, two of which are 0 which should be incorrect).
 
 # zooper 2.2.0

@@ -16,6 +16,10 @@ try_number <- 1
     )}
   out<-"Error"
 while(rlang::is_string(out) & all(stringr::str_starts(out, "Error")) & try_number <= n){
+
+  if(try_number>1){
+    Sys.sleep(2)
+    }
   try_number <- try_number  + 1
   out <- tryer(fun, ...)
 

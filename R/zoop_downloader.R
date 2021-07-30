@@ -97,7 +97,7 @@ Zoopdownloader <- function(
   if("EMP_Meso"%in%Data_sets) {
 
     EMP_Meso_file<-"cb_matrix.csv"
-    EMP_Meso_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Meso_file])
+    EMP_Meso_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Meso_file])
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
@@ -136,11 +136,8 @@ Zoopdownloader <- function(
     data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=dplyr::if_else(lubridate::year(.data$SampleDate)<1994, # Times are in local time (PDT/PST) before 1994 and just PST (Etc/GMT+8) after
-                                     lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"),
-                                     lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8")), #create a variable for datetime
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Datetime, -.data$Depth),
@@ -197,20 +194,39 @@ Zoopdownloader <- function(
 
     # Import the FMWT data
 
-    suppressWarnings(zoo_FMWT_Meso <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
+    zoo_FMWT_Meso <- suppressWarnings(readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
                                                          sheet = "FMWT&STN ZP CPUE",
                                                          col_types=c("text", rep("numeric", 3), "date", "text", "text",
                                                                      "text", "numeric", rep("text", 3), rep("numeric", 3),
-                                                                     "text", rep("numeric", 6), "text", rep("numeric", 55)))%>%
-                       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station)))
+                                                                     "text", rep("numeric", 6), "text", rep("numeric", 55))))%>%
+      dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
+                    Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"))
 
-    zoo_SMSCG_Meso<-readxl::read_excel(file.path(Data_folder, names(SMSCG_Meso_file)),
-                                       sheet="SMSCGZoopCPUE",
-                                       col_types=c("text", rep("numeric", 3), "date", "text", "text",
-                                                   "text", "numeric", rep("text", 3), rep("numeric", 3),
-                                                   "text", rep("numeric", 6), "text", rep("numeric", 55)))%>%
+    zoo_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file)),
+                                    col_types=readr::cols_only(Project="c", Year="d", Survey="d",
+                                                               Date="c", Station="c", Time="c",
+                                                               TideCode="c", DepthBottom="d", CondSurf="d",
+                                                               PPTSurf="d", CondBott="d", PPTBott="d",
+                                                               TempSurf="d", TempBottom="d", Secchi="d",
+                                                               Turbidity="d", Microcystis="c", Volume="d",
+                                                               ACARTELA="d", ACARTIA="d", DIAPTOM="d",
+                                                               EURYTEM="d", OTHCALAD="d", PDIAPFOR="d",
+                                                               PDIAPMAR="d", SINOCAL="d", TORTANUS="d",
+                                                               ACANTHO="d", LIMNOSPP="d", LIMNOSINE="d",
+                                                               LIMNOTET="d", OITHDAV="d", OITHSIM="d",
+                                                               OTHCYCAD="d", HARPACT="d", EURYJUV="d",
+                                                               OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
+                                                               ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
+                                                               TORTJUV="d", LIMNOJUV="d", OITHJUV="d",
+                                                               OTHCYCJUV="d", EURYNAUP="d", OTHCOPNAUP="d",
+                                                               PDIAPNAUP="d", SINONAUP="d", BOSMINA="d",
+                                                               DAPHNIA="d", DIAPHAN="d", OTHCLADO="d",
+                                                               ASPLANCH="d", KERATELA="d", OTHROT="d",
+                                                               POLYARTH="d", SYNCH="d", TRICHO="d",
+                                                               BARNNAUP="d", CRABZOEA="d", OSTRACOD="d", CUMAC="d"))%>%
       dplyr::mutate(Project=dplyr::recode(.data$Project, TNS="STN"),
-                    ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
+                    ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
+                    Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Meso$ID) & .data$Project!="EMP")%>%
       dplyr::mutate(Station=dplyr::if_else(.data$Project=="FRP", paste(.data$Project, .data$Station), .data$Station),
                     Project=dplyr::recode(.data$Project, FRP="STN"))
@@ -221,8 +237,9 @@ Zoopdownloader <- function(
     data.list[["FMWT_Meso"]] <- zoo_FMWT_Meso%>%
       dplyr::bind_rows(zoo_SMSCG_Meso)%>%
       dplyr::select(-.data$ID)%>%
-      dplyr::mutate(Datetime=suppressWarnings(lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M", tz="America/Los_Angeles")), #create a variable for datetime
-                    Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"))%>%
+      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time) | !stringr::str_detect(.data$Time, stringr::fixed(":")),
+                                                                       NA_character_,
+                                                                       paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"))%>% #create a variable for datetime
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Month, -.data$Date, -.data$Datetime,
                                  -.data$Station, -.data$Index, -.data$Time, -.data$TowDuration,
                                  -.data$Region, -.data$FLaSHRegionGroup, -.data$TideCode,
@@ -290,7 +307,7 @@ Zoopdownloader <- function(
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$TowTime),
                                                                        NA_character_,
                                                                        paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime))),
-                                                        "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>%
+                                                        "%Y-%m-%d %H:%M", tz="America/Los_Angeles"))%>%
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Survey, -.data$Station, -.data$TowTime, -.data$Temp, -.data$TopEC,
                                  -.data$BottomEC, -.data$Secchi, -.data$Turbidity, -.data$Tide, -.data$BottomDepth, -.data$Duration, -.data$MeterCheck, -.data$Volume,
                                  -.data$Dilution, -.data$SampleID, -.data$Datetime),
@@ -336,18 +353,21 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=d4c76f209a0653aa86bab1ff93ab9853",
+      Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
             destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
-                                    col_types = "cctddddddddcccdddddc", na=c("", "NA"))
+                                    col_types = "cccddddddddcccdddddc", na=c("", "NA"))
 
     #Already in long format
     data.list[["FRP_Meso"]] <- zoo_FRP_Meso%>%
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr"))%>% #Rename inconsistent station names to match
-      dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
+      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$time),
+                                                                       NA_character_,
+                                                                       paste(.data$Date, .data$time)),
+                                                        "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))%>% #Create a variable for datetime
       dplyr::mutate(Source="FRP", #add variable for data source
                     SizeClass="Meso",
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
@@ -411,7 +431,7 @@ Zoopdownloader <- function(
   if("EMP_Micro"%in%Data_sets) {
 
     EMP_Micro_file<-"pump_matrix.csv"
-    EMP_Micro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Micro_file])
+    EMP_Micro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Micro_file])
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
@@ -481,19 +501,22 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.2&entityid=630f16b33a9cbf75f1989fc18690a6b3",
+      Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
             destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
     }
 
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
-                                     col_types = "cctcddddddddccdddcddc", na=c("", "NA"))
+                                     col_types = "ccccddddddddccdddcddc", na=c("", "NA"))
 
     #Already in long format
     data.list[["FRP_Macro"]] <- zoo_FRP_Macro%>%
       dplyr::filter(.data$Sampletype=="trawl")%>%
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr", MINSLO1="MinSlo1", ProBR="ProBr", WinBR="WinBr"))%>% #Rename inconsistent station names to match
-      dplyr::mutate(Datetime=lubridate::parse_date_time(paste0(.data$Date, " ", lubridate::hour(.data$time), ":", lubridate::minute(.data$time)), "%Y-%m-%d %%H:%M", tz="America/Los_Angeles"))%>% #Create a variable for datetime
+      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$time),
+                                                                       NA_character_,
+                                                                       paste(.data$Date, .data$time)),
+                                                        "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))%>% #Create a variable for datetime
       dplyr::mutate(Source = "FRP",
                     SizeClass = "Macro",
                     CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
@@ -529,7 +552,7 @@ Zoopdownloader <- function(
   if("EMP_Macro"%in%Data_sets) {
 
     EMP_Macro_file<-"mysid_matrix.csv"
-    EMP_Macro_URL<-paste0("https://portal.edirepository.org/nis/dataviewer?packageid=edi.522.", EMP_latest_revision, "&entityid=", EMP_entities[EMP_Macro_file])
+    EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
@@ -553,11 +576,8 @@ Zoopdownloader <- function(
 
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=dplyr::if_else(lubridate::year(.data$SampleDate)<1994, # Times are in local time (PDT/PST) before 1994 and just PST (Etc/GMT+8) after
-                                            lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                                       c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="America/Los_Angeles"),
-                                            lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                                       c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8")), #create a variable for datetime
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Time, -.data$Datetime, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth),
@@ -660,7 +680,7 @@ Zoopdownloader <- function(
                     Time=dplyr::if_else(!is.na(.data$Time2), NA_character_, .data$Time),
                     Time2=readr::parse_double(stringr::str_split(.data$Time2, ":", simplify=T)[,2])/60 + readr::parse_double(stringr::str_split(.data$Time2, ":", simplify=T)[,1]),
                     Time=dplyr::if_else(!is.na(.data$Time2), .data$Time2, readr::parse_double(.data$Time)*24),
-                    Time=dplyr::if_else(is.na(.data$Time), NA_character_, paste(floor(.data$Time), round((.data$Time-floor(.data$Time))*60), sep=":")),
+                    Time=dplyr::if_else(is.na(.data$Time), NA_character_, paste(floor(.data$Time), stringr::str_pad(floor((.data$Time-floor(.data$Time))*60), width=2, side="left", pad="0"), sep=":")),
                     Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"),
                     Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"),
                     Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime

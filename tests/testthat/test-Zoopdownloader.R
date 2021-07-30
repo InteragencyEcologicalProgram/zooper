@@ -37,7 +37,7 @@ test_that("Date and Datetime and displaying the same dates", {
 })
 
 test_that("Bottom depths are within reasonable limits", {
-  #expect_true(all(Data$Environment$BottomDepth > 0.5 | is.na(Data$Environment$BottomDepth)))
+  expect_true(all(Data$Environment$BottomDepth > 0.5 | is.na(Data$Environment$BottomDepth)))
   expect_true(all(Data$Environment$BottomDepth < 35 | is.na(Data$Environment$BottomDepth)))
 })
 
