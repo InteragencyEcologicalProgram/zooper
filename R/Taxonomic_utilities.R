@@ -181,7 +181,7 @@ Datareducer<-function(Data, Reduced_vars){
   out<-Data%>%
     dplyr::select(tidyselect::all_of(Reduced_vars))%>%
     dplyr::distinct()%>%
-    tidyr::pivot_longer(cols=Reduced_vars, names_to = "Level", values_to = "Taxa")%>%
+    tidyr::pivot_longer(cols=tidyselect::all_of(Reduced_vars), names_to = "Level", values_to = "Taxa")%>%
     tidyr::drop_na()%>%
     dplyr::pull(.data$Taxa)%>%
     unique()

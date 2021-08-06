@@ -250,9 +250,9 @@ Zoopsynther<-function(
 
   #Apply commontaxer to every taxa level
   Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
-                  rep(Taxcats, length(Size_classes)),
-                  ~Commontaxer(SourceTaxaKey, .y, .x),
-                  .id = "SizeClass")
+                                rep(Taxcats, length(Size_classes)),
+                                ~Commontaxer(SourceTaxaKey, .y, .x),
+                                .id = "SizeClass")
 
   # Make list of taxalifestages that do not appear in all datasets
   Lumper<-function(Sizeclass){
@@ -343,10 +343,16 @@ Zoopsynther<-function(
     Zoop<-purrr::map_dfr(Taxcats_g, .f=LCD_Taxa, Data=Zoop%>%
                            dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species, -.data$Taxlifestage))%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
       dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
+      dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>% #Add warnings for taxa undersampled by different methods
+      dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
+      dplyr::select(-.data$Taxlifestage)%>%
       dplyr::mutate(Taxname = paste(.data$Taxname, "all", .data$SizeClass, sep="_"), #Differentiate grouped Taxnames from others
                     Taxatype = "Summed group")%>% #Add a label to these summed groups so they can be removed later if users wish)
       dplyr::bind_rows(Zoop%>% #Bind these summarized groupings to the original taxonomic categories in the original dataset
-                         dplyr::mutate(Taxatype=dplyr::if_else(.data$Taxname%in%unique(unlist(Groups, use.names = FALSE)), "UnID species", "Species")))%>%
+                         dplyr::mutate(Taxatype=dplyr::if_else(.data$Taxname%in%unique(unlist(Groups, use.names = FALSE)), "UnID species", "Species"))%>%
+                         dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>% #Add warnings for taxa undersampled by different methods
+                         dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE)))%>%
       dplyr::ungroup()
 
     rm(Groups)
@@ -538,6 +544,8 @@ Zoopsynther<-function(
                          dplyr::distinct(),
                        by="Taxlifestage"
       )%>%
+      dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>% #Add warnings for taxa undersampled by different methods
+      dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
       dplyr::mutate(Taxname=dplyr::if_else(.data$Taxname%in%UniqueSpecies, .data$Taxname, paste0(.data$Taxname, "_UnID")))%>%
       dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::left_join(ZoopEnv%>%
@@ -548,10 +556,7 @@ Zoopsynther<-function(
                          }}, by="SampleID")
   }
 
-  #Add warnings for taxa undersampled by different methods
   Zoop<-Zoop%>%
-    dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>%
-    dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
     dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm"))
 
   out<-list(Data=Zoop, Caveats=caveats)

@@ -15,14 +15,16 @@ test_that("Community option produces messages", {
                             N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
-                            CPUE_total=sum(CPUE)), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            CPUE_total=sum(CPUE),
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
   expect_output(comTime <<- Zoopsynther(Data_type="Community", Time_consistency = TRUE)%>%
                   summarise(N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
-                            CPUE_total=sum(CPUE)), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            CPUE_total=sum(CPUE),
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
 
 })
 
@@ -33,7 +35,8 @@ test_that("Taxa option produces messages", {
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
-                            Samples = list(unique(SampleID[which(Order!="Amphipoda")]))), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
+                            Samples = list(unique(SampleID[which(Order!="Amphipoda")])),
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
 Data_source <- c("EMP", "FMWT", "STN", "20mm", "FRP", "EMP", "FRP", "EMP", "FMWT", "STN")
@@ -83,12 +86,55 @@ test_that("Community dataset with time consistency contains same total CPUE as n
   expect_equal(comTime$CPUE_total, com$CPUE_total)
 })
 
-
 ### !!! AMPHIPODS WERE EXCLUDED BECAUSE THEY ARE REMOVED FROM COMMUNITY DATASET SINCE THEY ARE NOT SAMPLED IN ALL MACRO DATASETS !!! ###
 test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
 })
 
+# Test the Undersampled flag is correctly applied
+Crosswalk_reduced<-zooper::crosswalk%>%
+  select(c(Taxname, all_of(c("Genus", "Family", "Order", "Class", "Phylum")), Lifestage))%>%
+  mutate(Taxlifestage=paste(Taxname, Lifestage))%>%
+  distinct()%>%
+  select(-Lifestage, -Taxlifestage)%>%
+  distinct()
+
+#Create dataframe of undersampled taxa
+Undersampled<-zooper::undersampled%>%
+  left_join(Crosswalk_reduced, by="Taxname")%>%
+  pivot_longer(cols=c(Phylum, Class, Order, Family, Genus, Taxname), names_to = "Level", values_to = "Taxa")%>%
+  drop_na()%>%
+  mutate(Taxlifestage = paste(Taxa, Lifestage),
+                Undersampled = TRUE)%>%
+  select(SizeClass, Taxlifestage, Undersampled)%>%
+  distinct()
+
+com_undersampled<-com$Taxa[[1]]%>%
+  filter(!Undersampled)%>%
+  select(-Undersampled)%>%
+  left_join(Undersampled, by=c("SizeClass", "Taxlifestage"))
+
+comTime_undersampled<-comTime$Taxa[[1]]%>%
+  filter(!Undersampled)%>%
+  select(-Undersampled)%>%
+  left_join(Undersampled, by=c("SizeClass", "Taxlifestage"))
+
+tax_undersampled<-tax$Taxa[[1]]%>%
+  filter(!Undersampled)%>%
+  select(-Undersampled)%>%
+  left_join(Undersampled, by=c("SizeClass", "Taxlifestage"))
+
+test_that("Community dataset has correctly labeled undersampled taxa", {
+  expect_true(all(is.na(com_undersampled$Undersampled)))
+})
+
+test_that("Community dataset with time consistency has correctly labeled undersampled taxa", {
+  expect_true(all(is.na(comTime_undersampled$Undersampled)))
+})
+
+test_that("Taxa dataset has correctly labeled undersampled taxa", {
+  expect_true(all(is.na(tax_undersampled$Undersampled)))
+})
 # Test that zoopsynther community approach does not change overall CPUE
 
 data_com<-Zoopsynther("Community", Shiny = T)

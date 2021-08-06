@@ -1,3 +1,4 @@
+# Fixed error where Undersampled taxa were not being flagged, identified by Rosemary Hartman
 # Updated EDI download URLs to use pasta links
 # Added 2020 SMSCG data
 # Added updated 2020 EMP data with corrected depth values and corrected timezones
