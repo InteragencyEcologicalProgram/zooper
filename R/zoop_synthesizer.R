@@ -472,7 +472,7 @@ Zoopsynther<-function(
       dplyr::mutate(dplyr::across(tidyselect::all_of(Taxcats), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage)))))%>% #Create taxa x life stage variable for each taxonomic level
       dplyr::mutate(dplyr::across(tidyselect::all_of(paste0(Taxcats, "_lifestage")), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_)))%>%
       dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass)%>% #only retain columns we need
-      dplyr::filter(rowAny(dplyr::across(-c(.data$SizeClass), ~!is.na(.x))))
+      dplyr::filter(dplyr::if_any(-c(.data$SizeClass), ~!is.na(.x)))
 
     #Create taxonomy table for taxa not present in all datasets, then select their new names corresponding to taxa x life stage combinations that are measured in all datasets
     LCD_Com<-function(Lumped, crosswalk, Commontaxkey){

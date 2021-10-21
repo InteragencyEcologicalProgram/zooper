@@ -17,7 +17,7 @@
 
 Taxnamefinder <- function(Crosswalk, Taxa){
   Taxnames<-Crosswalk%>%
-    dplyr::filter(rowAny(dplyr::across(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa)))%>%
+    dplyr::filter(dplyr::if_any(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa))%>%
     dplyr::select(.data$Taxname)%>%
     dplyr::distinct()%>%
     dplyr::pull()
@@ -218,12 +218,3 @@ Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
   out<-paste(sort(Taxlifestage_list), collapse=", ")
   return(out)
 }
-
-#' Find rows with any TRUE values
-#'
-#' Helper function to replace \code{dplyr::any_vars}, copied from the \code{dplyr} "colwise" vignette
-#' @param x Row.
-#'
-#' @keywords internal
-
-rowAny <- function(x) rowSums(x) > 0
