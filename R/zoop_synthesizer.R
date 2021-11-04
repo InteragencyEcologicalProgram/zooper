@@ -79,6 +79,14 @@ Zoopsynther<-function(
 
   # Setup -------------------------------------------------------------------
 
+  if(utils::packageVersion("dplyr") < "1.0.4") {
+    stop("dplyr version >= 1.0.4 is required, please update dplyr.")
+  }
+
+  if(utils::packageVersion("dtplyr") < "1.1.0") {
+    stop("dplyr version >= 1.1.0 is required, please update dtplyr.")
+  }
+
   #Warnings for improper arguments
   if (!purrr::every(Sources, ~.%in%c("EMP", "FRP", "FMWT", "STN", "20mm"))){
     stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, STN, 20mm")
@@ -507,6 +515,7 @@ Zoopsynther<-function(
 
       Removed<-Lumpedkey%>%
         dplyr::filter(.data$Taxname_new=="REMOVE")%>%
+        dplyr::mutate(Taxlifestage=paste0(.data$Taxlifestage, " (", .data$SizeClass, ")"))%>%
         dplyr::pull(.data$Taxlifestage)%>%
         unique()
 

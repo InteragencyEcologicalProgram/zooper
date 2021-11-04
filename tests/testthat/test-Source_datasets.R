@@ -100,7 +100,7 @@ names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
 
 # EMP Macro ---------------------------------------------------------------
 
-EMP_Macro_file<-"mysid_matrix.csv"
+EMP_Macro_file<-"macro_matrix.csv"
 EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
 Tryer(n=3, fun=download.file, url=EMP_Macro_URL,
@@ -233,10 +233,14 @@ test_that("FRP Macro column names have not changed", {
 })
 
 test_that("EMP Macro column names have not changed", {
-  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'Time', 'TowDuration', 'StationNZ', 'EZStation',
-                                     'DWRStationNo', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
-                                     'ECBottomPreTow', 'Volume', 'Depth', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
-                                     'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid'))
+  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation',
+                                     'DWRStationNo', 'Core', 'Region', 'Time', 'TowDuration', 'Depth', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
+                                     'ECBottomPreTow', 'Volume', 'AmphipodCode', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
+                                     'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid',
+                                     "Mysid_Total", "A_spinicorne", "A_stimpsoni", "A_abdita", "Ampithoe_sp", "Caprelidae_sp",
+                                     "C_alienense", "Crangonyx_sp", "G_daiberi", "G_japonica", "Hyalella_sp", "Monocorophium_sp",
+                                     "Oedicerotidae_sp", "Pleustidae", "Unidentified_Amphipod", "Unidentified_Corophium",
+                                     "Unidentified_Gammarus", "Amphipod_Total"))
 })
 
 test_that("FMWT Macro Mysid column names have not changed", {

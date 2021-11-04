@@ -551,7 +551,7 @@ Zoopdownloader <- function(
 
   if("EMP_Macro"%in%Data_sets) {
 
-    EMP_Macro_file<-"mysid_matrix.csv"
+    EMP_Macro_file<-"macro_matrix.csv"
     EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
     #download the file
@@ -569,7 +569,12 @@ Zoopdownloader <- function(
                                                               Volume="d", Depth="d", A_aspera="d",
                                                               A_hwanhaiensis="d", A_macropsis="d", D_holmquistae="d",
                                                               H_longirostris="d", N_kadiakensis="d", N_mercedis="d",
-                                                              Unidentified_mysid="d"))
+                                                              Unidentified_mysid="d", A_spinicorne="d", A_stimpsoni="d",
+                                                              A_abdita="d", Ampithoe_sp="d", Caprelidae_sp="d",
+                                                              C_alienense="d", Crangonyx_sp="d", G_daiberi="d",
+                                                              G_japonica="d", Hyalella_sp="d", Monocorophium_sp="d",
+                                                              Oedicerotidae_sp="d", Pleustidae="d", Unidentified_Amphipod="d",
+                                                              Unidentified_Corophium="d", Unidentified_Gammarus="d", Amphipod_Total="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -578,7 +583,8 @@ Zoopdownloader <- function(
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
                                                         c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
-                    Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
+                    Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"), # Ensure everything ends up in local time
+                    Unidentified_mysid=dplyr::if_else(lubridate::year(.data$SampleDate)<2014, .data$Amphipod_Total, .data$Unidentified_mysid))%>% # Transfer pre 2014 amphipod counts to Amphipod_total
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Time, -.data$Datetime, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
