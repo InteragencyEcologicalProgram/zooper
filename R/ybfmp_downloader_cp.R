@@ -11,8 +11,8 @@ if("YBFMP_Meso"%in%Data_sets | "YBFMP_Micro"%in%Data_sets) {
   }
 
 
-  ### Here I read in data from online as I wasn't too clear what was going on above/if I should be downloading the data first into a folder, so feel free to change.
-  # Crosswalk <- readxl::read_excel("data-raw/crosswalk.xlsx", sheet = 2) I put this here for my testing but can be removed once the crosswalk is updated.
+  ### Here I read in data from online as I wasn't too clear what was going on above/if I should be downloading the data first into a folder, so feel free to change. I also read in the crosswalk below because I wasn't sure how to get the updated version into the package.
+  Crosswalk <- readxl::read_excel("data-raw/crosswalk.xlsx", sheet = 2) #I put this here for my testing but can be removed once the crosswalk is updated.
   zoo_YBFMP<-readr::read_csv(file.path(YBFMP_URL),
                              col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
                                                           Tide="c", WaterTemperature="d", Secchi="d",
