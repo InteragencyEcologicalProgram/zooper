@@ -1,3 +1,5 @@
+# Used EMP Macro QAQC flags for amphipod data to set amphipod CPUE to NA whenever issues were detected (vegetation in net)
+# Added EMP Amphipod data
 # Fixed error where Undersampled taxa were not being flagged, identified by Rosemary Hartman
 # Updated EDI download URLs to use pasta links
 # Added 2020 SMSCG data

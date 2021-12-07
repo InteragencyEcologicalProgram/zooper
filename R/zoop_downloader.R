@@ -17,7 +17,7 @@
 #' @importFrom rlang .data
 #' @return If \code{Return_object = TRUE}, returns the combined dataset as a list or tibble, depending on whether \code{Return_object_type} is set to \code{"List"} or \code{"Combined"}. If \code{Save_object = TRUE}, writes 2 .Rds files to disk: one with the zooplankton catch data and another with accessory environmental parameters.
 #' @author Sam Bashevkin
-#' @details For more information on the source datasets see \code{\link{zooper}}.
+#' @details Note that EMP Macro samples with QAQC flags (any value of AmphipodCode other than "A") have had their Amphipod CPUE set to NA in this function. For more information on the source datasets see \code{\link{zooper}}.
 #' @examples
 #' \dontrun{
 #' Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
@@ -137,7 +137,7 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                                c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$StationNZ, -.data$Time, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
                                  -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Datetime, -.data$Depth),
@@ -566,7 +566,7 @@ Zoopdownloader <- function(
                                    col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
                                                               Chl_a="d", Secchi="d", Temperature="d",
                                                               ECSurfacePreTow="d", ECBottomPreTow="d",
-                                                              Volume="d", Depth="d", A_aspera="d",
+                                                              Volume="d", Depth="d", AmphipodCode="c", A_aspera="d",
                                                               A_hwanhaiensis="d", A_macropsis="d", D_holmquistae="d",
                                                               H_longirostris="d", N_kadiakensis="d", N_mercedis="d",
                                                               Unidentified_mysid="d", A_spinicorne="d", A_stimpsoni="d",
@@ -586,12 +586,12 @@ Zoopdownloader <- function(
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"), # Ensure everything ends up in local time
                     Unidentified_mysid=dplyr::if_else(lubridate::year(.data$SampleDate)<2014, .data$Amphipod_Total, .data$Unidentified_mysid))%>% # Transfer pre 2014 amphipod counts to Amphipod_total
       tidyr::pivot_longer(cols=c(-.data$SampleDate, -.data$Time, -.data$Datetime, -.data$StationNZ, -.data$Secchi, -.data$Chl_a, -.data$Temperature,
-                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth),
+                                 -.data$ECSurfacePreTow, -.data$ECBottomPreTow, -.data$Volume, -.data$Depth, -.data$AmphipodCode),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
       dplyr::mutate(Source="EMP",
                     SizeClass="Macro")%>% #add variable for data source
       dplyr::select(.data$Source, Date = .data$SampleDate, .data$Datetime, Station=.data$StationNZ, Chl = .data$Chl_a, CondBott = .data$ECBottomPreTow, CondSurf = .data$ECSurfacePreTow, .data$Secchi, .data$SizeClass,
-                    .data$Temperature, BottomDepth=.data$Depth, .data$Volume, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
+                    .data$Temperature, BottomDepth=.data$Depth, .data$Volume, .data$AmphipodCode, .data$EMP_Macro, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$EMP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$EMPstart, .data$EMPend)%>% #only retain EMP codes
                          dplyr::filter(!is.na(.data$EMP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
@@ -607,8 +607,8 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
-        .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
-      ))%>%
+        .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_),
+        CPUE=dplyr::if_else(.data$AmphipodCode!="A" & .data$Order=="Amphipoda", NA_real_, .data$CPUE))%>% # Remove any tainted amphipod data (e.g., veg in net)
       dplyr::select(-.data$EMP_Macro, -.data$EMPstart, -.data$EMPend, -.data$Intro)%>% #Remove EMP taxa codes
       dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
