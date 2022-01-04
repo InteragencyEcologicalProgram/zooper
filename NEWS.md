@@ -1,10 +1,10 @@
-# Used EMP Macro QAQC flags for amphipod data to set amphipod CPUE to NA whenever issues were detected (vegetation in net)
-# Added EMP Amphipod data
-# Fixed error where Undersampled taxa were not being flagged, identified by Rosemary Hartman
-# Updated EDI download URLs to use pasta links
-# Added 2020 SMSCG data
-# Added updated 2020 EMP data with corrected depth values and corrected timezones
-# Added 2020 EMP data (NOTE there is an outstanding issues with the EMP bottom depth values, two of which are 0 which should be incorrect).
+* Used EMP Macro QAQC flags for amphipod data to set amphipod CPUE to NA whenever issues were detected (vegetation in net)
+* Added EMP Amphipod data
+* Fixed error where Undersampled taxa were not being flagged, identified by Rosemary Hartman
+* Updated EDI download URLs to use pasta links
+* Added 2020 SMSCG data
+* Added updated 2020 EMP data with corrected depth values and corrected timezones
+* Added 2020 EMP data (NOTE there is an outstanding issues with the EMP bottom depth values, two of which are 0 which should be incorrect).
 
 # zooper 2.2.0
 
