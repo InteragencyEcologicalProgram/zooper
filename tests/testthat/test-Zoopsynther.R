@@ -86,7 +86,7 @@ test_that("Community dataset with time consistency contains same total CPUE as n
   expect_equal(comTime$CPUE_total, com$CPUE_total)
 })
 
-### !!! AMPHIPODS WERE EXCLUDED BECAUSE THEY ARE REMOVED FROM COMMUNITY DATASET SINCE THEY ARE NOT SAMPLED IN ALL MACRO DATASETS !!! ###
+
 test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
 })
