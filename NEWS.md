@@ -1,3 +1,5 @@
+* Updated EMP EZ station locations
+
 # zooper 2.3.0
 
 * Used EMP Macro QAQC flags for amphipod data to set amphipod CPUE to NA whenever issues were detected (vegetation in net)

@@ -67,7 +67,7 @@
 #'
 #' Latitudes and longitudes for EMP EZ stations on each sampling date from 2004 to present.
 #'
-#' @format a tibble with 412 rows and 4 columns
+#' @format a tibble with 453 rows and 4 columns
 #' \describe{
 #'   \item{Date}{Date sample was collected}
 #'   \item{Station}{Sampling station name}
