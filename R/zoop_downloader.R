@@ -194,13 +194,30 @@ Zoopdownloader <- function(
 
     # Import the FMWT data
 
-    zoo_FMWT_Meso <- suppressWarnings(readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
-                                                         sheet = "FMWT&STN ZP CPUE",
-                                                         col_types=c("text", rep("numeric", 3), "date", "text", "text",
-                                                                     "text", "numeric", rep("text", 3), rep("numeric", 3),
-                                                                     "text", rep("numeric", 6), "text", rep("numeric", 55))))%>%
+    zoo_FMWT_Meso <- readr::read_csv(file.path(Data_folder, names(FMWTSTN_Meso_file)),
+                                     col_types=readr::cols_only(Project="c", Year="d", Survey="d",
+                                                                Date="c", Station="c", Time="c",
+                                                                TideCode="c", DepthBottom="d", CondSurf="d",
+                                                                CondBott="d", TempSurf="d", Secchi="d",
+                                                                Microcystis="c", Volume="d",
+                                                                ACARTELA="d", ACARTIA="d", DIAPTOM="d",
+                                                                EURYTEM="d", OTHCALAD="d", PDIAPFOR="d",
+                                                                PDIAPMAR="d", SINOCAL="d", TORTANUS="d",
+                                                                ACANTHO="d", LIMNOSPP="d", LIMNOSINE="d",
+                                                                LIMNOTET="d", OITHDAV="d", OITHSIM="d",
+                                                                OITHSPP="d", OTHCYCAD="d", HARPACT="d",
+                                                                EURYJUV="d", OTHCALJUV="d", PDIAPJUV="d",
+                                                                SINOCALJUV="d", ASINEJUV="d", ACARJUV="d",
+                                                                DIAPTJUV="d", TORTJUV="d", LIMNOJUV="d",
+                                                                OITHJUV="d", OTHCYCJUV="d", EURYNAUP="d",
+                                                                OTHCOPNAUP="d", PDIAPNAUP="d", SINONAUP="d",
+                                                                BOSMINA="d", DAPHNIA="d", DIAPHAN="d",
+                                                                OTHCLADO="d", ASPLANCH="d", KERATELA="d",
+                                                                OTHROT="d", POLYARTH="d", SYNCH="d",
+                                                                TRICHO="d", BARNNAUP="d", CRABZOEA="d",
+                                                                OSTRACOD="d", CUMAC="d"))%>%
       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
-                    Date=lubridate::force_tz(.data$Date, "America/Los_Angeles"))
+                    Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))
 
     zoo_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file)),
                                     col_types=readr::cols_only(Project="c", Year="d", Survey="d",
@@ -240,15 +257,14 @@ Zoopdownloader <- function(
       dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time) | !stringr::str_detect(.data$Time, stringr::fixed(":")),
                                                                        NA_character_,
                                                                        paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"))%>% #create a variable for datetime
-      tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Month, -.data$Date, -.data$Datetime,
-                                 -.data$Station, -.data$Index, -.data$Time, -.data$TowDuration,
-                                 -.data$Region, -.data$FLaSHRegionGroup, -.data$TideCode,
-                                 -.data$DepthBottom, -.data$CondSurf, -.data$PPTSurf,
-                                 -.data$SurfSalinityGroup, -.data$CondBott, -.data$PPTBott,
-                                 -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,
-                                 -.data$TotalMeter, -.data$Volume),
+      tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
+                                 -.data$Station,-.data$Time, -.data$TideCode,
+                                 -.data$DepthBottom, -.data$CondSurf,
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi,
+                                 -.data$Turbidity, -.data$Microcystis,
+                                 -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, .data$Region, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes

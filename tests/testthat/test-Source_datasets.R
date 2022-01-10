@@ -43,9 +43,8 @@ Tryer(n=3, fun=download.file, url=FMWTSTN_Meso_file,
 Tryer(n=3, fun=download.file, url=SMSCG_Meso_file,
            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
 
-names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
-                                       sheet = "FMWT&STN ZP CPUE",
-                                       col_types = "text")%>%
+names_FMWTSTN_Meso<-readr::read_csv(file.path(Data_folder, names(FMWTSTN_Meso_file)),
+                                    col_types = "c")%>%
   names()
 
 names_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file)),
@@ -163,11 +162,11 @@ test_that("EMP Meso column names have not changed", {
 })
 
 test_that("FMWTSTN Meso column names have not changed", {
-  expect_setequal(names_FMWTSTN_Meso, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time', 'TowDuration', 'Region',
-                                        'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'SurfSalinityGroup',
-                                        'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
+  expect_setequal(names_FMWTSTN_Meso, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'TowDuration', 'Region',
+                                        'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf',
+                                        'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'MeterEstimate', 'Volume',
                                         'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR', 'SINOCAL',
-                                        'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM',
+                                        'TORTANUS', 'ALLCALADULTS', 'ACANTHO', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM', 'OITHSPP',
                                         'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'EURYJUV', 'OTHCALJUV', 'PDIAPJUV', 'SINOCALJUV',
                                         'ASINEJUV', 'ACARJUV', 'DIAPTJUV', 'TORTJUV', 'ALLCALJUV', 'LIMNOJUV', 'OITHJUV', 'OTHCYCJUV',
                                         'ALLCYCJUV', 'EURYNAUP', 'OTHCOPNAUP', 'PDIAPNAUP', 'SINONAUP', 'ALLCOPNAUP', 'BOSMINA',
