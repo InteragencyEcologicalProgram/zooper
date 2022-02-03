@@ -81,7 +81,7 @@
 #'
 #' All source zooplankton datasets combined into one tibble.
 #'
-#' @format a tibble with 2,421,772 rows and 14 columns.
+#' @format a tibble with 2,788,526 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "STN"= Townet Survey, and "20mm" =20mm survey.}
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
@@ -107,7 +107,7 @@
 #' Accessory environmental data from the combined zooplankton dataset. Not all datasets report all environmental parameters.
 #'
 #' @encoding UTF-8
-#' @format a tibble with 37,532 rows and 19 columns
+#' @format a tibble with 37,704 rows and 20 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "STN"= Townet Survey, and "20mm" =20mm survey.}
 #'   \item{Year}{Year sample was collected}
@@ -127,6 +127,7 @@
 #'   \item{SalBott}{Bottom salinity in PPT}
 #'   \item{Latitude}{Latitude in decimal degrees}
 #'   \item{Longitude}{Longitude in decimal degrees}
+#'   \item{AmphipodCode}{Code indicating sample quality for EMP macro amphipod samples (A=valid, B=questionable [veg/algal bloom in net], C=not valid [error in lab], D=suspect [possible missing data])}
 #'   \item{SampleID}{Unique ID of the zooplankton sample. This is the key that links to the \code{zoopComb} dataset}
 #' }
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
