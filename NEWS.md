@@ -1,3 +1,5 @@
+* Updated to newest FMWT/SMSCG macro data. 
+
 # zooper 2.3.1
 
 * Updated EMP EZ station locations
