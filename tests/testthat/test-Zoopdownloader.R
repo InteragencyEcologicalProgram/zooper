@@ -2,7 +2,8 @@ library(zooper)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
               "20mm_Meso", "FRP_Meso","EMP_Micro",
-              "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"
+              "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+              "STN_Macro", "YBFMP_Meso", "YBFMP_Micro"
               )
 
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
