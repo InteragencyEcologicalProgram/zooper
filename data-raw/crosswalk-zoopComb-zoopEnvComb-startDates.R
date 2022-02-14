@@ -10,7 +10,11 @@ crosswalk<-readxl::read_excel(file.path("data-raw", "crosswalk.xlsx"), sheet = "
   dplyr::mutate(twentymmend = dplyr::if_else(is.finite(.data$twentymmend), .data$twentymmend+lubridate::years(1), .data$twentymmend))%>% #Change end dates to beginning of next year (first day it was not counted)
   dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
 
-zoop<-Zoopdownloader(Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE, Redownload_data=TRUE, Crosswalk=crosswalk)
+zoop<-Zoopdownloader(Data_sets=c("EMP_Meso", "FMWT_Meso", "STN_Meso",
+                                 "20mm_Meso", "FRP_Meso","EMP_Micro",
+                                 "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+                                 "STN_Macro", "YBFMP_Meso", "YBFMP_Micro"),
+                     Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE, Redownload_data=TRUE, Crosswalk=crosswalk)
 
 zoopComb <- zoop$Zooplankton
 zoopEnvComb <- zoop$Environment

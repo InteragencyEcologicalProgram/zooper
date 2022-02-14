@@ -1,7 +1,7 @@
 #' Downloads and combines zooplankton datasets collected by the Interagency Ecological Program from the Sacramento-San Joaquin Delta
 #'
 #' This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey).
-#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso","EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro". Defaults to including all datasets.
+#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro". Defaults to including all datasets except the two YBFMP datasets.
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
@@ -28,7 +28,7 @@
 
 Zoopdownloader <- function(
   Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso",
-                "20mm_Meso", "FRP_Meso","EMP_Micro",
+                "20mm_Meso", "FRP_Meso", "EMP_Micro",
                 "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"),
   Data_folder = tempdir(),
   Save_object = TRUE,
@@ -47,8 +47,9 @@ Zoopdownloader <- function(
 
   if (!purrr::every(Data_sets, ~.%in%c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                        "20mm_Meso", "FRP_Meso","EMP_Micro",
-                                       "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"))){
-    stop("Data_sets must contain one or more of the following options: 'EMP_Meso', 'FMWT_Meso', 'STN_Meso', '20mm_Meso', 'FRP_Meso', 'EMP_Micro', 'FRP_Macro', 'EMP_Macro', 'FMWT_Macro', 'STN_Macro'.")
+                                       "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+                                       "STN_Macro", "YBFMP_Meso", "YBFMP_Micro"))){
+    stop("Data_sets must contain one or more of the following options: 'EMP_Meso', 'FMWT_Meso', 'STN_Meso', '20mm_Meso', 'FRP_Meso', 'EMP_Micro', 'FRP_Macro', 'EMP_Macro', 'FMWT_Macro', 'STN_Macro', 'YBFMP_Meso', 'YBFMP_Micro'.")
   }
 
   if (!Return_object_type%in%c("List", "Combined")){
@@ -71,12 +72,12 @@ Zoopdownloader <- function(
   # Find URLs ---------------------------------------------------------------
 
   if(any(c("EMP_Meso", "EMP_Macro", "EMP_Micro")%in%Data_sets)){
-    revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=revision_url, warn = FALSE), 1)
-    pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
-    EMP_entities <- Tryer(n=3, fun=readLines, con=pkg_url, warn = FALSE)
-    name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
-    names(EMP_entities) <- purrr::map_chr(name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    EMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
+    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
+    EMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
+    EMP_entities <- Tryer(n=3, fun=readLines, con=EMP_pkg_url, warn = FALSE)
+    EMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
+    names(EMP_entities) <- purrr::map_chr(EMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
   }
 
@@ -92,12 +93,22 @@ Zoopdownloader <- function(
     twentymm_files<-html_file_list(twentymm_URL)
   }
 
+  if(any(c("YBFMP_Meso", "YBFMP_Micro")%in%Data_sets)){
+    YBFMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/494"
+    YBFMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=YBFMP_revision_url, warn = FALSE), 1)
+    YBFMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/494/", YBFMP_latest_revision)
+    YBFMP_entities <- Tryer(n=3, fun=readLines, con=YBFMP_pkg_url, warn = FALSE)
+    YBFMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/494", YBFMP_latest_revision, YBFMP_entities, sep="/")
+    names(YBFMP_entities) <- purrr::map_chr(YBFMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+
+  }
+
 
   # EMP Meso ---------------------------------------------------------------------
   if("EMP_Meso"%in%Data_sets) {
 
     EMP_Meso_file<-"cb_matrix.csv"
-    EMP_Meso_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Meso_file])
+    EMP_Meso_URL<-paste0(EMP_pkg_url, "/", EMP_entities[EMP_Meso_file])
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
@@ -415,39 +426,99 @@ Zoopdownloader <- function(
 
   # YBFMP Meso/Micro -------------------------------------------------------------
 
-  #if("YBFMP"%in%Data_sets) {
+  if("YBFMP_Meso"%in%Data_sets | "YBFMP_Micro"%in%Data_sets) {
 
-  #NO IDEA WHAT TO DO ABOUT INCONSISTENT TAXONOMIC RESOLUTION WITH NO DOCUMENTATION AND LACK OF LIFE STAGE INFORMATION
+    YBFMP_file<-"Zooplankton Data"
+    YBFMP_URL<-paste0(YBFMP_pkg_url, "/", YBFMP_entities[YBFMP_file])
 
-  #   zoo_YBFMP<-readr::read_csv(file.path(Data_folder, "yolo_zoop_public.csv"), col_types = "ctddcccdddddddccccccccccccccccccdd")
+    #download the file
+    if (!file.exists(file.path(Data_folder, YBFMP_file)) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
+            destfile=file.path(Data_folder, YBFMP_file), mode="wb", method="curl")
+    }
 
-  #  data.list[["YBFMP"]]<-zoo_YBFMP%>%
-  #    dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
-  #    dplyr::mutate(Datetime=lubridate::parse_date_time(paste(.data$SampleDate, .data$SampleTime), "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"),
-  #           Source="YBFMP",
-  #           YBFMP=paste(.data$TaxonName, .data$LifeStage),
-  #           SampleID=paste(.data$SampleDate, .data$StationCode))%>%
-  #    select(.data$SampleID, Date = .data$SampleDate, Station = .data$StationCode, Temperature = .data$WaterTemperature, .data$Secchi, .data$Turbidity, CondSurf = .data$Conductivity, .data$SpCnd, .data$pH, .data$DO, .data$YBFMP, .data$Source, .data$Datetime, .data$NetSize, .data$CPUE)%>%
-  #    dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-  #                select(.data$YBFMP, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain YBFMP codes
-  #                dplyr::filter(!is.na(.data$YBFMP))%>% #Only retain Taxnames corresponding to YBFMP codes
-  #                dplyr::distinct(),
-  #              by = "YBFMP")%>%
-  #    dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
-  #    select(-.data$YBFMP)%>% #Remove YBFMP taxa codes
-  #    dtplyr::lazy_dt()%>% #Speed up code
-  #    dplyr::group_by(dplyr::across(-.data$CPUE))%>% #In case some taxa names are repeated as in EMP so
-  #    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE), .groups="drop")%>% #this just adds up those duplications
-  #    tibble::as_tibble()%>%
-  #    dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
-  #}
+    zoo_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
+                               col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
+                                                            Tide="c", WaterTemperature="d", Secchi="d",
+                                                            SpCnd="d", pH="d", DO="d", Turbidity="d",
+                                                            MicrocystisVisualRank="c", MeshSize="c", VolNet_ed="d",
+                                                            TaxonName="c", LifeStage="c", CPUE_ed="d"))%>%
+      dplyr::mutate(Index = 1:nrow(.))
+
+
+
+    # Sum doubles with unclear life stages (both labeled as undifferentiated)
+    doubles <- zoo_YBFMP %>%
+      dplyr::group_by(.data$StationCode, .data$Date, .data$Time, .data$TaxonName, .data$LifeStage, .data$MeshSize) %>%
+      dplyr::mutate(n =  dplyr::n()) %>%
+      dplyr::filter(.data$n>1)
+
+    Index_rm <- doubles$Index
+
+    doubles_summed <- stats::aggregate(CPUE_ed~TaxonName, data = doubles, FUN = sum) %>%
+      dplyr::right_join((doubles %>%
+                           dplyr::select(-.data$CPUE_ed, -.data$Index, -.data$n) %>%
+                           dplyr::distinct())) %>%
+      dplyr::relocate(.data$TaxonName, .after = .data$VolNet_ed) %>%
+      dplyr::relocate(.data$CPUE_ed, .after = .data$LifeStage)
+
+
+    # Add zeroes, add sample ID, modify column names and order, join crosswalk taxonomy.
+    data.list[["YBFMP"]] <- zoo_YBFMP %>%
+      dplyr::filter(!(.data$Index %in% Index_rm)) %>%
+      dplyr::select(-.data$Index) %>%
+      dplyr::bind_rows(doubles_summed) %>% # replace doubles with summed CPUEs
+      dplyr::mutate(TaxonName = replace(.data$TaxonName, .data$TaxonName == "Eucyclops phaleratus", "Ectocyclops phaleratus")) %>% # Otherwise creates doubles for Platycyclops phaleratus later on
+      dplyr::mutate(YBFMP=paste(.data$TaxonName, .data$LifeStage),
+                    MeshSize=dplyr::recode(.data$MeshSize, `150_micron`="Meso", `50_micron`="Micro"),
+                    Source = "YBFMP",
+                    SampleID = paste0(.data$Date, "_", .data$StationCode, "_", .data$MeshSize),
+                    Datetime = lubridate::parse_date_time(paste(.data$Date, .data$Time), "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"),
+                    Date = lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles")) %>%
+      dplyr:: select(.data$Source,
+                     SizeClass = .data$MeshSize,
+                     Volume = .data$VolNet_ed,
+                     .data$Date,
+                     .data$Datetime,
+                     Station = .data$StationCode,
+                     Temperature = .data$WaterTemperature,
+                     .data$Secchi, .data$Turbidity,
+                     CondSurf = .data$SpCnd,
+                     .data$pH, .data$DO,
+                     Microcystis=.data$MicrocystisVisualRank,
+                     .data$SampleID,
+                     .data$YBFMP,
+                     CPUE = .data$CPUE_ed)%>%
+      {if(!"YBFMP_Meso"%in%Data_sets){
+        dplyr::filter(., .data$SizeClass!="Meso")
+      }else{
+        .
+      }}%>%
+      {if(!"YBFMP_Micro"%in%Data_sets){
+        dplyr::filter(., .data$SizeClass!="Micro")
+      }else{
+        .
+      }}%>%
+      tidyr::pivot_wider(names_from=.data$YBFMP, values_from=.data$CPUE, values_fill=list(CPUE=0)) %>%
+      tidyr::pivot_longer(cols=c(-.data$Source, -.data$SizeClass, -.data$Volume, -.data$Date,
+                                 -.data$Datetime, -.data$Station, -.data$Temperature, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Microcystis,
+                                 -.data$SampleID),
+                          names_to="YBFMP", values_to="CPUE")%>%
+      dplyr::left_join(Crosswalk %>%
+                         dplyr::select(.data$YBFMP, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species),
+                       by = "YBFMP") %>%
+      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
+      dplyr::select(-.data$YBFMP) %>% #Remove YBFMP taxa codes
+      dplyr::mutate(SampleID=paste0(.data$Source, "_", .data$SampleID))  #Create identifier for each sample
+    cat("\nFRP_Meso finished!\n\n")
+  }
 
   # EMP Micro ---------------------------------------------------------------
 
   if("EMP_Micro"%in%Data_sets) {
 
     EMP_Micro_file<-"pump_matrix.csv"
-    EMP_Micro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Micro_file])
+    EMP_Micro_URL<-paste0(EMP_pkg_url, "/", EMP_entities[EMP_Micro_file])
 
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {

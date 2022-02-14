@@ -19,6 +19,13 @@ SMSCG_files<-zooper:::html_file_list(SMSCG_URL)
 twentymm_URL<-"https://filelib.wildlife.ca.gov/Public/Delta%20Smelt/"
 twentymm_files<-zooper:::html_file_list(twentymm_URL)
 
+YBFMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/494"
+YBFMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=YBFMP_revision_url, warn = FALSE), 1)
+YBFMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/494/", YBFMP_latest_revision)
+YBFMP_entities <- Tryer(n=3, fun=readLines, con=YBFMP_pkg_url, warn = FALSE)
+YBFMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/494", YBFMP_latest_revision, YBFMP_entities, sep="/")
+names(YBFMP_entities) <- purrr::map_chr(YBFMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+
 Data_folder<-tempdir()
 
 
@@ -73,6 +80,19 @@ Tryer(n=3, fun=download.file, url="https://pasta.lternet.edu/package/data/eml/ed
 
 names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
                                   col_types = cols(.default=col_character()))%>%
+  names()
+
+
+
+# YBFMP Meso/Micro --------------------------------------------------------
+
+YBFMP_file<-"Zooplankton Data"
+YBFMP_URL<-paste0(YBFMP_pkg_url, "/", YBFMP_entities[YBFMP_file])
+Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
+      destfile=file.path(Data_folder, YBFMP_file), mode="wb", method="curl")
+
+names_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
+                           col_types = cols(.default=col_character()))%>%
   names()
 
 
@@ -201,6 +221,16 @@ test_that("FRP Meso column names have not changed", {
   expect_setequal(names_FRP_Meso, c('SampleID', 'Date', 'time', 'Latitude', 'Longitude', 'Temp', 'SC', 'pH', 'DO', 'Secchi',
                                     'Turbidity', 'Tide', 'Microcystis', 'CommonName', 'subsample', 'volume', 'Count',
                                     'AdjCount', 'CPUE', 'Station'))
+})
+
+test_that("YBFMP column names have not changed", {
+  expect_setequal(names_YBFMP, c('Date', 'Time', 'Datetime', 'StationCode', 'WeatherCode', 'Tide', 'WY', 'WaterTemperature',
+                                 'Secchi', 'Conductivity', 'SpCnd', 'pH', 'DO', 'Turbidity', 'MicrocystisVisualRank',
+                                 'ConditionCode', 'FieldComments', 'LabComments', 'MeshSize', 'FlowMeterSpeed', 'SetTime',
+                                 'FlowMeterStart', 'FlowMeterEnd', 'Flowdiff', 'Flowdiff_ed', 'VolMeso', 'SubMeso',
+                                 'VolMicro', 'SubMicro', 'Subsample', 'PropSubsampled', 'VolNet', 'VolNet_ed', 'OrganismID',
+                                 'TaxonName', 'TaxonRank', 'LifeStage', 'Count', 'CPUE', 'CPUE_ed', 'Flag_PQC', 'Comment_PQC',
+                                 'Flag_QC1', 'Comment_QC1', 'Flag_QC2', 'Comment_QC2', 'Flag_QC3', 'Comment_QC3'))
 })
 
 test_that("EMP Micro column names have not changed", {

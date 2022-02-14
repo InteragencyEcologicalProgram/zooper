@@ -37,7 +37,8 @@ Taxnamefinder <- function(Crosswalk, Taxa){
 #' @return a tibble with the complete taxonomic information for each combination of source and size class.
 #' @author Sam Bashevkin
 #' @examples
-#' SourceTaxaKey <- SourceTaxaKeyer(Data = zoopComb, Crosswalk = crosswalk)
+#' SourceTaxaKey <- SourceTaxaKeyer(Data = dplyr::filter(zoopComb, Source!="YBFMP"),
+#' Crosswalk = crosswalk)
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
 
