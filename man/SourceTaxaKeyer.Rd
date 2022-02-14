@@ -18,7 +18,8 @@ a tibble with the complete taxonomic information for each combination of source 
 Computes a dataframe with all unique taxa by lifestage combinations present in each source and size class
 }
 \examples{
-SourceTaxaKey <- SourceTaxaKeyer(Data = zoopComb, Crosswalk = crosswalk)
+SourceTaxaKey <- SourceTaxaKeyer(Data = dplyr::filter(zoopComb, Source!="YBFMP"),
+Crosswalk = crosswalk)
 }
 \seealso{
 \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}

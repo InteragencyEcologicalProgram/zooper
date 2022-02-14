@@ -143,7 +143,8 @@ Removed_data<-tibble(Taxlifestage=str_remove(Removed, " \\s*\\([^\\)]+\\)"),
                       SizeClass=str_extract(Removed, " \\s*\\([^\\)]+\\)"))%>%
   mutate(SizeClass=str_remove(str_remove(SizeClass, fixed(" (")), fixed(")")))
 Data_base_filtered<-zooper::zoopComb%>%
-  anti_join(Removed_data, by=c("SizeClass", "Taxlifestage"))
+  anti_join(Removed_data, by=c("SizeClass", "Taxlifestage"))%>%
+  filter(Source!="YBFMP")
 
 test_that("Zoopsynther with community option and problematic taxa removed produces expected message", {
   expect_output(data_com_filtered<<-Zoopsynther("Community", Zoop=Data_base_filtered), "No disclaimers here")
