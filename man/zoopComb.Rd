@@ -7,8 +7,8 @@
 \format{
 a tibble with 2,788,526 rows and 14 columns.
 \describe{
-  \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "STN"= Townet Survey, and "20mm" =20mm survey.}
-  \item{SizeClass}{Net size class. Micro corresponds to 43 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
+  \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
+  \item{SizeClass}{Net size class. Micro corresponds to 43-50 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
   \item{Volume}{Volume (\ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}}) of water sampled}
   \item{Lifestage}{Zooplankton life stage}
   \item{Taxname}{Scientific name}

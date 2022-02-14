@@ -75,10 +75,10 @@ lets me use all these datasets.*
 
 We have integrated zooplankton data from 3 net size classes:
 
-1.  Macro (500-505 μm): Amphipods and mysids (NOTE: Prior to 1974 EMP
+1.  Macro (500 - 505 μm): Amphipods and mysids (NOTE: Prior to 1974 EMP
     macrozooplankton were sampled with a 930 μm mesh net)
 2.  Meso (150 - 160 μm): Copepods, cladocera
-3.  Micro (43 μm): Copepods, rotifers
+3.  Micro (43 - 50 μm): Copepods, rotifers
 
 Nets accurately sample zooplankton larger than the mesh size.
 Zooplankton smaller than the mesh size are still captured and often

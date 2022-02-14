@@ -64,9 +64,9 @@ The biggest problem with integrating zooplankton datasets is variability in taxo
 
 We have integrated zooplankton data from 3 net size classes:
 
-1. Macro (500-505 &mu;m): Amphipods and mysids (NOTE: Prior to 1974 EMP macrozooplankton were sampled with a 930 &mu;m mesh net)
+1. Macro (500 - 505 &mu;m): Amphipods and mysids (NOTE: Prior to 1974 EMP macrozooplankton were sampled with a 930 &mu;m mesh net)
 2. Meso (150 - 160 &mu;m): Copepods, cladocera
-3. Micro (43 &mu;m): Copepods, rotifers
+3. Micro (43 - 50 &mu;m): Copepods, rotifers
 
 Nets accurately sample zooplankton larger than the mesh size. Zooplankton smaller than the mesh size are still captured and often recorded in datasets, but the resulting CPUEs are not accurate. To account for this we: 
 
