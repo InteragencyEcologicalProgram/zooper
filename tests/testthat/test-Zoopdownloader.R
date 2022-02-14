@@ -13,6 +13,9 @@ Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
 No_coords2<-dplyr::filter(Data$Environment, is.na(Latitude) & !stringr::str_detect(Station, "NZEZ"))%>%
   dplyr::mutate(Station=paste(Source, Station))
 
+No_coords_EZ<-dplyr::filter(Data$Environment, is.na(Latitude) & stringr::str_detect(Station, "NZEZ") & Date>min(stationsEMPEZ$Date))%>%
+  dplyr::mutate(Station=paste(Station, Date))
+
 test_that("Dowloaded data includes all datasets", {
   expect_setequal(unique(paste(Data$Zooplankton$Source, Data$Zooplankton$SizeClass, sep="_")), Data_sets)
 })
@@ -31,6 +34,10 @@ test_that("Not all CPUEs are 0", {
 
 test_that("Only the expected stations are missing coordinates", {
   expect_setequal(unique(No_coords2$Station), c("20mm 798", "20mm 799", "20mm 794", "20mm 795", "20mm 796", "20mm 797"))
+})
+
+test_that("Only the expected EZ stations are missing coordinates", {
+  expect_setequal(unique(No_coords_EZ$Station), c("NZEZ6 2004-12-21", "NZEZ2 2007-08-21", "NZEZ6 2007-08-21"))
 })
 
 test_that("Date and Datetime and displaying the same dates", {

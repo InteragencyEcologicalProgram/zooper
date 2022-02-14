@@ -17,7 +17,7 @@
 
 Taxnamefinder <- function(Crosswalk, Taxa){
   Taxnames<-Crosswalk%>%
-    dplyr::filter(rowAny(dplyr::across(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa)))%>%
+    dplyr::filter(dplyr::if_any(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa))%>%
     dplyr::select(.data$Taxname)%>%
     dplyr::distinct()%>%
     dplyr::pull()
@@ -37,7 +37,8 @@ Taxnamefinder <- function(Crosswalk, Taxa){
 #' @return a tibble with the complete taxonomic information for each combination of source and size class.
 #' @author Sam Bashevkin
 #' @examples
-#' SourceTaxaKey <- SourceTaxaKeyer(Data = zoopComb, Crosswalk = crosswalk)
+#' SourceTaxaKey <- SourceTaxaKeyer(Data = dplyr::filter(zoopComb, Source!="YBFMP"),
+#' Crosswalk = crosswalk)
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
 
@@ -218,12 +219,3 @@ Taxaremover<-function(ID, Taxlifestage_list, Remove_taxa){
   out<-paste(sort(Taxlifestage_list), collapse=", ")
   return(out)
 }
-
-#' Find rows with any TRUE values
-#'
-#' Helper function to replace \code{dplyr::any_vars}, copied from the \code{dplyr} "colwise" vignette
-#' @param x Row.
-#'
-#' @keywords internal
-
-rowAny <- function(x) rowSums(x) > 0

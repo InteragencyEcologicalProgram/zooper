@@ -1,5 +1,6 @@
 require(zooper)
 require(readr)
+require(dplyr)
 
 
 revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
@@ -50,9 +51,8 @@ Tryer(n=3, fun=download.file, url=FMWTSTN_Meso_file,
 Tryer(n=3, fun=download.file, url=SMSCG_Meso_file,
            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
 
-names_FMWTSTN_Meso<-readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Meso_file)),
-                                       sheet = "FMWT&STN ZP CPUE",
-                                       col_types = "text")%>%
+names_FMWTSTN_Meso<-readr::read_csv(file.path(Data_folder, names(FMWTSTN_Meso_file)),
+                                    col_types = "c")%>%
   names()
 
 names_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file)),
@@ -120,7 +120,7 @@ names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
 
 # EMP Macro ---------------------------------------------------------------
 
-EMP_Macro_file<-"mysid_matrix.csv"
+EMP_Macro_file<-"macro_matrix.csv"
 EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
 Tryer(n=3, fun=download.file, url=EMP_Macro_URL,
@@ -134,35 +134,22 @@ names_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
 
 # FMWT STN Macro ----------------------------------------------------------
 
-FMWTSTN_Macro_mysfile<-FMWTSTN_files[grep("MysidCPUE", FMWTSTN_files)]
-FMWTSTN_Macro_amphfile<-FMWTSTN_files[grep("AmphipodCPUE", FMWTSTN_files)]
+FMWTSTN_Macro_file<-FMWTSTN_files[grep("MysidNet", FMWTSTN_files)]
 
-SMSCG_Macro_mysfile<-SMSCG_files[grep("MysidCPUE", SMSCG_files)]
-SMSCG_Macro_amphfile<-SMSCG_files[grep("AmphipodCPUE", SMSCG_files)]
+SMSCG_Macro_file<-SMSCG_files[grep("MysidNet", SMSCG_files)]
 
-Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_mysfile,
-           destfile=file.path(Data_folder, names(FMWTSTN_Macro_mysfile)), mode="wb", method="curl")
-Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_amphfile,
-           destfile=file.path(Data_folder, names(FMWTSTN_Macro_amphfile)), mode="wb", method="curl")
-Tryer(n=3, fun=download.file, url=SMSCG_Macro_mysfile,
-           destfile=file.path(Data_folder, names(SMSCG_Macro_mysfile)), mode="wb", method="curl")
-Tryer(n=3, fun=download.file, url=SMSCG_Macro_amphfile,
-           destfile=file.path(Data_folder, names(SMSCG_Macro_amphfile)), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_file,
+           destfile=file.path(Data_folder, names(FMWTSTN_Macro_file)), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=SMSCG_Macro_file,
+           destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method="curl")
 
-names_FMWT_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_mysfile)),
-                                             sheet = "FMWT Mysid CPUE Matrix", col_types = "text")%>%
+names_FMWT_Macro <- readr::read_csv(file.path(Data_folder, names(FMWTSTN_Macro_file)),
+                                             col_types = cols(.default=col_character()))%>%
   names()
 
-names_FMWT_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(FMWTSTN_Macro_amphfile)),
-                                            sheet = "FMWT amphipod CPUE", col_types = "text")%>%
-  names()
-
-names_SMSCG_Macro_Mysid <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_mysfile)),
-                                              sheet = "SMSCG Mysid CPUE", col_types = "text")%>%
-  names()
-
-names_SMSCG_Macro_Amph <- readxl::read_excel(file.path(Data_folder, names(SMSCG_Macro_amphfile)),
-                                             sheet = "AmphipodCPUE", col_types = "text")%>%
+names_SMSCG_Macro <- readr::read_csv(file.path(Data_folder, names(SMSCG_Macro_file)),
+                                              col_types = cols(.default=col_character()))%>%
+  select(-starts_with("..."))%>% # Remove empty columns that are being read in here
   names()
 
 # Tests -------------------------------------------------------------------
@@ -183,11 +170,11 @@ test_that("EMP Meso column names have not changed", {
 })
 
 test_that("FMWTSTN Meso column names have not changed", {
-  expect_setequal(names_FMWTSTN_Meso, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time', 'TowDuration', 'Region',
-                                        'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'SurfSalinityGroup',
-                                        'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'Volume',
+  expect_setequal(names_FMWTSTN_Meso, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'TowDuration', 'Region',
+                                        'TideCode', 'DepthBottom', 'CondSurf', 'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf',
+                                        'TempBottom', 'Secchi', 'Turbidity', 'Microcystis', 'TotalMeter', 'MeterEstimate', 'Volume',
                                         'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR', 'SINOCAL',
-                                        'TORTANUS', 'ALLCALADULTS', 'AVERNAL', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM',
+                                        'TORTANUS', 'ALLCALADULTS', 'ACANTHO', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV', 'OITHSIM', 'OITHSPP',
                                         'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'EURYJUV', 'OTHCALJUV', 'PDIAPJUV', 'SINOCALJUV',
                                         'ASINEJUV', 'ACARJUV', 'DIAPTJUV', 'TORTJUV', 'ALLCALJUV', 'LIMNOJUV', 'OITHJUV', 'OTHCYCJUV',
                                         'ALLCYCJUV', 'EURYNAUP', 'OTHCOPNAUP', 'PDIAPNAUP', 'SINONAUP', 'ALLCOPNAUP', 'BOSMINA',
@@ -263,45 +250,36 @@ test_that("FRP Macro column names have not changed", {
 })
 
 test_that("EMP Macro column names have not changed", {
-  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'Time', 'TowDuration', 'StationNZ', 'EZStation',
-                                     'DWRStationNo', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
-                                     'ECBottomPreTow', 'Volume', 'Depth', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
-                                     'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid'))
+  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation',
+                                     'DWRStationNo', 'Core', 'Region', 'Time', 'TowDuration', 'Depth', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
+                                     'ECBottomPreTow', 'Volume', 'AmphipodCode', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
+                                     'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid',
+                                     "Mysid_Total", "A_spinicorne", "A_stimpsoni", "A_abdita", "Ampithoe_sp", "Caprelidae_sp",
+                                     "C_alienense", "Crangonyx_sp", "G_daiberi", "G_japonica", "Hyalella_sp", "Monocorophium_sp",
+                                     "Oedicerotidae_sp", "Pleustidae", "Unidentified_Amphipod", "Unidentified_Corophium",
+                                     "Unidentified_Gammarus", "Amphipod_Total"))
 })
 
-test_that("FMWT Macro Mysid column names have not changed", {
-  expect_setequal(names_FMWT_Macro_Mysid, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time',
-                                            'TowDuration', 'Region', 'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf',
-                                            'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'Secchi', 'Turbidity', 'Microcystis',
-                                            'TotalMeter', 'Volume', 'Acanthomysis aspera', 'Hyperacanthomysis longirostris',
-                                            'Acanthomysis hwanhaiensis', 'Alienacanthomysis macropsis', 'Deltamysis holmquistae',
-                                            'Neomysis kadiakensis', 'Neomysis mercedis', 'Unidentified Mysid'))
-})
-
-test_that("FMWT Macro Amph column names have not changed", {
-  expect_setequal(names_FMWT_Macro_Amph, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'Time',
-                                           'TowDuration', 'Region', 'FLaSHRegionGroup', 'TideCode', 'DepthBottom',
-                                           'CondSurf', 'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'Secchi',
-                                           'Turbidity', 'Microcystis', 'TotalMeter', 'Volume', 'Americorophium spinicorne',
-                                           'Americorophium stimpsoni', 'Ampelisca abdita', 'Corophium alienense', 'Crangonyx sp_',
-                                           'Gammarus daiberi', 'Hyalella sp_', 'Unidentified Amphipod', 'Unidentified Corophium',
-                                           'Unidentified Gammarus'))
+test_that("FMWT Macro column names have not changed", {
+  expect_setequal(names_FMWT_Macro, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'MeterEstimated',
+                                            'TowDuration', 'Region', 'TideCode', 'DepthBottom', 'CondSurf',
+                                            'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis',
+                                            'TotalMeter', 'Volume', 'Acanthomysis_aspera', 'Hyperacanthomysis_longirostris',
+                                            'Acanthomysis_hwanhaiensis', 'Alienacanthomysis_macropsis', 'Deltamysis_holmquistae',
+                                            'Neomysis_kadiakensis', 'Neomysis_mercedis', 'Unidentified_Mysid', 'Americorophium_spinicorne',
+                                            'Americorophium_stimpsoni', 'Ampelisca_abdita', 'Corophium_alienense', 'Crangonyx_sp',
+                                            'Gammarus_daiberi', 'Hyalella_sp', 'Unidentified_Amphipod', 'Unidentified_Corophium',
+                                            'Unidentified_Gammarus', 'Grandidierella_japonica'))
 })
 
 test_that("SMSCG Macro Mysid column names have not changed", {
-  expect_setequal(names_SMSCG_Macro_Mysid, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Index', 'SMSCG', 'Time',
-                                             'TowDuration', 'Region', 'FLaSHRegionGroup', 'TideCode', 'DepthBottom', 'CondSurf',
-                                             'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'Secchi', 'Turbidity', 'Microcystis',
-                                             'TotalMeter', 'Volume', 'Acanthomysis aspera', 'Hyperacanthomysis longirostris',
-                                             'Acanthomysis hwanhaiensis', 'Alienacanthomysis macropsis', 'Deltamysis holmquistae',
-                                             'Neomysis kadiakensis', 'Neomysis mercedis', 'Unidentified'))
-})
-
-test_that("SMSCG Macro Amph column names have not changed", {
-  expect_setequal(names_SMSCG_Macro_Amph, c('Year', 'Project', 'Survey', 'SampleDate', 'Station', 'Index', 'SMSCG', 'Time',
-                                            'TowDuration', 'Region', 'RegionFLaSH', 'Tide', 'Depth in Meters', 'CondSurf',
-                                            'PPTSurf', 'CondBott', 'PPTBott', 'WaterTemperature', 'Secchi', 'Turbidity(NTU)',
-                                            'Microcystis', 'TotalMeter', 'Volume', 'Americorophium spinicorne', 'Americorophium stimpsoni',
-                                            'Ampelisca abdita', 'Corophium alienense', 'Crangonyx sp_', 'Gammarus daiberi', 'Hyalella sp_',
-                                            'Unidentified Amphipod', 'Unidentified Corophium', 'Unidentified Gammarus'))
+  expect_setequal(names_SMSCG_Macro, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'MeterEstimated',
+                                             'TowDuration', 'Region', 'TideCode', 'DepthBottom', 'CondSurf',
+                                             'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis',
+                                             'TotalMeter', 'Volume', 'Acanthomysis_aspera', 'Hyperacanthomysis_longirostris',
+                                             'Acanthomysis_hwanhaiensis', 'Alienacanthomysis_macropsis', 'Deltamysis_holmquistae',
+                                             'Neomysis_kadiakensis', 'Neomysis_mercedis', 'Unidentified_Mysid', 'Americorophium_spinicorne',
+                                             'Americorophium_stimpsoni', 'Ampelisca_abdita', 'Corophium_alienense', 'Crangonyx_sp',
+                                             'Gammarus_daiberi', 'Hyalella_sp', 'Unidentified_Amphipod', 'Unidentified_Corophium',
+                                             'Unidentified_Gammarus', 'Grandidierella_japonica'))
 })

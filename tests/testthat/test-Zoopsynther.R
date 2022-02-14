@@ -35,7 +35,7 @@ test_that("Taxa option produces messages", {
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
-                            Samples = list(unique(SampleID[which(Order!="Amphipoda")])),
+                            Samples = list(unique(SampleID)),
                             Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
@@ -86,7 +86,7 @@ test_that("Community dataset with time consistency contains same total CPUE as n
   expect_equal(comTime$CPUE_total, com$CPUE_total)
 })
 
-### !!! AMPHIPODS WERE EXCLUDED BECAUSE THEY ARE REMOVED FROM COMMUNITY DATASET SINCE THEY ARE NOT SAMPLED IN ALL MACRO DATASETS !!! ###
+
 test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
 })
@@ -138,9 +138,13 @@ test_that("Taxa dataset has correctly labeled undersampled taxa", {
 # Test that zoopsynther community approach does not change overall CPUE
 
 data_com<-Zoopsynther("Community", Shiny = T)
-Removed<-unlist(str_split(str_split(data_com$Caveats, ", ")[[1]], ": "))
+Removed<-unlist(str_split(str_split(data_com$Caveats, ", ")[[1]], ": "))[-1]
+Removed_data<-tibble(Taxlifestage=str_remove(Removed, " \\s*\\([^\\)]+\\)"),
+                      SizeClass=str_extract(Removed, " \\s*\\([^\\)]+\\)"))%>%
+  mutate(SizeClass=str_remove(str_remove(SizeClass, fixed(" (")), fixed(")")))
 Data_base_filtered<-zooper::zoopComb%>%
-  filter(!Taxlifestage%in%Removed)
+  anti_join(Removed_data, by=c("SizeClass", "Taxlifestage"))%>%
+  filter(Source!="YBFMP")
 
 test_that("Zoopsynther with community option and problematic taxa removed produces expected message", {
   expect_output(data_com_filtered<<-Zoopsynther("Community", Zoop=Data_base_filtered), "No disclaimers here")

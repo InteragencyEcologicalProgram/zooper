@@ -6,7 +6,7 @@
 \alias{zoopEnvComb}
 \title{Environmental data}
 \format{
-a tibble with 37,532 rows and 19 columns
+a tibble with 37,704 rows and 20 columns
 \describe{
   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl), "STN"= Townet Survey, and "20mm" =20mm survey.}
   \item{Year}{Year sample was collected}
@@ -26,6 +26,7 @@ a tibble with 37,532 rows and 19 columns
   \item{SalBott}{Bottom salinity in PPT}
   \item{Latitude}{Latitude in decimal degrees}
   \item{Longitude}{Longitude in decimal degrees}
+  \item{AmphipodCode}{Code indicating sample quality for EMP macro amphipod samples (A=valid, B=questionable [veg/algal bloom in net], C=not valid [error in lab], D=suspect [possible missing data])}
   \item{SampleID}{Unique ID of the zooplankton sample. This is the key that links to the \code{zoopComb} dataset}
 }
 }
