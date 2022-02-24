@@ -1,3 +1,4 @@
+* Changed all *Acanthocyclops vernalis* in crosswalk to *Acanthocyclops*.
 * Added YBFMP data. YBFMP data cannot be used in the `Zoopsynther` function due to issues with taxonomic and life stage resolution. 
 * Updated to newest FMWT/SMSCG macro data. 
 

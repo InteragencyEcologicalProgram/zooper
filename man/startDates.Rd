@@ -5,7 +5,7 @@
 \alias{startDates}
 \title{Start dates}
 \format{
-a tibble with 3 columns and 10 rows
+a tibble with 12 rows and 3 columns.
 \describe{
   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
   \item{SizeClass}{Net size class. Micro corresponds to 43 (EMP) or 50 (YBFMP) \eqn{\mu}m mesh, Meso corresponds to 150 (FRP) or 160 (EMP, FMWT, STN, 20mm, YBFMP) \eqn{\mu}m mesh, and Macro corresponds to 500 (FRP) - 505 (EMP, FMWT, STN) \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}

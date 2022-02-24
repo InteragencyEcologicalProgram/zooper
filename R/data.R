@@ -2,7 +2,7 @@
 #'
 #' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic hierarchies.
 #'
-#' @format a tibble with 318 rows and 28 variables
+#' @format a tibble with 378 rows and 30 variables
 #' \describe{
 #'   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
 #'   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}
@@ -53,7 +53,7 @@
 #'
 #' Latitudes and longitudes for each zooplankton station.
 #'
-#' @format a tibble with 384 rows and 4 columns
+#' @format a tibble with 386 rows and 4 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset}
 #'   \item{Station}{Sampling station name}
@@ -67,7 +67,7 @@
 #'
 #' Latitudes and longitudes for EMP EZ stations on each sampling date from 2004 to present.
 #'
-#' @format a tibble with 453 rows and 4 columns
+#' @format a tibble with 454 rows and 4 columns
 #' \describe{
 #'   \item{Date}{Date sample was collected}
 #'   \item{Station}{Sampling station name}
@@ -81,7 +81,7 @@
 #'
 #' All source zooplankton datasets combined into one tibble.
 #'
-#' @format a tibble with 2,788,526 rows and 14 columns.
+#' @format a tibble with 2,872,526 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43-50 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
@@ -107,7 +107,7 @@
 #' Accessory environmental data from the combined zooplankton dataset. Not all datasets report all environmental parameters.
 #'
 #' @encoding UTF-8
-#' @format a tibble with 37,704 rows and 20 columns
+#' @format a tibble with 38,579 rows and 20 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{Year}{Year sample was collected}
@@ -138,7 +138,7 @@
 #'
 #' A complete list of all valid taxonomic names included in the full dataset. Used to limit choices for filtering by taxa.
 #'
-#' @format a character vector of length 391.
+#' @format a character vector of length 416.
 #' @seealso \code{\link{Taxnamefinder}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 #'
 "completeTaxaList"
@@ -148,7 +148,7 @@
 #'
 #' First dates sampled by each survey and size class
 #'
-#' @format a tibble with 3 columns and 10 rows
+#' @format a tibble with 12 rows and 3 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43 (EMP) or 50 (YBFMP) \eqn{\mu}m mesh, Meso corresponds to 150 (FRP) or 160 (EMP, FMWT, STN, 20mm, YBFMP) \eqn{\mu}m mesh, and Macro corresponds to 500 (FRP) - 505 (EMP, FMWT, STN) \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
