@@ -261,7 +261,7 @@ test_that("EMP Macro column names have not changed", {
 })
 
 test_that("FMWT Macro column names have not changed", {
-  expect_setequal(names_FMWT_Macro, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'MeterEstimated',
+  expect_setequal(names_FMWT_Macro, c('Project', 'Year', 'Survey', 'Month', 'Date', 'Station', 'Time', 'MeterEstimate',
                                             'TowDuration', 'Region', 'TideCode', 'DepthBottom', 'CondSurf',
                                             'PPTSurf', 'CondBott', 'PPTBott', 'TempSurf', 'TempBottom', 'Secchi', 'Turbidity', 'Microcystis',
                                             'TotalMeter', 'Volume', 'Acanthomysis_aspera', 'Hyperacanthomysis_longirostris',
