@@ -9,7 +9,9 @@ status](https://github.com/InteragencyEcologicalProgram/zooper/workflows/R-CMD-c
 coverage](https://codecov.io/gh/InteragencyEcologicalProgram/zooper/branch/master/graph/badge.svg)](https://codecov.io/gh/InteragencyEcologicalProgram/zooper?branch=master)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5828619.svg)](https://doi.org/10.5281/zenodo.5828619)
 [![Data
-DOI](https://img.shields.io/badge/Data%20publication%20DOI-10.6073/pasta/e67851d690088a1244f69fb38d6659d6-blue.svg)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539)
+DOI](https://img.shields.io/badge/Data%20publication%20DOI-10.6073/pasta/89dbadd9d9dbdfc804b160c81633db0d-blue.svg)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539)
+[![Data
+paper](https://img.shields.io/badge/Data%20paper%20DOI-10.1371/journal.pone.0265402-blue.svg)](https://doi.org/10.1371/journal.pone.0265402)
 <!-- badges: end -->
 
 An R package to download and integrate zooplankton data from the
@@ -17,12 +19,40 @@ Sacramento San Joaquin Delta.
 
 ## Installation
 
-You can install the development version from GitHub with:
+You can install the latest version from R-universe with:
+
+``` r
+options(repos = c(
+    sbashevkin = 'https://sbashevkin.r-universe.dev',
+    CRAN = 'https://cloud.r-project.org'))
+
+install.packages(“zooper”)
+```
+
+Or from GitHub with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("InteragencyEcologicalProgram/zooper")
 ```
+
+# Dataset documentation
+
+For a full documentation of this dataset please see the data paper in
+PLOS ONE or the data publication on EDI
+
+Bashevkin, S. M., R. Hartman, M. Thomas, A. Barros, C. E. Burdi, A.
+Hennessy, T. Tempel, and K. Kayfetz. 2022. Five decades (1972–2020) of
+zooplankton monitoring in the upper San Francisco Estuary. PLOS ONE 17:
+e0265402.
+[doi:10.1371/journal.pone.0265402](https://doi.org/10.1371/journal.pone.0265402)
+
+Bashevkin, S. M., R. Hartman, M. Thomas, A. Barros, C. Burdi, A.
+Hennessy, T. Tempel, and K. Kayfetz. 2022. Interagency Ecological
+Program: Zooplankton abundance in the Upper San Francisco Estuary from
+1972-2020, an integration of 5 long-term monitoring programs. ver 3.
+Environmental Data Initiative.
+[doi:10.6073/pasta/89dbadd9d9dbdfc804b160c81633db0d](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539)
 
 # Introduction
 
@@ -118,6 +148,7 @@ years).
 
 ``` r
 library(zooper)
+#> Warning: package 'zooper' was built under R version 4.1.3
 MyZoops <- Zoopsynther(Data_type = "Community", 
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 
@@ -130,14 +161,14 @@ str(MyZoops)
 #>  $ SizeClass   : chr [1:151478] "Meso" "Meso" "Meso" "Meso" ...
 #>  $ Volume      : num [1:151478] 10.6 10.6 10.6 10.6 10.6 ...
 #>  $ Lifestage   : chr [1:151478] "Adult" "Adult" "Adult" "Adult" ...
-#>  $ Taxname     : chr [1:151478] "Acanthocyclops" "Acartia_UnID" "Acartiella sinensis" "Asplanchna_UnID" ...
+#>  $ Taxname     : chr [1:151478] "Acanthocyclops_UnID" "Acartia_UnID" "Acartiella sinensis" "Asplanchna_UnID" ...
 #>  $ Phylum      : chr [1:151478] "Arthropoda" "Arthropoda" "Arthropoda" "Rotifera" ...
 #>  $ Class       : chr [1:151478] "Copepoda" "Copepoda" "Copepoda" "Eurotatoria" ...
 #>  $ Order       : chr [1:151478] "Cyclopoida" "Calanoida" "Calanoida" "Ploima" ...
 #>  $ Family      : chr [1:151478] "Cyclopidae" "Acartiidae" "Acartiidae" "Asplanchnidae" ...
 #>  $ Genus       : chr [1:151478] "Acanthocyclops" "Acartia" "Acartiella" "Asplanchna" ...
 #>  $ Species     : chr [1:151478] NA NA "Acartiella sinensis" NA ...
-#>  $ Taxlifestage: chr [1:151478] "Acanthocyclops Adult" "Acartia_UnID Adult" "Acartiella sinensis Adult" "Asplanchna_UnID Adult" ...
+#>  $ Taxlifestage: chr [1:151478] "Acanthocyclops_UnID Adult" "Acartia_UnID Adult" "Acartiella sinensis Adult" "Asplanchna_UnID Adult" ...
 #>  $ SampleID    : chr [1:151478] "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" ...
 #>  $ CPUE        : num [1:151478] 11.34 1.89 5.67 0 0 ...
 #>  $ Undersampled: logi [1:151478] FALSE FALSE FALSE TRUE FALSE FALSE ...
