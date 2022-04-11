@@ -1,3 +1,7 @@
+# zooper 2.4.1
+
+* Updated to newest FMWT macro column names.
+
 # zooper 2.4.0
 
 * Changed all *Acanthocyclops vernalis* in crosswalk to *Acanthocyclops*.
