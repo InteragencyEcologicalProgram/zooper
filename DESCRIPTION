@@ -1,6 +1,6 @@
 Package: zooper
 Title: Download and Integrate Zooplankton Datasets from the Upper San Francisco Estuary
-Version: 2.4.1
+Version: 2.4.1.9000
 Date: 2019-12-13
 Authors@R: 
     person(given = c("Samuel", "M"),
