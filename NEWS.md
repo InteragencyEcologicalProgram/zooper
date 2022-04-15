@@ -1,3 +1,5 @@
+* Updated to newest SMSCG data
+
 # zooper 2.4.1
 
 * Updated to newest FMWT macro column names.
