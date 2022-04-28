@@ -12,6 +12,7 @@ Zoopdownloader(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
+  Download_method = "curl",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -30,6 +31,8 @@ Zoopdownloader(
 \item{Return_object_type}{If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{Zoopsynther} function without saving the combined dataset to disk.}
 
 \item{Redownload_data}{Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.}
+
+\item{Download_method}{Method used to download files. See argument \code{method} options in \code{\link[utils]{download.file}}. Defaults to "curl".}
 
 \item{Zoop_path}{File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.}
 

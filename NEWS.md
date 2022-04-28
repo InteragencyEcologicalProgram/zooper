@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Add option to specify download method in `Zoopdownloader` function.
 * Updated to newest SMSCG data
 
 # zooper 2.4.1
