@@ -185,7 +185,7 @@ test_that("FMWTSTN Meso column names have not changed", {
 test_that("SMSCG Meso column names have not changed", {
   expect_setequal(names_SMSCG_Meso, c('Project' , 'Year' , 'Survey' , 'Month' , 'Date' , 'Station' , 'Time' , 'TowDuration' , 'Region' ,
                                       'TideCode' , 'DepthBottom' , 'CondSurf' , 'PPTSurf' , 'CondBott' , 'PPTBott' , 'TempSurf' ,
-                                      'TempBottom' , 'Secchi' , 'Turbidity' , 'Microcystis' , 'TotalMeter' , 'Volume' , 'ACARTELA' ,
+                                      'TempBottom' , 'Secchi' , 'Turbidity' , 'Microcystis' , 'TotalMeter', 'MeterEstimate' , 'Volume' , 'ACARTELA' ,
                                       'ACARTIA' , 'DIAPTOM' , 'EURYTEM' , 'OTHCALAD' , 'PDIAPFOR' , 'PDIAPMAR' , 'SINOCAL' , 'TORTANUS' ,
                                       'ALLCALADULTS' , 'ACANTHO' , 'LIMNOSPP' , 'LIMNOSINE' , 'LIMNOTET' , 'OITHDAV' , 'OITHSIM' ,
                                       'OITHSPP' , 'OTHCYCAD' , 'ALLCYCADULTS' , 'HARPACT' , 'EURYJUV' , 'OTHCALJUV' , 'PDIAPJUV' ,
