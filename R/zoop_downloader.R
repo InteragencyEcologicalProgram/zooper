@@ -663,7 +663,8 @@ Zoopdownloader <- function(
                                                               C_alienense="d", Crangonyx_sp="d", G_daiberi="d",
                                                               G_japonica="d", Hyalella_sp="d", Monocorophium_sp="d",
                                                               Oedicerotidae_sp="d", Pleustidae="d", Unidentified_Amphipod="d",
-                                                              Unidentified_Corophium="d", Unidentified_Gammarus="d", Amphipod_Total="d"))
+                                                              Unidentified_Corophium="d", Unidentified_Gammarus="d", Amphipod_Total="d"))%>%
+      dplyr::filter(dplyr::if_any(dplyr::everything(), ~ !is.na(.)))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets

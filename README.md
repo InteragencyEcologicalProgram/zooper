@@ -148,7 +148,6 @@ years).
 
 ``` r
 library(zooper)
-#> Warning: package 'zooper' was built under R version 4.1.3
 MyZoops <- Zoopsynther(Data_type = "Community", 
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 
@@ -156,7 +155,7 @@ MyZoops <- Zoopsynther(Data_type = "Community",
 #> [1] "No disclaimers here! Enjoy the clean data!"
 
 str(MyZoops)
-#> tibble [151,478 x 33] (S3: tbl_df/tbl/data.frame)
+#> tibble [151,478 × 33] (S3: tbl_df/tbl/data.frame)
 #>  $ Source      : chr [1:151478] "EMP" "EMP" "EMP" "EMP" ...
 #>  $ SizeClass   : chr [1:151478] "Meso" "Meso" "Meso" "Meso" ...
 #>  $ Volume      : num [1:151478] 10.6 10.6 10.6 10.6 10.6 ...
@@ -209,8 +208,7 @@ MyZoops%>%
   ))%>%
   mutate(Salinity_zone=factor(Salinity_zone, levels=c("Freshwater", "Low salinity zone", "High salinity zone")))%>%
   group_by(Year,Phylum, Class, Order, Family, Genus, Species, Lifestage, Taxlifestage, Salinity_zone)%>%
-  summarise(CPUE=mean(CPUE, na.rm=T))%>%
-  ungroup()%>%
+  summarise(CPUE=mean(CPUE, na.rm=T), .groups="drop")%>%
   arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
   mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
   ggplot(aes(x=Year, y=CPUE))+

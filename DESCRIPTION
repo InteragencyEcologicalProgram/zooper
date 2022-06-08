@@ -17,7 +17,6 @@ LazyData: true
 LazyDataCompression: xz
 Imports: 
     lubridate,
-    pillar,
     readxl,
     dtplyr (>= 1.1.0),
     dplyr (>= 1.0.4),
@@ -30,7 +29,6 @@ Imports:
     magrittr,
     data.table,
     tidyselect (>= 1.0.0),
-    curl,
     stats,
     utils,
     wql,

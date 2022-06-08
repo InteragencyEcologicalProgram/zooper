@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Updating to newest EMP data. 
 * Added newest FMWT/STN data, including new station STN 722
 * Add option to specify download method in `Zoopdownloader` function.
 * Updated to newest SMSCG data
