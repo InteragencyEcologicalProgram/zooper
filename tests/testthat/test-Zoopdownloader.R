@@ -16,6 +16,10 @@ No_coords2<-dplyr::filter(Data$Environment, is.na(Latitude) & !stringr::str_dete
 No_coords_EZ<-dplyr::filter(Data$Environment, is.na(Latitude) & stringr::str_detect(Station, "NZEZ") & Date>min(stationsEMPEZ$Date))%>%
   dplyr::mutate(Station=paste(Station, Date))
 
+No_stations<-dplyr::filter(Data$Environment, is.na(Station))%>%
+  dplyr::mutate(ID=paste(Source, Date))%>%
+  pull(ID)
+
 test_that("Dowloaded data includes all datasets", {
   expect_setequal(unique(paste(Data$Zooplankton$Source, Data$Zooplankton$SizeClass, sep="_")), Data_sets)
 })
@@ -40,6 +44,10 @@ test_that("Only the expected EZ stations are missing coordinates", {
   expect_setequal(unique(No_coords_EZ$Station), c("NZEZ6 2004-12-21", "NZEZ2 2007-08-21", "NZEZ6 2007-08-21"))
 })
 
+test_that("Only the expected rows are missing station names", {
+  expect_setequal(No_stations, c("FRP 2016-05-10", "FRP 2016-05-10", "FRP 2016-05-10", "FRP 2016-05-10"))
+})
+
 test_that("Date and Datetime and displaying the same dates", {
   expect_true(all(lubridate::as_date(Data$Environment$Date)==lubridate::as_date(Data$Environment$Datetime) | is.na(Data$Environment$Datetime)))
 })
@@ -49,6 +57,7 @@ test_that("Bottom depths are within reasonable limits", {
   expect_true(all(Data$Environment$BottomDepth < 35 | is.na(Data$Environment$BottomDepth)))
 })
 
-test_that("There are no NA Volumes in Zoopdownloader output", {
+test_that("There are no NA Volumes, Dates, or Stations in Zoopdownloader output", {
   expect_equal(length(which(is.na(Data$Zooplankton$Volume))), 0)
+  expect_equal(length(which(is.na(Data$Environment$Date))), 0)
 })
