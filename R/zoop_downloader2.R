@@ -131,7 +131,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Meso_URL,
-            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
+            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb") # , method="curl")
     }
 
 
@@ -215,14 +215,14 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_URL,
-            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb", method="curl")
+            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb") #, method="curl")
     }
 
     SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
-            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb") #,  method="curl")
     }
 
     # For use with EDI source
@@ -532,6 +532,8 @@ Zoopdownloader <- function(
         .
       }}%>%
       tidyr::pivot_wider(names_from=.data$YBFMP, values_from=.data$CPUE, values_fill=list(CPUE=0)) %>%
+
+      #THIS SECOND PIVOT
       tidyr::pivot_longer(cols=c(-.data$Source, -.data$SizeClass, -.data$Volume, -.data$Date,
                                  -.data$Datetime, -.data$Station, -.data$Temperature, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Microcystis,
                                  -.data$SampleID),
