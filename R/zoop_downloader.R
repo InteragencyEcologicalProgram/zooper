@@ -133,7 +133,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Meso_URL,
-            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb") , method=Download_method)
+            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method=Download_method)
     }
 
 
