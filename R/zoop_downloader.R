@@ -207,7 +207,7 @@ Zoopdownloader <- function(
   }
 
   # FMWTSTN Meso --------------------------------------------------------------------
-#browser()
+
   if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
 
     FMWTSTN_Meso_file <- "FMWT_STN_CBNetCPUE.csv"
@@ -217,14 +217,14 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_URL,
-            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb") , method=Download_method)
+            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb", method=Download_method)
     }
 
     SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
-            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb") ,  method=Download_method)
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb",  method=Download_method)
     }
 
     # For use with EDI source
@@ -306,7 +306,8 @@ Zoopdownloader <- function(
                                  -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Microcystis,
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi,  .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      # Note: .data$Turbidity not found in FMWT_Meso data
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
