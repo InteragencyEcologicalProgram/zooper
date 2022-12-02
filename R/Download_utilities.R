@@ -53,7 +53,7 @@ html_file_list<-function(URL){
     return(files)
   }
 
-  files <- Tryer(n=6, fun=html_file_extract, URL=URL)
+  files <- Tryer(n=3, fun=html_file_extract, URL=URL)
 
   return(files)
 }
