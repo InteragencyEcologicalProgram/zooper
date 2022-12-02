@@ -7,6 +7,7 @@
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
 #' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{Zoopsynther} function without saving the combined dataset to disk.
 #' @param Redownload_data Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.
+#' @param Download_method Method used to download files. See argument \code{method} options in \code{\link[utils]{download.file}}. Defaults to "curl".
 #' @param Zoop_path File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
 #' @param Crosswalk Crosswalk table to be used for conversions. Must have columns named for each unique combination of source and size class with an underscore separator, as well as all taxonomic levels Phylum through Species, Taxname (full scientific name) and Lifestage. See \code{\link{crosswalk}} (the default) for an example.
@@ -35,6 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
+  Download_method="curl",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -131,7 +133,7 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Meso_URL,
-            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb") # , method="curl")
+            destfile=file.path(Data_folder, EMP_Meso_file), mode="wb") , method=Download_method)
     }
 
 
@@ -215,14 +217,14 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_URL,
-            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb") #, method="curl")
+            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb") , method=Download_method)
     }
 
     SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
-            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb") #,  method="curl")
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb") ,  method=Download_method)
     }
 
     # For use with EDI source
@@ -305,7 +307,7 @@ Zoopdownloader <- function(
                                  -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Microcystis,
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
+      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
@@ -348,8 +350,8 @@ Zoopdownloader <- function(
 
     #download the file
     if (!file.exists(file.path(Data_folder, names(twentymm_Meso_file))) | Redownload_data) {
-      Tryer(n=6, fun=utils::download.file, url=twentymm_Meso_file,
-            destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb")
+      Tryer(n=3, fun=utils::download.file, url=twentymm_Meso_file,
+            destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
     }
 
     #tst , method="curl"
@@ -413,9 +415,8 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
-            destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb")
+            destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method=Download_method)
     }
-#, method="curl"
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
                                     col_types = "cccddddddddcccdddddc", na=c("", "NA"))
 
@@ -466,9 +467,8 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, YBFMP_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
-            destfile=file.path(Data_folder, YBFMP_file), mode="wb")
+            destfile=file.path(Data_folder, YBFMP_file), mode="wb", method=Download_method)
     }
-#, method="curl"
     zoo_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
                                col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
                                                             Tide="c", WaterTemperature="d", Secchi="d",
@@ -557,9 +557,8 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Micro_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Micro_URL,
-            destfile=file.path(Data_folder, EMP_Micro_file), mode="wb")
+            destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method=Download_method)
     }
-#, method="curl"
     # Import the EMP data
     zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
@@ -623,9 +622,8 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
-            destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb")
+            destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method=Download_method)
     }
-#, method="curl"
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
                                      col_types = "ccccddddddddccdddcddc", na=c("", "NA"))
 
@@ -678,9 +676,8 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, EMP_Macro_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=EMP_Macro_URL,
-            destfile=file.path(Data_folder, EMP_Macro_file), mode="wb")
+            destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method=Download_method)
     }
-#, method="curl"
     # Import the EMP data
 
     zoo_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
@@ -695,7 +692,8 @@ Zoopdownloader <- function(
                                                               C_alienense="d", Crangonyx_sp="d", G_daiberi="d",
                                                               G_japonica="d", Hyalella_sp="d", Monocorophium_sp="d",
                                                               Oedicerotidae_sp="d", Pleustidae="d", Unidentified_Amphipod="d",
-                                                              Unidentified_Corophium="d", Unidentified_Gammarus="d", Amphipod_Total="d"))
+                                                              Unidentified_Corophium="d", Unidentified_Gammarus="d", Amphipod_Total="d"))%>%
+      dplyr::filter(dplyr::if_any(dplyr::everything(), ~ !is.na(.)))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -750,13 +748,13 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Macro_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Macro_URL,
-            destfile=file.path(Data_folder,FMWTSTN_Macro_file), mode="wb")
+            destfile=file.path(Data_folder,FMWTSTN_Macro_file), mode="wb", method=Download_method)
     }
 
     #download the file
     if (!file.exists(file.path(Data_folder, names(SMSCG_Macro_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Macro_file,
-            destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method="curl")
+            destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method=Download_method)
     }
 
 
