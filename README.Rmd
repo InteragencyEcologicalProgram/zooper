@@ -132,8 +132,7 @@ MyZoops%>%
   ))%>%
   mutate(Salinity_zone=factor(Salinity_zone, levels=c("Freshwater", "Low salinity zone", "High salinity zone")))%>%
   group_by(Year,Phylum, Class, Order, Family, Genus, Species, Lifestage, Taxlifestage, Salinity_zone)%>%
-  summarise(CPUE=mean(CPUE, na.rm=T))%>%
-  ungroup()%>%
+  summarise(CPUE=mean(CPUE, na.rm=T), .groups="drop")%>%
   arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
   mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
   ggplot(aes(x=Year, y=CPUE))+
