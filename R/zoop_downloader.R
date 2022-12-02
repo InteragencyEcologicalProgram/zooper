@@ -36,7 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method="curl",
+  Download_method="auto", #wininet",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -207,7 +207,7 @@ Zoopdownloader <- function(
   }
 
   # FMWTSTN Meso --------------------------------------------------------------------
-#browser()
+
   if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
 
     FMWTSTN_Meso_file <- "FMWT_STN_CBNetCPUE.csv"
@@ -217,14 +217,14 @@ Zoopdownloader <- function(
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_URL,
-            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb") , method=Download_method)
+            destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb", method=Download_method)
     }
 
     SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
-            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb") ,  method=Download_method)
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb",  method=Download_method)
     }
 
     # For use with EDI source
@@ -241,7 +241,7 @@ Zoopdownloader <- function(
                                       col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                 Date="c", Station="c", Time="c",
                                                                 TideCode="c", DepthBottom="d", CondSurf="d",
-                                                                CondBott="d", TempSurf="d", Secchi="d",
+                                                                CondBott="d", TempSurf="d", Secchi="d",Turbidity="d", #TMP: added Turbidity to this read line
                                                                 Microcystis="c", Volume="d",
                                                                 ACARTELA="d", ACARTIA="d", DIAPTOM="d",
                                                                 EURYTEM="d", OTHCALAD="d", PDIAPFOR="d",
@@ -303,10 +303,11 @@ Zoopdownloader <- function(
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
                                  -.data$Station,-.data$Time, -.data$TideCode,
                                  -.data$DepthBottom, -.data$CondSurf,
-                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Microcystis,
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,#TMP: added -.data$Turbidity
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
+
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
@@ -352,8 +353,6 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=twentymm_Meso_file,
             destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
     }
-
-    #tst , method="curl"
 
     # Import and modify 20mm data
 
