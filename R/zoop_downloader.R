@@ -234,7 +234,6 @@ Zoopdownloader <- function(
     #   Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_URL,
     #         destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb")
     # }
-#, method="curl"
 
     # Import the FMWT data
 
