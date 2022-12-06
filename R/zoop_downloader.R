@@ -241,7 +241,7 @@ Zoopdownloader <- function(
                                       col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                 Date="c", Station="c", Time="c",
                                                                 TideCode="c", DepthBottom="d", CondSurf="d",
-                                                                CondBott="d", TempSurf="d", Secchi="d",
+                                                                CondBott="d", TempSurf="d", Secchi="d",Turbidity="d", #TMP: added Turbidity to this read line
                                                                 Microcystis="c", Volume="d",
                                                                 ACARTELA="d", ACARTIA="d", DIAPTOM="d",
                                                                 EURYTEM="d", OTHCALAD="d", PDIAPFOR="d",
@@ -303,11 +303,10 @@ Zoopdownloader <- function(
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
                                  -.data$Station,-.data$Time, -.data$TideCode,
                                  -.data$DepthBottom, -.data$CondSurf,
-                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Microcystis,
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,#TMP: added -.data$Turbidity
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi,  .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
-      # Note: .data$Turbidity not found in FMWT_Meso data
+      dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$FMWT_Meso, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Intro, .data$FMWTstart, .data$FMWTend)%>% #only retain FMWT codes
                          dplyr::filter(!is.na(.data$FMWT_Meso))%>% #Only retain Taxnames corresponding to FMWT codes
@@ -354,7 +353,7 @@ Zoopdownloader <- function(
             destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
     }
 
-    #tst , method="curl"
+
 
     # Import and modify 20mm data
 
