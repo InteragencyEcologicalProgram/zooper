@@ -36,7 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method="auto", #wininet",
+  Download_method="curl",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -353,6 +353,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=twentymm_Meso_file,
             destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
     }
+
 
     # Import and modify 20mm data
 
