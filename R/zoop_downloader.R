@@ -354,7 +354,10 @@ Zoopdownloader <- function(
             destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
     }
 
+<<<<<<< HEAD
     #tst , method="curl"
+=======
+>>>>>>> ea4c58c (resolved Turbidity problem in FMWT_Meso data read)
 
     # Import and modify 20mm data
 
