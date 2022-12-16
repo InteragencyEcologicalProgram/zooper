@@ -36,7 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method="curl",
+  Download_method="curl", #cdfw: use "auto" option
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -93,15 +93,6 @@ Zoopdownloader <- function(
 
   }
 
-  # if(any(c("STN_Meso", "STN_Macro")%in%Data_sets)){
-  #   SMSCG_revision_url <- "https://pasta.lternet.edu/package/eml/edi/581"
-  #   SMSCG_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=SMSCG_revision_url, warn = FALSE), 1)
-  #   SMSCG_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/581/", SMSCG_latest_revision)
-  #   SMSCG_entities <- Tryer(n=3, fun=readLines, con=SMSCG_pkg_url, warn = FALSE)
-  #   SMSCG_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/581", SMSCG_latest_revision, SMSCG_entities, sep="/")
-  #   names(SMSCG_entities) <- purrr::map_chr(SMSCG_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
-  #
-  # }
 
   if(any(c("STN_Meso", "STN_Macro")%in%Data_sets)){
     SMSCG_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
@@ -227,13 +218,6 @@ Zoopdownloader <- function(
             destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb",  method=Download_method)
     }
 
-    # For use with EDI source
-    # SMSCG_Meso_URL  <-paste0(SMSCG_Meso_pkg_url, "/", SMSCG_Meso_entities[SMSCG_Meso_file])
-    #
-    # if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
-    #   Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_URL,
-    #         destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb")
-    # }
 
     # Import the FMWT data
 
@@ -755,16 +739,6 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Macro_file,
             destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method=Download_method)
     }
-
-
-         # For use with EDI source
-      # SMSCG_Meso_URL  <-paste0(SMSCG_Meso_pkg_url, "/", SMSCG_Meso_entities[SMSCG_Meso_file])
-      #
-      # if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
-      #   Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_URL,
-      #         destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb")
-      # }
-      #, method="curl"
 
 
     zoo_FMWT_Macro <- readr::read_csv(file.path(Data_folder, FMWTSTN_Macro_file),
