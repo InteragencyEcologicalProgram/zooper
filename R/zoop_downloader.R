@@ -36,7 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method="curl", #cdfw: use "auto" option
+  Download_method="auto",#"curl",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -225,7 +225,7 @@ Zoopdownloader <- function(
                                       col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                 Date="c", Station="c", Time="c",
                                                                 TideCode="c", DepthBottom="d", CondSurf="d",
-                                                                CondBott="d", TempSurf="d", Secchi="d",Turbidity="d", #TMP: added Turbidity to this read line
+                                                                CondBott="d", TempSurf="d", Secchi="d",Turbidity="d",
                                                                 Microcystis="c", Volume="d",
                                                                 ACARTELA="d", ACARTIA="d", DIAPTOM="d",
                                                                 EURYTEM="d", OTHCALAD="d", PDIAPFOR="d",
@@ -287,7 +287,7 @@ Zoopdownloader <- function(
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
                                  -.data$Station,-.data$Time, -.data$TideCode,
                                  -.data$DepthBottom, -.data$CondSurf,
-                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,#TMP: added -.data$Turbidity
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
