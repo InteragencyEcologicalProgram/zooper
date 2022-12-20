@@ -66,7 +66,7 @@ Zoopdownloader <- function(
 
   stations <- Stations
 
-  # Initialize list of data frames
+  # Initialize list of dataframes
 
   data.list<-list()
 
@@ -203,15 +203,13 @@ Zoopdownloader <- function(
 
     FMWTSTN_Meso_file <- "FMWT_STN_CBNetCPUE.csv"
     FMWTSTN_Meso_URL<-paste0(FMWTSTN_pkg_url, "/", FMWTSTN_entities[FMWTSTN_Meso_file])
-
+    SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     #download the file
     if (!file.exists(file.path(Data_folder, FMWTSTN_Meso_file)) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=FMWTSTN_Meso_URL,
             destfile=file.path(Data_folder,FMWTSTN_Meso_file), mode="wb", method=Download_method)
     }
-
-    SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
