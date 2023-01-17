@@ -13,7 +13,7 @@ crosswalk<-readxl::read_excel(file.path("data-raw", "crosswalk.xlsx"), sheet = "
 zoop<-Zoopdownloader(Data_sets=c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                  "20mm_Meso", "FRP_Meso","EMP_Micro",
                                  "FRP_Macro", "EMP_Macro", "FMWT_Macro",
-                                 "STN_Macro", "YBFMP_Meso", "YBFMP_Micro"),
+                                 "STN_Macro", "YBFMP_Meso", "YBFMP_Micro", "DOP_Macro", "DOP_Meso"),
                      Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE, Redownload_data=TRUE, Crosswalk=crosswalk)
 
 zoopComb <- zoop$Zooplankton
