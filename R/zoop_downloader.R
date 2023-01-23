@@ -242,7 +242,7 @@ Zoopdownloader <- function(
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
                     Station = .data$Station_Code, Chl = .data$Chl_a, CondSurf = .data$Conductivity, .data$Secchi, .data$SizeClass,
                     .data$Temperature, Volume = .data$Mesozooplankton_Volume, BottomDepth = .data$Start_Depth,
-                    .data$DOP_Meso, .data$CPUE, .data$Latitude, .data$Longitude) %>%
+                    .data$DOP_Meso, .data$CPUE, .data$Latitude, .data$Longitude, .data$Habitat) %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$DOP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum,
                                      .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain dop codes
@@ -252,10 +252,10 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Taxname),#I might not need this step for this dataset, but just in case
                     !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                    SampleID=paste(.data$Source, .data$Station, .data$Date, .data$Habitat), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048,# Convert feet to meters
                     CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when combining data
-   dplyr::select(-.data$DOP_Meso) #Remove DOP code
+   dplyr::select(-.data$DOP_Meso, -.data$Habitat) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
   }
@@ -301,7 +301,7 @@ Zoopdownloader <- function(
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
                     Station = .data$Station_Code, Chl = .data$Chl_a, CondSurf = .data$Conductivity, .data$Secchi, .data$SizeClass,
-                    .data$Temperature, Volume = .data$Macrozooplankton_Volume, BottomDepth = .data$Start_Depth,
+                    .data$Temperature, Volume = .data$Macrozooplankton_Volume, BottomDepth = .data$Start_Depth, .data$Habitat,
                     .data$DOP_Macro, .data$CPUE, .data$Latitude, .data$Longitude) %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$DOP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum,
@@ -312,10 +312,10 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Taxname), #I might not need this step for this dataset, but just in case
                     !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                    SampleID=paste(.data$Source, .data$Station, .data$Date, .data$Habitat), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048, # Convert feet to meters
                     CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when data are combined.
-      dplyr::select(-.data$DOP_Macro) #Remove DOP code
+      dplyr::select(-.data$DOP_Macro, -.data$Habitat) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
   }
