@@ -6,7 +6,8 @@
 \usage{
 Zoopdownloader(
   Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso",
-    "EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"),
+    "EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Meso",
+    "DOP_Macro"),
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
@@ -20,7 +21,7 @@ Zoopdownloader(
 )
 }
 \arguments{
-\item{Data_sets}{Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro". Defaults to including all datasets except the two YBFMP datasets.}
+\item{Data_sets}{Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"., "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.}
 
 \item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.}
 

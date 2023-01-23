@@ -5,7 +5,7 @@
 \alias{zoopComb}
 \title{Combined zooplankton dataset}
 \format{
-a tibble with 2,872,526 rows and 14 columns.
+a tibble with 2,896,453 rows and 14 columns.
 \describe{
   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
   \item{SizeClass}{Net size class. Micro corresponds to 43-50 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}

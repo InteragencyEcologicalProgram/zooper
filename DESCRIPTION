@@ -35,7 +35,7 @@ Imports:
     rvest
 URL: https://github.com/InteragencyEcologicalProgram/zooper
 BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Suggests: 
     spelling,
     testthat (>= 2.1.0),

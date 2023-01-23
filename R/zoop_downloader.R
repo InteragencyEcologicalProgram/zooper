@@ -233,10 +233,10 @@ Zoopdownloader <- function(
     data.list[["DOP_Meso"]] <- zoo_DOP_Meso %>%
       tidyr::pivot_longer(cols = !ICF_ID, names_to = "DOP_Meso", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
-      dplyr::mutate( Datetime=Date +Start_Time, #create a variable for datetime
-              Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"),
+      dplyr::mutate(Datetime =  lubridate::ymd(as.character(Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(Start_Time)),
               Source = "DOP", #add variable for data source
               SizeClass = "Meso") %>%
+      filter(!is.na(Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
 
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
@@ -292,8 +292,9 @@ Zoopdownloader <- function(
     data.list[["DOP_Macro"]] <- zoo_DOP_Macro %>%
       tidyr::pivot_longer(cols = !ICF_ID, names_to = "DOP_Macro", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
-      dplyr::mutate( Datetime=Date + Start_Time, #create a variable for datetime
-                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"),
+      dplyr::filter(!is.na(.data$Macrozooplankton_Volume)) %>%
+      dplyr::mutate( Datetime =  lubridate::ymd(as.character(Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(Start_Time)), #create a variable for datetime
+                     #Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"),
                      Source = "DOP", #add variable for data source
                      SizeClass = "Macro") %>%
 
