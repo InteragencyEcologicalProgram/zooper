@@ -236,7 +236,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Datetime =  lubridate::ymd(as.character(Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(Start_Time)),
               Source = "DOP", #add variable for data source
               SizeClass = "Meso") %>%
-      filter(!is.na(Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
+      dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
 
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
