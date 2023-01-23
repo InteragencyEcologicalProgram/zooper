@@ -54,7 +54,7 @@ Zoopdownloader <- function(
                                        "DOP_Meso", "DOP_Macro"))){
     stop("Data_sets must contain one or more of the following options: 'EMP_Meso',
          'FMWT_Meso', 'STN_Meso', '20mm_Meso', 'FRP_Meso', 'EMP_Micro', 'FRP_Macro', 'EMP_Macro',
-         'FMWT_Macro', 'STN_Macro', 'YBFMP_Meso', 'YBFMP_Micro', 'DOP_Macro', 'DOP_Meso.")
+         'FMWT_Macro', 'STN_Macro', 'YBFMP_Meso', 'YBFMP_Micro', 'DOP_Macro', 'DOP_Meso'")
   }
 
   if (!Return_object_type%in%c("List", "Combined")){
@@ -205,10 +205,10 @@ Zoopdownloader <- function(
   # DOP Meso ---------------------------------------------------------------------
   if("DOP_Meso"%in%Data_sets) {
 
-    DOP_Meso_file<-"DOP_ICF Mesozooplankton Abundance"
+    DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance2017-2021"
     DOP_Meso_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Meso_file])
 
-    DOP_trawls_file<-"DOP-ICF Tow Data"
+    DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
     DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
 
     #download the files
@@ -249,10 +249,12 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
-      dplyr::filter(!is.na(.data$Taxname)) %>% #I might not need this step for this dataset, but just in case
+      dplyr::filter(!is.na(.data$Taxname),#I might not need this step for this dataset, but just in case
+                    !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
+                    BottomDepth=.data$BottomDepth*0.3048,# Convert feet to meters
+                    CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when combining data
    dplyr::select(-.data$DOP_Meso) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
@@ -262,10 +264,10 @@ Zoopdownloader <- function(
   # DOP Macro ---------------------------------------------------------------------
   if("DOP_Macro"%in%Data_sets) {
 
-    DOP_Macro_file<-"DOP_ICF Macrozooplankton Abundance"
+    DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance2017-2021"
     DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
 
-    DOP_trawls_file<-"DOP-ICF Tow Data"
+    DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
     DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
 
     #download the files
@@ -306,10 +308,12 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
-      dplyr::filter(!is.na(.data$Taxname)) %>% #I might not need this step for this dataset, but just in case
+      dplyr::filter(!is.na(.data$Taxname), #I might not need this step for this dataset, but just in case
+                    !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
+                    BottomDepth=.data$BottomDepth*0.3048, # Convert feet to meters
+                    CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when data are combined.
       dplyr::select(-.data$DOP_Macro) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
