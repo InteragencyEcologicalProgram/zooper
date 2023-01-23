@@ -20,6 +20,7 @@ test_that("No samples are duplicated in zoopComb", {
   expect_equal(length(unique(paste(zoopComb$SampleID, zoopComb$Taxlifestage, zoopComb$SizeClass))), nrow(zoopComb))
 })
 
+
 test_that("No samples are duplicated in zoopEnvComb", {
   expect_equal(length(unique(zoopEnvComb$SampleID)), nrow(zoopEnvComb))
 })
