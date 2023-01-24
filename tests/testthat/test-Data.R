@@ -21,6 +21,7 @@ test_that("No samples are duplicated in zoopComb", {
 })
 
 
+
 test_that("No samples are duplicated in zoopEnvComb", {
   expect_equal(length(unique(zoopEnvComb$SampleID)), nrow(zoopEnvComb))
 })
@@ -44,7 +45,7 @@ test_that("Date and Datetime and displaying the same dates", {
 
 
 test_that("Bottom depths are within reasonable limits", {
-  expect_true(all(zoopEnvComb$BottomDepth > 0.5 | is.na(zoopEnvComb$BottomDepth)))
+  expect_true(all(zoopEnvComb$BottomDepth > 0.2 | is.na(zoopEnvComb$BottomDepth)))
   expect_true(all(zoopEnvComb$BottomDepth < 35 | is.na(zoopEnvComb$BottomDepth)))
 })
 #One DOP station has a depth of 0.21 m.
