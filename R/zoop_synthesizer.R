@@ -226,7 +226,7 @@ Zoopsynther<-function(
 
   #Find remaining samples to retain
   Samples<-ZoopEnv%>%
-    dplyr::pull(.data$SampleID)%>%
+    dplyr::pull("SampleID")%>%
     unique()
 
   #Retain remaining samples and filter to preferred size classes
@@ -250,7 +250,7 @@ Zoopsynther<-function(
 
   #Create variable for size classes present in dataset
   Size_classes<-Zoop%>%
-    dplyr::pull(.data$SizeClass)%>%
+    dplyr::pull("SizeClass")%>%
     unique()%>%
     rlang::set_names()
 
@@ -258,7 +258,7 @@ Zoopsynther<-function(
   Commontax<-purrr::map(Size_classes, function(x)
     Commontaxer(SourceTaxaKey, "Taxname", x)%>%
       dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
-      dplyr::pull(.data$Taxlifestage))
+      dplyr::pull("Taxlifestage"))
 
   #Apply commontaxer to every taxa level
   Commontaxkey<-purrr::map2_dfr(rep(Size_classes, each=length(Taxcats)),
@@ -270,7 +270,7 @@ Zoopsynther<-function(
   Lumper<-function(Sizeclass){
     Taxa<-Zoop%>%
       dplyr::filter(.data$SizeClass==Sizeclass)%>%
-      dplyr::pull(.data$Taxlifestage)%>%
+      dplyr::pull("Taxlifestage")%>%
       unique()
     setdiff(Taxa, Commontax[[Sizeclass]])
   }
@@ -279,33 +279,33 @@ Zoopsynther<-function(
 
   #Create reduced versions of crosswalk
   Crosswalk_reduced_stage<-Crosswalk%>%
-    dplyr::select(c(.data$Taxname, tidyselect::all_of(Taxcats), .data$Lifestage))%>%
+    dplyr::select(c("Taxname", tidyselect::all_of(Taxcats), "Lifestage"))%>%
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     dplyr::distinct()
 
   Crosswalk_reduced<-Crosswalk_reduced_stage%>%
-    dplyr::select(-.data$Lifestage, -.data$Taxlifestage)%>%
+    dplyr::select(-"Lifestage", -"Taxlifestage")%>%
     dplyr::distinct()
 
   #Create dataframe of undersampled taxa
   Undersampled<-Undersampled%>%
     dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
-    tidyr::pivot_longer(cols=c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Taxname), names_to = "Level", values_to = "Taxa")%>%
+    tidyr::pivot_longer(cols=c("Phylum", "Class", "Order", "Family", "Genus", "Taxname"), names_to = "Level", values_to = "Taxa")%>%
     tidyr::drop_na()%>%
     dplyr::mutate(Taxlifestage = paste(.data$Taxa, .data$Lifestage),
                   Undersampled = TRUE)%>%
-    dplyr::select(.data$SizeClass, .data$Taxlifestage, .data$Undersampled)%>%
+    dplyr::select("SizeClass", "Taxlifestage", "Undersampled")%>%
     dplyr::distinct()
 
   #Create vector of all unique taxa in dataset
   UniqueTaxa<-Zoop%>%
-    dplyr::select(.data$Taxname)%>%
+    dplyr::select("Taxname")%>%
     dplyr::distinct()%>%
-    dplyr::left_join(dplyr::select(Crosswalk, .data$Taxname, .data$Level)%>%
+    dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
                      by="Taxname")%>%
     dplyr::filter(.data$Level!="Species")%>%
-    dplyr::pull(.data$Taxname)
+    dplyr::pull("Taxname")
 
   # Apply LCD approach for taxa-level data user ----------------------
 
@@ -347,18 +347,18 @@ Zoopsynther<-function(
     Orphansdf<-Orphans[which(nchar(Orphans)>0)]
     Orphansdf<-purrr::map(rlang::set_names(names(Orphansdf)), ~strsplit(Orphansdf[[.x]], ", ")[[1]])%>%
       tibble::enframe(name = "SizeClass", value = "Taxlifestage")%>%
-      tidyr::unnest(.data$Taxlifestage)%>%
+      tidyr::unnest("Taxlifestage")%>%
       dplyr::mutate(Orphan=TRUE)
 
 
     # Calculate summed groups and create a final dataset
     Zoop<-purrr::map_dfr(Taxcats_g, .f=LCD_Taxa, Data=Zoop%>%
-                           dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species, -.data$Taxlifestage))%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
+                           dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species", -"Taxlifestage"))%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
       dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>% #Add warnings for taxa undersampled by different methods
       dplyr::mutate(Undersampled=tidyr::replace_na(.data$Undersampled, FALSE))%>%
-      dplyr::select(-.data$Taxlifestage)%>%
+      dplyr::select(-"Taxlifestage")%>%
       dplyr::mutate(Taxname = paste(.data$Taxname, "all", .data$SizeClass, sep="_"), #Differentiate grouped Taxnames from others
                     Taxatype = "Summed group")%>% #Add a label to these summed groups so they can be removed later if users wish)
       dplyr::bind_rows(Zoop%>% #Bind these summarized groupings to the original taxonomic categories in the original dataset
@@ -382,9 +382,9 @@ Zoopsynther<-function(
       dplyr::select(-tidyselect::all_of(Taxcats_g))%>%
       dplyr::left_join(ZoopEnv%>%
                          {if(!All_env){
-                           dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
+                           dplyr::select(., "Year", "Date", "SalSurf", "Latitude", "Longitude", "SampleID")
                          } else{
-                           dplyr::select(., -.data$Source)
+                           dplyr::select(., -"Source")
                          }}, by="SampleID")
 
     #Output caveats specific to these data
@@ -398,23 +398,23 @@ Zoopsynther<-function(
 
     #Create vector of species level taxa
     UniqueSpecies<-Crosswalk%>%
-      dplyr::select(.data$Taxname, .data$Level)%>%
+      dplyr::select("Taxname", "Level")%>%
       dplyr::filter(.data$Level=="Species")%>%
-      dplyr::pull(.data$Taxname)%>%
+      dplyr::pull("Taxname")%>%
       unique()
 
     if(Time_consistency){
       datasets<-Zoop%>%
-        dplyr::select(.data$Source, .data$SizeClass)%>%
+        dplyr::select("Source", "SizeClass")%>%
         dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm"))%>%
         dplyr::mutate(Source=dplyr::recode(.data$Source, STN="FMWT"))%>% #STN currently represented as FMWT for start/end years
         dplyr::distinct()
 
       AllYears<-ZoopEnv%>%
-        dplyr::select(.data$Date)%>%
+        dplyr::select("Date")%>%
         dplyr::distinct()%>%
         dplyr::mutate(Year=as.integer(lubridate::year(.data$Date)))%>%
-        dplyr::pull(.data$Year)%>%
+        dplyr::pull("Year")%>%
         unique()
 
       StartDates<-StartDates%>%
@@ -427,14 +427,14 @@ Zoopsynther<-function(
                                                                                         dplyr::filter(Taxname%in%UniqueTaxa),
                                                                                       Start_year = StartDates%>%
                                                                                         dplyr::filter(.data$Source==.x & .data$SizeClass==.y)%>%
-                                                                                        dplyr::pull(.data$Startdate)%>%
+                                                                                        dplyr::pull("Startdate")%>%
                                                                                         lubridate::year(),
                                                                                       Intro_lag = Intro_lag))%>%
         dplyr::filter(purrr::map_lgl(.data$Years, function(x) any(x%in%AllYears)))%>%
         dplyr::mutate(Taxlifesize = paste(.data$Taxlifestage, .data$SizeClass))
 
       if(nrow(BadYears)>0){
-        Lumped<-purrr::map(Size_classes, ~ unique(c(Lumped[[.]], dplyr::filter(BadYears, .data$SizeClass%in%.)%>%dplyr::pull(.data$Taxlifestage)%>%unique())))
+        Lumped<-purrr::map(Size_classes, ~ unique(c(Lumped[[.]], dplyr::filter(BadYears, .data$SizeClass%in%.)%>%dplyr::pull("Taxlifestage")%>%unique())))
       }
     }
 
@@ -449,9 +449,9 @@ Zoopsynther<-function(
         dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
         dplyr::left_join(ZoopEnv%>%
                            {if(!All_env){
-                             dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
+                             dplyr::select(., "Year", "Date", "SalSurf", "Latitude", "Longitude", "SampleID")
                            } else{
-                             dplyr::select(., -.data$Source)
+                             dplyr::select(., -"Source")
                            }}, by="SampleID")
 
       out<-list(Data=Zoop, Caveats="No disclaimers here! Enjoy the clean data!")
@@ -469,7 +469,7 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifesize = paste(.data$Taxlifestage, .data$SizeClass))%>%
       {if(Time_consistency){ #To correct for time, remove all members of this list that were not counted in all years. This will ensure they do not appear in the Commontaxkey
         if(nrow(BadYears)>0){
-          dplyr::select(., .data$Taxlifesize)%>%
+          dplyr::select(., "Taxlifesize")%>%
             dplyr::filter(!(.data$Taxlifesize%in%unique(BadYears$Taxlifesize)))
         } else{
           .
@@ -478,15 +478,15 @@ Zoopsynther<-function(
         .
       }
       }%>%
-      dplyr::pull(.data$Taxlifesize)%>%
+      dplyr::pull("Taxlifesize")%>%
       unique()
 
     #Create taxonomy table for all taxonomic levels present (and measured) in all datasets. If the taxonomic level is not present as a taxname (i.e. there is no spp. category for that taxonomic level) it will be removed.
     Commontaxkey<-Commontaxkey%>%
       dplyr::mutate(dplyr::across(tidyselect::all_of(Taxcats), list(lifestage=~dplyr::if_else(is.na(.), NA_character_, paste(., .data$Lifestage)))))%>% #Create taxa x life stage variable for each taxonomic level
       dplyr::mutate(dplyr::across(tidyselect::all_of(paste0(Taxcats, "_lifestage")), ~dplyr::if_else(paste(., .data$SizeClass)%in%UniqueTaxlifesize, ., NA_character_)))%>%
-      dplyr::select(.data$Genus_lifestage, .data$Family_lifestage, .data$Order_lifestage, .data$Class_lifestage, .data$Phylum_lifestage, .data$SizeClass)%>% #only retain columns we need
-      dplyr::filter(dplyr::if_any(-c(.data$SizeClass), ~!is.na(.x)))
+      dplyr::select("Genus_lifestage", "Family_lifestage", "Order_lifestage", "Class_lifestage", "Phylum_lifestage", "SizeClass")%>% #only retain columns we need
+      dplyr::filter(dplyr::if_any(-c("SizeClass"), ~!is.na(.x)))
 
     #Create taxonomy table for taxa not present in all datasets, then select their new names corresponding to taxa x life stage combinations that are measured in all datasets
     LCD_Com<-function(Lumped, crosswalk, Commontaxkey){
@@ -522,7 +522,7 @@ Zoopsynther<-function(
       Removed<-Lumpedkey%>%
         dplyr::filter(.data$Taxname_new=="REMOVE")%>%
         dplyr::mutate(Taxlifestage=paste0(.data$Taxlifestage, " (", .data$SizeClass, ")"))%>%
-        dplyr::pull(.data$Taxlifestage)%>%
+        dplyr::pull("Taxlifestage")%>%
         unique()
 
       Removed<-paste(Removed, collapse=", ")
@@ -535,27 +535,27 @@ Zoopsynther<-function(
     #Rename and sum taxa that are not measured in all datasets, add taxonomic info back to data
     Zoop<-Zoop%>%
       dplyr::left_join(Lumpedkey%>%
-                         dplyr::select(.data$Taxlifestage, .data$Taxname_new, .data$SizeClass),
+                         dplyr::select("Taxlifestage", "Taxname_new", "SizeClass"),
                        by=c("Taxlifestage", "SizeClass"))%>%
       dplyr::mutate(Taxname = dplyr::if_else(is.na(.data$Taxname_new), .data$Taxname, .data$Taxname_new))%>%
-      dplyr::select(-.data$Taxname_new)%>%
+      dplyr::select(-"Taxname_new")%>%
       dplyr::filter(.data$Taxname!="REMOVE")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
-      dplyr::select(-.data$Phylum, -.data$Class, -.data$Order, -.data$Family, -.data$Genus, -.data$Species)%>%
+      dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species")%>%
       dtplyr::lazy_dt()%>%
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%
-                         dplyr::select(.data$Taxname, .data$Lifestage, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>%
+                         dplyr::select("Taxname", "Lifestage", "Phylum", "Class", "Order", "Family", "Genus", "Species")%>%
                          dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
-                         dplyr::select(-.data$Taxname, -.data$Lifestage)%>%
+                         dplyr::select(-"Taxname", -"Lifestage")%>%
                          dplyr::bind_rows(Lumpedkey%>%
                                             dplyr::filter(.data$Taxname_new!="REMOVE")%>%
-                                            dplyr::select(.data$Taxname_new, .data$Lifestage, .data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus)%>%
+                                            dplyr::select("Taxname_new", "Lifestage", "Phylum", "Class", "Order", "Family", "Genus")%>%
                                             dplyr::mutate(Taxlifestage = paste(.data$Taxname_new, .data$Lifestage))%>%
-                                            dplyr::select(-.data$Taxname_new, -.data$Lifestage))%>%
+                                            dplyr::select(-"Taxname_new", -"Lifestage"))%>%
                          dplyr::distinct(),
                        by="Taxlifestage"
       )%>%
@@ -565,9 +565,9 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage = paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::left_join(ZoopEnv%>%
                          {if(!All_env){
-                           dplyr::select(., .data$Year, .data$Date, .data$SalSurf, .data$Latitude, .data$Longitude, .data$SampleID)
+                           dplyr::select(., "Year", "Date", "SalSurf", "Latitude", "Longitude", "SampleID")
                          } else{
-                           dplyr::select(., -.data$Source)
+                           dplyr::select(., -"Source")
                          }}, by="SampleID")
   }
 
