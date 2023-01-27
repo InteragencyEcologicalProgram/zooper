@@ -36,7 +36,7 @@ Zoopdownloader <- function(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method="auto",#"curl",
+  Download_method="auto",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,
@@ -213,14 +213,14 @@ Zoopdownloader <- function(
 
     if (!file.exists(file.path(Data_folder, names(SMSCG_Meso_file))) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=SMSCG_Meso_file,
-            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb",  method=Download_method)
+            destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method=Download_method)
     }
 
 
     # Import the FMWT data
 
     zoo_FMWT_Meso <- readr::read_csv(file.path(Data_folder, FMWTSTN_Meso_file),
-                                      col_types=readr::cols_only(Project="c", Year="d", Survey="d",
+                                     col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                 Date="c", Station="c", Time="c",
                                                                 TideCode="c", DepthBottom="d", CondSurf="d",
                                                                 CondBott="d", TempSurf="d", Secchi="d",Turbidity="d",
@@ -240,7 +240,7 @@ Zoopdownloader <- function(
                                                                 OTHCLADO="d", ASPLANCH="d", KERATELA="d",
                                                                 OTHROT="d", POLYARTH="d", SYNCH="d",
                                                                 TRICHO="d", BARNNAUP="d", CRABZOEA="d",
-                                                                OSTRACOD="d", CUMAC="d")) %>%
+                                                                OSTRACOD="d", CUMAC="d"))%>%
       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
                     Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))
 
@@ -267,11 +267,11 @@ Zoopdownloader <- function(
                                                                POLYARTH="d", SYNCH="d", TRICHO="d",
                                                                BARNNAUP="d", CRABZOEA="d", OSTRACOD="d", CUMAC="d"))%>%
       dplyr::mutate(Project=dplyr::recode(.data$Project, TNS="STN"),
-                  ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
-                  Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
-    dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Meso$ID) & .data$Project!="EMP")%>%
-    dplyr::mutate(Station=dplyr::if_else(.data$Project=="FRP", paste(.data$Project, .data$Station), .data$Station),
-                  Project=dplyr::recode(.data$Project, FRP="STN"))
+                    ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station),
+                    Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+      dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Meso$ID) & .data$Project!="EMP")%>%
+      dplyr::mutate(Station=dplyr::if_else(.data$Project=="FRP", paste(.data$Project, .data$Station), .data$Station),
+                    Project=dplyr::recode(.data$Project, FRP="STN"))
 
     # Transform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -285,7 +285,8 @@ Zoopdownloader <- function(
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
                                  -.data$Station,-.data$Time, -.data$TideCode,
                                  -.data$DepthBottom, -.data$CondSurf,
-                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, -.data$Turbidity, -.data$Microcystis,
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, 
+                                 -.data$Turbidity, -.data$Microcystis,
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = .data$Project, .data$Year, .data$Date, .data$Datetime, .data$Station, Tide = .data$TideCode, BottomDepth = .data$DepthBottom, .data$CondSurf, .data$CondBott, Temperature = .data$TempSurf, .data$Secchi, .data$Turbidity, .data$Microcystis, .data$Volume, .data$FMWT_Meso, .data$CPUE)%>% #Select for columns in common and rename columns to match
@@ -398,6 +399,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
             destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method=Download_method)
     }
+    
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
                                     col_types = "cccddddddddcccdddddc", na=c("", "NA"))
 
@@ -450,6 +452,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
             destfile=file.path(Data_folder, YBFMP_file), mode="wb", method=Download_method)
     }
+    
     zoo_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
                                col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
                                                             Tide="c", WaterTemperature="d", Secchi="d",
@@ -513,8 +516,6 @@ Zoopdownloader <- function(
         .
       }}%>%
       tidyr::pivot_wider(names_from=.data$YBFMP, values_from=.data$CPUE, values_fill=list(CPUE=0)) %>%
-
-      #THIS SECOND PIVOT
       tidyr::pivot_longer(cols=c(-.data$Source, -.data$SizeClass, -.data$Volume, -.data$Date,
                                  -.data$Datetime, -.data$Station, -.data$Temperature, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity, -.data$Microcystis,
                                  -.data$SampleID),
@@ -540,6 +541,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=EMP_Micro_URL,
             destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method=Download_method)
     }
+    
     # Import the EMP data
     zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
@@ -605,6 +607,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
             destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method=Download_method)
     }
+    
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
                                      col_types = "ccccddddddddccdddcddc", na=c("", "NA"))
 
@@ -659,6 +662,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=EMP_Macro_URL,
             destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method=Download_method)
     }
+    
     # Import the EMP data
 
     zoo_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
@@ -880,5 +884,3 @@ Zoopdownloader <- function(
   }
 
 }
-
-
