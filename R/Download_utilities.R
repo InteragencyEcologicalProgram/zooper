@@ -8,7 +8,6 @@
 #' @keywords internal
 #' @importFrom magrittr %>%
 
-
 Tryer <- function(n, fun, ...){
 try_number <- 1
   tryer<-function(fun, ...){
@@ -40,7 +39,6 @@ while(rlang::is_string(out) & all(stringr::str_starts(out, "Error")) & try_numbe
 #' @keywords internal
 #' @importFrom magrittr %>%
 #'
-
 
 html_file_list<-function(URL){
 
