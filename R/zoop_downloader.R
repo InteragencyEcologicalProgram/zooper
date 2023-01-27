@@ -255,13 +255,19 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
+      dplyr::mutate(CPUE=dplyr::case_when(
+        .data$CPUE!=0 ~ .data$CPUE,
+        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
+        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$DOPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
    dplyr::select(-.data$DOP_Meso, -.data$ICF_ID) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
   }
 
 
-  # DOP Macro ---------------------------------------------------------------------
+# DOP Macro ---------------------------------------------------------------------
   if("DOP_Macro"%in%Data_sets) {
 
     DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance2017-2021"
@@ -311,9 +317,16 @@ Zoopdownloader <- function(
                        by="DOP_Macro")%>%
       dplyr::filter(!is.na(.data$Taxname), #I might not need this step for this dataset, but just in case
                     !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
+
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
+      dplyr::mutate(CPUE=dplyr::case_when(
+        .data$CPUE!=0 ~ .data$CPUE,
+        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
+        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$DOPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
       dplyr::select(-.data$DOP_Macro, -.data$ICF_ID) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
