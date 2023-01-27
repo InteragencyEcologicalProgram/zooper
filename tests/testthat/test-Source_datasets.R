@@ -172,13 +172,13 @@ DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
 
 #download the files
   Tryer(n=3, fun=utils::download.file, url=DOP_Meso_URL,
-        destfile=file.path(Data_folder, DOP_Meso_file), mode="wb", method=Download_method)
+        destfile=file.path(Data_folder, DOP_Meso_file), mode="wb", method= "curl")
 
   Tryer(n=3, fun=utils::download.file, url=DOP_trawls_URL,
-        destfile=file.path(Data_folder, DOP_trawls_file), mode="wb", method=Download_method)
+        destfile=file.path(Data_folder, DOP_trawls_file), mode="wb", method="curl")
 
   Tryer(n=3, fun=utils::download.file, url=DOP_Macro_URL,
-        destfile=file.path(Data_folder, DOP_Macro_file), mode="wb", method=Download_method)
+        destfile=file.path(Data_folder, DOP_Macro_file), mode="wb", method="curl")
 
 names_DOP_Meso<-readr::read_csv(file.path(Data_folder, DOP_Meso_file)) %>%
   names()
