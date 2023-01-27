@@ -253,8 +253,7 @@ Zoopdownloader <- function(
                     !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
-                    BottomDepth=.data$BottomDepth*0.3048,# Convert feet to meters
-                    CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when combining data
+                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
    dplyr::select(-.data$DOP_Meso, -.data$ICF_ID) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
@@ -313,16 +312,11 @@ Zoopdownloader <- function(
                     !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
-                    BottomDepth=.data$BottomDepth*0.3048, # Convert feet to meters
-                    CondBott = NA, Tide = factor(NA))%>% #needed to prevent error when data are combined.
+                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::select(-.data$DOP_Macro, -.data$ICF_ID) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
   }
-
-
-
-
 
   # FMWTSTN Meso --------------------------------------------------------------------
   if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
@@ -961,10 +955,18 @@ Zoopdownloader <- function(
   zoop<-dplyr::bind_rows(data.list)%>% # Combine data
     dplyr::filter(!is.na(.data$Taxname))%>% #Remove NA taxnames (should only correspond to previously summed "all" categories from input datasets)
     dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),
-                  SalBott=wql::ec2pss(.data$CondBott/1000, t=25),
                   Year=lubridate::year(.data$Date))%>%
-    dplyr::select(-tidyselect::any_of(c("Region", "CondBott", "CondSurf")))%>% #Remove some extraneous variables to save memory
-    dplyr::mutate(Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
+    {if("Tide"%in%names(.)){
+    dplyr::mutate(., Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
+    } else{
+    .
+    }}%>%
+    {if("SalBott"%in%names(.)){
+    dplyr::mutate(SalBott=wql::ec2pss(.data$CondBott/1000, t=25))
+    } else{
+    .
+    }}%>%
+    dplyr::select(-tidyselect::any_of(c("Region", "CondBott", "CondSurf"))) #Remove some extraneous variables to save memory
 
   stationsEMPEZ<-zooper::stationsEMPEZ
 
