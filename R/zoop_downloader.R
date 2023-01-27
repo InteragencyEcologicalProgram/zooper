@@ -195,8 +195,9 @@ Zoopdownloader <- function(
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
       dplyr::ungroup()%>%
-      dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
-      tibble::as_tibble() #required to finish operation after lazy_dt()
+      tibble::as_tibble() %>% #required to finish operation after lazy_dt()
+      dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
+
 
     cat("\nEMP_Meso finished!\n\n")
   }
@@ -238,7 +239,7 @@ Zoopdownloader <- function(
               SizeClass = "Meso") %>%
       dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
 
-      #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
+      #Select variables we are interested in.
       dplyr::select(.data$Source, .data$Date, .data$Datetime,
                     Station = .data$Station_Code, Chl = .data$Chl_a, CondSurf = .data$Conductivity, .data$Secchi, .data$SizeClass,
                     .data$Temperature, Volume = .data$Mesozooplankton_Volume, BottomDepth = .data$Start_Depth,
@@ -718,8 +719,9 @@ Zoopdownloader <- function(
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
       dplyr::ungroup()%>%
-      dplyr::left_join(stations, by=c("Source", "Station"))%>% #Add lat and long
-      tibble::as_tibble() #required to finish operation after lazy_dt()
+      tibble::as_tibble() %>%#required to finish operation after lazy_dt()
+      dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
+
     cat("\nEMP_Micro finished!\n\n")
   }
   # FRP Macro ---------------------------------------------------------------
@@ -845,8 +847,9 @@ Zoopdownloader <- function(
       dplyr::group_by(dplyr::across(-.data$CPUE))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
       dplyr::ungroup()%>%
-      dplyr::left_join(stations, by=c("Source", "Station"))%>%
-      tibble::as_tibble() #required to finish operation after lazy_dt()
+      tibble::as_tibble() %>% #required to finish operation after lazy_dt()
+    dplyr::left_join(stations, by=c("Source", "Station"))
+
     cat("\nEMP_Macro finished!\n\n")
   }
   # FMWT Macro --------------------------------------------------------------
