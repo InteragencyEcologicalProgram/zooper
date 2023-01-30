@@ -13,7 +13,7 @@ Zoopdownloader(
   Return_object = FALSE,
   Return_object_type = "List",
   Redownload_data = FALSE,
-  Download_method = "curl",
+  Download_method = "auto",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
   Crosswalk = zooper::crosswalk,

@@ -163,6 +163,16 @@ test_that("Community approach does not change overall CPUE", {
 })
 
 
+# foo = Data_filtered[which(Data_filtered$CPUE_base != Data_filtered$CPUE_com),]
+#
+# foo2 = mutate(Data_filtered, diff = CPUE_base - CPUE_com) %>%
+#   filter(abs(diff)>0)
+#
+# foo3 = filter(data_com_filtered, SampleID %in% c(foo2$SampleID)) %>%
+#   filter(CPUE >0)
+#
+# foo3wide = pivot_wider(foo3, id_cols = SampleID, names_from = Taxlifestage, values_from = CPUE)
+
 test_that("Community option produces correct messages with a single source", {
   expect_output(comind <<- map2(Data_source, Size_class,
                                 ~Zoopsynther(Data_type="Community", Sources=.x, Size_class = .y)%>%
@@ -198,3 +208,4 @@ test_that("Single source taxa dataset is created and contains all sources", {
   expect_equal(taxind$Source, Data_sets)
   expect_equal(taxind$N, taxind$N_Taxsamples)
 })
+

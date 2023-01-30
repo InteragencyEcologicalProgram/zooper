@@ -61,3 +61,4 @@ test_that("There are no NA Volumes, Dates, or Stations in Zoopdownloader output"
   expect_equal(length(which(is.na(Data$Zooplankton$Volume))), 0)
   expect_equal(length(which(is.na(Data$Environment$Date))), 0)
 })
+

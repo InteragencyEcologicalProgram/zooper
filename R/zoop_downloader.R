@@ -255,7 +255,8 @@ Zoopdownloader <- function(
                     .data$DOP_Meso, .data$CPUE, .data$Latitude, .data$Longitude, .data$ICF_ID) %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select(.data$DOP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum,
-                                     .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain dop codes
+                                     .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species,
+                                     .data$DOPstart, .data$DOPend, .data$Intro)%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
@@ -268,9 +269,9 @@ Zoopdownloader <- function(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
-        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$DOPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
-   dplyr::select(-.data$DOP_Meso, -.data$ICF_ID) #Remove DOP code
+   dplyr::select(-.data$DOP_Meso, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
   }
@@ -320,7 +321,8 @@ Zoopdownloader <- function(
                     .data$DOP_Macro, .data$CPUE, .data$Latitude, .data$Longitude) %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select(.data$DOP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum,
-                                       .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species)%>% #only retain dop codes
+                                       .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species,
+                                        .data$DOPstart, .data$DOPend, .data$Intro)%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
@@ -334,9 +336,9 @@ Zoopdownloader <- function(
         .data$CPUE!=0 ~ .data$CPUE,
         .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
-        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$DOPend ~ 0,
+        .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
-      dplyr::select(-.data$DOP_Macro, -.data$ICF_ID) #Remove DOP code
+      dplyr::select(-.data$DOP_Macro, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
   }
@@ -430,7 +432,7 @@ Zoopdownloader <- function(
       tidyr::pivot_longer(cols=c(-.data$Project, -.data$Year, -.data$Survey, -.data$Date, -.data$Datetime,
                                  -.data$Station,-.data$Time, -.data$TideCode,
                                  -.data$DepthBottom, -.data$CondSurf,
-                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi, 
+                                 -.data$CondBott,  -.data$TempSurf, -.data$Secchi,
                                  -.data$Turbidity, -.data$Microcystis,
                                  -.data$Volume),
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
@@ -548,7 +550,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
             destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method=Download_method)
     }
-    
+
     zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
                                     col_types = "cccddddddddcccdddddc", na=c("", "NA"))
 
@@ -602,7 +604,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
             destfile=file.path(Data_folder, YBFMP_file), mode="wb", method=Download_method)
     }
-    
+
     zoo_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
                                col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
                                                             Tide="c", WaterTemperature="d", Secchi="d",
@@ -694,7 +696,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=EMP_Micro_URL,
             destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method=Download_method)
     }
-    
+
     # Import the EMP data
     zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
@@ -762,7 +764,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
             destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method=Download_method)
     }
-    
+
     zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
                                      col_types = "ccccddddddddccdddcddc", na=c("", "NA"))
 
@@ -818,7 +820,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=EMP_Macro_URL,
             destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method=Download_method)
     }
-    
+
     # Import the EMP data
 
     zoo_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
