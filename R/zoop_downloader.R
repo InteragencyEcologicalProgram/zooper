@@ -260,8 +260,7 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
-      dplyr::filter(!is.na(.data$Taxname),#I might not need this step for this dataset, but just in case
-                    !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
+      dplyr::filter(!is.na(.data$Taxname)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
@@ -271,6 +270,7 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
+      filter(!is.na(CPUE)) %>%
    dplyr::select(-.data$DOP_Meso, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
@@ -326,8 +326,7 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
-      dplyr::filter(!is.na(.data$Taxname), #I might not need this step for this dataset, but just in case
-                    !is.na(CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
+      dplyr::filter(!is.na(.data$Taxname)) %>%
 
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
@@ -338,6 +337,7 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
+      filter(!is.na(.data$CPUE)) %>%
       dplyr::select(-.data$DOP_Macro, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 

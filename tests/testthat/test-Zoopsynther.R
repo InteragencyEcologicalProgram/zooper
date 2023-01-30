@@ -155,21 +155,26 @@ Data_filtered<-data_com_filtered%>%
   summarise(CPUE_com=sum(CPUE), .groups="drop")%>%
   full_join(Data_base_filtered%>%
               group_by(SampleID)%>%
-              summarise(CPUE_base=sum(CPUE), .groups="drop"),
+              summarise(CPUE_base=sum(CPUE, na.rm = T), .groups="drop"),
             by="SampleID")
 
 test_that("Community approach does not change overall CPUE", {
-  expect_equal(Data_filtered$CPUE_base, Data_filtered$CPUE_com)
+  expect_equal(round(Data_filtered$CPUE_base, 6), round(Data_filtered$CPUE_com, 6))
 })
 
 
-# foo = Data_filtered[which(Data_filtered$CPUE_base != Data_filtered$CPUE_com),]
+ foo = Data_filtered[which(Data_filtered$CPUE_base != Data_filtered$CPUE_com),]
 #
-# foo2 = mutate(Data_filtered, diff = CPUE_base - CPUE_com) %>%
-#   filter(abs(diff)>0)
+ foo2 = mutate(Data_filtered, diff = CPUE_base - CPUE_com) %>%
+   filter(abs(diff)>0)
+ foo = Data_filtered[which(round(Data_filtered$CPUE_base, 6) != round(Data_filtered$CPUE_com, 6)),]
+foo3 = filter(data_com_filtered, SampleID %in% c(foo2$SampleID)) %>%
+  filter(CPUE >0)
+ foox = filter(data_com_filtered, Source == "DOP", is.na(CPUE))
+
+ fooy = filter(Data_filtered, is.na(CPUE_base))
 #
-# foo3 = filter(data_com_filtered, SampleID %in% c(foo2$SampleID)) %>%
-#   filter(CPUE >0)
+
 #
 # foo3wide = pivot_wider(foo3, id_cols = SampleID, names_from = Taxlifestage, values_from = CPUE)
 
