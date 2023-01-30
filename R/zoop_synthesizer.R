@@ -406,7 +406,7 @@ Zoopsynther<-function(
     if(Time_consistency){
       datasets<-Zoop%>%
         dplyr::select(.data$Source, .data$SizeClass)%>%
-        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm"))%>%
+        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm", "DOP"))%>%
         dplyr::mutate(Source=dplyr::recode(.data$Source, STN="FMWT"))%>% #STN currently represented as FMWT for start/end years
         dplyr::distinct()
 
