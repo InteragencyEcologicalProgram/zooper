@@ -241,9 +241,9 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["DOP_Meso"]] <- zoo_DOP_Meso %>%
-      tidyr::pivot_longer(cols = !ICF_ID, names_to = "DOP_Meso", values_to = "CPUE") %>%
+      tidyr::pivot_longer(cols = !.data$ICF_ID, names_to = "DOP_Meso", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
-      dplyr::mutate(Datetime =  lubridate::ymd(as.character(Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(Start_Time)),
+      dplyr::mutate(Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)),
               Source = "DOP", #add variable for data source
               SizeClass = "Meso") %>%
       dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
@@ -260,7 +260,7 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
-      dplyr::filter(!is.na(.data$Taxname)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
+      dplyr::filter(!is.na(.data$Taxname), !is.na(.data$CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
@@ -270,7 +270,7 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
-      filter(!is.na(CPUE)) %>%
+      dplyr::filter(!is.na(CPUE)) %>%
    dplyr::select(-.data$DOP_Meso, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
@@ -306,10 +306,10 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["DOP_Macro"]] <- zoo_DOP_Macro %>%
-      tidyr::pivot_longer(cols = !ICF_ID, names_to = "DOP_Macro", values_to = "CPUE") %>%
+      tidyr::pivot_longer(cols = !.data$ICF_ID, names_to = "DOP_Macro", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
       dplyr::filter(!is.na(.data$Macrozooplankton_Volume)) %>%
-      dplyr::mutate( Datetime =  lubridate::ymd(as.character(Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(Start_Time)), #create a variable for datetime
+      dplyr::mutate( Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)), #create a variable for datetime
                      #Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"),
                      Source = "DOP", #add variable for data source
                      SizeClass = "Macro") %>%
@@ -326,7 +326,7 @@ Zoopdownloader <- function(
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
-      dplyr::filter(!is.na(.data$Taxname)) %>%
+      dplyr::filter(!is.na(.data$Taxname), !is.na(.data$CPUE)) %>%
 
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
@@ -337,7 +337,7 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
-      filter(!is.na(.data$CPUE)) %>%
+      dplyr::filter(!is.na(.data$CPUE)) %>%
       dplyr::select(-.data$DOP_Macro, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
