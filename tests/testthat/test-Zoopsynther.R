@@ -159,7 +159,7 @@ Data_filtered<-data_com_filtered%>%
             by="SampleID")
 
 test_that("Community approach does not change overall CPUE", {
-  expect_equal(round(Data_filtered$CPUE_base, 6), round(Data_filtered$CPUE_com, 6))
+  expect_equal(Data_filtered$CPUE_base, Data_filtered$CPUE_com)
 })
 
 
