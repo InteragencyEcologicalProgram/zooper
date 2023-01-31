@@ -163,20 +163,20 @@ test_that("Community approach does not change overall CPUE", {
 })
 
 
- foo = Data_filtered[which(Data_filtered$CPUE_base != Data_filtered$CPUE_com),]
+#  foo = Data_filtered[which(Data_filtered$CPUE_base != Data_filtered$CPUE_com),]
+# #
+#  foo2 = mutate(Data_filtered, diff = CPUE_base - CPUE_com) %>%
+#    filter(abs(diff)>0)
+#  foo = Data_filtered[which(round(Data_filtered$CPUE_base, 6) != round(Data_filtered$CPUE_com, 6)),]
+# foo3 = filter(data_com_filtered, SampleID %in% c(foo2$SampleID)) %>%
+#   filter(CPUE >0)
+#  foox = filter(data_com_filtered, Source == "DOP", is.na(CPUE))
 #
- foo2 = mutate(Data_filtered, diff = CPUE_base - CPUE_com) %>%
-   filter(abs(diff)>0)
- foo = Data_filtered[which(round(Data_filtered$CPUE_base, 6) != round(Data_filtered$CPUE_com, 6)),]
-foo3 = filter(data_com_filtered, SampleID %in% c(foo2$SampleID)) %>%
-  filter(CPUE >0)
- foox = filter(data_com_filtered, Source == "DOP", is.na(CPUE))
-
- fooy = filter(Data_filtered, is.na(CPUE_base))
+#  fooy = filter(Data_filtered, is.na(CPUE_base))
+# #
 #
-
-#
-# foo3wide = pivot_wider(foo3, id_cols = SampleID, names_from = Taxlifestage, values_from = CPUE)
+# #
+# # foo3wide = pivot_wider(foo3, id_cols = SampleID, names_from = Taxlifestage, values_from = CPUE)
 
 test_that("Community option produces correct messages with a single source", {
   expect_output(comind <<- map2(Data_source, Size_class,
@@ -214,3 +214,12 @@ test_that("Single source taxa dataset is created and contains all sources", {
   expect_equal(taxind$N, taxind$N_Taxsamples)
 })
 
+test = unlist(tax$Samples)[c(42564, 42565, 42566, 42567)]
+test
+foo = filter(zoopComb, SampleID %in% test)
+foo2 = filter(zoopEnvComb, SampleID %in% test)
+
+test2 = unlist(tax$Samples)[which(!unlist(tax$Samples) %in% unlist(com$Samples))]
+
+foo = filter(zoopComb, SampleID %in% test2)
+foo2 = filter(zoopEnvComb, SampleID %in% test2)
