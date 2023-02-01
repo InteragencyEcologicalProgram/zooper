@@ -39,8 +39,8 @@ test_that("Taxa option produces messages", {
                             Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
-Data_source <- c("EMP", "FMWT", "STN", "20mm", "FRP", "EMP", "FRP", "EMP", "FMWT", "STN")
-Size_class <- c(rep("Meso", 5), "Micro", rep("Macro", 4))
+Data_source <- c("EMP", "FMWT", "STN", "20mm", "FRP","DOP", "EMP", "FRP", "EMP", "FMWT", "STN", "DOP")
+Size_class <- c(rep("Meso", 6), "Micro", rep("Macro", 5))
 
 Data_sets <- paste(Data_source, Size_class, sep="_")
 
@@ -155,14 +155,14 @@ Data_filtered<-data_com_filtered%>%
   summarise(CPUE_com=sum(CPUE), .groups="drop")%>%
   full_join(Data_base_filtered%>%
               group_by(SampleID)%>%
-              summarise(CPUE_base=sum(CPUE), .groups="drop"),
+              summarise(CPUE_base=sum(CPUE, na.rm = T), .groups="drop"),
             by="SampleID")
 
 test_that("Community approach does not change overall CPUE", {
   expect_equal(Data_filtered$CPUE_base, Data_filtered$CPUE_com)
 })
 
-#Test on each individual dataset
+
 
 test_that("Community option produces correct messages with a single source", {
   expect_output(comind <<- map2(Data_source, Size_class,
@@ -199,3 +199,5 @@ test_that("Single source taxa dataset is created and contains all sources", {
   expect_equal(taxind$Source, Data_sets)
   expect_equal(taxind$N, taxind$N_Taxsamples)
 })
+
+

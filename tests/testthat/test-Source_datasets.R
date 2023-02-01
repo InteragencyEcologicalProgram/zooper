@@ -26,6 +26,13 @@ YBFMP_entities <- Tryer(n=3, fun=readLines, con=YBFMP_pkg_url, warn = FALSE)
 YBFMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/494", YBFMP_latest_revision, YBFMP_entities, sep="/")
 names(YBFMP_entities) <- purrr::map_chr(YBFMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
+DOP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/1187"
+DOP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=DOP_revision_url, warn = FALSE), 1)
+DOP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/1187/", DOP_latest_revision)
+DOP_entities <- Tryer(n=3, fun=readLines, con=DOP_pkg_url, warn = FALSE)
+DOP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/1187", DOP_latest_revision, DOP_entities, sep="/")
+names(DOP_entities) <- purrr::map_chr(DOP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+
 Data_folder<-tempdir()
 
 
@@ -151,6 +158,36 @@ names_SMSCG_Macro <- readr::read_csv(file.path(Data_folder, names(SMSCG_Macro_fi
                                               col_types = cols(.default=col_character()))%>%
   select(-starts_with("..."))%>% # Remove empty columns that are being read in here
   names()
+
+# DOP Meso and Macro -------------------------------------------------------------------
+
+DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance2017-2021"
+DOP_Meso_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Meso_file])
+
+DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
+DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
+
+DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance2017-2021"
+DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
+
+#download the files
+  Tryer(n=3, fun=utils::download.file, url=DOP_Meso_URL,
+        destfile=file.path(Data_folder, DOP_Meso_file), mode="wb", method= "curl")
+
+  Tryer(n=3, fun=utils::download.file, url=DOP_trawls_URL,
+        destfile=file.path(Data_folder, DOP_trawls_file), mode="wb", method="curl")
+
+  Tryer(n=3, fun=utils::download.file, url=DOP_Macro_URL,
+        destfile=file.path(Data_folder, DOP_Macro_file), mode="wb", method="curl")
+
+names_DOP_Meso<-readr::read_csv(file.path(Data_folder, DOP_Meso_file)) %>%
+  names()
+names_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file)) %>%
+  names()
+
+names_DOP_Macro<-readr::read_csv(file.path(Data_folder, DOP_Macro_file)) %>%
+  names()
+
 
 # Tests -------------------------------------------------------------------
 
@@ -281,5 +318,61 @@ test_that("SMSCG Macro Mysid column names have not changed", {
                                              'Neomysis_kadiakensis', 'Neomysis_mercedis', 'Unidentified_Mysid', 'Americorophium_spinicorne',
                                              'Americorophium_stimpsoni', 'Ampelisca_abdita', 'Corophium_alienense', 'Crangonyx_sp',
                                              'Gammarus_daiberi', 'Hyalella_sp', 'Unidentified_Amphipod', 'Unidentified_Corophium',
-                                             'Unidentified_Gammarus', 'Grandidierella_japonica'))
+                                             'Unidentified_Gammarus', 'Grandidierella_japonica'))})
+
+
+  test_that("DOP Meso column names have not changed", {
+    expect_setequal(names_DOP_Meso, c( "ICF_ID", "Acanthocyclops_spp_adult","Acanthocyclops_vernalis_adult",
+                                       "Acanthocyclops_vernalis_copepodid","Acartia_spp_adult","Acartia_spp_copepodid" ,
+                                       "Acartiella_sinensis_adult",          "Acartiella_sinensis_copepodid",      "Asplanchna_spp",
+                                        "Barnacle_UNID_nauplii",              "Bosmina_longirostris", "Brachionidae_UNID",
+                                        "Brachionus_spp", "Calanoid_UNID_adult" , "Calanoid_UNID_copepodid",
+                                        "Camptocercus_spp" ,  "Chydoridae_UNID",                    "Chydorus_spp",
+                                        "Cladocera_UNID", "Copepod_UNID_nauplii", "Crab_UNID_zoea",
+                                        "Cyclopoid_UNID_adult","Cyclopoid_UNID_copepodid",           "Daphnia_spp" ,
+                                       "Daphniidae_UNID" ,"Diaptomidae_UNID_adult" ,"Diaptomidae_UNID_copepodid" ,
+                                        "Ditrichocorycaeus_affinis_adult",    "Eurytemora_affinis_adult", "Eurytemora_affinis_copepodid",
+                                       "Eurytemora_spp_nauplii" , "Harpacticoid_UNID",  "Holopedium_gibberum" ,
+                                       "Ilyocryptus_spp","Keratella_spp","Labidocera_spp_adult",
+                                       "Labidocera_spp_copepodid", "Leptodora_spp", "Limnoithona_sinensis_adult",
+                                       "Limnoithona_sinensis_copepodid",     "Limnoithona_spp_adult",              "Limnoithona_spp_copepodid",
+                                       "Limnoithona_tetraspina_adult",      "Limnoithona_tetraspina_copepodid",   "Macrothrix_spp",
+                                       "Moina_spp",                          "Oithona_davisae_adult",             "Oithona_davisae_copepodid",
+                                       "Oithona_similis_adult",             "Oithona_similis_copepodid",         "Oithona_spp_adult",
+                                       "Oithona_spp_copepodid",             "Osphranticum_labronectum_adult",    "Osphranticum_labronectum_copepodid",
+                                       "Ostracoda_UNID",                    "Paracalanus_parvus_adult",          "Paracalanus_parvus_copepodid",
+                                       "Platyias_spp",                      "Podonidae_UNID",                    "Polyarthra_spp",
+                                       "Pseudodiaptomus_euryhalinus_adult", "Pseudodiaptomus_forbesi_adult",     "Pseudodiaptomus_forbesi_copepodid",
+                                       "Pseudodiaptomus_marinus_adult",     "Pseudodiaptomus_marinus_copepodid", "Pseudodiaptomus_spp_adult",
+                                       "Pseudodiaptomus_spp_copepodid",     "Pseudodiaptomus_spp_nauplii",       "Rotifer_UNID",
+                                       "Scapholeberis_spp",                 "Sididae_UNID",                      "Sinocalanus_doerrii_adult",
+                                       "Sinocalanus_doerrii_copepodid",     "Sinocalanus_doerrii_nauplii",       "Synchaeta_bicornis",
+                                       "Synchaeta_spp",                     "Tortanus_dextrilobatus_adult",      "Tortanus_discaudatus_adult",
+                                       "Tortanus_spp_copepodid",            "Trichocerca_spp"))
+})
+
+test_that("DOP Macro column names have not changed", {
+    expect_setequal(names_DOP_Macro, c( "ICF_ID", "Alienacanthomysis_macropsis",   "Americorophium_spinicorne",     "Americorophium_spp",
+                                       "Americorophium_stimpsoni",      "Ampelisca_abdita",              "Amphipod_UNID",                 "Ampithoe_spp",
+                                       "Ampithoe_valida",               "Corophiidae_UNID",              "Crangonyx_spp",                 "Cumacean_UNID",
+                                       "Deltamysis_holmquistae",        "Dexaminidae_UNID",              "Eogammarus_spp",                "Exopalaemon_spp",
+                                       "Gammarus_daiberi",              "Grandidierella_japonica",       "Grandifoxus_grandis",           "Hyalella_spp",
+                                       "Hyperacanthomysis_longirostris","Isopoda_UNID",                  "Monocorophium_acherusicum",     "Mysid_UNID",
+                                       "Neomysis_kadiakensis",          "Neomysis_mercedes",             "Oedicerotidae_UNID",            "Orientomysis_aspera",
+                                       "Orientomysis_hwanhaiensis",     "Pleustidae_UNID",               "Shrimp_UNID_larvae",
+                                       "Sinocorophium_alienense",
+                                       "Tanaidacea_UNID","Sinocorophium_alienense"))
+})
+
+test_that("DOP Trawl column names have not changed", {
+  expect_setequal(names_DOP_Macro, c( "ICF_ID", "Alienacanthomysis_macropsis",   "Americorophium_spinicorne",     "Americorophium_spp",
+                                     "Americorophium_stimpsoni",      "Ampelisca_abdita",              "Amphipod_UNID",                 "Ampithoe_spp",
+                                     "Ampithoe_valida",               "Corophiidae_UNID",              "Crangonyx_spp",                 "Cumacean_UNID",
+                                     "Deltamysis_holmquistae",        "Dexaminidae_UNID",              "Eogammarus_spp",                "Exopalaemon_spp",
+                                     "Gammarus_daiberi",              "Grandidierella_japonica",       "Grandifoxus_grandis",           "Hyalella_spp",
+                                     "Hyperacanthomysis_longirostris","Isopoda_UNID",                  "Monocorophium_acherusicum",     "Mysid_UNID",
+                                     "Neomysis_kadiakensis",          "Neomysis_mercedes",             "Oedicerotidae_UNID",            "Orientomysis_aspera",
+                                     "Orientomysis_hwanhaiensis",     "Pleustidae_UNID",               "Shrimp_UNID_larvae",
+                                     "Sinocorophium_alienense",
+                                     "Tanaidacea_UNID","Sinocorophium_alienense"))
 })

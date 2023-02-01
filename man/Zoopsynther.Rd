@@ -10,7 +10,7 @@ Zoopsynther(
   ZoopEnv = zooper::zoopEnvComb,
   Zoop_path = NULL,
   Env_path = NULL,
-  Sources = c("EMP", "FRP", "FMWT", "STN", "20mm"),
+  Sources = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP"),
   Size_class = c("Micro", "Meso", "Macro"),
   Time_consistency = FALSE,
   Intro_lag = 2,
@@ -45,7 +45,7 @@ Zoopsynther(
 
 \item{Env_path}{If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.}
 
-\item{Sources}{Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey). The YBFMP datasets cannot be used in this function due to taxonomic and life stage issues with that dataset. Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "STN", "20mm")}.}
+\item{Sources}{Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "DOP" (Directed Outflow Project), and "20mm" (20mm survey). The YBFMP datasets cannot be used in this function due to taxonomic and life stage issues with that dataset. Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP")}.}
 
 \item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
 
