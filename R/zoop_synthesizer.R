@@ -6,7 +6,7 @@
 #' @param ZoopEnv Accessory environmental data. You must provide the "Environment" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Env_path}.
 #' @param Zoop_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined zooplankton dataset on disk. You must also set \code{Data_list = NULL}.
 #' @param Env_path If you wish to save time by saving the combined zooplankton datasets returned from the \code{zoopdatadownloader} to disk, provider here the path to the combined accessory environmental data on disk. You must also set \code{Data_list = NULL}.
-#' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey). The YBFMP datasets cannot be used in this function due to taxonomic and life stage issues with that dataset. Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "STN", "20mm")}.
+#' @param Sources Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "DOP" (Directed Outflow Project), and "20mm" (20mm survey). The YBFMP datasets cannot be used in this function due to taxonomic and life stage issues with that dataset. Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP")}.
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
 #' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Only available for the Community option.
 #' @param Intro_lag Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.
@@ -53,7 +53,7 @@ Zoopsynther<-function(
   ZoopEnv = zooper::zoopEnvComb,
   Zoop_path = NULL,
   Env_path = NULL,
-  Sources = c("EMP", "FRP", "FMWT", "STN", "20mm"),
+  Sources = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP"),
   Size_class = c("Micro", "Meso", "Macro"),
   Time_consistency = FALSE,
   Intro_lag = 2,
@@ -92,8 +92,8 @@ Zoopsynther<-function(
     stop("YBFMP cannot be synthesized with this function due to taxonomic and life stage issues with that dataset. Please acccess the YBFMP data with the zoop_downloader function or the built-in datasets zoopComb and zoopEnvComb.")
   }
 
-  if (!purrr::every(Sources, ~.%in%c("EMP", "FRP", "FMWT", "STN", "20mm"))){
-    stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, STN, 20mm")
+  if (!purrr::every(Sources, ~.%in%c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP"))){
+    stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, STN, 20mm, DOP")
   }
 
 
@@ -406,7 +406,7 @@ Zoopsynther<-function(
     if(Time_consistency){
       datasets<-Zoop%>%
         dplyr::select(.data$Source, .data$SizeClass)%>%
-        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm"))%>%
+        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm", "DOP"))%>%
         dplyr::mutate(Source=dplyr::recode(.data$Source, STN="FMWT"))%>% #STN currently represented as FMWT for start/end years
         dplyr::distinct()
 

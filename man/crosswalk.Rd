@@ -17,6 +17,8 @@ a tibble with 378 rows and 30 variables
   \item{twentymm_Meso}{Taxonomic codes used in the 20mm Survey mesozooplankton (160 \eqn{\mu}m mesh) dataset}
   \item{FRP_Meso}{Taxonomic codes used in the Fish Restoration Program mesozooplankton (150 \eqn{\mu}m mesh) dataset}
   \item{FRP_Macro}{Taxonomic codes used in the Fish Restoration Program macrozooplankton (500 \eqn{\mu}m mesh) dataset}
+  \item{DOP_Meso}{Taxonomic codes used in the Directed Outflow Project mesozooplankton (150 \eqn{\mu}m mesh) dataset}
+  \item{DOP_Macro}{Taxonomic codes used in the Directed Outflow Project macrozooplankton (500 \eqn{\mu}m mesh) dataset}
   \item{YBFMP}{Taxonomic codes used in the Yolo Bypass Fish Monitoring Program zooplankton dataset)}
   \item{Lifestage}{Plankton lifestage}
   \item{Taxname}{Current scientific name}
