@@ -17,8 +17,8 @@
 
 Taxnamefinder <- function(Crosswalk, Taxa){
   Taxnames<-Crosswalk%>%
-    dplyr::filter(dplyr::if_any(c(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species, .data$Taxname), ~.x%in%Taxa))%>%
-    dplyr::select(.data$Taxname)%>%
+    dplyr::filter(dplyr::if_any(c("Phylum", "Class", "Order", "Family", "Genus", "Species", "Taxname"), ~.x%in%Taxa))%>%
+    dplyr::select("Taxname")%>%
     dplyr::distinct()%>%
     dplyr::pull()
 
@@ -51,7 +51,7 @@ SourceTaxaKeyer<-function(Data, Crosswalk){
     Source2<-rlang::enquo(Source2) #capture expression to pass on to functions below
     Crosswalk%>%
       dplyr::filter(!is.na(!!Source2))%>%
-      dplyr::select(.data$Phylum, .data$Class, .data$Order, .data$Family, .data$Genus, .data$Taxname, .data$Lifestage)%>%
+      dplyr::select("Phylum", "Class", "Order", "Family", "Genus", "Taxname", "Lifestage")%>%
       dplyr::distinct()%>%
       dplyr::mutate(Source=Source)
   }
@@ -99,17 +99,17 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
   Taxa_level<-rlang::sym(Taxa_level) #unquote input
   Taxa_level<-rlang::enquo(Taxa_level) #capture expression to pass on to functions below
   N<-Source_taxa_key%>%
-    dplyr::pull(.data$Source)%>%
+    dplyr::pull("Source")%>%
     unique()%>%
     length()
   Source_taxa_key%>%
     dplyr::filter(!is.na(!!Taxa_level))%>%
-    dplyr::select(!!Taxa_level, .data$Lifestage, .data$Source)%>%
+    dplyr::select(!!Taxa_level, "Lifestage", "Source")%>%
     dplyr::distinct()%>%
     dplyr::group_by(!!Taxa_level, .data$Lifestage)%>%
     dplyr::summarise(n=dplyr::n(), .groups="drop")%>% #Create index of number of data sources in which each Taxa_level x lifestage combo appears
     dplyr::filter(.data$n==N)%>% #only retain Taxa_level x lifestage combos that appear in all datasets
-    dplyr::select(!!Taxa_level, .data$Lifestage)
+    dplyr::select(!!Taxa_level, "Lifestage")
 }
 
 
@@ -184,7 +184,7 @@ Datareducer<-function(Data, Reduced_vars){
     dplyr::distinct()%>%
     tidyr::pivot_longer(cols=tidyselect::all_of(Reduced_vars), names_to = "Level", values_to = "Taxa")%>%
     tidyr::drop_na()%>%
-    dplyr::pull(.data$Taxa)%>%
+    dplyr::pull("Taxa")%>%
     unique()
   return(out)
 }
