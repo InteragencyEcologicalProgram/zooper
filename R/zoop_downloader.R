@@ -241,7 +241,7 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["DOP_Meso"]] <- zoo_DOP_Meso %>%
-      tidyr::pivot_longer(cols = !.data$ICF_ID, names_to = "DOP_Meso", values_to = "CPUE") %>%
+      tidyr::pivot_longer(cols = !"ICF_ID", names_to = "DOP_Meso", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
       dplyr::mutate(Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)),
               Source = "DOP", #add variable for data source
@@ -249,14 +249,14 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
 
       #Select variables we are interested in.
-      dplyr::select(.data$Source, .data$Date, .data$Datetime,
-                    Station = .data$Station_Code, Chl = .data$Chl_a, CondSurf = .data$Conductivity, .data$Secchi, .data$SizeClass,
-                    .data$Temperature, Volume = .data$Mesozooplankton_Volume, BottomDepth = .data$Start_Depth,
-                    .data$DOP_Meso, .data$CPUE, .data$Latitude, .data$Longitude, .data$ICF_ID) %>%
+      dplyr::select("Source", "Date", "Datetime",
+                    Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
+                    "Temperature", Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
+                    "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select(.data$DOP_Meso, .data$Lifestage, .data$Taxname, .data$Phylum,
-                                     .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species,
-                                     .data$DOPstart, .data$DOPend, .data$Intro)%>% #only retain dop codes
+                       dplyr::select("DOP_Meso", "Lifestage", "Taxname", "Phylum",
+                                     "Class", "Order", "Family", "Genus", "Species",
+                                     "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
@@ -270,8 +270,8 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$DOPstart ~ NA_real_,
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
-      dplyr::filter(!is.na(CPUE)) %>%
-   dplyr::select(-.data$DOP_Meso, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
+      dplyr::filter(!is.na(.data$CPUE)) %>%
+   dplyr::select(-"DOP_Meso", -"ICF_ID", -"DOPstart", -"DOPend", -"Intro") #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
   }
@@ -306,7 +306,7 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["DOP_Macro"]] <- zoo_DOP_Macro %>%
-      tidyr::pivot_longer(cols = !.data$ICF_ID, names_to = "DOP_Macro", values_to = "CPUE") %>%
+      tidyr::pivot_longer(cols = !"ICF_ID", names_to = "DOP_Macro", values_to = "CPUE") %>%
       dplyr::left_join(zoo_DOP_trawls) %>%
       dplyr::filter(!is.na(.data$Macrozooplankton_Volume)) %>%
       dplyr::mutate( Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)), #create a variable for datetime
@@ -315,14 +315,14 @@ Zoopdownloader <- function(
                      SizeClass = "Macro") %>%
 
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
-      dplyr::select(.data$Source, .data$Date, .data$Datetime,
-                    Station = .data$Station_Code, Chl = .data$Chl_a, CondSurf = .data$Conductivity, .data$Secchi, .data$SizeClass,
-                    .data$Temperature, Volume = .data$Macrozooplankton_Volume, BottomDepth = .data$Start_Depth, .data$ICF_ID,
-                    .data$DOP_Macro, .data$CPUE, .data$Latitude, .data$Longitude) %>%
+      dplyr::select("Source", "Date", "Datetime",
+                    Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
+                    "Temperature", Volume = "Macrozooplankton_Volume", BottomDepth = "Start_Depth", "ICF_ID",
+                    "DOP_Macro", "CPUE", "Latitude", "Longitude") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
-                         dplyr::select(.data$DOP_Macro, .data$Lifestage, .data$Taxname, .data$Phylum,
-                                       .data$Class, .data$Order, .data$Family, .data$Genus, .data$Species,
-                                        .data$DOPstart, .data$DOPend, .data$Intro)%>% #only retain dop codes
+                         dplyr::select("DOP_Macro", "Lifestage", "Taxname", "Phylum",
+                                       "Class", "Order", "Family", "Genus", "Species",
+                                        "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
@@ -338,7 +338,7 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
       dplyr::filter(!is.na(.data$CPUE)) %>%
-      dplyr::select(-.data$DOP_Macro, -.data$ICF_ID, -.data$DOPstart, -.data$DOPend, -.data$Intro) #Remove DOP code
+      dplyr::select(-"DOP_Macro", -"ICF_ID", -"DOPstart", -"DOPend", -"Intro") #Remove DOP code
     cat("\nDOP_Macro finished!\n\n")
 
   }
@@ -569,16 +569,16 @@ Zoopdownloader <- function(
       dplyr::mutate(Source="FRP", #add variable for data source
                     SizeClass="Meso",
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
-      dplyr::select(.data$Source, .data$Date, .data$Datetime, .data$Latitude, .data$Longitude,
-                    .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
-                    Temperature = .data$Temp, Volume = .data$volume, FRP_Meso = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
-      dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::select("Source", "Date", "Datetime", "Latitude", "Longitude",
+                    "Station", CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass",
+                    Temperature = "Temp", Volume = "volume", FRP_Meso = "CommonName", "CPUE", "SampleID")%>% #Select for columns in common and rename columns to match
+      dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
-      tidyr::pivot_wider(names_from=.data$FRP_Meso, values_from=.data$CPUE, values_fill=list(CPUE=0))%>%
-      tidyr::pivot_longer(cols=c(-.data$Source, -.data$Date, -.data$Datetime,
-                                 -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH, -.data$DO, -.data$Turbidity,
-                                 -.data$Tide, -.data$Microcystis, -.data$SizeClass,-.data$Latitude, -.data$Longitude,
-                                 -.data$Temperature, -.data$Volume, -.data$SampleID),
+      tidyr::pivot_wider(names_from="FRP_Meso", values_from="CPUE", values_fill=list(CPUE=0))%>%
+      tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime",
+                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"Turbidity",
+                                 -"Tide", -"Microcystis", -"SizeClass", -"Latitude", -"Longitude",
+                                 -"Temperature", -"Volume", -"SampleID"),
                           names_to="FRP_Meso", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FRP_Meso", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species")%>% #only retain FRP codes
@@ -671,18 +671,18 @@ Zoopdownloader <- function(
       }else{
         .
       }}%>%
-      tidyr::pivot_wider(names_from=.data$YBFMP, values_from=.data$CPUE, values_fill=list(CPUE=0)) %>%
-      tidyr::pivot_longer(cols=c(-.data$Source, -.data$SizeClass, -.data$Volume, -.data$Date,
-                                 -.data$Datetime, -.data$Station, -.data$Temperature, -.data$CondSurf, -.data$Secchi,
-                                 -.data$pH, -.data$DO, -.data$Turbidity, -.data$Microcystis,
-                                 -.data$SampleID),
+      tidyr::pivot_wider(names_from="YBFMP", values_from="CPUE", values_fill=list(CPUE=0)) %>%
+      tidyr::pivot_longer(cols=c(-"Source", -"SizeClass", -"Volume", -"Date",
+                                 -"Datetime", -"Station", -"Temperature", -"CondSurf", -"Secchi",
+                                 -"pH", -"DO", -"Turbidity", -"Microcystis",
+                                 -"SampleID"),
                           names_to="YBFMP", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk %>%
-                         dplyr::select(.data$YBFMP, .data$Lifestage, .data$Taxname, .data$Phylum, .data$Class,
-                                       .data$Order, .data$Family, .data$Genus, .data$Species),
+                         dplyr::select("YBFMP", "Lifestage", "Taxname", "Phylum", "Class",
+                                       "Order", "Family", "Genus", "Species"),
                        by = "YBFMP") %>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
-      dplyr::select(-.data$YBFMP) %>% #Remove YBFMP taxa codes
+      dplyr::select(-"YBFMP") %>% #Remove YBFMP taxa codes
       dplyr::mutate(SampleID=paste0(.data$Source, "_", .data$SampleID))  %>% #Create identifier for each sample
       dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
     cat("\nFRP_Meso finished!\n\n")
@@ -788,16 +788,16 @@ Zoopdownloader <- function(
                     SizeClass = "Macro",
                     CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
-      dplyr::select(.data$Source, .data$Date, .data$Datetime, .data$Latitude, .data$Longitude,
-                    .data$Station, CondSurf = .data$SC, .data$Secchi, .data$pH, .data$DO, .data$Turbidity, .data$Tide, .data$Microcystis, .data$SizeClass,
-                    Temperature = .data$Temp, Volume = .data$volume, FRP_Macro = .data$CommonName, .data$CPUE, .data$SampleID)%>% #Select for columns in common and rename columns to match
-      dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Some taxa names are repeated as in EMP so
+      dplyr::select("Source", "Date", "Datetime", "Latitude", "Longitude",
+                    "Station", CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass",
+                    Temperature = "Temp", Volume = "volume", FRP_Macro = "CommonName", "CPUE", "SampleID")%>% #Select for columns in common and rename columns to match
+      dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
-      tidyr::pivot_wider(names_from=.data$FRP_Macro, values_from=.data$CPUE, values_fill=list(CPUE=0))%>%
-      tidyr::pivot_longer(cols=c(-.data$Source, -.data$Date, -.data$Datetime, -.data$Latitude, -.data$Longitude,
-                                 -.data$Station, -.data$CondSurf, -.data$Secchi, -.data$pH,
-                                 -.data$DO, -.data$Turbidity, -.data$Tide, -.data$Microcystis, -.data$SizeClass,
-                                 -.data$Temperature, -.data$Volume, -.data$SampleID),
+      tidyr::pivot_wider(names_from="FRP_Macro", values_from="CPUE", values_fill=list(CPUE=0))%>%
+      tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime", -"Latitude", -"Longitude",
+                                 -"Station", -"CondSurf", -"Secchi", -"pH",
+                                 -"DO", -"Turbidity", -"Tide", -"Microcystis", -"SizeClass",
+                                 -"Temperature", -"Volume", -"SampleID"),
                           names_to="FRP_Macro", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FRP_Macro", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species")%>% #only retain FRP codes
@@ -1031,7 +1031,7 @@ Zoopdownloader <- function(
   # Remove duplicated samples not caught by distinct
   dups<-dplyr::filter(zoopEnv, .data$SampleID%in%.data$SampleID[which(duplicated(.data$SampleID))])%>%
     dplyr::group_by(.data$SampleID)%>%
-    dplyr::mutate(dplyr::across(where(is.numeric), mean, na.rm=T))%>%
+    dplyr::mutate(dplyr::across(where(is.numeric), ~mean(.x, na.rm=T)))%>%
     dplyr::mutate(dplyr::across(where(lubridate::is.POSIXct), ~suppressWarnings(dplyr::if_else(all(is.na(.x)), lubridate::parse_date_time(NA_character_, tz="America/Los_Angeles"), min(.x, na.rm=T)))))%>%
     tidyr::fill(where(is.character), .direction="downup")%>%
     dplyr::mutate(dplyr::across(where(is.character), ~unique(.x)[1]))%>%

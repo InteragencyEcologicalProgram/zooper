@@ -1,5 +1,9 @@
 # zooper (development version)
 
+* Changed FRP data coordinates to use the sample-specific coordinates instead of the general station location coordinates
+* Added DOP data
+* Changed data source for FMWT/STN to EDI
+* Changed default download method of `Zoopdownloader` to "auto"
 * Updating to newest EMP data. 
 * Added newest FMWT/STN data, including new station STN 722
 * Add option to specify download method in `Zoopdownloader` function.

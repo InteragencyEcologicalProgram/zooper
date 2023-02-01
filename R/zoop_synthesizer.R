@@ -303,7 +303,8 @@ Zoopsynther<-function(
     dplyr::distinct()%>%
     dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
-                     by="Taxname")%>%
+                     by="Taxname",
+                     multiple="error")%>%
     dplyr::filter(.data$Level!="Species")%>%
     dplyr::pull("Taxname")
 
