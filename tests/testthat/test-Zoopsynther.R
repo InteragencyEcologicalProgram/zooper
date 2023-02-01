@@ -1,3 +1,5 @@
+skip_os_ci(os=c("darwin", "linux"), logical="or", ci="local")
+
 library(zooper)
 library(dplyr)
 library(purrr)
