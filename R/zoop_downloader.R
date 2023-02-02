@@ -30,7 +30,8 @@
 Zoopdownloader <- function(
   Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                 "20mm_Meso", "FRP_Meso", "EMP_Micro",
-                "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Meso", "DOP_Macro"),
+                "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+                "STN_Macro", "DOP_Meso", "DOP_Macro"),
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
@@ -171,7 +172,7 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                        c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-"SampleDate", -"StationNZ", -"Time", -"Secchi", -"Chl_a", -"Temperature",
                                  -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Datetime", -"Depth"),
@@ -234,16 +235,50 @@ Zoopdownloader <- function(
 
     # Import the DOP data
 
-    zoo_DOP_Meso<-readr::read_csv(file.path(Data_folder, DOP_Meso_file))
-    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file))
+    zoo_DOP_Meso<-readr::read_csv(file.path(Data_folder, DOP_Meso_file),
+                                  col_types=readr::cols_only(ICF_ID="c", Acanthocyclops_spp_adult="d", Acanthocyclops_vernalis_adult="d",
+                                                        Acanthocyclops_vernalis_copepodid="d", Acartia_spp_adult="d", Acartia_spp_copepodid="d",
+                                                        Acartiella_sinensis_adult="d", Acartiella_sinensis_copepodid="d", Asplanchna_spp="d",
+                                                        Barnacle_UNID_nauplii="d", Bosmina_longirostris="d", Brachionidae_UNID="d",
+                                                        Brachionus_spp="d", Calanoid_UNID_adult="d", Calanoid_UNID_copepodid="d",
+                                                        Camptocercus_spp="d", Chydoridae_UNID="d", Chydorus_spp="d",
+                                                        Cladocera_UNID="d", Copepod_UNID_nauplii="d", Crab_UNID_zoea="d",
+                                                        Cyclopoid_UNID_adult="d", Cyclopoid_UNID_copepodid="d", Daphnia_spp="d",
+                                                        Daphniidae_UNID="d", Diaptomidae_UNID_adult="d", Diaptomidae_UNID_copepodid="d",
+                                                        Ditrichocorycaeus_affinis_adult="d", Eurytemora_affinis_adult="d", Eurytemora_affinis_copepodid="d",
+                                                        Eurytemora_spp_nauplii="d", Harpacticoid_UNID="d", Holopedium_gibberum="d",
+                                                        Ilyocryptus_spp="d", Keratella_spp="d", Labidocera_spp_adult="d",
+                                                        Labidocera_spp_copepodid="d", Leptodora_spp="d", Limnoithona_sinensis_adult="d",
+                                                        Limnoithona_sinensis_copepodid="d", Limnoithona_spp_adult="d", Limnoithona_spp_copepodid="d",
+                                                        Limnoithona_tetraspina_adult="d", Limnoithona_tetraspina_copepodid="d", Macrothrix_spp="d",
+                                                        Moina_spp="d", Oithona_davisae_adult="d", Oithona_davisae_copepodid="d",
+                                                        Oithona_similis_adult="d", Oithona_similis_copepodid="d", Oithona_spp_adult="d",
+                                                        Oithona_spp_copepodid="d", Osphranticum_labronectum_adult="d", Osphranticum_labronectum_copepodid="d",
+                                                        Ostracoda_UNID="d", Paracalanus_parvus_adult="d", Paracalanus_parvus_copepodid="d",
+                                                        Platyias_spp="d", Podonidae_UNID="d", Polyarthra_spp="d",
+                                                        Pseudodiaptomus_euryhalinus_adult="d", Pseudodiaptomus_forbesi_adult="d", Pseudodiaptomus_forbesi_copepodid="d",
+                                                        Pseudodiaptomus_marinus_adult="d", Pseudodiaptomus_marinus_copepodid="d", Pseudodiaptomus_spp_adult="d",
+                                                        Pseudodiaptomus_spp_copepodid="d", Pseudodiaptomus_spp_nauplii="d", Rotifer_UNID="d",
+                                                        Scapholeberis_spp="d", Sididae_UNID="d", Sinocalanus_doerrii_adult="d",
+                                                        Sinocalanus_doerrii_copepodid="d", Sinocalanus_doerrii_nauplii="d", Synchaeta_bicornis="d",
+                                                        Synchaeta_spp="d", Tortanus_dextrilobatus_adult="d", Tortanus_discaudatus_adult="d",
+                                                        Tortanus_spp_copepodid="d", Trichocerca_spp="d"))
+
+    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file),
+                                    col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
+                                                          Station_Code="c", Latitude="d", Longitude="d",
+                                                          Start_Depth="d", Temperature="d", Conductivity="d",
+                                                          Chl_a="d", Secchi="d", Mesozooplankton_Volume="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["DOP_Meso"]] <- zoo_DOP_Meso %>%
       tidyr::pivot_longer(cols = !"ICF_ID", names_to = "DOP_Meso", values_to = "CPUE") %>%
-      dplyr::left_join(zoo_DOP_trawls) %>%
-      dplyr::mutate(Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)),
+      dplyr::left_join(zoo_DOP_trawls, by="ICF_ID") %>%
+      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles"),
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Start_Time), NA_character_, paste(.data$Date, .data$Start_Time)),
+                                                        "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"), #create a variable for datetime
               Source = "DOP", #add variable for data source
               SizeClass = "Meso") %>%
       dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
@@ -299,18 +334,35 @@ Zoopdownloader <- function(
 
     # Import the DOP data
 
-    zoo_DOP_Macro<-readr::read_csv(file.path(Data_folder, DOP_Macro_file))
-    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file))
+    zoo_DOP_Macro<-readr::read_csv(file.path(Data_folder, DOP_Macro_file),
+                                   col_types=readr::cols_only(ICF_ID="c", Alienacanthomysis_macropsis="d", Americorophium_spinicorne="d",
+                                                              Americorophium_spp="d", Americorophium_stimpsoni="d", Ampelisca_abdita="d",
+                                                              Amphipod_UNID="d", Ampithoe_spp="d", Ampithoe_valida="d",
+                                                              Corophiidae_UNID="d", Crangonyx_spp="d", Cumacean_UNID="d",
+                                                              Deltamysis_holmquistae="d", Dexaminidae_UNID="d", Eogammarus_spp="d",
+                                                              Exopalaemon_spp="d", Gammarus_daiberi="d", Grandidierella_japonica="d",
+                                                              Grandifoxus_grandis="d", Hyalella_spp="d", Hyperacanthomysis_longirostris="d",
+                                                              Isopoda_UNID="d", Monocorophium_acherusicum="d", Mysid_UNID="d",
+                                                              Neomysis_kadiakensis="d", Neomysis_mercedes="d", Oedicerotidae_UNID="d",
+                                                              Orientomysis_aspera="d", Orientomysis_hwanhaiensis="d", Pleustidae_UNID="d",
+                                                              Shrimp_UNID_larvae="d", Sinocorophium_alienense="d", Tanaidacea_UNID="d"))
+
+    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file),
+                                    col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
+                                                               Station_Code="c", Latitude="d", Longitude="d",
+                                                               Start_Depth="d", Temperature="d", Conductivity="d",
+                                                               Chl_a="d", Secchi="d", Macrozooplankton_Volume="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
 
     data.list[["DOP_Macro"]] <- zoo_DOP_Macro %>%
       tidyr::pivot_longer(cols = !"ICF_ID", names_to = "DOP_Macro", values_to = "CPUE") %>%
-      dplyr::left_join(zoo_DOP_trawls) %>%
+      dplyr::left_join(zoo_DOP_trawls, by="ICF_ID") %>%
       dplyr::filter(!is.na(.data$Macrozooplankton_Volume)) %>%
-      dplyr::mutate( Datetime =  lubridate::ymd(as.character(.data$Date), tz = "America/Los_Angeles") + lubridate::hms(as.character(.data$Start_Time)), #create a variable for datetime
-                     #Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"),
+      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles"),
+                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Start_Time), NA_character_, paste(.data$Date, .data$Start_Time)),
+                                                        "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"), #create a variable for datetime,
                      Source = "DOP", #add variable for data source
                      SizeClass = "Macro") %>%
 
@@ -851,7 +903,7 @@ Zoopdownloader <- function(
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %H:%M", "%Y-%m-%d %I:%M:%S %p"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                        c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"), # Ensure everything ends up in local time
                     Unidentified_mysid=dplyr::if_else(lubridate::year(.data$SampleDate)<2014, .data$Amphipod_Total, .data$Unidentified_mysid))%>% # Transfer pre 2014 amphipod counts to Amphipod_total
       tidyr::pivot_longer(cols=c(-"SampleDate", -"Time", -"Datetime", -"StationNZ", -"Secchi", -"Chl_a", -"Temperature",
@@ -1005,8 +1057,8 @@ Zoopdownloader <- function(
     } else{
     .
     }}%>%
-    {if("SalBott"%in%names(.)){
-    dplyr::mutate(SalBott=wql::ec2pss(.data$CondBott/1000, t=25))
+    {if("CondBott"%in%names(.)){
+    dplyr::mutate(., SalBott=wql::ec2pss(.data$CondBott/1000, t=25))
     } else{
     .
     }}%>%

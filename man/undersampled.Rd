@@ -5,7 +5,7 @@
 \alias{undersampled}
 \title{Taxa undersampled in each size class}
 \format{
-a tibble with 22 rows and 3 columns
+a tibble with 27 rows and 3 columns
 \describe{
   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corresponds to 43 \eqn{\mu}m mesh and Meso corresponds to 150-160 \eqn{\mu}m mesh.}
   \item{Taxname}{The scientific name of taxa undersampled by the corresponding mesh size class}

@@ -1,5 +1,10 @@
 # zooper (development version)
 
+* Removed crosswalk Inf and -Inf dates and used 2500 and 1900, respectively, instead. For some reason, Inf and -Inf dates were no longer being treated correctly. 
+* Added DOP to `Zoopdownloader` test
+* Added new co-authors
+* Converted undersampled and crosswalk files to csv so it is easier to track changes on git
+* Fixed previously incorrect times in EMP data. Previously, times in the EMP data were automatically converted to AM even if they were recorded as PM
 * Changed FRP data coordinates to use the sample-specific coordinates instead of the general station location coordinates
 * Added DOP data
 * Changed data source for FMWT/STN to EDI

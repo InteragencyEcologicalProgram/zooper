@@ -84,22 +84,22 @@ different types of synthesized data.
 *I want to analyze the community composition at whatever taxonomic level
 lets me use all these datasets.*
 
--   Consistent taxonomic categories
--   No plankters counted more than once
--   Sacrifices some taxonomic resolution
--   Removes taxa with no relatives in all datasets (e.g., Annelida)
+- Consistent taxonomic categories
+- No plankters counted more than once
+- Sacrifices some taxonomic resolution
+- Removes taxa with no relatives in all datasets (e.g., Annelida)
 
 ### For specific taxa analyzers
 
 *I want all possible data on these specific taxa.*
 
--   Calculates total CPUE for higher taxonomic levels
--   Some plankters appear in multiple nested taxa (e.g., Calanoida,
-    Copepoda)
--   Preserves taxonomic resolution and creates taxonomic categories that
-    are comparable across all datasets
--   Labels taxa that are comparable across all datasets, warns about
-    those that are not.
+- Calculates total CPUE for higher taxonomic levels
+- Some plankters appear in multiple nested taxa (e.g., Calanoida,
+  Copepoda)
+- Preserves taxonomic resolution and creates taxonomic categories that
+  are comparable across all datasets
+- Labels taxa that are comparable across all datasets, warns about those
+  that are not.
 
 ## Size classes
 
@@ -178,8 +178,8 @@ str(MyZoops)
 #>  $ Temperature : num [1:151478] 14.8 14.8 14.8 14.8 14.8 14.8 14.8 14.8 14.8 14.8 ...
 #>  $ BottomDepth : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ Tide        : chr [1:151478] "High slack" "High slack" "High slack" "High slack" ...
-#>  $ Year        : num [1:151478] 1994 1994 1994 1994 1994 ...
 #>  $ Datetime    : POSIXct[1:151478], format: "1994-03-21 09:25:00" "1994-03-21 09:25:00" ...
+#>  $ Year        : num [1:151478] 1994 1994 1994 1994 1994 ...
 #>  $ Turbidity   : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ Microcystis : chr [1:151478] NA NA NA NA ...
 #>  $ pH          : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...

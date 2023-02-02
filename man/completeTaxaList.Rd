@@ -5,7 +5,7 @@
 \alias{completeTaxaList}
 \title{All taxonomic names}
 \format{
-a character vector of length 416.
+a character vector of length 454.
 }
 \usage{
 completeTaxaList

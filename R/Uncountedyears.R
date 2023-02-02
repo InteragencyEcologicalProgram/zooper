@@ -52,10 +52,10 @@ Uncountedyears<- function(Source, Size_class, Crosswalk, Start_year, Intro_lag){
 
   out<-Crosswalk%>%
     dplyr::filter(!is.na(!!dataset))%>% #Filter to source and size class of choice
-    dplyr::mutate(!!start := dplyr::if_else(!is.finite(!!start), Sys.Date(), !!start))%>% #Change infinite start dates to current year
+    dplyr::mutate(!!start := dplyr::if_else(!!start > lubridate::ymd("2100-01-01"), Sys.Date(), !!start))%>% #Change super late (never) start dates to current year
     dplyr::mutate(Intro = .data$Intro + lubridate::years(Intro_lag))%>% # Add Intro_lag to species introduction year
-    dplyr::mutate(Intro = dplyr::if_else(!is.finite(.data$Intro) | .data$Intro > !!start, !!start, .data$Intro), # If introduction year is infinite (native species) or greater than the start date for that taxa, set it equal to the start date
-                  !!end := dplyr::if_else(!is.finite(!!end), Sys.Date(), !!end))%>% # If end date is infinite, set it to current year
+    dplyr::mutate(Intro = dplyr::if_else(.data$Intro < lubridate::ymd("1900-01-01") | .data$Intro > !!start, !!start, .data$Intro), # If introduction year is super early (native species) or greater than the start date for that taxa, set it equal to the start date
+                  !!end := dplyr::if_else(!!end > lubridate::ymd("2100-01-01"), Sys.Date(), !!end))%>% # If end date is super late (never), set it to current year
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     {if(rlang::quo_name(start2)%in%names(Crosswalk)){ # If source has a set of second start dates (currently just 20mm)
       dplyr::select(., "Taxname", "Lifestage", "Taxlifestage", !!start, !!start2, !!end, "Intro", !!dataset)%>% # select desired columns
@@ -63,7 +63,7 @@ Uncountedyears<- function(Source, Size_class, Crosswalk, Start_year, Intro_lag){
         dplyr::do(tibble::tibble(Years = list(c(
           as.integer(seq(lubridate::year(.$Intro), lubridate::year(.[[rlang::quo_name(start)]]), by = 1)), # Sequence of years from when taxon was introduced to when it was first counted in this particular source and size class
           as.integer(seq(lubridate::year(.[[rlang::quo_name(end)]]),
-                         dplyr::if_else(is.finite(.[[rlang::quo_name(start2)]]), lubridate::year(.[[rlang::quo_name(start2)]])-1, lubridate::year(Sys.Date())), by=1)))))) # Sequence of years from when taxon was last counted to the current year or when counting was restarted
+                         dplyr::if_else(.[[rlang::quo_name(start2)]] < lubridate::ymd("2100-01-01"), lubridate::year(.[[rlang::quo_name(start2)]])-1, lubridate::year(Sys.Date())), by=1)))))) # Sequence of years from when taxon was last counted to the current year or when counting was restarted
     } else{
       dplyr::select(., "Taxname", "Lifestage", "Taxlifestage", !!start, !!end, "Intro", !!dataset)%>% # Same as above but for normal sources that never restarted counting
         dplyr::group_by(.data$Taxname, .data$Lifestage, !!dataset, .data$Taxlifestage, !!start, !!end, .data$Intro, n = dplyr::row_number())%>%

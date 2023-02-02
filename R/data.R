@@ -2,7 +2,7 @@
 #'
 #' A crosswalk table relating the taxonomic code used by each dataset to current scientific names, life stages, and taxonomic hierarchies.
 #'
-#' @format a tibble with 378 rows and 30 variables
+#' @format a tibble with 404 rows and 34 variables
 #' \describe{
 #'   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
 #'   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}
@@ -34,6 +34,8 @@
 #'   \item{twentymmstart}{First year the 20mm Survey starting counting this taxa}
 #'   \item{twentymmend}{Last year the 20mm Survey counted this taxa}
 #'   \item{twentymmstart2}{First year the 20mm Survey restarted counting this taxa}
+#'   \item{DOPstart}{First year DOP starting counting this taxa}
+#'   \item{DOPend}{Last year DOP counted this taxa}
 #'   }
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "crosswalk"
@@ -42,7 +44,7 @@
 #'
 #' A table listing the taxonomic names and life stages of plankton undersampled by each net mesh size (i.e. size class)
 #'
-#' @format a tibble with 22 rows and 3 columns
+#' @format a tibble with 27 rows and 3 columns
 #' \describe{
 #'   \item{SizeClass}{The size class of zooplankton intended to be capture be each net mesh size. Micro corresponds to 43 \eqn{\mu}m mesh and Meso corresponds to 150-160 \eqn{\mu}m mesh.}
 #'   \item{Taxname}{The scientific name of taxa undersampled by the corresponding mesh size class}
@@ -55,7 +57,7 @@
 #'
 #' Latitudes and longitudes for each zooplankton station.
 #'
-#' @format a tibble with 386 rows and 4 columns
+#' @format a tibble with 387 rows and 4 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset}
 #'   \item{Station}{Sampling station name}
@@ -83,7 +85,7 @@
 #'
 #' All source zooplankton datasets combined into one tibble.
 #'
-#' @format a tibble with 2,896,453 rows and 14 columns.
+#' @format a tibble with 3,508,904 rows and 14 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43-50 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
@@ -109,7 +111,7 @@
 #' Accessory environmental data from the combined zooplankton dataset. Not all datasets report all environmental parameters.
 #'
 #' @encoding UTF-8
-#' @format a tibble with 39,168 rows and 20 columns
+#' @format a tibble with 43,445 rows and 20 columns
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{Year}{Year sample was collected}
@@ -140,7 +142,7 @@
 #'
 #' A complete list of all valid taxonomic names included in the full dataset. Used to limit choices for filtering by taxa.
 #'
-#' @format a character vector of length 416.
+#' @format a character vector of length 454.
 #' @seealso \code{\link{Taxnamefinder}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 #'
 "completeTaxaList"
@@ -150,7 +152,7 @@
 #'
 #' First dates sampled by each survey and size class
 #'
-#' @format a tibble with 12 rows and 3 columns.
+#' @format a tibble with 14 rows and 3 columns.
 #' \describe{
 #'   \item{Source}{Abbreviated name of the source dataset.  "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, "DOP" = Directed Outflow Project, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
 #'   \item{SizeClass}{Net size class. Micro corresponds to 43 (EMP) or 50 (YBFMP) \eqn{\mu}m mesh, Meso corresponds to 150 (FRP and DOP) or 160 (EMP, FMWT, STN, 20mm, YBFMP) \eqn{\mu}m mesh, and Macro corresponds to 500 (FRP and DOP) - 505 (EMP, FMWT, STN) \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}

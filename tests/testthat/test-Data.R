@@ -7,7 +7,7 @@ Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "20mm_Meso", "FRP_Meso","EMP_Micro",
                "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                "STN_Macro", "YBFMP_Meso", "YBFMP_Micro", "DOP_Meso", "DOP_Macro"
-               )
+)
 
 No_coords<-filter(zoopEnvComb, is.na(Latitude) & !str_detect(Station, "NZEZ"))%>%
   mutate(Station=paste(Source, Station))
@@ -42,7 +42,14 @@ test_that("Date and Datetime and displaying the same dates", {
   expect_true(all(as_date(zoopEnvComb$Date)==as_date(zoopEnvComb$Datetime) | is.na(zoopEnvComb$Datetime)))
 })
 
+test_that("Timezone is correct", {
+  expect_true(all(tz(zoopEnvComb$Datetime)=="America/Los_Angeles"))
+})
 
+test_that("Very few times are before 5AM or after 6PM", {
+  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)<5)), 50)
+  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)>18)), 50)
+})
 
 test_that("Bottom depths are within reasonable limits", {
   expect_true(all(zoopEnvComb$BottomDepth > 0.2 | is.na(zoopEnvComb$BottomDepth)))

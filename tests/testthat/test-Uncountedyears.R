@@ -10,8 +10,8 @@ Crosswalk1 <- tibble::tibble(
   Surveystart = readr::parse_date(c("1990", "1985", "2000", NA_character_, "1950", NA_character_, NA_character_), format="%Y"),
   Surveyend = readr::parse_date(c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, "2005"), format="%Y")
 )%>%
-  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)%>%
-  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
+  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend")), ~tidyr::replace_na(., lubridate::ymd("2500-01-01")))%>% #Change any NAs for starts or ends to 2500 (i.e. never started or ended)%>%
+  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::ymd("1800-01-01"))) #Change any NAs in Intro date to 1800 (i.e., always been around)
 
 # Should have a NULL result
 Crosswalk2 <- tibble::tibble(
@@ -22,8 +22,8 @@ Crosswalk2 <- tibble::tibble(
   Surveystart = readr::parse_date(c("1990", "1985", "2000", NA_character_, "1950", NA_character_, NA_character_), format="%Y"),
   Surveyend = readr::parse_date(c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, "2005"), format="%Y")
 )%>%
-  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)%>%
-  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
+  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend")), ~tidyr::replace_na(., lubridate::ymd("2500-01-01")))%>% #Change any NAs for starts or ends to 2500 (i.e. never started or ended)%>%
+  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::ymd("1800-01-01"))) #Change any NAs in Intro date to 1800 (i.e., always been around)
 
 # Should have 5 years for species E from 2010-2015
 Crosswalk3 <- tibble::tibble(
@@ -35,8 +35,8 @@ Crosswalk3 <- tibble::tibble(
   Surveyend = readr::parse_date(c(NA_character_, NA_character_, NA_character_, NA_character_, "2010", NA_character_, "2005", NA_character_), format="%Y"),
   Surveystart2 = readr::parse_date(c(NA_character_, NA_character_, NA_character_, NA_character_, "2015", NA_character_, NA_character_, NA_character_), format="%Y")
 )%>%
-  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend")), ~tidyr::replace_na(., lubridate::as_date(Inf)))%>% #Change any NAs for starts or ends to Infinity (i.e. never started or ended)%>%
-  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::as_date(-Inf))) #Change any NAs in Intro date to -Inf (i.e., always been around)
+  dplyr::mutate_at(dplyr::vars(c("Surveystart", "Surveyend", "Surveystart2")), ~tidyr::replace_na(., lubridate::ymd("2500-01-01")))%>% #Change any NAs for starts or ends to 2500 (i.e. never started or ended)%>%
+  dplyr::mutate(Intro=tidyr::replace_na(.data$Intro, lubridate::ymd("1800-01-01"))) #Change any NAs in Intro date to 1800 (i.e., always been around)
 
 Start_year <- lubridate::year(readr::parse_date("1970", format="%Y"))
 
