@@ -65,8 +65,9 @@
 #'        DOP samples with meso (150 \eqn{\mu}m) and macro (500 \eqn{\mu}m) zooplankton nets.
 #'        \href{https://doi.org/10.6073/pasta/73b4acc0e1a72cb31d95ba96a4071fbc}{Data are available here.}}
 #'   \item{Yolo Bypass Fish Monitoring Program (YBFMP)}{YBFMP is run by the California Department of Water Resources.
-#'        Zooplankton were first collected in 2011. Samples are collected twice monthly or weekly from 2 sites,
-#'        one in the Yolo Bypass and one in the Sacramento River, when the Yolo Bypass is inundated.
+#'        Zooplankton were first collected in 1999. Samples are from 2 sites, one in the Yolo Bypass and one in the Sacramento River.
+#'        In 1999 and 2000, samples were collected for a couple of months each year, and then it increased to roughly winter/spring from 2001-2010.
+#'        Since 2011, samples are collected twice monthly during most of the year, and weekly when the bypass is inundated.
 #'        YBFMP samples with micro (50 \eqn{\mu}m) and meso (150 \eqn{\mu}m) zooplankton nets.
 #'        \href{https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=494}{Data are available here.}}
 #'   }
