@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Added TowType variable to identify whether each tow was a surface, bottom, oblique, or vertical pump sample. 
 * Removed crosswalk Inf and -Inf dates and used 2500 and 1800, respectively, instead. For some reason, Inf and -Inf dates were no longer being treated correctly. 
 * Added DOP to `Zoopdownloader` test
 * Added new co-authors

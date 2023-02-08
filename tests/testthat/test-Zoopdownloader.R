@@ -62,3 +62,6 @@ test_that("There are no NA Volumes, Dates, or Stations in Zoopdownloader output"
   expect_equal(length(which(is.na(Data$Environment$Date))), 0)
 })
 
+test_that("TowType only has the expected levels", {
+  expect_setequal(Data$Environment$TowType, c("Surface", "Bottom", "Oblique", "Vertical pump"))
+})

@@ -57,8 +57,11 @@ test_that("Bottom depths are within reasonable limits", {
 })
 #One DOP station has a depth of 0.21 m.
 
-
-
 test_that("There are no NA Volumes in zoopComb", {
   expect_equal(length(which(is.na(zoopComb$Volume))), 0)
+})
+
+
+test_that("TowType only has the expected levels", {
+  expect_setequal(zoopEnvComb$TowType, c("Surface", "Bottom", "Oblique", "Vertical pump"))
 })

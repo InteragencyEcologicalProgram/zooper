@@ -1,7 +1,12 @@
 #' Downloads and combines zooplankton datasets collected by the Interagency Ecological Program from the Sacramento-San Joaquin Delta
 #'
-#' This function downloads all IEP zooplankton datasets from the internet, converts them to a consistent format, binds them together, and exports the combined dataset as .Rds R data files and/or an R object. Datasets currently include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), and "20mm" (20mm survey).
-#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro"., "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.
+#' This function downloads all IEP zooplankton datasets from the internet,
+#' converts them to a consistent format, binds them together, and exports
+#' the combined dataset as .Rds R data files and/or an R object.
+#' Datasets currently include "EMP" (Environmental Monitoring Program),
+#' "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "20mm" (20mm survey),
+#' "DOP" (Directed Outflow Project Lower Trophic Study), and "YBFMP" (Yolo Bypass Fish Monitoring Program).
+#' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
@@ -191,6 +196,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     Tide="1",# All EMP samples collected at high slack
+                    TowType="Oblique",
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -266,7 +272,7 @@ Zoopdownloader <- function(
 
     zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file),
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
-                                                          Station_Code="c", Latitude="d", Longitude="d",
+                                                          Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                           Start_Depth="d", Temperature="d", Conductivity="d",
                                                           Chl_a="d", Secchi="d", Mesozooplankton_Volume="d"))
 
@@ -287,7 +293,7 @@ Zoopdownloader <- function(
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
                     "Temperature", Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
-                    "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID") %>%
+                    "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select("DOP_Meso", "Lifestage", "Taxname", "Phylum",
                                      "Class", "Order", "Family", "Genus", "Species",
@@ -298,6 +304,8 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$Taxname), !is.na(.data$CPUE)) %>%  #get rid of the lines with "NA" because the critter wasn't counted in this sample.
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
+                    TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
+                                          `Channel Deep`="Bottom"),
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -349,7 +357,7 @@ Zoopdownloader <- function(
 
     zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, DOP_trawls_file),
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
-                                                               Station_Code="c", Latitude="d", Longitude="d",
+                                                               Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                                Start_Depth="d", Temperature="d", Conductivity="d",
                                                                Chl_a="d", Secchi="d", Macrozooplankton_Volume="d"))
 
@@ -370,7 +378,7 @@ Zoopdownloader <- function(
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
                     "Temperature", Volume = "Macrozooplankton_Volume", BottomDepth = "Start_Depth", "ICF_ID",
-                    "DOP_Macro", "CPUE", "Latitude", "Longitude") %>%
+                    "DOP_Macro", "CPUE", "Latitude", "Longitude", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("DOP_Macro", "Lifestage", "Taxname", "Phylum",
                                        "Class", "Order", "Family", "Genus", "Species",
@@ -382,6 +390,8 @@ Zoopdownloader <- function(
 
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
+                    TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
+                                          `Channel Deep`="Bottom"),
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -503,6 +513,7 @@ Zoopdownloader <- function(
                     Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Date),
+                    TowType="Oblique",
                     SizeClass="Meso")%>% #Create identifier for each sample
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ CPUE,
@@ -588,6 +599,7 @@ Zoopdownloader <- function(
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::mutate(Source="20mm",
+                    TowType="Oblique",
                     SampleID=paste(.data$Source, .data$SampleID)) %>%#Create identifier for each sample
 
       dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
@@ -644,7 +656,8 @@ Zoopdownloader <- function(
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID),
+                    TowType="Surface") #Create identifier for each sample
     cat("\nFRP_Meso finished!\n\n")
   }
 
@@ -735,7 +748,8 @@ Zoopdownloader <- function(
                        by = "YBFMP") %>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>% #create variable for combo taxonomy x life stage
       dplyr::select(-"YBFMP") %>% #Remove YBFMP taxa codes
-      dplyr::mutate(SampleID=paste0(.data$Source, "_", .data$SampleID))  %>% #Create identifier for each sample
+      dplyr::mutate(SampleID=paste0(.data$Source, "_", .data$SampleID), #Create identifier for each sample
+                    TowType="Surface")  %>%
       dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
     cat("\nFRP_Meso finished!\n\n")
   }
@@ -794,6 +808,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     Tide="1", # All EMP samples collected at high slack
+                    TowType="Vertical pump",
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -863,7 +878,8 @@ Zoopdownloader <- function(
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID),
+                    TowType="Surface") #Create identifier for each sample
     cat("\nFRP_Macro finished!\n\n")
   }
 
@@ -924,6 +940,7 @@ Zoopdownloader <- function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     Tide="1", # All EMP samples collected at high slack
+                    TowType="Oblique",
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -1021,6 +1038,7 @@ Zoopdownloader <- function(
                     Microcystis=dplyr::if_else(.data$Microcystis=="6", "2", .data$Microcystis), #Microsystis value of 6 only used from 2012-2015 and is equivalent to a 2 in other years, so just converting all 6s to 2s.
                     SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
                     SizeClass="Macro",
+                    TowType="Oblique",
                     Tide=as.character(.data$Tide))%>%
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,

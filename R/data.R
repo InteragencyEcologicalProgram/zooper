@@ -117,6 +117,7 @@
 #'   \item{Year}{Year sample was collected}
 #'   \item{Date}{Date sample was collected}
 #'   \item{Datetime}{Date and time sample was collected, if time was provided}
+#'   \item{TowType}{Sample collection method identifying whether each tow was a surface, bottom, oblique, or vertical pump sample}
 #'   \item{Tide}{Tidal stage}
 #'   \item{Station}{Station where sample was collected. This is the key that links to the  \code{stations} dataset}
 #'   \item{Chl}{Chlorophyll concentration in \eqn{\mu}g/L}

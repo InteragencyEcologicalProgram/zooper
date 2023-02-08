@@ -4,6 +4,7 @@ AmphipodCode
 Amphipods
 Annelida
 Barros
+Benicia
 Burdi
 CDFW
 CPUE
@@ -23,6 +24,7 @@ FMWT
 FRP
 FTPs
 HTMLs
+ICF
 IEP
 Interagency
 Kayfetz
@@ -53,7 +55,9 @@ Taxlifestages
 Taxname
 Tempel
 Tibble
+TowType
 Townet
+Trophic
 Undersampled
 YBFMP
 Yolo
