@@ -11,16 +11,18 @@ require(stringr)
 
 test_that("Community option produces messages", {
   expect_output(com <<- Zoopsynther(Data_type="Community")%>%
-                  summarise(N = nrow(.),
+                  summarise(col_names=list(names(.)),
+                            N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
                             CPUE_total=sum(CPUE),
-                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled,)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
   expect_output(comTime <<- Zoopsynther(Data_type="Community", Time_consistency = TRUE)%>%
-                  summarise(N = nrow(.),
+                  summarise(col_names=list(names(.)),,
+                            N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
@@ -32,7 +34,8 @@ test_that("Community option produces messages", {
 
 test_that("Taxa option produces messages", {
   expect_output(tax <<- Zoopsynther(Data_type="Taxa")%>%
-                  summarise(N = nrow(.),
+                  summarise(col_names=list(names(.)),,
+                            N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
                             N_Volume_NA = length(which(is.na(Volume))),
@@ -93,6 +96,13 @@ test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
 })
 
+test_that("No datasets contain the intro, start, or end columns from crosswalk", {
+  expect_false(any(str_detect(unlist(com$col_names), "end|start|Intro")))
+  expect_false(any(str_detect(unlist(comTime$col_names), "end|start|Intro")))
+  expect_false(any(str_detect(unlist(tax$col_names), "end|start|Intro")))
+})
+
+
 # Test the Undersampled flag is correctly applied
 Crosswalk_reduced<-zooper::crosswalk%>%
   select(c(Taxname, all_of(c("Genus", "Family", "Order", "Class", "Phylum")), Lifestage))%>%
@@ -107,7 +117,7 @@ Undersampled<-zooper::undersampled%>%
   pivot_longer(cols=c(Phylum, Class, Order, Family, Genus, Taxname), names_to = "Level", values_to = "Taxa")%>%
   drop_na()%>%
   mutate(Taxlifestage = paste(Taxa, Lifestage),
-                Undersampled = TRUE)%>%
+         Undersampled = TRUE)%>%
   select(SizeClass, Taxlifestage, Undersampled)%>%
   distinct()
 
@@ -142,7 +152,7 @@ test_that("Taxa dataset has correctly labeled undersampled taxa", {
 data_com<-Zoopsynther("Community", Shiny = T)
 Removed<-unlist(str_split(str_split(data_com$Caveats, ", ")[[1]], ": "))[-1]
 Removed_data<-tibble(Taxlifestage=str_remove(Removed, " \\s*\\([^\\)]+\\)"),
-                      SizeClass=str_extract(Removed, " \\s*\\([^\\)]+\\)"))%>%
+                     SizeClass=str_extract(Removed, " \\s*\\([^\\)]+\\)"))%>%
   mutate(SizeClass=str_remove(str_remove(SizeClass, fixed(" (")), fixed(")")))
 Data_base_filtered<-zooper::zoopComb%>%
   anti_join(Removed_data, by=c("SizeClass", "Taxlifestage"))%>%
