@@ -274,6 +274,7 @@ Zoopdownloader <- function(
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
                                                           Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                           Start_Depth="d", Temperature="d", Conductivity="d",
+                                                          Turbidity="d", pH="d", DO="d", Microcystis="c",
                                                           Chl_a="d", Secchi="d", Mesozooplankton_Volume="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
@@ -292,7 +293,8 @@ Zoopdownloader <- function(
       #Select variables we are interested in.
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
-                    "Temperature", Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
+                    "Temperature", "Turbidity", "pH", "DO", "Microcystis",
+                    Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
                     "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                        dplyr::select("DOP_Meso", "Lifestage", "Taxname", "Phylum",
@@ -306,6 +308,9 @@ Zoopdownloader <- function(
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
                                           `Channel Deep`="Bottom"),
+                    CondBott=ifelse(.data$TowType=="Bottom", .data$CondSurf, NA), # Move salinity to bottom for bottom samples
+                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "Turbidity", "pH", "DO", "Microcystis"),
+                                  ~ifelse(.data$TowType=="Bottom", NA, .x)), # Remove bottom samples for variables that aren't retained
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
@@ -359,6 +364,7 @@ Zoopdownloader <- function(
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
                                                                Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                                Start_Depth="d", Temperature="d", Conductivity="d",
+                                                               Turbidity="d", pH="d", DO="d", Microcystis="c",
                                                                Chl_a="d", Secchi="d", Macrozooplankton_Volume="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
@@ -377,7 +383,8 @@ Zoopdownloader <- function(
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
-                    "Temperature", Volume = "Macrozooplankton_Volume", BottomDepth = "Start_Depth", "ICF_ID",
+                    "Temperature", "Turbidity", "pH", "DO", "Microcystis",
+                    Volume = "Macrozooplankton_Volume", BottomDepth = "Start_Depth", "ICF_ID",
                     "DOP_Macro", "CPUE", "Latitude", "Longitude", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("DOP_Macro", "Lifestage", "Taxname", "Phylum",
@@ -387,11 +394,13 @@ Zoopdownloader <- function(
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
       dplyr::filter(!is.na(.data$Taxname), !is.na(.data$CPUE)) %>%
-
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
                     SampleID=paste(.data$Source, .data$Station, .data$Date, .data$ICF_ID), #Create identifier for each sample
                     TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
                                           `Channel Deep`="Bottom"),
+                    CondBott=ifelse(.data$TowType=="Bottom", .data$CondSurf, NA),
+                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "Turbidity", "pH", "DO", "Microcystis"),
+                                  ~ifelse(.data$TowType=="Bottom", NA, .x)),
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
         .data$CPUE!=0 ~ .data$CPUE,
