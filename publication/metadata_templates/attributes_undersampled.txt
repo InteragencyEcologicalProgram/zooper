@@ -1,0 +1,4 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+SizeClass	"Zooplankton size class. SizeClass, Taxname, and Lifestage are the keys linking to the zooplankton dataset."	categorical				
+Taxname	"Scientific name of taxon. SizeClass, Taxname, and Lifestage are the keys linking to the zooplankton dataset, while just Taxname links to the taxonomy dataset."	character				
+Lifestage	"Life stage. SizeClass, Taxname, and Lifestage are the keys linking to the zooplankton dataset, while just Taxname links to the taxonomy dataset."	character				

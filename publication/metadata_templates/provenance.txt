@@ -1,0 +1,9 @@
+dataPackageID	systemID	title	givenName	middleInitial	surName	role	organizationName	email	onlineDescription	url
+edi.458.7	EDI									
+edi.269.2	EDI									
+edi.522.11	EDI									
+edi.1103.2	EDI									
+edi.494.2	EDI									
+edi.1187.3	EDI									
+		CDFW 20-mm Survey meso-zooplankton data			California Department of Fish and Wildlife	creator	California Department of Fish and Wildlife		This online link references the location of the metadata and original data from this survey	https://filelib.wildlife.ca.gov/Public/Delta%20Smelt/
+		CDFW 20-mm Survey meso-zooplankton data			California Department of Fish and Wildlife	contact	California Department of Fish and Wildlife		This online link references the location of the metadata and original data from this survey	https://filelib.wildlife.ca.gov/Public/Delta%20Smelt/

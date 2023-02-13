@@ -1,0 +1,26 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Taxname	Scientific name of taxon.	character				
+Lifestage	Life stage of taxon.	character				
+EMP_Micro	Was taxon counted in the EMP microzooplankton samples?	categorical				
+EMP_Meso	Was taxon counted in the EMP mesozooplankton samples?	categorical				
+EMP_Macro	Was taxon counted in the EMP macrozooplankton samples?	categorical				
+STN_Meso	Was taxon counted in the STN mesozooplankton samples?	categorical				
+STN_Macro	Was taxon counted in the STN macrozooplankton samples?	categorical				
+FMWT_Meso	Was taxon counted in the FMWT mesozooplankton samples?	categorical				
+FMWT_Macro	Was taxon counted in the FMWT macrozooplankton samples?	categorical				
+twentymm_Meso	Was taxon counted in the 20mm mesozooplankton samples?	categorical				
+FRP_Meso	Was taxon counted in the FRP mesozooplankton samples?	categorical				
+FRP_Macro	Was taxon counted in the FRP macrozooplankton samples?	categorical				
+YBFMP	Was taxon counted in the YBFMP samples?	categorical				
+DOP_Meso	Was taxon counted in the DOP mesozooplankton samples?	categorical				
+DOP_Macro	Was taxon counted in the DOP macrozooplankton samples?	categorical				
+Intro	"If nonnative, year species was introduced to the San Francisco Estuary"	Date		YYYY	NA	Taxon presumed native or introduction year unknown
+EMPstart	First year this taxon was counted in EMP samples	Date		YYYY	NA	Taxon not counted by EMP
+EMPend	Last year this taxon was counted in EMP samples	Date		YYYY	NA	Taxon not counted by EMP
+FMWTSTNstart	First year this taxon was counted in FMWT and STN samples	Date		YYYY	NA	Taxon not counted by FMWT or STN
+FMWTSTNend	Last year this taxon was counted in FMWT and STN samples	Date		YYYY	NA	Taxon not counted by FMWT or STN
+twentymmstart	First year this taxon was counted in 20mm samples	Date		YYYY	NA	Taxon not counted by 20mm
+twentymmend	Last year this taxon was counted in 20mm samples	Date		YYYY	NA	Taxon not counted by 20mm
+twentymmstart2	Year this taxon was re-added to the taxa list and counted in 20mm samples.	Date		YYYY	NA	Taxon not counted by 20mm
+DOPstart	First year this taxon was counted in DOP samples	Date		YYYY	NA	Taxon not counted by DOP
+DOPend	Last year this taxon was counted in DOP samples	Date		YYYY	NA	Taxon not counted by DOP

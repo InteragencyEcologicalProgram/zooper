@@ -1,0 +1,262 @@
+name	name_type	name_resolved	authority_system	authority_id
+Americophium	scientific	Americophium	NA	NA
+Corophium	scientific	Corophium	World Register of Marine Species	101489
+Gammarus	scientific	Gammarus	World Register of Marine Species	101537
+Americorophium spinicorne	scientific	Americorophium spinicorne	GBIF Backbone Taxonomy	2217313
+Americorophium stimpsoni	scientific	Americorophium stimpsoni	ITIS	656747
+Ampelisca abdita	scientific	Ampelisca abdita	ITIS	93329
+Amphipoda	scientific	Amphipoda	World Register of Marine Species	1135
+Ampithoe	scientific	Ampithoe	World Register of Marine Species	101459
+Caprellidae	scientific	Caprellidae	World Register of Marine Species	101361
+Corophiidae	scientific	Corophiidae	World Register of Marine Species	101376
+Crangonyx	scientific	Crangonyx	ITIS	95081
+Eogammarus	scientific	Eogammarus	World Register of Marine Species	422834
+Gammaridae	scientific	Gammaridae	World Register of Marine Species	101383
+Gammarus daiberi	scientific	Gammarus daiberi	ITIS	93779
+Grandidierella	scientific	Grandidierella	World Register of Marine Species	205825
+Grandidierella japonica	scientific	Grandidierella japonica	ITIS	93643
+Hyalella	scientific	Hyalella	ITIS	94025
+Monocorophium	scientific	Monocorophium	World Register of Marine Species	148591
+Oedicerotidae	scientific	Oedicerotidae	World Register of Marine Species	101400
+Pleustidae	scientific	Pleustidae	World Register of Marine Species	101404
+Melita	scientific	Melita	World Register of Marine Species	101679
+Sinocorophium alienense	scientific	Sinocorophium alienense	ITIS	656764
+Talitridae	scientific	Talitridae	World Register of Marine Species	101411
+Araneae	scientific	Araneae	World Register of Marine Species	150467
+Galba	scientific	Galba	ITIS	1132456
+Lymnaea	scientific	Lymnaea	ITIS	76484
+Melanoides tuberculata	scientific	Melanoides tuberculata	GBIF Backbone Taxonomy	4362965
+Acartia	scientific	Acartia	World Register of Marine Species	104108
+Acartiella sinensis	scientific	Acartiella sinensis	GBIF Backbone Taxonomy	2114423
+Arctodiaptomus dorsalis	scientific	Arctodiaptomus dorsalis	ITIS	572714
+Calanoida	scientific	Calanoida	World Register of Marine Species	1100
+Diaptomus dorsalis	scientific	Diaptomus dorsalis	ITIS	85794
+Diaptomus siciloides	scientific	Diaptomus siciloides	ITIS	85793
+Diaptomus	scientific	Diaptomus	ITIS	85780
+Eurytemora affinis	scientific	Eurytemora affinis	ITIS	85863
+Eurytemora	scientific	Eurytemora	World Register of Marine Species	104240
+Hesperodiaptomus californiensis	scientific	Hesperodiaptomus californiensis	ITIS	666942
+Hesperodiaptomus franciscanus	scientific	Hesperodiaptomus franciscanus	ITIS	666944
+Hesperodiaptomus	scientific	Hesperodiaptomus	ITIS	666871
+Leptodiaptomus siciloides	scientific	Leptodiaptomus siciloides	ITIS	85843
+Osphranticum labronectum	scientific	Osphranticum labronectum	ITIS	85778
+Osphranticum	scientific	Osphranticum	World Register of Marine Species	347646
+Pseudodiaptomus	scientific	Pseudodiaptomus	World Register of Marine Species	157680
+Pseudodiaptomus forbesi	scientific	Pseudodiaptomus forbesi	ITIS	666993
+Sinocalanus doerrii	scientific	Sinocalanus doerrii	GBIF Backbone Taxonomy	4331540
+Skistodiaptomus pallidus	scientific	Skistodiaptomus pallidus	ITIS	666978
+Skistodiaptomus	scientific	Skistodiaptomus	ITIS	85844
+Tortanus	scientific	Tortanus	World Register of Marine Species	157683
+Acartiella	scientific	Acartiella	World Register of Marine Species	345327
+Diaptomidae	scientific	Diaptomidae	ITIS	85779
+Pseudodiaptomus euryhalinus	scientific	Pseudodiaptomus euryhalinus	ITIS	85853
+Pseudodiaptomus marinus	scientific	Pseudodiaptomus marinus	ITIS	550441
+Sinocalanus	scientific	Sinocalanus	World Register of Marine Species	348013
+Tortanus dextrilobatus	scientific	Tortanus dextrilobatus	ITIS	667001
+Tortanus discaudatus	scientific	Tortanus discaudatus	ITIS	86100
+Alona	scientific	Alona	World Register of Marine Species	148383
+Alonella	scientific	Alonella	ITIS	84033
+Bosmina longirostris	scientific	Bosmina longirostris	ITIS	83938
+Ceriodaphnia	scientific	Ceriodaphnia	World Register of Marine Species	148376
+Chydorus	scientific	Chydorus	World Register of Marine Species	148377
+Cladocera	scientific	Cladocera	World Register of Marine Species	1076
+Daphnia	scientific	Daphnia	World Register of Marine Species	148370
+Diaphanosoma	scientific	Diaphanosoma	World Register of Marine Species	234062
+Disparalona	scientific	Disparalona	World Register of Marine Species	148387
+Eurycercus	scientific	Eurycercus	World Register of Marine Species	1374670
+Graptoleberis	scientific	Graptoleberis	World Register of Marine Species	247920
+Ilyocryptus	scientific	Ilyocryptus	World Register of Marine Species	148388
+Kurzia	scientific	Kurzia	ITIS	14337
+Leydigia	scientific	Leydigia	World Register of Marine Species	148386
+Macrothricidae	scientific	Macrothricidae	ITIS	84116
+Moina	scientific	Moina	World Register of Marine Species	148346
+Monospilus dispar	scientific	Monospilus dispar	ITIS	84032
+Monospilus	scientific	Monospilus	World Register of Marine Species	412823
+Picripleuroxus	scientific	Picripleuroxus	ITIS	684604
+Pleuroxus	scientific	Pleuroxus	World Register of Marine Species	148389
+Pseudochydorus globosus	scientific	Pseudochydorus globosus	ITIS	84030
+Pseudochydorus	scientific	Pseudochydorus	World Register of Marine Species	412821
+Scapholeberis	scientific	Scapholeberis	World Register of Marine Species	148385
+Sida	scientific	Sida	World Register of Marine Species	410028
+Simocephalus	scientific	Simocephalus	World Register of Marine Species	148380
+Holopedium	scientific	Holopedium	World Register of Marine Species	177171
+Latona	scientific	Latona	World Register of Marine Species	412859
+Leptodora	scientific	Leptodora	World Register of Marine Species	247922
+Carabidae	scientific	Carabidae	World Register of Marine Species	118092
+Chrysomelidae	scientific	Chrysomelidae	ITIS	114509
+Coccinellidae	scientific	Coccinellidae	ITIS	114329
+Coleoptera	scientific	Coleoptera	World Register of Marine Species	118085
+Curculionidae	scientific	Curculionidae	World Register of Marine Species	150716
+Dytiscidae	scientific	Dytiscidae	World Register of Marine Species	150718
+Elmidae	scientific	Elmidae	ITIS	114093
+Gyrinidae	scientific	Gyrinidae	ITIS	112653
+Haliplidae	scientific	Haliplidae	ITIS	111857
+Hydraenidae	scientific	Hydraenidae	World Register of Marine Species	150721
+Hydrophilidae	scientific	Hydrophilidae	World Register of Marine Species	150733
+Hydroscaphidae	scientific	Hydroscaphidae	ITIS	112744
+Noteridae	scientific	Noteridae	ITIS	112606
+Ptiliidae	scientific	Ptiliidae	ITIS	113805
+Scirtidae	scientific	Scirtidae	ITIS	113924
+Scolytus	scientific	Scolytus	ITIS	114946
+Staphylinidae	scientific	Staphylinidae	World Register of Marine Species	118093
+Tenebrionidae	scientific	Tenebrionidae	World Register of Marine Species	150728
+Cumacea	scientific	Cumacea	World Register of Marine Species	1137
+Acanthocyclops	scientific	Acanthocyclops	GBIF Backbone Taxonomy	2116764
+Acanthocyclops vernalis	scientific	Acanthocyclops vernalis	ITIS	88770
+Cyclopoida	scientific	Cyclopoida	World Register of Marine Species	1101
+Diacyclops	scientific	Diacyclops	ITIS	88775
+Diacyclops thomasi	scientific	Diacyclops thomasi	ITIS	88789
+Platycyclops phaleratus	scientific	Platycyclops phaleratus	GBIF Backbone Taxonomy	5718676
+Ergasilus	scientific	Ergasilus	World Register of Marine Species	128641
+Eucyclops agilis	scientific	Eucyclops agilis	ITIS	88720
+Eucyclops elegans	scientific	Eucyclops elegans	ITIS	572732
+Eucyclops pectinifer	scientific	Eucyclops pectinifer	World Register of Marine Species	NA
+Eucyclops prionophorus	scientific	Eucyclops prionophorus	ITIS	88723
+Eucyclops	scientific	Eucyclops	ITIS	88719
+Lernaea	scientific	Lernaea	ITIS	89253
+Limnoithona sinensis	scientific	Limnoithona sinensis	ITIS	667197
+Limnoithona	scientific	Limnoithona	World Register of Marine Species	346619
+Limnoithona tetraspina	scientific	Limnoithona tetraspina	ITIS	667198
+Macrocyclops albidus	scientific	Macrocyclops albidus	ITIS	88738
+Macrocyclops	scientific	Macrocyclops	ITIS	88737
+Mesocyclops edax	scientific	Mesocyclops edax	ITIS	88692
+Microcyclops rubellus	scientific	Microcyclops rubellus	ITIS	572741
+Microcyclops	scientific	Microcyclops	ITIS	88757
+Oithona davisae	scientific	Oithona davisae	ITIS	88825
+Oithona similis	scientific	Oithona similis	ITIS	88805
+Oithona	scientific	Oithona	World Register of Marine Species	106485
+Paracyclops chiltoni	scientific	Paracyclops chiltoni	ITIS	622292
+Paracyclops fimbriatus	scientific	Paracyclops fimbriatus	ITIS	88732
+Paracyclops poppei	scientific	Paracyclops poppei	ITIS	88735
+Paracyclops	scientific	Paracyclops	ITIS	88731
+Tropocyclops prasinus	scientific	Tropocyclops prasinus	ITIS	88743
+Tropocyclops	scientific	Tropocyclops	ITIS	88742
+Halicyclops	scientific	Halicyclops	World Register of Marine Species	106433
+Homocyclops	scientific	Homocyclops	ITIS	88799
+Mesocyclops	scientific	Mesocyclops	ITIS	88691
+Decapoda	scientific	Decapoda	World Register of Marine Species	1130
+Crangon	scientific	Crangon	World Register of Marine Species	107007
+Exopalaemon modestus	scientific	Exopalaemon modestus	ITIS	96574
+Pacifastacus	scientific	Pacifastacus	ITIS	97325
+Palaemon	scientific	Palaemon	World Register of Marine Species	107032
+Rhithropanopeus harrisii	scientific	Rhithropanopeus harrisii	ITIS	98790
+Dermaptera	scientific	Dermaptera	World Register of Marine Species	118087
+Anchistropus	scientific	Anchistropus	ITIS	84061
+Camptocercus	scientific	Camptocercus	ITIS	84056
+Chironomidae	scientific	Chironomidae	World Register of Marine Species	118100
+Ceratopogonidae	scientific	Ceratopogonidae	World Register of Marine Species	150940
+Culicidae	scientific	Culicidae	World Register of Marine Species	150945
+Diptera	scientific	Diptera	World Register of Marine Species	118088
+Dolichopodidae	scientific	Dolichopodidae	World Register of Marine Species	150930
+Ephydridae	scientific	Ephydridae	World Register of Marine Species	118101
+Muscidae	scientific	Muscidae	ITIS	150025
+Psychodidae	scientific	Psychodidae	ITIS	125351
+Sciomyzidae	scientific	Sciomyzidae	World Register of Marine Species	870828
+Simuliidae	scientific	Simuliidae	ITIS	126640
+Stratiomyidae	scientific	Stratiomyidae	ITIS	130150
+Tabanidae	scientific	Tabanidae	World Register of Marine Species	493907
+Tipulidae	scientific	Tipulidae	ITIS	118840
+Baetidae	scientific	Baetidae	ITIS	100755
+Caenidae	scientific	Caenidae	ITIS	101467
+Ephemeroptera	scientific	Ephemeroptera	ITIS	100502
+Tricorythidae	scientific	Tricorythidae	ITIS	101404
+Tricorythodes minutus	scientific	Tricorythodes minutus	ITIS	101413
+Lumbricidae	scientific	Lumbricidae	ITIS	69165
+Stylaria	scientific	Stylaria	ITIS	68871
+Harpacticoida	scientific	Harpacticoida	World Register of Marine Species	1102
+Aphididae	scientific	Aphididae	World Register of Marine Species	494197
+Belostomatidae	scientific	Belostomatidae	ITIS	103683
+Cicadellidae	scientific	Cicadellidae	ITIS	109171
+Corixidae	scientific	Corixidae	World Register of Marine Species	151135
+Gerridae	scientific	Gerridae	World Register of Marine Species	160268
+Hebridae	scientific	Hebridae	ITIS	103964
+Hemiptera	scientific	Hemiptera	World Register of Marine Species	118089
+Hydrometridae	scientific	Hydrometridae	ITIS	103938
+Mesoveliidae	scientific	Mesoveliidae	World Register of Marine Species	477161
+Nepidae	scientific	Nepidae	ITIS	103747
+Psyllidae	scientific	Psyllidae	ITIS	109187
+Veliidae	scientific	Veliidae	World Register of Marine Species	477164
+Hydrachnidia	scientific	Hydrachnidia	World Register of Marine Species	738272
+Hydra	scientific	Hydra	ITIS	50845
+Gyraulus	scientific	Gyraulus	ITIS	76592
+Physa	scientific	Physa	ITIS	76677
+Planorbella	scientific	Planorbella	World Register of Marine Species	1013019
+Planorbidae	scientific	Planorbidae	ITIS	76591
+Formicidae	scientific	Formicidae	ITIS	154193
+Hymenoptera	scientific	Hymenoptera	ITIS	152741
+Isopoda	scientific	Isopoda	World Register of Marine Species	1131
+Asellidae	scientific	Asellidae	ITIS	92657
+Caecidotea	scientific	Caecidotea	World Register of Marine Species	248558
+Gnorimosphaeroma insulare	scientific	Gnorimosphaeroma insulare	ITIS	92298
+Ligidium lates??	scientific	Ligidium lates??	World Register of Marine Species	NA
+Munnidae	scientific	Munnidae	World Register of Marine Species	118263
+Lepidoptera	scientific	Lepidoptera	ITIS	117232
+Aequorea	scientific	Aequorea	World Register of Marine Species	116998
+Maeotias	scientific	Maeotias	World Register of Marine Species	117173
+Ferrissia californica	scientific	Ferrissia californica	ITIS	1132739
+Fluminicola	scientific	Fluminicola	ITIS	70778
+Hydrobiidae	scientific	Hydrobiidae	World Register of Marine Species	120
+Prostoma	scientific	Prostoma	ITIS	57577
+Potamocorbula amurensis	scientific	Potamocorbula amurensis	ITIS	81746
+Mysidae	scientific	Mysidae	World Register of Marine Species	119822
+Alienacanthomysis macropsis	scientific	Alienacanthomysis macropsis	ITIS	90326
+Deltamysis holmquistae	scientific	Deltamysis holmquistae	ITIS	682626
+Hyperacanthomysis longirostris	scientific	Hyperacanthomysis longirostris	ITIS	682631
+Mysida	scientific	Mysida	World Register of Marine Species	149668
+Neomysis kadiakensis	scientific	Neomysis kadiakensis	ITIS	90058
+Neomysis mercedis	scientific	Neomysis mercedis	ITIS	90059
+Orientomysis aspera	scientific	Orientomysis aspera	World Register of Marine Species	NA
+Orientomysis hwanhaiensis	scientific	Orientomysis hwanhaiensis	World Register of Marine Species	NA
+Sisyridae	scientific	Sisyridae	ITIS	115085
+Nudibranchia	scientific	Nudibranchia	World Register of Marine Species	1762
+Aeshnidae	scientific	Aeshnidae	ITIS	101596
+Coenagrionidae	scientific	Coenagrionidae	ITIS	102077
+Gomphidae	scientific	Gomphidae	ITIS	101664
+Libellulidae	scientific	Libellulidae	World Register of Marine Species	890533
+Odonata	scientific	Odonata	World Register of Marine Species	404096
+Orthoptera	scientific	Orthoptera	World Register of Marine Species	426331
+Hediste limnicola	scientific	Hediste limnicola	GBIF Backbone Taxonomy	2316425
+Asplanchna	scientific	Asplanchna	World Register of Marine Species	134935
+Branchionus	scientific	Branchionus	NA	NA
+Kellicottia	scientific	Kellicottia	GBIF Backbone Taxonomy	1002568
+Keratella	scientific	Keratella	World Register of Marine Species	134941
+Platyias	scientific	Platyias	World Register of Marine Species	148357
+Polyarthra	scientific	Polyarthra	ITIS	59270
+Synchaeta	scientific	Synchaeta	World Register of Marine Species	134958
+Synchaeta bicornis	scientific	Synchaeta bicornis	ITIS	59264
+Trichocerca	scientific	Trichocerca	World Register of Marine Species	134959
+Pectinatella magnifica	scientific	Pectinatella magnifica	ITIS	156731
+Psocoptera	scientific	Psocoptera	ITIS	103320
+Aurelia	scientific	Aurelia	World Register of Marine Species	135263
+Tanaidacea	scientific	Tanaidacea	World Register of Marine Species	1133
+Thysanoptera	scientific	Thysanoptera	World Register of Marine Species	380393
+Hydroptilidae	scientific	Hydroptilidae	ITIS	115629
+Polycentropodidae	scientific	Polycentropodidae	ITIS	117043
+Trichoptera	scientific	Trichoptera	World Register of Marine Species	160252
+Girardia tigrina	scientific	Girardia tigrina	ITIS	1038742
+Corbicula fluminea	scientific	Corbicula fluminea	ITIS	81387
+Actinopterygii	scientific	Actinopterygii	World Register of Marine Species	10194
+Bivalvia	scientific	Bivalvia	World Register of Marine Species	105
+Cirripedia	scientific	Cirripedia	World Register of Marine Species	1082
+Collembola	scientific	Collembola	World Register of Marine Species	118086
+Copepoda	scientific	Copepoda	World Register of Marine Species	1080
+Mollusca	scientific	Mollusca	World Register of Marine Species	51
+Gastropoda	scientific	Gastropoda	World Register of Marine Species	101
+Hirudinea	scientific	Hirudinea	World Register of Marine Species	2041
+Insecta	scientific	Insecta	World Register of Marine Species	1307
+Malacostraca	scientific	Malacostraca	World Register of Marine Species	1071
+Oligochaeta	scientific	Oligochaeta	World Register of Marine Species	2036
+Ostracoda	scientific	Ostracoda	World Register of Marine Species	1078
+Polychaeta	scientific	Polychaeta	World Register of Marine Species	883
+Annelida	scientific	Annelida	World Register of Marine Species	882
+Arthropoda	scientific	Arthropoda	World Register of Marine Species	1065
+Chordata	scientific	Chordata	World Register of Marine Species	1821
+Cnidaria	scientific	Cnidaria	World Register of Marine Species	1267
+Nematoda	scientific	Nematoda	World Register of Marine Species	799
+Nemertea	scientific	Nemertea	World Register of Marine Species	152391
+Rotifera	scientific	Rotifera	World Register of Marine Species	14260
+Tardigrada	scientific	Tardigrada	World Register of Marine Species	1276
+UnID Invertebrate	scientific	UnID Invertebrate	NA	NA
+Animal material UNID	scientific	Animal material UNID	NA	NA
+Egg	scientific	Egg	NA	NA
+UNID	scientific	UNID	NA	NA

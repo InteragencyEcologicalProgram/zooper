@@ -1,0 +1,22 @@
+keyword	keywordThesaurus
+zooplankton	https://vocab.lternet.edu/vocab/vocab/index.php
+estuaries	https://vocab.lternet.edu/vocab/vocab/index.php
+brackish water	https://vocab.lternet.edu/vocab/vocab/index.php
+freshwater	https://vocab.lternet.edu/vocab/vocab/index.php
+rivers	https://vocab.lternet.edu/vocab/vocab/index.php
+long term monitoring	https://vocab.lternet.edu/vocab/vocab/index.php
+water quality	https://vocab.lternet.edu/vocab/vocab/index.php
+ecology	https://vocab.lternet.edu/vocab/vocab/index.php
+abundance	https://vocab.lternet.edu/vocab/vocab/index.php
+invasive species	https://vocab.lternet.edu/vocab/vocab/index.php
+aquatic ecosystems	https://vocab.lternet.edu/vocab/vocab/index.php
+crustaceans	https://vocab.lternet.edu/vocab/vocab/index.php
+invertebrates	https://vocab.lternet.edu/vocab/vocab/index.php
+larvae	https://vocab.lternet.edu/vocab/vocab/index.php
+rotifers	https://vocab.lternet.edu/vocab/vocab/index.php
+Interagency Ecological Program for the San Francisco Bay Delta Estuary	
+California Department of Fish and Wildlife	
+Copepods	
+Cladocerans	
+Mysids	
+Amphipods	

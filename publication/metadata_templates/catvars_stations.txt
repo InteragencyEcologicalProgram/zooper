@@ -1,0 +1,7 @@
+attributeName	code	definition
+Source	EMP	Environmental Monitoring Program
+Source	FMWT	Fall Midwater Trawl
+Source	STN	Summer Townet Survey
+Source	20mm	20mm survey
+Source	FRP	Fish Restoration Program (Note that for FRP these locations are the general locations of the sampling station while the specific site-visit locations are in the environmental table)
+Source	YBFMP	Yolo Bypass Fish Monitoring Program

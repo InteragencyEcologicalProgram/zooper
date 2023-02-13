@@ -1,0 +1,5 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Source	Name of the source dataset. Source and Station are the keys linking to the environment dataset.	categorical				
+Station	Station where sample was collected. Source and Station are the keys linking to the environment dataset.	character				
+Latitude	Latitude of station location	numeric	degree		NA	Coordinates unknown
+Longitude	Longitude of station location	numeric	degree		NA	Coordinates unknown

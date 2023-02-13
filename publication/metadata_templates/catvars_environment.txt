@@ -1,0 +1,17 @@
+attributeName	code	definition
+Source	EMP	Environmental Monitoring Program
+Source	STN	Summer Townet Survey
+Source	FMWT	Fall Midwater Trawl
+Source	20mm	20mm survey
+Source	FRP	Fish Restoration Program
+Source	DOP	Directed Outflow Project Lower Trophic Study
+Source	YBFMP	Yolo Bypass Fish Monitoring Program
+Microcystis	2	low
+Microcystis	1	absent
+Microcystis	3	medium
+Microcystis	4	high
+Microcystis	5	very high
+AmphipodCode	A	valid
+AmphipodCode	B	questionable [veg/algal bloom in net
+AmphipodCode	C	not valid [error in lab]
+AmphipodCode	D	suspect [possible missing data]

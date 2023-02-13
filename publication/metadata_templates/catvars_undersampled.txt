@@ -1,0 +1,3 @@
+attributeName	code	definition
+SizeClass	Meso	Meso zooplankton (primarily copepods and cladocerans) sampled with a 150-160 micrometer mesh net.
+SizeClass	Micro	Micro zooplankton (primarily copepods and rotifers) sampled with a 43 micrometer mesh.

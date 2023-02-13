@@ -1,0 +1,22 @@
+attributeName	code	definition
+Source	EMP	Environmental Monitoring Program
+Source	STN	Summer Townet Survey
+Source	FMWT	Fall Midwater Trawl
+Source	20mm	20mm survey
+Source	FRP	Fish Restoration Program
+Source	DOP	Directed Outflow Project Lower Trophic Study
+Source	YBFMP	Yolo Bypass Fish Monitoring Program
+SizeClass	Meso	Meso zooplankton (primarily copepods and cladocerans) sampled with a 150-160 micrometer mesh net.
+SizeClass	Micro	Micro zooplankton (primarily copepods and rotifers) sampled with a 43 micrometer mesh.
+SizeClass	Macro	Macro zooplankton (primarily amphipids and mysids) sampled with a 500-505 micrometer mesh net.
+Microcystis	2	low
+Microcystis	1	absent
+Microcystis	3	medium
+Microcystis	4	high
+Microcystis	5	very high
+Undersampled	FALSE	This CPUE does NOT represent undersampling of a taxon. These represent good estimates of their concentration.
+Undersampled	TRUE	This CPUE probably DOES represent undersampling of a taxon. This may not be a good estimate of the true concentration of this taxon in the environment from which this sample was collected.
+AmphipodCode	A	valid
+AmphipodCode	B	questionable [veg/algal bloom in net
+AmphipodCode	C	not valid [error in lab]
+AmphipodCode	D	suspect [possible missing data]

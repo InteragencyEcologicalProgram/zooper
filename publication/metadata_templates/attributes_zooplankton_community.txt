@@ -1,0 +1,35 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Source	Name of the source dataset.	categorical				
+Station	Station where sample was collected.	character			NA	Unknown or not measured
+Latitude	Latitude of station location	numeric	degree		NA	Unknown or not measured
+Longitude	Longitude of station location	numeric	degree		NA	Unknown or not measured
+Year	Year sample was collected.	Date		YYYY	NA	Unknown or not measured
+Date	Date sample was collected	Date		YYYY-MM-DD	NA	Unknown or not measured
+Datetime	Date and time sample was collected	Date		YYYY-MM-DD hh:mm:ss	NA	Unknown or not measured
+SampleID	Unique ID of each zooplankton sample.	character				
+Tide	Tidal stage	character			NA	Unknown or not measured
+TowType	"Sample collection method identifying whether each tow was a surface, bottom, oblique, or vertical pump sample"	character				
+AmphipodCode	Code indicating sample quality for EMP macro amphipod samples	categorical			NA	Unknown or not measured (this is only used for EMP data)
+BottomDepth	Total water column depth	numeric	meter		NA	Unknown or not measured
+Chl	Chlorophyll concentration at surface	numeric	microgramsPerLiter		NA	Unknown or not measured
+Secchi	Secchi depth	numeric	centimeter		NA	Unknown or not measured
+Temperature	Surface temperature	numeric	celsius		NA	Unknown or not measured
+Turbidity	Turbidity at surface	numeric	nephelometricTurbidityUnit		NA	Unknown or not measured
+Microcystis	Microcystis ranking on scale from 1-5	categorical			NA	Unknown or not measured
+pH	Surface pH	numeric	dimensionless		NA	Unknown or not measured
+DO	Surface dissolved oxygen concentration	numeric	milligramsPerLiter		NA	Unknown or not measured
+SalSurf	Surface salinity	numeric	dimensionless		NA	Unknown or not measured
+SalBott	Bottom salinity	numeric	dimensionless		NA	Unknown or not measured
+SizeClass	Zooplankton size class. 	categorical				
+Volume	Volume of water sampled	numeric	cubicMeter			
+Phylum	Phylum	character			NA	Unknown or not measured
+Class	Class	character			NA	Unknown or not measured
+Order	Order	character			NA	Unknown or not measured
+Family	Family	character			NA	Unknown or not measured
+Genus	Genus	character			NA	Unknown or not measured
+Species	Species	character			NA	Unknown or not measured
+Taxname	Scientific name of taxon.	character				
+Lifestage	Life stage.	character				
+Taxlifestage	Scientific name and life stage.	character				
+CPUE	Catch per unit effort.	numeric	numberPerMeterCubed		NA	Unknown or not measured
+Undersampled	Does this count represent an under-sample of the true concentration of this taxa in the water sampled?	categorical				

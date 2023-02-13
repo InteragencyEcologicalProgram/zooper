@@ -1,0 +1,50 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Survey_name	Name of the survey	character				
+Size_class	Zooplankton size class sampled	categorical				
+Contact_person	PI or contact person for the survey or study	character				
+Contact_email	Email for contact person	character				
+Link_to_data	"Link to the data, if online, or other way to get the data"	character				
+Link_to_info_on_study	"Link to project website, if available"	character				
+Start_year	Year program started	Date		YYYY		
+Frequency	Sample collection frequency.	character				
+Time_of_year	Months in which sampling occur	character				
+San_Pablo_Bay	Is San Pablo Bay sampled?	character				
+Suisun	Is Suisun Bay sampled?	character				
+Sacramento_River	Is the Sacramento River sampled?	character				
+San_Joaquin_River	Is the San Joaquin River sampled?	character				
+Cache_Slough_Complex	Is the Cache Slough Complex sampled?	character				
+Napa_River	Is the Napa River sampled?	character				
+Tidal_stage_sampled	When on the tidal stage sampling occurs	character				
+Sampling_scheme	"Are stations randomly selected, or fixed? "	character				
+Gear_type	Is a net or pump used?	character				
+Sample_duration_minutes	How long are the net tows?	numeric	minute		NA	"Sampled by pump, not net"
+Sampling_method	"Are samples collected obliquely, vertically, or horizontally?"	character				
+Length_of_net_cm	Net length	numeric	centimeter		NA	"Sampled by pump, not net"
+Mesh_size_microns	Mesh size used to collect sample	numeric	micrometer			
+Habitat_sampled	"Habitat where samples are collected (channels, shoals, shallow water, deep water, wetlands, etc)"	character				
+Copepods	Are copepods counted?	character				
+Rotifers	Are rotifers counted?	character				
+Cladocera	Are cladocera counted?	character				
+Mysids	Are mysids counted?	character				
+Amphipods	Are amphipods counted?	character				
+Other_taxa	Any other taxa that are counted.	character				
+Subsampling_method	How are samples divided for counting. What parameters are used to decide how much of the sample to count?	character				
+Magnification	Microscope magnification during sample processing	character			NA	Unknown
+Preservative	How are sampled preserved?	character				
+CPUE_calculation	How is CPUE calculated?	character				
+Biomass	Can biomass be estimated?	character				
+Lengths_measured	Are lengths measured?	character				
+Sample_archived	Are samples archived?	character				
+Time	Is time of day recorded?	character				
+Tidal_stage	Is tidal stage recorded?	character				
+Depth_of_water	Is the total depth of the water recorded?	character				
+Surface_conductivity	Is conductivity at the surface recorded?	character				
+Bottom_conductivity	Is conductivity at the surface recorded?	character				
+Temperature	Is water temperature recorded?	character				
+Secchi	Is the Secchi depth recorded?	character				
+Turbidity	Is water turbidity recorded?	character				
+Microcystis	Is Microcystis presence or absence recorded?	character				
+Chlorophyll	Is chlorophyll-a concentration recorded?	character				
+pH	Is water pH recorded?	character				
+DO	Is dissolved oxygen concentration recorded?	character				
+Volume	Is the total volume of water filtered through the net recorded?	character				

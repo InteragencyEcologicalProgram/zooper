@@ -1,0 +1,6 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Taxname	"Scientific name of taxon. Taxname and Lifestage are the keys linking to the zooplankton dataset, while Taxname is the key linknig to the taxonomy dataset."	character				
+Level	Taxonomic level of taxon	character				
+Lifestage	Life stage of taxon. Taxname and Lifestage are the keys linking to the zooplankton dataset.	character				
+Carbon_mass_micrograms	Average carbon mass of an individual	numeric	microgram			
+Reference	Reference	character				

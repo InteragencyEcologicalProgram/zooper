@@ -1,0 +1,27 @@
+attributeName	code	definition
+EMP_Micro	TRUE	Taxon counted in EMP microzooplankton samples
+EMP_Micro	FALSE	Taxon not counted in EMP microzooplankton samples
+EMP_Meso	TRUE	Taxon counted in EMP mesozooplankton samples
+EMP_Meso	FALSE	Taxon not counted in EMP mesozooplankton samples
+EMP_Macro	TRUE	Taxon counted in EMP macrozooplankton samples
+EMP_Macro	FALSE	Taxon not counted in EMP macrozooplankton samples
+STN_Meso	TRUE	Taxon counted in STN mesozooplankton samples
+STN_Meso	FALSE	Taxon not counted in STN mesozooplankton samples
+STN_Macro	TRUE	Taxon counted in STN macrozooplankton samples
+STN_Macro	FALSE	Taxon not counted in STN macrozooplankton samples
+FMWT_Meso	TRUE	Taxon counted in FMWT mesozooplankton samples
+FMWT_Meso	FALSE	Taxon not counted in FMWT mesozooplankton samples
+FMWT_Macro	TRUE	Taxon counted in FMWT macrozooplankton samples
+FMWT_Macro	FALSE	Taxon not counted in FMWT macrozooplankton samples
+twentymm_Meso	TRUE	Taxon counted in 20mm mesozooplankton samples
+twentymm_Meso	FALSE	Taxon not counted in 20mm mesozooplankton samples
+FRP_Meso	TRUE	Taxon counted in FRP mesozooplankton samples
+FRP_Meso	FALSE	Taxon not counted in FRP mesozooplankton samples
+FRP_Macro	TRUE	Taxon counted in FRP macrozooplankton samples
+FRP_Macro	FALSE	Taxon not counted in FRP macrozooplankton samples
+YBFMP	TRUE	Taxon counted in YBFMP samples
+YBFMP	FALSE	Taxon not counted in YBFMP samples
+DOP_Meso	TRUE	Taxon counted in DOP mesozooplankton samples
+DOP_Meso	FALSE	Taxon not counted in DOP mesozooplankton samples
+DOP_Macro	TRUE	Taxon counted in DOP macrozooplankton samples
+DOP_Macro	FALSE	Taxon not counted in DOP macrozooplankton samples

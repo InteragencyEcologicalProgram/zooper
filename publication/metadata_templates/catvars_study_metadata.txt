@@ -1,0 +1,4 @@
+attributeName	code	definition
+Size_class	Macro	Macro zooplankton (primarily amphipids and mysids) sampled with a 500-505 micrometer mesh net.
+Size_class	Meso	Meso zooplankton (primarily copepods and cladocerans) sampled with a 150-160 micrometer mesh net.
+Size_class	Micro	Micro zooplankton (primarily copepods and rotifers) sampled with a 43 micrometer mesh.

@@ -1,0 +1,21 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Source	Name of the source dataset. Source and Station are the keys linking to the zooplankton dataset.	categorical				
+Station	Station where sample was collected.  Source and Station are the keys linking to the zooplankton dataset.	character			NA	Unknown or not measured
+Latitude	Latitude of station location	numeric	degree		NA	Coordinates unknown
+Longitude	Longitude of station location	numeric	degree		NA	Coordinates unknown
+Date	Date sample was collected	Date		YYYY-MM-DD		
+Datetime	Date and time sample was collected	Date		YYYY-MM-DD hh:mm:ss	NA	Unknown or not measured
+SampleID	Unique ID of each zooplankton sample. This is the key linking to the zooplankton dataset.	character				
+Tide	Tidal stage	character			NA	Unknown or not measured
+TowType	"Sample collection method identifying whether each tow was a surface, bottom, oblique, or vertical pump sample"	character				
+AmphipodCode	Code indicating sample quality for EMP macro amphipod samples	categorical			NA	Unknown or not measured (this is only used for EMP data)
+BottomDepth	Total water column depth	numeric	meter		NA	Unknown or not measured
+Chl	Chlorophyll concentration at surface	numeric	microgramsPerLiter		NA	Unknown or not measured
+Secchi	Secchi depth	numeric	centimeter		NA	Unknown or not measured
+Temperature	Surface temperature	numeric	celsius		NA	Unknown or not measured
+Turbidity	Turbidity at surface	numeric	nephelometricTurbidityUnit		NA	Unknown or not measured
+Microcystis	Microcystis ranking on scale from 1-5	categorical			NA	Unknown or not measured
+pH	Surface pH	numeric	dimensionless		NA	Unknown or not measured
+DO	Surface dissolved oxygen concentration	numeric	milligramsPerLiter		NA	Unknown or not measured
+SalSurf	Surface salinity	numeric	dimensionless		NA	Unknown or not measured
+SalBott	Bottom salinity	numeric	dimensionless		NA	Unknown or not measured

@@ -1,0 +1,7 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+SampleID	Unique ID of each zooplankton sample. This is the key linking to the environment dataset.	character				
+SizeClass	"Zooplankton size class. SizeClass, Taxname, and Lifestage are the keys linking to the undersampled dataset."	categorical				
+Volume	Volume of water sampled	numeric	cubicMeter			
+Taxname	"Scientific name of taxon. SizeClass, Taxname, and Lifestage are the keys linking to the undersampled dataset, while just Taxname links to the taxonomy dataset."	character				
+Lifestage	"Life stage. SizeClass, Taxname, and Lifestage are the keys linking to the undersampled dataset, while just Taxname links to the taxonomy dataset."	character				
+CPUE	Catch per unit effort.	numeric	numberPerMeterCubed			

@@ -1,0 +1,11 @@
+givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
+Samuel	M	Bashevkin	"Delta Science Program, Delta Stewardship Council"	sam.bashevkin@deltacouncil.ca.gov	0000-0001-7406-7089	contact			
+Samuel	M	Bashevkin	"Delta Science Program, Delta Stewardship Council"	sam.bashevkin@deltacouncil.ca.gov	0000-0001-7406-7089	creator			
+Rosemary		Hartman	California Department of Water Resources	Rosemary.Hartman@water.ca.gov	0000-0002-0642-183X	creator			
+Madison		Thomas	"Delta Science Program, Delta Stewardship Council"	Madison.Thomas@parks.ca.gov		creator			
+Arthur		Barros	California Department of Fish and Wildlife	Arthur.Barros@Wildlife.ca.gov		creator			
+Christina	E	Burdi	California Department of Fish and Wildlife	Christina.Burdi@wildlife.ca.gov		creator			
+April		Hennessy	California Department of Fish and Wildlife	April.Hennessy@wildlife.ca.gov		creator			
+Trishelle		Tempel	California Department of Fish and Wildlife	Trishelle.Tempel@wildlife.ca.gov		creator			
+Karen		Kayfetz	"Delta Science Program, Delta Stewardship Council"	"Kayfetz, Karen@DeltaCouncil"		creator			
+		Interagency Ecological Program	Interagency Ecological Program	iep@wildlife.ca.gov		Organization			

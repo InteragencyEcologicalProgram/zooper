@@ -1,0 +1,9 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Phylum	Phylum	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Class	Class	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Order	Order	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Family	Family	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Genus	Genus	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Species	Species	character			NA	"Unknown, i.e. defined at a higher taxonomic level."
+Taxname	"Scientific name of taxon. Taxname is the key linking to the biomass, zooplankton, and undersampled datasets."	character				
+Level	Taxonomic level of taxon	character				

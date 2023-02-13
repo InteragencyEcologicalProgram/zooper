@@ -1,0 +1,2 @@
+id	unitType	parentSI	multiplierToSI	description
+nephelometricTurbidityUnit	dimensionless	dimensionless	dimensionless	The intensity of light scattered at 90 degrees incident to a beam of light projected through the sample
