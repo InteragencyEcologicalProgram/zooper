@@ -16,11 +16,11 @@ DOP_Meso	Was taxon counted in the DOP mesozooplankton samples?	categorical
 DOP_Macro	Was taxon counted in the DOP macrozooplankton samples?	categorical				
 Intro	"If nonnative, year species was introduced to the San Francisco Estuary"	Date		YYYY	NA	Taxon presumed native or introduction year unknown
 EMPstart	First year this taxon was counted in EMP samples	Date		YYYY	NA	Taxon not counted by EMP
-EMPend	Last year this taxon was counted in EMP samples	Date		YYYY	NA	Taxon not counted by EMP
+EMPend	Last year this taxon was counted in EMP samples	Date		YYYY	NA	Taxon not counted by EMP or taxon is still counted by EMP (no end date)
 FMWTSTNstart	First year this taxon was counted in FMWT and STN samples	Date		YYYY	NA	Taxon not counted by FMWT or STN
-FMWTSTNend	Last year this taxon was counted in FMWT and STN samples	Date		YYYY	NA	Taxon not counted by FMWT or STN
+FMWTSTNend	Last year this taxon was counted in FMWT and STN samples	Date		YYYY	NA	Taxon not counted by FMWT and STN or taxon is still counted by FMWT and STN (no end date)
 twentymmstart	First year this taxon was counted in 20mm samples	Date		YYYY	NA	Taxon not counted by 20mm
-twentymmend	Last year this taxon was counted in 20mm samples	Date		YYYY	NA	Taxon not counted by 20mm
+twentymmend	Last year this taxon was counted in 20mm samples	Date		YYYY	NA	Taxon not counted by 20mm or taxon is still counted by 20mm (no end date)
 twentymmstart2	Year this taxon was re-added to the taxa list and counted in 20mm samples.	Date		YYYY	NA	Taxon not counted by 20mm
 DOPstart	First year this taxon was counted in DOP samples	Date		YYYY	NA	Taxon not counted by DOP
-DOPend	Last year this taxon was counted in DOP samples	Date		YYYY	NA	Taxon not counted by DOP
+DOPend	Last year this taxon was counted in DOP samples	Date		YYYY	NA	Taxon not counted by DOP or taxon is still counted by DOP (no end date)

@@ -30,12 +30,14 @@ taxonomy <- zooper::crosswalk%>% #Pull data from zooper
 
 taxa_lists<-zooper::crosswalk%>% #Pull data from zooper
   select(-LI_Meso, -LI_Micro, -Level, -Phylum, -Class, -Order, -Family, -Genus, -Species)%>% # Remove variables present in other tables
-  mutate_at(vars(EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
-                 FMWT_Macro, twentymm_Meso, FRP_Meso, FRP_Macro, YBFMP, DOP_Meso, DOP_Macro),
-            ~if_else(is.na(.), FALSE, TRUE))%>%# Convert organism codes into a binary TRUE/FALSE indicating if taxa are counted in each survey and size class.
+  mutate(across(c(EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
+                  FMWT_Macro, twentymm_Meso, FRP_Meso, FRP_Macro, YBFMP, DOP_Meso, DOP_Macro),
+                ~if_else(is.na(.x), FALSE, TRUE)))%>%# Convert organism codes into a binary TRUE/FALSE indicating if taxa are counted in each survey and size class.
   distinct()%>% # Remove duplicated rows now that organism codes are removed
-  mutate_at(vars(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
-                 twentymmend, twentymmstart2, DOPstart, DOPend), ~year(.))%>%
+  mutate(across(c(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
+                  twentymmend, twentymmstart2, DOPstart, DOPend), ~year(.x)),
+         across(c(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
+                  twentymmend, twentymmstart2, DOPstart, DOPend), ~if_else(.x<1900 | .x>2400, NA, .x)))%>%
   select(Taxname, Lifestage, EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
          FMWT_Macro, twentymm_Meso, FRP_Meso, FRP_Macro, YBFMP, DOP_Meso, DOP_Macro,
          Intro, EMPstart, EMPend, FMWTSTNstart=FMWTstart, FMWTSTNend=FMWTend, twentymmstart,

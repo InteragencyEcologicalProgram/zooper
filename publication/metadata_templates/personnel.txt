@@ -8,4 +8,6 @@ Christina	E	Burdi	California Department of Fish and Wildlife	Christina.Burdi@wil
 April		Hennessy	California Department of Fish and Wildlife	April.Hennessy@wildlife.ca.gov		creator			
 Trishelle		Tempel	California Department of Fish and Wildlife	Trishelle.Tempel@wildlife.ca.gov		creator			
 Karen		Kayfetz	"Delta Science Program, Delta Stewardship Council"	"Kayfetz, Karen@DeltaCouncil"		creator			
+Karrin		Alstad	California Department of Fish and Wildlife	Karrin.Alstad@wildlife.ca.gov		creator			
+Catarina		Pien	U.S. Bureau of Reclamation	cpien@usbr.gov	0000-0003-4427-6300	creator			
 		Interagency Ecological Program	Interagency Ecological Program	iep@wildlife.ca.gov		Organization			

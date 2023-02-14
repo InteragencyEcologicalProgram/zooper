@@ -1,13 +1,14 @@
 library(zooper)
-require(dplyr)
-require(readr)
-require(googlesheets4)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(googlesheets4)
 library(EMLassemblyline)
 library(stringr)
-require(purrr)
-require(readxl)
-require(EML)
-require(lubridate)
+library(purrr)
+library(readxl)
+library(EML)
+library(lubridate)
 
 root<-"publication"
 path_templates <- file.path(root, "metadata_templates")
@@ -44,12 +45,14 @@ taxonomy <- zooper::crosswalk%>%
 
 taxa_lists<-zooper::crosswalk%>%
   select(-LI_Meso, -LI_Micro, -Level, -Phylum, -Class, -Order, -Family, -Genus, -Species)%>%
-  mutate_at(vars(EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
+  mutate(across(c(EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
                  FMWT_Macro, twentymm_Meso, FRP_Meso, FRP_Macro, YBFMP, DOP_Meso, DOP_Macro),
-            ~if_else(is.na(.), FALSE, TRUE))%>%
+            ~if_else(is.na(.x), FALSE, TRUE)))%>%
   distinct()%>%
-  mutate_at(vars(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
-                 twentymmend, twentymmstart2, DOPstart, DOPend), ~year(.))%>%
+  mutate(across(c(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
+                 twentymmend, twentymmstart2, DOPstart, DOPend), ~year(.x)),
+         across(c(Intro, EMPstart, EMPend, FMWTstart, FMWTend, twentymmstart,
+                  twentymmend, twentymmstart2, DOPstart, DOPend), ~if_else(.x<1900 | .x>2400, NA, .x)))%>%
   select(Taxname, Lifestage, EMP_Micro, EMP_Meso, EMP_Macro, STN_Meso, STN_Macro, FMWT_Meso,
          FMWT_Macro, twentymm_Meso, FRP_Meso, FRP_Macro, YBFMP, DOP_Meso, DOP_Macro,
          Intro, EMPstart, EMPend, FMWTSTNstart=FMWTstart, FMWTSTNend=FMWTend, twentymmstart,
@@ -66,14 +69,14 @@ meta2<-meta%>%
   mutate_at(c("Start_year", "Sample_duration_minutes", "Length_of_net_cm", "Mesh_size_microns"), ~parse_number(.))%>%
   rename(Survey_name=Study_name)
 
-biomass_mesomicro<-read_excel("Data paper/Biomass conversions.xlsx", sheet=1)%>%
+biomass_mesomicro<-read_excel(file.path(root, "Biomass conversions.xlsx"), sheet=1)%>%
   select(Taxname, Level, Lifestage, Carbon_mass_micrograms=starts_with("Carbon"), Reference)
 
 #biomass_macro<-read_excel("Data paper/Biomass conversions.xlsx", sheet=2)
 
-walk2(list(zoop_com, zoop, env, taxonomy, taxa_lists, undersampled, stations, stations_EMP_EZ, meta2, biomass_mesomicro), data_files, ~write_csv(.x, file.path(path_data, .y)))
+walk2(list(zoop_com, zoop, env, taxonomy, taxa_lists, undersampled, stations, meta2, biomass_mesomicro), data_files, ~write_csv(.x, file.path(path_data, .y)))
 
-file.copy(from=file.path("Data paper", "EDI", "Data publication code.R"),
+file.copy(from=file.path(root, "Data publication code.R"),
           to=file.path(path_data, "Data_processing.R"),
           overwrite = TRUE)
 
@@ -130,8 +133,8 @@ template_taxonomic_coverage(
   taxa.name.type = 'scientific'
 )
 
-ID<-"edi.230.3" # Sandbox EDI
-#ID<-"edi.539.3" # Real EDI
+ID<-"edi.230.4" # Sandbox EDI
+#ID<-"edi.539.4" # Real EDI
 
 zoop_eml<-make_eml(
   path = path_templates,
@@ -219,7 +222,10 @@ changelog<-list(list(changeScope="Metadata and data",
                      changeDate=Sys.Date(),
                      comment="1) Added DOP and YBFMP datasets
                               2) Switched FRP to using site-visit coordinates instead of fixed locations of sampling stations
-                              3) Due to the addition of more sample-level coordinates (from DOP and FRP), removed the stations_EMP_EZ table from this dataset, and added coordinates to the env table"))
+                              3) Due to the addition of more sample-level coordinates (from DOP and FRP), removed the stations_EMP_EZ table from this dataset, and added coordinates to the env table
+                              4) Updated, FMWT, STN, and EMP datasets
+                              5) Added TowType variable to identify whether each tow was a surface, bottom, oblique, or vertical pump sample
+                              6) Changed all Acanthocyclops vernalis in crosswalk to Acanthocyclops to reflect the uncertain taxonomy of this species complex"))
 class(changelog)<-c("emld", "list")
 
 zoop_eml$dataset$maintenance$changeHistory<-changelog
