@@ -1,4 +1,4 @@
-# zooper (development version)
+# zooper 2.5.0
 
 * Added some missing environmental variables to DOP and removed bottom samples for environmental variables except conductivity. 
 * Added TowType variable to identify whether each tow was a surface, bottom, oblique, or vertical pump sample. 
