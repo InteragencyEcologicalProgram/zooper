@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R build status](https://github.com/InteragencyEcologicalProgram/zooper/workflows/R-CMD-check/badge.svg)](https://github.com/InteragencyEcologicalProgram/zooper/actions)
 [![Codecov test coverage](https://codecov.io/gh/InteragencyEcologicalProgram/zooper/branch/master/graph/badge.svg)](https://codecov.io/gh/InteragencyEcologicalProgram/zooper?branch=master)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5828619.svg)](https://doi.org/10.5281/zenodo.5828619)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7641064.svg)](https://doi.org/10.5281/zenodo.7641064)
 [![Data DOI](https://img.shields.io/badge/Data%20publication%20DOI-10.6073/pasta/89dbadd9d9dbdfc804b160c81633db0d-blue.svg)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539)
 [![Data paper](https://img.shields.io/badge/Data%20paper%20DOI-10.1371/journal.pone.0265402-blue.svg)](https://doi.org/10.1371/journal.pone.0265402)
 <!-- badges: end -->
