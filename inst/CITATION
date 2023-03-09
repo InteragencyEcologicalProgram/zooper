@@ -3,21 +3,35 @@ citHeader("To cite zooper in publications use:")
 citEntry(
   entry    = "Article",
   title    = "zooper: an R package to download and integrate zooplankton datasets from the Upper San Francisco Estuary",
-  author   = person(given = c("Samuel", "M"),
-             family = "Bashevkin",
-             role = c("aut", "cre"),
-             email = "sam.bashevkin@deltacouncil.ca.gov",
-             comment = c(ORCID = "0000-0001-7406-7089")),
+  author   = c(person(given = c("Samuel", "M"),
+           family = "Bashevkin",
+           role = c("aut", "cre"),
+           email = "sam.bashevkin@waterboards.ca.gov",
+           comment = c(ORCID = "0000-0001-7406-7089")),
+      person(given = "Rosemary",
+           family = "Hartman",
+           role = c("aut"),
+           email = "Rosemary.Hartman@water.ca.gov",
+           comment = c(ORCID = "0000-0002-0642-183X")),
+      person(given = "Karrin",
+           family = "Alstad",
+           role = c("aut"),
+           email = "Karrin.Alstad@wildlife.ca.gov"),
+      person(given = "Catarina",
+           family = "Pien",
+           role = c("aut"),
+           email = "cpien@usbr.gov",
+           comment = c(ORCID = "0000-0003-4427-6300"))),
   journal  = "Zenodo",
-  year     = "2022",
+  year     = "2023",
   url      = "https://doi.org/10.5281/zenodo.3776867",
   doi      = "10.5281/zenodo.3776867",
-    textVersion = "Bashevkin, S. M. 2022. zooper: an R package to download and integrate zooplankton datasets from the Upper San Francisco Estuary. Zenodo. doi:10.5281/zenodo.3776867"
+    textVersion = "Bashevkin, S. M., R. Hartman, K. Alstad, and C. Pien. 2023. zooper: an R package to download and integrate zooplankton datasets from the Upper San Francisco Estuary. Zenodo. doi:10.5281/zenodo.3776867"
 )
 
 citEntry(
   entry    = "Article",
-  title    = "Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2020, an integration of 5 long-term monitoring programs",
+  title    = "Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2021, an integration of 7 long-term monitoring programs",
   author   = c(person(given = c("Samuel", "M"),
                       family = "Bashevkin",
                       role = c("aut", "cre"),
@@ -37,13 +51,17 @@ citEntry(
                person(given = "Trishelle",
                       family = "Tempel"),
                person(given = "Karen",
-                      family = "Kayfetz")
+                      family = "Kayfetz"),
+               person(given = "Karrin",
+                      family = "Alstad"),
+               person(given = "Catarina",
+                      family = "Pien")
                ),
   journal  = "Environmental Data Initiative",
-  year     = "2022",
+  year     = "2023",
   url      = "https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=539",
-  doi      = "10.6073/pasta/89dbadd9d9dbdfc804b160c81633db0d",
-    textVersion = "Bashevkin, S. M., R. Hartman, M. Thomas, A. Barros, C. Burdi, A. Hennessy, T. Tempel, and K. Kayfetz. 2020. Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2018, an integration of 5 long-term monitoring programs. Environmental Data Initiative. doi:10.6073/pasta/89dbadd9d9dbdfc804b160c81633db0d"
+  doi      = "10.6073/pasta/8b646dfbeb625e308212a39f1e46f69b",
+    textVersion = "Bashevkin, S. M., R. Hartman, M. Thomas, A. Barros, C. Burdi, A. Hennessy, T. Tempel, K. Kayfetz, K. Alstad, and C. Pien. 2023. Interagency Ecological Program: Zooplankton abundance in the Upper San Francisco Estuary from 1972-2021, an integration of 7 long-term monitoring programs. ver 4. Environmental Data Initiative. doi:10.6073/pasta/8b646dfbeb625e308212a39f1e46f69b"
 )
 
 citEntry(
