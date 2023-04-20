@@ -1,11 +1,12 @@
 ## code to prepare `stations` dataset goes here
 require(dplyr)
-require(readxl)
 require(readr)
 require(tidyr)
 require(lubridate)
 
-stations <- read_excel(file.path("data-raw", "stations.xlsx"), sheet="lat_long")%>%
+stations <- read_csv(file.path("data-raw", "stations.csv"),
+                     col_types=cols_only(Source="c", Station="c",
+                                         Latitude="d", Longitude="d"))%>%
   mutate(Source=recode(Source, TNS="STN", twentymm="20mm"))
 
 stationsEMPEZ<-read_csv(file.path("data-raw", "EZ_stations.csv"),

@@ -304,7 +304,7 @@ Zoopsynther<-function(
     dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
                      by="Taxname",
-                     multiple="error")%>%
+                     relationship = "many-to-one")%>%
     dplyr::filter(.data$Level!="Species")%>%
     dplyr::pull("Taxname")
 
@@ -544,7 +544,7 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species")%>%
       dtplyr::lazy_dt()%>%
-      dplyr::group_by(dplyr::across(-.data$CPUE))%>%
+      dplyr::group_by(dplyr::across(-"CPUE"))%>%
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%

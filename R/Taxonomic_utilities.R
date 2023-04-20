@@ -151,7 +151,7 @@ LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g
     dplyr::ungroup()%>%
     dplyr::select(-tidyselect::all_of(c("N", "Taxname", Groupers)))%>%
     dtplyr::lazy_dt()%>%
-    dplyr::group_by(dplyr::across(-.data$CPUE))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+    dplyr::group_by(dplyr::across(-"CPUE"))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
     dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
     dplyr::ungroup()%>%
     tibble::as_tibble()%>%
