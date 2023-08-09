@@ -161,13 +161,13 @@ names_SMSCG_Macro <- readr::read_csv(file.path(Data_folder, names(SMSCG_Macro_fi
 
 # DOP Meso and Macro -------------------------------------------------------------------
 
-DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance2017-2021"
+DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance_2017-2022"
 DOP_Meso_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Meso_file])
 
-DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
+DOP_trawls_file<-"DOP_ICF_TowData_2017-2022"
 DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
 
-DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance2017-2021"
+DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance_2017-2022"
 DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
 
 #download the files
@@ -358,21 +358,21 @@ test_that("DOP Macro column names have not changed", {
                                        "Deltamysis_holmquistae",        "Dexaminidae_UNID",              "Eogammarus_spp",                "Exopalaemon_spp",
                                        "Gammarus_daiberi",              "Grandidierella_japonica",       "Grandifoxus_grandis",           "Hyalella_spp",
                                        "Hyperacanthomysis_longirostris","Isopoda_UNID",                  "Monocorophium_acherusicum",     "Mysid_UNID",
-                                       "Neomysis_kadiakensis",          "Neomysis_mercedes",             "Oedicerotidae_UNID",            "Orientomysis_aspera",
+                                       "Neomysis_kadiakensis",          "Neomysis_mercedis",             "Oedicerotidae_UNID",            "Orientomysis_aspera",
                                        "Orientomysis_hwanhaiensis",     "Pleustidae_UNID",               "Shrimp_UNID_larvae",
                                        "Sinocorophium_alienense",
                                        "Tanaidacea_UNID","Sinocorophium_alienense"))
 })
 
 test_that("DOP Trawl column names have not changed", {
-  expect_setequal(names_DOP_Macro, c( "ICF_ID", "Alienacanthomysis_macropsis",   "Americorophium_spinicorne",     "Americorophium_spp",
-                                     "Americorophium_stimpsoni",      "Ampelisca_abdita",              "Amphipod_UNID",                 "Ampithoe_spp",
-                                     "Ampithoe_valida",               "Corophiidae_UNID",              "Crangonyx_spp",                 "Cumacean_UNID",
-                                     "Deltamysis_holmquistae",        "Dexaminidae_UNID",              "Eogammarus_spp",                "Exopalaemon_spp",
-                                     "Gammarus_daiberi",              "Grandidierella_japonica",       "Grandifoxus_grandis",           "Hyalella_spp",
-                                     "Hyperacanthomysis_longirostris","Isopoda_UNID",                  "Monocorophium_acherusicum",     "Mysid_UNID",
-                                     "Neomysis_kadiakensis",          "Neomysis_mercedes",             "Oedicerotidae_UNID",            "Orientomysis_aspera",
-                                     "Orientomysis_hwanhaiensis",     "Pleustidae_UNID",               "Shrimp_UNID_larvae",
-                                     "Sinocorophium_alienense",
-                                     "Tanaidacea_UNID","Sinocorophium_alienense"))
+  expect_setequal(names_DOP_trawls, c("ICF_ID", "Date" ,"Start_Time",
+                                     "Station_Code" ,"Habitat","Region_GIS" ,
+                                      "Latitude","Longitude","Start_Depth" ,
+                                      "Temperature" , "Conductivity","Turbidity",
+                                      "pH", "Salinity", "DO"  ,
+                                      "Chl_a","Secchi" , "NO3",
+                                      "NH4", "PO4","DOC",
+                                      "End_Depth", "End_Time","Microcystis_2017" ,
+                                      "Microcystis","Warp_Length","Warp_Angle"  ,
+                                      "TowTime","Macrozooplankton_Volume" ,"Mesozooplankton_Volume" ))
 })
