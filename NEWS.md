@@ -1,3 +1,7 @@
+# zooper 2.5.1
+
+* Added DOP and STN/FMWT 2022 data 
+
 # zooper 2.5.0
 
 * Added some missing environmental variables to DOP and removed bottom samples for environmental variables except conductivity. 

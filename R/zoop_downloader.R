@@ -222,10 +222,10 @@ Zoopdownloader <- function(
   # DOP Meso ---------------------------------------------------------------------
   if("DOP_Meso"%in%Data_sets) {
 
-    DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance2017-2021"
+    DOP_Meso_file<-"DOP_ICF_Mesozooplankton_Abundance_2017-2022"
     DOP_Meso_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Meso_file])
 
-    DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
+    DOP_trawls_file<-"DOP_ICF_TowData_2017-2022"
     DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
 
     #download the files
@@ -328,10 +328,10 @@ Zoopdownloader <- function(
 # DOP Macro ---------------------------------------------------------------------
   if("DOP_Macro"%in%Data_sets) {
 
-    DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance2017-2021"
+    DOP_Macro_file<-"DOP_ICF_Macrozooplankton_Abundance_2017-2022"
     DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
 
-    DOP_trawls_file<-"DOP_ICF_TowData2017-2021"
+    DOP_trawls_file<-"DOP_ICF_TowData_2017-2022"
     DOP_trawls_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_trawls_file])
 
     #download the files
@@ -356,7 +356,7 @@ Zoopdownloader <- function(
                                                               Exopalaemon_spp="d", Gammarus_daiberi="d", Grandidierella_japonica="d",
                                                               Grandifoxus_grandis="d", Hyalella_spp="d", Hyperacanthomysis_longirostris="d",
                                                               Isopoda_UNID="d", Monocorophium_acherusicum="d", Mysid_UNID="d",
-                                                              Neomysis_kadiakensis="d", Neomysis_mercedes="d", Oedicerotidae_UNID="d",
+                                                              Neomysis_kadiakensis="d", Neomysis_mercedis="d", Oedicerotidae_UNID="d",
                                                               Orientomysis_aspera="d", Orientomysis_hwanhaiensis="d", Pleustidae_UNID="d",
                                                               Shrimp_UNID_larvae="d", Sinocorophium_alienense="d", Tanaidacea_UNID="d"))
 
