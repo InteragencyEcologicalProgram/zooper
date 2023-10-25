@@ -14,9 +14,9 @@ crosswalk<-readr::read_csv(file.path("data-raw", "crosswalk.csv"),
                                                Intro="d", EMPstart="d", EMPend="d",
                                                FMWTstart="d", FMWTend="d", twentymmstart="d",
                                                twentymmend="d", twentymmstart2="d", DOPstart="d",
-                                               DOPend="d"))%>%
-  dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2", "DOPstart", "DOPend")), ~readr::parse_date(as.character(.), format="%Y"))%>%
-  dplyr::mutate_at(dplyr::vars(c("EMPstart", "FMWTstart", "twentymmstart", "twentymmstart2", "EMPend", "FMWTend", "twentymmend", "DOPstart", "DOPend")), ~tidyr::replace_na(., lubridate::ymd("2500-01-01")))%>% #Change any NAs for starts or ends to 2500 (i.e. never started or ended, super far in the future)
+                                               DOPend="d", FRPstart = "d"))%>%
+  dplyr::mutate_at(dplyr::vars(c("EMPstart", "EMPend", "Intro", "FMWTstart", "FMWTend", "twentymmstart", "twentymmend", "twentymmstart2", "DOPstart", "DOPend", "FRPstart")), ~readr::parse_date(as.character(.), format="%Y"))%>%
+  dplyr::mutate_at(dplyr::vars(c("EMPstart", "FMWTstart", "twentymmstart", "twentymmstart2", "EMPend", "FMWTend", "twentymmend", "DOPstart", "DOPend", "FRPstart")), ~tidyr::replace_na(., lubridate::ymd("2500-01-01")))%>% #Change any NAs for starts or ends to 2500 (i.e. never started or ended, super far in the future)
   dplyr::mutate(EMPend = dplyr::if_else(is.finite(.data$EMPend), .data$EMPend+lubridate::years(1), .data$EMPend))%>% #Change end dates to beginning of next year (first day it was not counted)
   dplyr::mutate(FMWTend = dplyr::if_else(is.finite(.data$FMWTend), .data$FMWTend+lubridate::years(1), .data$FMWTend))%>% #Change end dates to beginning of next year (first day it was not counted)
   dplyr::mutate(twentymmend = dplyr::if_else(is.finite(.data$twentymmend), .data$twentymmend+lubridate::years(1), .data$twentymmend))%>% #Change end dates to beginning of next year (first day it was not counted)

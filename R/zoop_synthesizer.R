@@ -303,8 +303,9 @@ Zoopsynther<-function(
     dplyr::distinct()%>%
     dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
-                     by="Taxname",
-                     relationship = "many-to-one")%>%
+                     by="Taxname"#,
+                     #relationship = "many-to-one"
+                     )%>%
     dplyr::filter(.data$Level!="Species")%>%
     dplyr::pull("Taxname")
 
@@ -537,7 +538,7 @@ Zoopsynther<-function(
     Zoop<-Zoop%>%
       dplyr::left_join(Lumpedkey%>%
                          dplyr::select("Taxlifestage", "Taxname_new", "SizeClass"),
-                       by=c("Taxlifestage", "SizeClass"))%>%
+                       by=c("Taxlifestage", "SizeClass"), relationship = "many-to-many")%>%
       dplyr::mutate(Taxname = dplyr::if_else(is.na(.data$Taxname_new), .data$Taxname, .data$Taxname_new))%>%
       dplyr::select(-"Taxname_new")%>%
       dplyr::filter(.data$Taxname!="REMOVE")%>%
