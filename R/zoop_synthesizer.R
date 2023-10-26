@@ -424,8 +424,7 @@ Zoopsynther<-function(
 
       BadYears<-purrr::map2_dfr(datasets$Source, datasets$SizeClass, ~ Uncountedyears(Source = .x,
                                                                                       Size_class = .y,
-                                                                                      Crosswalk=Crosswalk%>%
-                                                                                        dplyr::filter(Taxname%in%UniqueTaxa),
+                                                                                      Crosswalk=Crosswalk,
                                                                                       Start_year = StartDates%>%
                                                                                         dplyr::filter(.data$Source==.x & .data$SizeClass==.y)%>%
                                                                                         dplyr::pull("Startdate")%>%

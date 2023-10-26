@@ -54,7 +54,9 @@ Uncountedyears<- function(Source, Size_class, Crosswalk, Start_year, Intro_lag){
     dplyr::filter(!is.na(!!dataset))%>% #Filter to source and size class of choice
     dplyr::mutate(!!start := dplyr::if_else(!!start > lubridate::ymd("2100-01-01"), Sys.Date(), !!start))%>% #Change super late (never) start dates to current year
     dplyr::mutate(Intro = .data$Intro + lubridate::years(Intro_lag))%>% # Add Intro_lag to species introduction year
-    dplyr::mutate(Intro = dplyr::if_else(.data$Intro < lubridate::ymd("1900-01-01") | .data$Intro > !!start, !!start, .data$Intro), # If introduction year is super early (native species) or greater than the start date for that taxa, set it equal to the start date
+    dplyr::mutate(Intro = dplyr::case_when(.data$Intro < lubridate::ymd("1900-01-01") ~  lubridate::ymd(paste0(Start_year, "-01-01")), # If introduction year is super early (native species), set to start year of the survey
+                                           .data$Intro > !!start ~ !!start, #If intro year greater than the start date for that taxa, set it equal to the start date of counting
+                                           TRUE ~ .data$Intro),
                   !!end := dplyr::if_else(!!end > lubridate::ymd("2100-01-01"), Sys.Date(), !!end))%>% # If end date is super late (never), set it to current year
     dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
     {if(rlang::quo_name(start2)%in%names(Crosswalk)){ # If source has a set of second start dates (currently just 20mm)

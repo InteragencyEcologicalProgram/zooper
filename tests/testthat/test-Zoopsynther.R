@@ -132,11 +132,6 @@ test_that("Taxa dataset contains no NA Volumes", {
   expect_equal(tax$N_Volume_NA, 0)
 })
 
-test_that("Community dataset with time consistency contains same total CPUE as normal community dataset", {
-  expect_equal(comTime$CPUE_total, com$CPUE_total)
-})
-
-
 test_that("Taxa and community datasets contain same samples", {
   expect_setequal(unlist(tax$Samples), unlist(com$Samples))
 })
@@ -219,7 +214,25 @@ test_that("Community approach does not change overall CPUE", {
   expect_equal(Data_filtered$CPUE_base, Data_filtered$CPUE_com)
 })
 
+# Test that time consistency doesn't change overall CPUE
 
+data_com_time<-Zoopsynther("Community", Time_consistency = TRUE, Shiny = T)
+Removed_time<-unlist(str_split(str_split(data_com_time$Caveats, ", ")[[1]], ": "))[-1]
+Removed_data_time<-tibble(Taxlifestage=str_remove(Removed_time, " \\s*\\([^\\)]+\\)"),
+                     SizeClass=str_extract(Removed_time, " \\s*\\([^\\)]+\\)"))%>%
+  mutate(SizeClass=str_remove(str_remove(SizeClass, fixed(" (")), fixed(")")))
+Data_base_filtered_time<-zooper::zoopComb%>%
+  anti_join(Removed_data_time, by=c("SizeClass", "Taxlifestage"))%>%
+  filter(Source!="YBFMP")
+
+test_that("Zoopsynther with community option, time consistency, and problematic taxa removed produces expected message", {
+  expect_output(data_com_filtered_time<<-Zoopsynther("Community", Zoop=Data_base_filtered_time)%>%
+                  summarise(CPUE_total=sum(CPUE)), "No disclaimers here")
+})
+
+test_that("Community dataset with time consistency contains same total CPUE as normal community dataset", {
+  expect_equal(comTime$CPUE_total, data_com_filtered_time$CPUE_total)
+})
 
 test_that("Community option produces correct messages with a single source", {
   expect_output(comind <<- map2(Data_source, Size_class,
