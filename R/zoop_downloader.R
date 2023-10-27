@@ -637,6 +637,12 @@ Zoopdownloader <- function(
     #join environmental data to taxa counts and fix some wonky names
     FRP_all = dplyr::left_join(zoo_FRP_Meso, sites_FRP_Meso) %>%
       dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID",
+                                                  CommonName == "Insect Unid" ~ "Insect UNID",
+                                                  CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                                  CommonName == "Asellidae UNID" ~ "Asellidae",
+                                                  CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
+                                                  CommonName == "Fish larvae" ~ "Fish UNID",
                                     CommonName == "Insect Unid" ~ "Insect UNID",
                                     CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
                                     CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
@@ -652,12 +658,16 @@ Zoopdownloader <- function(
       dplyr::mutate(Source="FRP", #add variable for data source
                     SizeClass="Meso",
                     TowType= dplyr::case_when(GearTypeAbbreviation == "ZOOP" ~ "Surface",
-                                       GearTypeAbbreviation == "ZOOPOBL" ~ "Oblique",
-                                       GearTypeAbbreviation == "ZOOPBEN" ~ "Benthic"),
+
+                                       GearTypeAbbreviation == "ZOBL" ~ "Oblique",
+
+                                       GearTypeAbbreviation == "ZBEN" ~ "Bottom",
+                                       TRUE ~ "Surface"),
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium` = "3"))%>%
       dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
                     CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Meso = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
+      dplyr::filter(!is.na(Latitude)) %>% #remove samples with no gps coordinates
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Meso", values_from="CPUE", values_fill=list(CPUE=0))%>%
@@ -867,13 +877,19 @@ Zoopdownloader <- function(
     sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
-    FRP_allmac = dplyr::left_join(zoo_FRP_Macro, sites_FRP_Macro) %>%
-      dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID",
+    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -Date, -Location), sites_FRP_Macro, by = "VisitNo") %>%
+      dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID", #fix some wonky common names
                                     CommonName == "Insect Unid" ~ "Insect UNID",
                                     CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
                                     CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
                                     CommonName == "Tricoptera larvae Other" ~ "Tricoptera larvae UNID",
                                     CommonName == "Palaemonectes" ~ "Palaemon",
+                                    CommonName == "Palaemonetes" ~ "Palaemon",
+                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                    CommonName == "Asellidae UNID" ~ "Asellidae",
+                                    CommonName == "Diptera adult" ~ "Diptera Adult",
+                                    CommonName == "Coleoptera other" ~ "Coleoptera Other",
+                                    CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
                                     TRUE ~ CommonName))
 
     #Already in long format
@@ -888,13 +904,15 @@ Zoopdownloader <- function(
                     SizeClass = "Macro",
                     TowType= dplyr::case_when(GearTypeAbbreviation == "MAC" ~ "Surface",
                                        GearTypeAbbreviation == "MACOBL" ~ "Oblique",
-                                       GearTypeAbbreviation == "MACBEN" ~ "Benthic"),
+                                       GearTypeAbbreviation == "MACBEN" ~ "Bottom",
+                                       TRUE ~ "Surface"),
                     CPUE = .data$AdjCount/.data$effort, #add variable for data source and calculate CPUE
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium`="3"))%>%
 
       dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
                     CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Macro = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
+      dplyr::filter(!is.na(Latitude)) %>%
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Macro", values_from="CPUE", values_fill=list(CPUE=0))%>%

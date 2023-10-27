@@ -66,7 +66,7 @@ test_that("Community option produces messages", {
                             CPUE_total=sum(CPUE),
                             Taxa=list(select(., Taxlifestage, SizeClass, Undersampled,)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
   expect_output(comTime <<- Zoopsynther(Data_type="Community", Time_consistency = TRUE)%>%
-                  summarise(col_names=list(names(.)),,
+                  summarise(col_names=list(names(.)),
                             N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
@@ -79,7 +79,7 @@ test_that("Community option produces messages", {
 
 test_that("Taxa option produces messages", {
   expect_output(tax <<- Zoopsynther(Data_type="Taxa")%>%
-                  summarise(col_names=list(names(.)),,
+                  summarise(col_names=list(names(.)),
                             N = nrow(.),
                             N_greater0 = nrow(filter(., CPUE>0)),
                             Source = list(unique(paste(Source, SizeClass, sep="_"))),
@@ -112,9 +112,11 @@ test_that("Taxa dataset is created and contains all sources", {
   expect_setequal(unlist(tax$Source), Data_sets)
 })
 
+
 test_that("Community dataset contains no duplicated rows", {
   expect_equal(com$N, com$N_Taxsamples)
 })
+
 
 test_that("Community dataset contains no NA Volumes", {
   expect_equal(com$N_Volume_NA, 0)

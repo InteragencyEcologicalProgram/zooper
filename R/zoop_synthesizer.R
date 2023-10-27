@@ -574,7 +574,8 @@ Zoopsynther<-function(
   }
 
   Zoop<-Zoop%>%
-    dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm"))
+    dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm")) %>%
+    dplyr::distinct()
 
   out<-list(Data=Zoop, Caveats=caveats)
 

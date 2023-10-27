@@ -44,8 +44,8 @@ test_that("Only the expected EZ stations are missing coordinates", {
   expect_setequal(unique(No_coords_EZ$Station), c("NZEZ6 2004-12-21", "NZEZ2 2007-08-21", "NZEZ6 2007-08-21"))
 })
 
-test_that("Only the expected rows are missing station names", {
-  expect_setequal(No_stations, c("FRP 2016-05-10", "FRP 2016-05-10", "FRP 2016-05-10", "FRP 2016-05-10"))
+test_that("All rowshave station names", {
+  expect_setequal(No_stations, character(0))
 })
 
 test_that("Date and Datetime and displaying the same dates", {
@@ -65,3 +65,4 @@ test_that("There are no NA Volumes, Dates, or Stations in Zoopdownloader output"
 test_that("TowType only has the expected levels", {
   expect_setequal(Data$Environment$TowType, c("Surface", "Bottom", "Oblique", "Vertical pump"))
 })
+
