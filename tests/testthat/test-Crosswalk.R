@@ -27,6 +27,14 @@ test_that("Crosswalk start dates are entered for every taxa", {
   expect_true(all(is.finite(filter(crosswalk_starts, !is.na(FRP))$FRPstart)))
 })
 
+test_that("Crosswalk start dates are reasonable for every taxa", {
+  expect_true(all(year(filter(crosswalk_starts, !is.na(EMP))$EMPstart)<=year(Sys.Date())))
+  expect_true(all(year(filter(crosswalk_starts, !is.na(FMWT))$FMWTstart)<=year(Sys.Date())))
+  expect_true(all(year(filter(crosswalk_starts, !is.na(twentymm))$twentymmstart)<=year(Sys.Date())))
+  expect_true(all(year(filter(crosswalk_starts, !is.na(DOP))$DOPstart)<=year(Sys.Date())))
+  expect_true(all(year(filter(crosswalk_starts, !is.na(FRP))$FRPstart)<=year(Sys.Date())))
+})
+
 test_that("Crosswalk start dates are not earlier than survey start dates", {
   expect_true(all(is.na(crosswalk_starts$twentymmstart) | starts$`20mm` <= year(crosswalk_starts$twentymmstart)))
   expect_true(all(is.na(crosswalk_starts$twentymmstart2) | starts$`20mm` <= year(crosswalk_starts$twentymmstart2)))

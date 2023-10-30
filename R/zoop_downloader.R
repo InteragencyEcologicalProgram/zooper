@@ -133,6 +133,15 @@ Zoopdownloader <- function(
 
   }
 
+  if(any(c("FRP_Meso", "FRP_Macro")%in%Data_sets)){
+    FRP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/269"
+    FRP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=FRP_revision_url, warn = FALSE), 1)
+    FRP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/269/", FRP_latest_revision)
+    FRP_entities <- Tryer(n=3, fun=readLines, con=FRP_pkg_url, warn = FALSE)
+    FRP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/269", FRP_latest_revision, FRP_entities, sep="/")
+    names(FRP_entities) <- purrr::map_chr(FRP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+  }
+
   # EMP Meso ---------------------------------------------------------------------
   if("EMP_Meso"%in%Data_sets) {
 
@@ -622,17 +631,23 @@ Zoopdownloader <- function(
 
     # Import the FRP data
 
+    FRP_Meso_file<-FRP_entities[grep("zoops_FRP", names(FRP_entities))]
+    FRP_Meso_URL<-paste0(FRP_pkg_url, "/", FRP_Meso_file)
+
+    FRP_site_file<-FRP_entities[grep("sitevisit_FRP", names(FRP_entities))]
+    FRP_site_URL<-paste0(FRP_pkg_url, "/", FRP_site_file)
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "zoopsFRP2021.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=5218ffbc7b8f38959704a46ffb668ad9",
-            destfile=file.path(Data_folder, "zoopsFRP2021.csv"), mode="wb", method=Download_method)
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
-       destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+    if (!file.exists(file.path(Data_folder, "zoopsFRP.csv")) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=FRP_Meso_URL,
+            destfile=file.path(Data_folder, "zoopsFRP.csv"), mode="wb", method=Download_method)
+      Tryer(n=3, fun=utils::download.file, url=FRP_site_URL,
+       destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
 
     }
 
-    zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2021.csv"), na=c("", "NA"))
-    sites_FRP_Meso <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+    zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP.csv"), na=c("", "NA"))
+    sites_FRP_Meso <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
     FRP_all = dplyr::left_join(zoo_FRP_Meso, sites_FRP_Meso) %>%
@@ -664,10 +679,10 @@ Zoopdownloader <- function(
                                        GearTypeAbbreviation == "ZBEN" ~ "Bottom",
                                        TRUE ~ "Surface"),
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium` = "3"))%>%
-      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
+      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart", Longitude = "LongitudeStart", Station = "Location",
                     CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Meso = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
-      dplyr::filter(!is.na(Latitude)) %>% #remove samples with no gps coordinates
+      dplyr::filter(!is.na(.data$Latitude)) %>% #remove samples with no gps coordinates
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Meso", values_from="CPUE", values_fill=list(CPUE=0))%>%
@@ -864,20 +879,26 @@ Zoopdownloader <- function(
 
     # Import the FRP data
 
+    FRP_Macro_file<-FRP_entities[grep("macroinvert_FRP", names(FRP_entities))]
+    FRP_Macro_URL<-paste0(FRP_pkg_url, "/", FRP_Macro_file)
+
+    FRP_site_file<-FRP_entities[grep("sitevisit_FRP", names(FRP_entities))]
+    FRP_site_URL<-paste0(FRP_pkg_url, "/", FRP_site_file)
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "bugsFRP2021.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
-            destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
-      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
-            destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+    if (!file.exists(file.path(Data_folder, "macroinvert_FRP.csv")) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url=FRP_Macro_URL,
+            destfile=file.path(Data_folder, "macroinvert_FRP.csv"), mode="wb", method=Download_method)
+      Tryer(n=3, fun=utils::download.file, url=FRP_site_URL,
+            destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
 
     }
 
-    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
-    sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "macroinvert_FRP.csv"), na=c("", "NA"))
+    sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
-    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -Date, -Location), sites_FRP_Macro, by = "VisitNo") %>%
+    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -.data$Date, -.data$Location), sites_FRP_Macro, by = "VisitNo") %>%
       dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID", #fix some wonky common names
                                     CommonName == "Insect Unid" ~ "Insect UNID",
                                     CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
@@ -909,10 +930,10 @@ Zoopdownloader <- function(
                     CPUE = .data$AdjCount/.data$effort, #add variable for data source and calculate CPUE
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium`="3"))%>%
 
-      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
+      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart", Longitude = "LongitudeStart", Station = "Location",
                     CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Macro = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
-      dplyr::filter(!is.na(Latitude)) %>%
+      dplyr::filter(!is.na(.data$Latitude)) %>%
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Macro", values_from="CPUE", values_fill=list(CPUE=0))%>%

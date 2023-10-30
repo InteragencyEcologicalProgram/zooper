@@ -2,6 +2,8 @@ require(zooper)
 require(readr)
 require(dplyr)
 
+Download_method<-"auto"
+
 
 revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
 EMP_latest_revision <- tail(zooper:::Tryer(n=3, fun=readLines, con=revision_url, warn = FALSE), 1)
@@ -33,6 +35,13 @@ DOP_entities <- Tryer(n=3, fun=readLines, con=DOP_pkg_url, warn = FALSE)
 DOP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/1187", DOP_latest_revision, DOP_entities, sep="/")
 names(DOP_entities) <- purrr::map_chr(DOP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
+FRP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/269"
+FRP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=FRP_revision_url, warn = FALSE), 1)
+FRP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/269/", FRP_latest_revision)
+FRP_entities <- Tryer(n=3, fun=readLines, con=FRP_pkg_url, warn = FALSE)
+FRP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/269", FRP_latest_revision, FRP_entities, sep="/")
+names(FRP_entities) <- purrr::map_chr(FRP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+
 Data_folder<-tempdir()
 
 
@@ -40,7 +49,7 @@ Data_folder<-tempdir()
 
 EMP_Meso_file<-"cb_matrix.csv"
 EMP_Meso_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Meso_file])
-Tryer(n=3, fun=download.file, url=EMP_Meso_URL, destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method="curl")
+Tryer(n=3, fun=download.file, url=EMP_Meso_URL, destfile=file.path(Data_folder, EMP_Meso_file), mode="wb", method=Download_method)
 
 
 names_EMP_Meso<-readr::read_csv(file.path(Data_folder, EMP_Meso_file), col_types = cols(.default=col_character()))%>%
@@ -53,10 +62,10 @@ FMWTSTN_Meso_file<-FMWTSTN_files[grep("CBNet", FMWTSTN_files)]
 SMSCG_Meso_file<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
 Tryer(n=3, fun=download.file, url=FMWTSTN_Meso_file,
-           destfile=file.path(Data_folder, names(FMWTSTN_Meso_file)), mode="wb", method="curl")
+           destfile=file.path(Data_folder, names(FMWTSTN_Meso_file)), mode="wb", method=Download_method)
 
 Tryer(n=3, fun=download.file, url=SMSCG_Meso_file,
-           destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method="curl")
+           destfile=file.path(Data_folder, names(SMSCG_Meso_file)), mode="wb", method=Download_method)
 
 names_FMWTSTN_Meso<-readr::read_csv(file.path(Data_folder, names(FMWTSTN_Meso_file)),
                                     col_types = "c")%>%
@@ -72,7 +81,7 @@ names_SMSCG_Meso<-readr::read_csv(file.path(Data_folder, names(SMSCG_Meso_file))
 twentymm_Meso_file<-twentymm_files[grep("Zooplankton%20Catch%20Matrix", twentymm_files)]
 
 Tryer(n=3, fun=download.file, url=twentymm_Meso_file,
-           destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method="curl")
+           destfile=file.path(Data_folder, names(twentymm_Meso_file)), mode="wb", method=Download_method)
 
 names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_file)),
                                     sheet="20-mm CB CPUE Data",
@@ -82,31 +91,35 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_f
 
 # FRP ----------------------------------------------------------------
 
-Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=5218ffbc7b8f38959704a46ffb668ad9",
-      destfile=file.path(Data_folder, "zoopsFRP2021.csv"), mode="wb", method=Download_method)
-Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
-      destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
-Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
-      destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
+FRP_Meso_file<-FRP_entities[grep("zoops_FRP", names(FRP_entities))]
+FRP_Meso_URL<-paste0(FRP_pkg_url, "/", FRP_Meso_file)
 
-zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2021.csv"), na=c("", "NA"))
-zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
-sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+FRP_Macro_file<-FRP_entities[grep("macroinvert_FRP", names(FRP_entities))]
+FRP_Macro_URL<-paste0(FRP_pkg_url, "/", FRP_Macro_file)
 
+FRP_site_file<-FRP_entities[grep("sitevisit_FRP", names(FRP_entities))]
+FRP_site_URL<-paste0(FRP_pkg_url, "/", FRP_site_file)
 
-names_FRP_Macro <- names(zoo_FRP_Macro)
+Tryer(n=3, fun=utils::download.file, url=FRP_Meso_URL,
+      destfile=file.path(Data_folder, "zoopsFRP.csv"), mode="wb", method=Download_method)
+Tryer(n=3, fun=utils::download.file, url=FRP_Macro_URL,
+      destfile=file.path(Data_folder, "macroinvert_FRP.csv"), mode="wb", method=Download_method)
+Tryer(n=3, fun=utils::download.file, url=FRP_site_URL,
+      destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
 
-names_FRP_sites <- names(sites_FRP_Macro)
-
-names_FRP_Meso <- names(zoo_FRP_Meso)
-
+names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP.csv"), na=c("", "NA"))%>%
+  names()
+names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "macroinvert_FRP.csv"), na=c("", "NA"))%>%
+  names()
+names_FRP_sites <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))%>%
+  names()
 
 # YBFMP Meso/Micro --------------------------------------------------------
 
 YBFMP_file<-"Zooplankton Data"
 YBFMP_URL<-paste0(YBFMP_pkg_url, "/", YBFMP_entities[YBFMP_file])
 Tryer(n=3, fun=utils::download.file, url=YBFMP_URL,
-      destfile=file.path(Data_folder, YBFMP_file), mode="wb", method="curl")
+      destfile=file.path(Data_folder, YBFMP_file), mode="wb", method=Download_method)
 
 names_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
                            col_types = cols(.default=col_character()))%>%
@@ -118,7 +131,7 @@ names_YBFMP<-readr::read_csv(file.path(Data_folder, YBFMP_file),
 EMP_Micro_file<-"pump_matrix.csv"
 EMP_Micro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Micro_file])
 Tryer(n=3, fun=download.file, url=EMP_Micro_URL,
-             destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method="curl")
+             destfile=file.path(Data_folder, EMP_Micro_file), mode="wb", method=Download_method)
 
 names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                  col_types=cols(.default=col_character()))%>%
@@ -131,7 +144,7 @@ EMP_Macro_file<-"macro_matrix.csv"
 EMP_Macro_URL<-paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision, "/", EMP_entities[EMP_Macro_file])
 
 Tryer(n=3, fun=download.file, url=EMP_Macro_URL,
-             destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method="curl")
+             destfile=file.path(Data_folder, EMP_Macro_file), mode="wb", method=Download_method)
 
 
 names_EMP_Macro<-readr::read_csv(file.path(Data_folder, EMP_Macro_file),
@@ -146,9 +159,9 @@ FMWTSTN_Macro_file<-FMWTSTN_files[grep("MysidNet", FMWTSTN_files)]
 SMSCG_Macro_file<-SMSCG_files[grep("MysidNet", SMSCG_files)]
 
 Tryer(n=3, fun=download.file, url=FMWTSTN_Macro_file,
-           destfile=file.path(Data_folder, names(FMWTSTN_Macro_file)), mode="wb", method="curl")
+           destfile=file.path(Data_folder, names(FMWTSTN_Macro_file)), mode="wb", method=Download_method)
 Tryer(n=3, fun=download.file, url=SMSCG_Macro_file,
-           destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method="curl")
+           destfile=file.path(Data_folder, names(SMSCG_Macro_file)), mode="wb", method=Download_method)
 
 names_FMWT_Macro <- readr::read_csv(file.path(Data_folder, names(FMWTSTN_Macro_file)),
                                              col_types = cols(.default=col_character()))%>%
@@ -172,13 +185,13 @@ DOP_Macro_URL<-paste0(DOP_pkg_url, "/", DOP_entities[DOP_Macro_file])
 
 #download the files
   Tryer(n=3, fun=utils::download.file, url=DOP_Meso_URL,
-        destfile=file.path(Data_folder, DOP_Meso_file), mode="wb", method= "curl")
+        destfile=file.path(Data_folder, DOP_Meso_file), mode="wb", method= Download_method)
 
   Tryer(n=3, fun=utils::download.file, url=DOP_trawls_URL,
-        destfile=file.path(Data_folder, DOP_trawls_file), mode="wb", method="curl")
+        destfile=file.path(Data_folder, DOP_trawls_file), mode="wb", method=Download_method)
 
   Tryer(n=3, fun=utils::download.file, url=DOP_Macro_URL,
-        destfile=file.path(Data_folder, DOP_Macro_file), mode="wb", method="curl")
+        destfile=file.path(Data_folder, DOP_Macro_file), mode="wb", method=Download_method)
 
 names_DOP_Meso<-readr::read_csv(file.path(Data_folder, DOP_Meso_file)) %>%
   names()
@@ -295,11 +308,9 @@ test_that("FRP Macro column names have not changed", {
 })
 
 test_that("FRP site data column names have not changed", {
-  expect_setequal(names_FRP_sites, c("VisitNo", "Location",
-                                     "Date","Comments", "effort","CPUE" ,       "Temp",
-                                     "SC", "pH", "DO", "Turbidity", "Chlorophyll",
-                                     "Phycocyanin", "FDOM","Secchi",  "Microcystis", "Tide",
-                                     "Weather","WindWaves"))
+  expect_setequal(names_FRP_sites, c('VisitNo', 'Location', 'Date', 'Temp', 'SC', 'pH', 'DO',
+                                     'Turbidity', 'Chlorophyll', 'Phycocyanin', 'FDOM', 'Secchi',
+                                     'Microcystis', 'Tide', 'Weather', 'WindWaves', 'Flagged_Data'))
 
 })
 
