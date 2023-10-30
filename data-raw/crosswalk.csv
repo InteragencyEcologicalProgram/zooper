@@ -1,152 +1,53 @@
 EMP_Micro,EMP_Meso,EMP_Macro,STN_Meso,STN_Macro,FMWT_Meso,FMWT_Macro,twentymm_Meso,FRP_Meso,FRP_Macro,YBFMP,LI_Meso,LI_Micro,DOP_Meso,DOP_Macro,Lifestage,Taxname,Level,Phylum,Class,Order,Family,Genus,Species,Intro,EMPstart,EMPend,FMWTstart,FMWTend,twentymmstart,twentymmend,twentymmstart2,DOPstart,DOPend,FRPstart,FRPend
-NA,NA,A_macropsis,NA,Alienacanthomysis macropsis,NA,Alienacanthomysis_macropsis,NA,NA,Alienacanthomysis macropsis,NA,NA,NA,NA,Alienacanthomysis_macropsis,Adult,Alienacanthomysis macropsis,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Alienacanthomysis,macropsis,NA,1994,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,A_spinicorne,NA,Americorophium spinicorne,NA,Americorophium_spinicorne,NA,Americorophium spinicorne,Americorophium spinicorne,NA,NA,NA,NA,Americorophium_spinicorne,Adult,Americorophium spinicorne,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,spinicorne,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Americophium sp. undifferentiated,NA,NA,NA,Americorophium_spp,Adult,Americophium,Genus,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,A_stimpsoni,NA,Americorophium stimpsoni,NA,Americorophium_stimpsoni,NA,Americorophium stimpsoni,Americorophium stimpsoni,NA,NA,NA,NA,Americorophium_stimpsoni,Adult,Americorophium stimpsoni,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,stimpsoni,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,A_abdita,NA,Ampelisca abdita,NA,Ampelisca_abdita,NA,NA,NA,NA,NA,NA,NA,Ampelisca_abdita,Adult,Ampelisca abdita,Species,Arthropoda,Malacostraca,Amphipoda,Ampeliscidae,Ampelisca,abdita,1954,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Unidentified_Amphipod,NA,Unidentified Amphipod,NA,Unidentified_Amphipod,NA,Amphipod UNID,Amphipod UNID,NA,NA,NA,NA,Amphipod_UNID,Adult,Amphipoda,Order,Arthropoda,Malacostraca,Amphipoda,NA,NA,NA,NA,1996,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Ampithoe_sp,NA,NA,NA,NA,NA,NA,Ampithoe,NA,NA,NA,NA,Ampithoe_spp,Adult,Ampithoe,Genus,Arthropoda,Malacostraca,Amphipoda,Ampithoidae,Ampithoe,NA,1941,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ampithoe_valida,Adult,Ampithoe valida,Species,Arthropoda,Malacostraca,Amphipoda,Ampithoidae,Ampithoe,valida,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Shrimp juvenile,NA,NA,NA,NA,NA,Juvenile,Shrimp,Class,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Isopod juvenile,Isopod juvenile,NA,NA,NA,NA,NA,Juvenile,Isopod,Class,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Isopod UNID,Isopod UNID,NA,NA,NA,NA,NA,Adult,Isopod,Class,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Barnacle cyprid,NA,NA,NA,NA,NA,NA,Larva,Barnacle cyprid,Class,Arthropoda,Maxillopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+BARNNAUP,BARNNAUP,NA,BARNNAUP,NA,BARNNAUP,NA,barnacle nauplii,Barnacle Nauplii,Barnacle Nauplii,Cirripedia nauplius,NA,NA,Barnacle_UNID_nauplii,NA,Larva,Cirripedia,Class,Arthropoda,Cirripedia,NA,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Clam Juvenile,Clam Juvenile,Bivalvia larva,NA,NA,NA,NA,Juvenile,Bivalvia,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Clam UNID,Clam UNID,Bivalvia undifferentiated,Bivalvia,Bivalvia,NA,NA,Undifferentiated,Bivalvia,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Collembola,Collembola,NA,NA,NA,NA,NA,Undifferentiated,Collembola,Class,Arthropoda,Collembola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+OTHCOPNAUP,OTHCOPNAUP,NA,OTHCOPNAUP,NA,OTHCOPNAUP,NA,NA,Copepod Nauplii,NA,NA,NA,NA,NA,NA,Larva,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,1989,NA,1989,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Copepod other adult,NA,NA,NA,NA,NA,NA,Adult,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Copepod Other juvenile,Copepod Other juvenile,NA,NA,NA,NA,NA,Juvenile,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Fish UNID,Fish UNID,NA,NA,NA,NA,NA,Juvenile,Fish,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Hydrozoa,NA,NA,NA,NA,NA,NA,Undifferentiated,Hydrozoa,Class,Cnidaria,Hydrozoa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,Other Insect larvae,Insect larvae UNID,Insect larvae UNID,Insecta larva,NA,NA,NA,NA,Larva,Insecta,Class,Arthropoda,Insecta,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,1999,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Insect UNID,Insect UNID,NA,NA,NA,NA,NA,Undifferentiated,Insect,Class,Arthropoda,Insecta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Leech,Leech,NA,NA,NA,NA,NA,Undifferentiated,Hirudinea,Class,Annelida,Hirudinea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Limpet,Limpet,NA,NA,NA,NA,NA,Adult,Limpet,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Millipede,NA,NA,NA,NA,NA,Adult,Millipede,Class,Arthropoda,Diplopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mussel UNID,NA,NA,NA,NA,NA,NA,Undifferentiated,Mussel,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Oligocheate,Oligocheate,NA,NA,NA,NA,NA,Undifferentiated,Oligochaeta,Class,Annelida,Oligochaeta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,OSTRACOD,NA,OSTRACOD,NA,Ostracods,Ostracods,Ostracods,Ostracoda undifferentiated,NA,NA,Ostracoda_UNID,NA,Adult,Ostracoda,Class,Arthropoda,Ostracoda,NA,NA,NA,NA,NA,NA,NA,2002,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Polychaete,Polychaete,NA,NA,NA,NA,NA,Undifferentiated,Polychaeta,Class,Annelida,Polychaeta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Slug,NA,NA,NA,NA,NA,Adult,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Snail UNID,Snail UNID,NA,NA,NA,NA,NA,Adult,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Actinopterygii larva,NA,NA,NA,NA,Larva,Actinopterygii,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Actinopterygii undifferentiated,NA,NA,NA,NA,Undifferentiated,Actinopterygii,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+COPNAUP,COPNAUP,NA,NA,NA,NA,NA,copepod nauplii,NA,NA,Copepoda nauplius,NA,NA,Copepod_UNID_nauplii,NA,Larva,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,1972,1988,NA,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Copepoda,Copepoda,NA,NA,Undifferentiated,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mollusca larva,NA,NA,NA,NA,Juvenile,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mollusca undifferentiated,Gastropoda,Gastropoda,NA,NA,Undifferentiated,Mollusca,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Teleosti,Teleosti,NA,NA,Undifferentiated,Teleostei,Class,Chordata,Teleostei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Teleosti,Teleosti,NA,NA,Undifferentiated,Teleostei,Class,Chordata,Teleostei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,Unidentified_Corophium,NA,Unidentified Corophium,NA,Unidentified_Corophium,NA,Corophiid UNID,Corophiid UNID,NA,NA,NA,NA,Corophiidae_UNID,Adult,Corophiidae,Family,Arthropoda,Malacostraca,Amphipoda,Corophiidae,NA,NA,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Crangon,NA,NA,NA,NA,Crangon_spp,Adult,Crangon,Genus,Arthropoda,Malacostraca,Decapoda,Crangonidae,Crangon,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Crangonyx_sp,NA,Crangonyx sp_,NA,Crangonyx_sp,NA,Crangonyx,Crangonyx,NA,NA,NA,NA,Crangonyx_spp,Adult,Crangonyx,Genus,Arthropoda,Malacostraca,Amphipoda,Crangonycitidae,Crangonyx,NA,1995,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,CUMAC,NA,CUMAC,NA,Cumaceans,Cumaceans,Cumaceans,Cumacea undifferentiated,NA,NA,NA,Cumacean_UNID,Undifferentiated,Cumacea,Order,Arthropoda,Malacostraca,Cumacea,NA,NA,NA,NA,NA,NA,2001,NA,1995,2006,NA,2018,NA,NA,NA
-NA,NA,D_holmquistae,NA,Deltamysis holmquistae,NA,Deltamysis_holmquistae,NA,NA,Deltamysis homquistae,NA,NA,NA,NA,Deltamysis_holmquistae,Adult,Deltamysis holmquistae,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Deltamysis,holmquistae,1977,1979,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Dexaminidae_UNID,Adult,Dexaminidae,Family,Arthropoda,Malacostraca,Amphipoda,Dexaminidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Eogammarus,Eogammarus,NA,NA,NA,NA,Eogammarus_spp,Adult,Eogammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Anisogammaridae,Eogammarus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Exopalaemon,NA,NA,NA,NA,Exopalaemon_spp,Adult,Exopalaemon modestus,Species,Arthropoda,Malacostraca,Decapoda,Palaemonidae,Exopalaemon,modestus,NA,NA,NA,NA,NA,NA,NA,NA,2018,2020,NA,NA
-NA,NA,G_daiberi,NA,Gammarus daiberi,NA,Gammarus_daiberi,NA,NA,NA,NA,NA,NA,NA,Gammarus_daiberi,Adult,Gammarus daiberi,Species,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,daiberi,1983,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,G_japonica,NA,NA,NA,Grandidierella_japonica,NA,NA,NA,NA,NA,NA,NA,Grandidierella_japonica,Adult,Grandidierella japonica,Species,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella,japonica,NA,2017,NA,2019,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Grandifoxus_grandis,Adult,Grandifoxus grandis,Species,Arthropoda,Malacostraca,Amphipoda,Phoxocephalidae,Grandifoxus,grandis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Hyalella_sp,NA,Hyalella sp_,NA,Hyalella_sp,NA,Hyalella,Hyalella,NA,NA,NA,NA,Hyalella_spp,Adult,Hyalella,Genus,Arthropoda,Malacostraca,Amphipoda,Hyalellidae,Hyalella,NA,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hyperacanthomysis_longirostris,Adult,Hyperacanthomysis longirostris,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Hyperacanthomysis,longirostris,1993,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Incisocalliope derzhavini,NA,NA,NA,NA,Incisocalliope_derzhavini,Adult,Incisocalliope derzhavini,Species,Arthropoda,Malacostraca,Amphipoda,Pleustidae,Incisocalliope,derzhavini,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Isopoda undifferentiated,NA,NA,NA,Isopoda_UNID,Undifferentiated,Isopoda,Order,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Leptodora,NA,NA,NA,NA,Leptodora_spp,Leptodora_spp,Adult,Leptodora,Genus,Arthropoda,Branchiopoda,Cladocera,Leptodoridae,Leptodora,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monocorophium_acherusicum,Adult,Monocorophium acherusicum,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,acherusicum,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monocorophium_insidiosum,Adult,Monocorophium insidiosum,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,insidiosum,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Unidentified_mysid,NA,Unidentified Mysid,NA,Unidentified_Mysid,NA,Mysid Other,Mysid Other,NA,NA,NA,NA,Mysid_UNID,Adult,Mysida,Order,Arthropoda,Malacostraca,Mysida,NA,NA,NA,NA,2007,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Amphipod juvenile,NA,NA,NA,NA,NA,NA,Juvenile,Amphipoda,Order,Arthropoda,Malacostraca,Amphipoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Anisogammaridae,NA,NA,NA,NA,NA,NA,Adult,Anisogammaridae,Family,Arthropoda,Malacostraca,Amphipoda,Anisogammaridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Aoridae,NA,NA,NA,NA,NA,NA,Adult,Aoridae,Family,Arthropoda,Malacostraca,Amphipoda,Aoridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Corophiid Juvenile,Corophiid Juvenile,NA,NA,NA,NA,NA,Juvenile,Corophiidae,Family,Arthropoda,Malacostraca,Amphipoda,Corophiidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Gammarid juvenile,Gammarid juvenile,NA,NA,NA,NA,NA,Juvenile,Gammaridae,Family,Arthropoda,Malacostraca,Amphipoda,Gammaridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Gammaroidea,NA,NA,NA,NA,NA,Adult,Gammaroidea,Family,Arthropoda,Malacostraca,Amphipoda,Gammaroidea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,Unidentified_Gammarus,NA,Unidentified Gammarus,NA,Unidentified_Gammarus,Gammarus,Gammarus,Gammarus,NA,NA,NA,NA,NA,Adult,Gammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,NA,1986,2014,NA,2013,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Grandidierella,Grandidierella,NA,NA,NA,NA,NA,Adult,Grandidierella,Genus,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella,NA,1966,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Lysianassidae,NA,NA,NA,NA,NA,Adult,Lysianassidae,Family,Arthropoda,Malacostraca,Amphipoda,Lysianassidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Melita,NA,NA,NA,NA,NA,Adult,Melita,Genus,Arthropoda,Malacostraca,Amphipoda,Hadzioidea,Melita,NA,1938,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Talitridae,NA,NA,NA,NA,NA,Adult,Talitridae,Family,Arthropoda,Malacostraca,Amphipoda,Talitridae,NA,NA,1962,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,Caprelidae_sp,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Adult,Caprellidae,Family,Arthropoda,Malacostraca,Amphipoda,Caprellidae,NA,NA,NA,2014,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Corophium sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Corophium,Family,Arthropoda,Malacostraca,Amphipoda,Corophiidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Gammarus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Gammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,Monocorophium_sp,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Adult,Monocorophium,Genus,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,NA,NA,2014,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Kurzia latissima,NA,NA,NA,NA,NA,NA,Adult,Kurzia latissima,Species,Arthropoda,Branchiopoda,Anomopoda,Chydoridae,Kurzia,latissima,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Moerisia spp,Moerisia spp,NA,NA,NA,NA,NA,Adult,Moerisia,Genus,Cnidaria,Hydrozoa,Anthoathecata,Moerisiidae,Moerisia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Tadpole,NA,NA,NA,NA,NA,Larva,Anura,Order,Chordata,Amphibia,Anura,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Spider,Spider,NA,NA,NA,NA,NA,Adult,Araneae,Order,Arthropoda,Arachnida,Araneae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Fossaria,NA,NA,NA,NA,NA,Adult,Galba,Genus,Mollusca,Gastropoda,Basommatophora,Lymnaeidae,Galba,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Lymnaea,Lymnaea,NA,NA,NA,NA,NA,Adult,Lymnaea,Genus,Mollusca,Gastropoda,Basommatophora,Lymnaeidae,Lymnaea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Melanoides tuberculata,NA,NA,NA,NA,NA,Adult,Melanoides tuberculata,Species,Mollusca,Gastropoda,Caenogastropoda,Thiaridae,Melanoides,tuberculata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,ACARJUV,NA,ACARJUV,NA,ACARJUV,NA,Acartia copepodid,Acartia copepodid,NA,NA,NA,NA,Acartia_spp_copepodid,NA,Juvenile,Acartia,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartia,NA,NA,2006,NA,2006,NA,2006,NA,NA,2017,NA,NA,NA
-NA,ACARTIA,NA,ACARTIA,NA,ACARTIA,NA,Acartia spp_,Acartia spp.,NA,Acartia sp. adult,NA,NA,Acartia_spp_adult,NA,Adult,Acartia,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartia,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-NA,ACARTELA,NA,ACARTELA,NA,ACARTELA,NA,Acartiella,Acartiella,NA,Acartiella sinensis adult,NA,NA,Acartiella_sinensis_adult,NA,Adult,Acartiella sinensis,Species,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,Acartiella sinensis,1993,1994,NA,1994,NA,1995,NA,NA,2017,NA,NA,NA
-NA,ASINEJUV,NA,ASINEJUV,NA,ASINEJUV,NA,NA,Acartiella copepodid,NA,NA,NA,NA,Acartiella_sinensis_copepodid,NA,Juvenile,Acartiella sinensis,Species,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,Acartiella sinensis,1993,2006,NA,2006,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Calanoid,NA,Calanoida adult,NA,NA,Calanoid_UNID_adult,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,CALJUV,NA,NA,NA,NA,NA,calanoid copepodid,Calanoid copepodid,NA,NA,NA,NA,NA,NA,Juvenile,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1972,1988,NA,NA,1995,NA,NA,NA,NA,NA,NA
-NA,OTHCALAD,NA,OTHCALAD,NA,OTHCALAD,NA,Other calanoid,NA,NA,NA,NA,NA,NA,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,UnID calanoid,Calanoid UNID,Calanoid UNID,NA,NA,NA,NA,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
 NA,DIAPTJUV,NA,DIAPTJUV,NA,DIAPTJUV,NA,NA,Diaptomidae copepodid,NA,NA,NA,NA,NA,NA,Juvenile,Diaptomidae,Family,Arthropoda,Copepoda,Calanoida,Diaptomidae,NA,NA,NA,2006,NA,2006,NA,NA,NA,NA,NA,NA,NA,NA
 NA,DIAPTOM,NA,DIAPTOM,NA,DIAPTOM,NA,NA,Diaptomidae spp.,NA,NA,NA,NA,NA,NA,Adult,Diaptomidae,Family,Arthropoda,Copepoda,Calanoida,Diaptomidae,NA,NA,NA,1972,NA,1972,NA,NA,NA,NA,NA,NA,NA,NA
-NA,EURYTEM,NA,EURYTEM,NA,EURYTEM,NA,Eurytemora spp_,Eurytemora affinis,NA,Eurytemora affinis adult,NA,NA,Eurytemora_affinis_adult,NA,Adult,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-NA,EURYJUV,NA,EURYJUV,NA,EURYJUV,NA,Eurytemora copepodid,Eurytemora copepodid,NA,Eurytemora affinis copepodid,NA,NA,Eurytemora_affinis_copepodid,NA,Juvenile,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1989,NA,1989,NA,1998,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Eurytemora nauplii,Eurytemora nauplii,NA,NA,NA,NA,Eurytemora_spp_nauplii,NA,Larva,Eurytemora,Genus,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,NA,NA,NA,NA,NA,NA,2006,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Osphranticum,Osphranticum,NA,Osphranticum labronectum adult,NA,NA,Osphranticum_labronectum_adult,NA,Adult,Osphranticum labronectum,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Osphranticum,Osphranticum labronectum,NA,NA,NA,NA,NA,1995,NA,NA,2018,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Osphranticum copepodid,NA,Osphranticum sp. copepodid,NA,NA,Osphranticum_labronectum_copepodid,NA,Juvenile,Osphranticum,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Osphranticum,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
-NA,PDIAPJUV,NA,PDIAPJUV,NA,PDIAPJUV,NA,Pseudodiaptomus copepodid,Pseudodiaptomus copepodid,NA,NA,NA,NA,Pseudodiaptomus_spp_copepodid,NA,Juvenile,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,1990,NA,1990,NA,1998,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,Pseudodiaptomus_euryhalinus_adult,NA,Adult,Pseudodiaptomus euryhalinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,2006,NA,NA,2020,NA,NA,NA
-NA,PDIAPFOR,NA,PDIAPFOR,NA,PDIAPFOR,NA,Pseudodiaptomus forbesii,Pseudodiaptomus forbesi,NA,Pseudodiaptomus forbesi adult,NA,NA,Pseudodiaptomus_forbesi_adult,NA,Adult,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,1988,NA,1988,NA,2006,NA,NA,2017,NA,NA,NA
-NA,PDIAPMAR,NA,PDIAPMAR,NA,PDIAPMAR,NA,Pseudodiaptomus marinus,Pseudodiaptomus marinus,NA,NA,NA,NA,Pseudodiaptomus_marinus_adult,NA,Adult,Pseudodiaptomus marinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus marinus,1986,1988,NA,1988,NA,2006,NA,NA,2017,NA,NA,NA
-PDIAPNAUP,PDIAPNAUP,NA,PDIAPNAUP,NA,PDIAPNAUP,NA,Pseudodiaptomus nauplii,Pseudodiaptomus nauplii,NA,NA,NA,NA,Pseudodiaptomus_spp_nauplii,NA,Larva,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,2000,NA,2000,NA,2006,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus spp_,NA,NA,Pseudodiaptomus sp. adult,NA,NA,Pseudodiaptomus_spp_adult,NA,Adult,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,NA,NA,NA,NA,1995,NA,NA,2017,2019,NA,NA
-NA,SINOCAL,NA,SINOCAL,NA,SINOCAL,NA,Sinocalanus,Sinocalanus,NA,Sinocalanus doerrii adult,NA,NA,Sinocalanus_doerrii_adult,NA,Adult,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,1978,NA,1978,NA,1995,NA,NA,2017,NA,NA,NA
-NA,SINOCALJUV,NA,SINOCALJUV,NA,SINOCALJUV,NA,Sinocalanus copepodid,Sinocalanus copepodid,NA,NA,NA,NA,NA,NA,Juvenile,Sinocalanus,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,NA,1978,1989,NA,1989,NA,2006,NA,NA,NA,NA,NA,NA
-SINONAUP,SINONAUP,NA,SINONAUP,NA,SINONAUP,NA,NA,Sinocalanus nauplii,NA,NA,NA,NA,Sinocalanus_doerrii_nauplii,NA,Larva,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,1989,NA,1989,NA,NA,NA,NA,2017,NA,NA,NA
-NA,TORTANUS,NA,TORTANUS,NA,TORTANUS,NA,Tortanus,Tortanus,NA,Tortanus sp. adult,NA,NA,NA,NA,Adult,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,1993,1994,NA,1994,NA,1995,NA,NA,NA,NA,NA,NA
-NA,TORTJUV,NA,TORTJUV,NA,TORTJUV,NA,Tortanus copepodid,Tortanus copepodid,NA,NA,NA,NA,Tortanus_spp_copepodid,NA,Juvenile,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,1993,2006,NA,2006,NA,2006,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Tortanus dextrilobatus,Tortanus dextrilobatus,NA,NA,NA,NA,Tortanus_dextrilobatus_adult,NA,Adult,Tortanus dextrilobatus,Species,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,Tortanus dextrilobatus,1993,NA,NA,NA,NA,2006,2010,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Tortanus discaudatus,Tortanus discaudatus,NA,NA,NA,NA,Tortanus discaudatus,NA,Adult,Tortanus discaudatus,Species,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,Tortanus discaudatus,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Acartiella copepodid,NA,NA,Acartiella sp. copepodid,NA,NA,NA,NA,Juvenile,Acartiella,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,NA,1993,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Arctodiaptomus dorsalis adult,NA,NA,NA,NA,Adult,Arctodiaptomus dorsalis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Arctodiaptomus,dorsalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,OTHCALJUV,NA,OTHCALJUV,NA,OTHCALJUV,NA,NA,NA,NA,Calanoida copepodid,NA,NA,Calanoid_UNID_copepodid,NA,Juvenile,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1989,NA,1989,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Diaptomus spp_,NA,NA,Diaptomus sp. adult,NA,NA,Diaptomidae_UNID_adult,NA,Adult,Diaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Diaptomus copepodid,NA,NA,Diaptomus sp. copepodid,NA,NA,Diaptomidae_UNID_copepodid,NA,Juvenile,Diaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,NA,NA,NA,NA,NA,NA,2006,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaptomus dorsalis adult,NA,NA,NA,NA,Adult,Diaptomus dorsalis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,dorsalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaptomus siciloides adult,NA,NA,NA,NA,Adult,Diaptomus siciloides,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,siciloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurytemora sp. adult,NA,NA,NA,NA,Adult,Eurytemora,Genus,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-EURYNAUP,EURYNAUP,NA,EURYNAUP,NA,EURYNAUP,NA,NA,NA,NA,NA,NA,NA,NA,NA,Larva,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1989,NA,1989,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurytemora affinis,Eurytemora affinis,NA,NA,Undifferentiated,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus sp. adult,NA,NA,NA,NA,Adult,Hesperodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus cf. californiensis adult,NA,NA,NA,NA,Adult,Hesperodiaptomus californiensis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,californiensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus franciscanus adult,NA,NA,NA,NA,Adult,Hesperodiaptomus franciscanus,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,franciscanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Labidocera_spp_adult,NA,Adult,Labidocera,Genus,Arthropoda,Copepoda,Calanoida,Pontellidae,Labidocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Labidocera_spp_copepodid,NA,Juvenile,Labidocera,Genus,Arthropoda,Copepoda,Calanoida,Pontellidae,Labidocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Leptodiaptomus siciloides adult,NA,NA,NA,NA,Adult,Leptodiaptomus siciloides,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Leptodiaptomus,siciloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracalanus_parvus_adult,NA,Adult,Paracalanus parvus,Species,Arthropoda,Copepoda,Calanoida,Paracalanidae,Paracalanus,parvus,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracalanus_parvus_copepodid,NA,Juvenile,Paracalanus parvus,Species,Arthropoda,Copepoda,Calanoida,Paracalanidae,Paracalanus,parvus,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus_euryhalinus_copepodid,NA,Juvenile,Pseudodiaptomus euryhalinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus forbesi copepodid,NA,NA,Pseudodiaptomus_forbesi_copepodid,NA,Juvenile,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus forbesi,Pseudodiaptomus forbesi,NA,NA,Undifferentiated,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus_marinus_copepodid,NA,Juvenile,Pseudodiaptomus marinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus marinus,1986,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Sinocalanus nauplii,NA,NA,NA,NA,NA,NA,NA,Larva,Sinocalanus,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,NA,1978,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinoclanus doerii adult,NA,NA,NA,NA,Adult,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinocalanus doerrii copepodid,NA,NA,Sinocalanus_doerrii_copepodid,NA,Juvenile,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinocalanus doerrii,Sinocalanus doerrii,NA,NA,Undifferentiated,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Skistodiaptomus sp. adult,NA,NA,NA,NA,Adult,Skistodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Skistodiaptomus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Skistodiaptomus pallidus adult,NA,NA,NA,NA,Adult,Skistodiaptomus pallidus,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Skistodiaptomus,pallidus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tortanus sp. copepodid,NA,NA,NA,NA,Juvenile,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,BOSMINA,NA,BOSMINA,NA,BOSMINA,NA,Bosmina,Bosmina,NA,Bosmina longirostris undifferentiated,NA,NA,Bosmina_longirostris,NA,Adult,Bosmina longirostris,Species,Arthropoda,Branchiopoda,Cladocera,Bosminidae,Bosmina,Bosmina longirostris,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Ceriodaphnia,Ceriodaphnia,NA,NA,NA,NA,NA,NA,Adult,Ceriodaphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Ceriodaphnia,NA,NA,NA,NA,NA,NA,1995,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Chydoridae,NA,NA,NA,NA,Chydoridae_UNID,NA,Adult,Chydoridae,Family,Arthropoda,Branchiopoda,Cladocera,Chydoridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,UnID cladocera,Cladocera UNID,Cladocera UNID,NA,NA,NA,NA,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
-NA,DAPHNIA,NA,DAPHNIA,NA,DAPHNIA,NA,Daphnia,Daphnia,NA,NA,NA,NA,NA,NA,Adult,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,1972,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,DIAPHAN,NA,DIAPHAN,NA,DIAPHAN,NA,Diaphanosoma,Diaphanosoma,NA,NA,NA,NA,NA,NA,Adult,Diaphanosoma,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Diaphanosoma,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Holopedium,NA,NA,NA,NA,NA,NA,Adult,Holopedium,Genus,Arthropoda,Branchiopoda,Cladocera,Holopedidae,Holopedium,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Ilyocryptus,NA,Ilyocryptus sp. undifferentiated,NA,NA,Ilyocryptus_spp,NA,Adult,Ilyocryptus,Genus,Arthropoda,Branchiopoda,Cladocera,Ilyocryptidae,Ilyocryptus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Latona,NA,NA,NA,NA,NA,NA,Adult,Latona,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Latona,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Macrothricidae,NA,NA,NA,NA,NA,NA,Adult,Macrothricidae,Family,Arthropoda,Branchiopoda,Cladocera,Macrothricidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Moina,NA,NA,NA,NA,Moina_spp,NA,Adult,Moina,Genus,Arthropoda,Branchiopoda,Cladocera,Moinidae,Moina,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Scapholeberis,NA,NA,NA,NA,NA,NA,Adult,Scapholeberis,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Scapholeberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Sida,NA,Sida sp. undifferentiated,NA,NA,Sididae_UNID,NA,Adult,Sida,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Sida,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Simocephalus,NA,NA,NA,NA,NA,NA,Adult,Simocephalus,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Simocephalus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Alona sp. undifferentiated,NA,NA,Alona_spp,NA,Adult,Alona,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Alona,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Alonella sp. undifferentiated,NA,NA,NA,NA,Adult,Alonella,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Alonella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ceriodaphnia sp. undifferentiated,NA,NA,NA,NA,Adult,Ceriodaphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Ceriodaphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Chydorus sp. undifferentiated,NA,NA,Chydorus_spp,NA,Adult,Chydorus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Chydorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,OTHCLADO,NA,OTHCLADO,NA,OTHCLADO,NA,Other cladocera,NA,NA,NA,NA,NA,NA,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cladocera undifferentiated,Cladocera,Cladocera,Cladocera_UNID,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cladocera nauplius,NA,NA,NA,NA,Larva,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Daphnia sp. undifferentiated,NA,NA,Daphnia_spp,NA,Adult,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Daphnia sp. juvenile,NA,NA,NA,NA,Juvenile,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Daphniidae_UNID,NA,Adult,Daphniidae,Family,Arthropoda,Branchiopoda,Cladocera,Daphniidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaphanosoma sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Diaphanosoma,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Diaphanosoma,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Disparalona sp. undifferentiated,NA,NA,NA,NA,Adult,Disparalona,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Disparalona,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurycercus sp. undifferentiated,NA,NA,NA,NA,Adult,Eurycercus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Eurycercus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Graptoleberis sp. undifferentiated,NA,NA,NA,NA,Adult,Graptoleberis,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Graptoleberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Holopedium_gibberum,NA,Adult,Holopedium gibberum,Species,Arthropoda,Branchiopoda,Cladocera,Holopedidae,Holopedium,gibberum,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Kurzia sp. undifferentiated,NA,NA,NA,NA,Adult,Kurzia,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Kurzia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Leydigia sp. undifferentiated,NA,NA,NA,NA,Adult,Leydigia,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Leydigia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Macrothrix sp. undifferentiated,NA,NA,Macrothrix_spp,NA,Adult,Macrothrix,Genus,Arthropoda,Branchiopoda,Cladocera,Macrothricidae,Macrothrix,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Moina sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Moina,Genus,Arthropoda,Branchiopoda,Cladocera,Moinidae,Moina,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monospilus sp. undifferentiated,NA,NA,NA,NA,Adult,Monospilus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Monospilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monospilus dispar undifferentiated,NA,NA,NA,NA,Adult,Monospilus dispar,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Monospilus,dispar,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Picripleuroxus sp. undifferentiated,NA,NA,NA,NA,Adult,Picripleuroxus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Picripleuroxus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pleuroxus sp. undifferentiated,NA,NA,NA,NA,Adult,Pleuroxus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pleuroxus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Podonidae_UNID,NA,Adult,Podonidae,Family,Arthropoda,Branchiopoda,Cladocera,Podonidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudochydorus sp. undifferentiated,NA,NA,NA,NA,Adult,Pseudochydorus,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pseudochydorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudochydorus globosus undifferentiated,NA,NA,NA,NA,Adult,Pseudochydorus globosus,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pseudochydorus,globosus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Scapholeberis sp. undifferentiated,NA,NA,Scapholeberis_spp,NA,Adult,Scapholeberis,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Scapholeberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Simocephalus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Simocephalus,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Simocephalus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Clupeidae larvae,NA,NA,NA,NA,NA,Larva,Clupeidae,Family,Chordata,Actinopterygii,Clupeiformes,Clupeidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Cantharidae adult,NA,NA,NA,NA,NA,Adult,Cantharidae,Family,Arthropoda,Insecta,Coleoptera,Cantharidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Carabidae adult,NA,NA,NA,NA,NA,Adult,Carabidae,Family,Arthropoda,Insecta,Coleoptera,Carabidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
@@ -154,9 +55,6 @@ NA,NA,NA,NA,NA,NA,NA,NA,NA,Carabidae Larvae,NA,NA,NA,NA,NA,Larva,Carabidae,Famil
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Chrysomelidae Adult,NA,NA,NA,NA,NA,Adult,Chrysomelidae,Family,Arthropoda,Insecta,Coleoptera,Chrysomelidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Coccinellidae Adult,NA,NA,NA,NA,NA,Adult,Coccinellidae,Family,Arthropoda,Insecta,Coleoptera,Coccinellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Coccinellidae Larvae,NA,NA,NA,NA,NA,Larva,Coccinellidae,Family,Arthropoda,Insecta,Coleoptera,Coccinellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Larvae,Coleoptera Larvae,NA,NA,NA,NA,NA,Larva,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Other,NA,NA,NA,NA,NA,Adult,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Other adult,Coleoptera Other adult,NA,NA,NA,NA,NA,Adult,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Curculionidae,NA,NA,NA,NA,NA,Undifferentiated,Curculionidae,Family,Arthropoda,Insecta,Coleoptera,Curculionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Curculionidae adult,NA,NA,NA,NA,NA,Adult,Curculionidae,Family,Arthropoda,Insecta,Coleoptera,Curculionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Curculionidae Larvae,NA,NA,NA,NA,NA,Larva,Curculionidae,Family,Arthropoda,Insecta,Coleoptera,Curculionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
@@ -174,89 +72,15 @@ NA,NA,NA,NA,NA,NA,NA,NA,Hydrophilidae Larvae Beetle,Hydrophilidae Larvae Beetle,
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydroscaphidae Adult,NA,NA,NA,NA,NA,Adult,Hydroscaphidae,Family,Arthropoda,Insecta,Coleoptera,Hydroscaphidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Noteridae adult,NA,NA,NA,NA,NA,Adult,Noteridae,Family,Arthropoda,Insecta,Coleoptera,Noteridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Scirtidae adult,NA,NA,NA,NA,NA,Adult,Scirtidae,Family,Arthropoda,Insecta,Coleoptera,Scirtidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Scolytinae Adult,NA,NA,NA,NA,NA,Adult,Scolytus,Genus,Arthropoda,Insecta,Coleoptera,Curculionidae,Scolytus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Staphylinidae adult,Staphylinidae adult,NA,NA,NA,NA,NA,Adult,Staphylinidae,Family,Arthropoda,Insecta,Coleoptera,Staphylinidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,ACANTHO,NA,ACANTHO,NA,ACANTHO,NA,Acanthocyclops,Acanthocyclops,NA,Acanthocyclops sp. adult,NA,NA,Acanthocyclops_spp_adult,NA,Adult,Acanthocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,NA,NA,1972,NA,1972,NA,1995,2010,2014,2017,NA,NA,NA
-OTHCYCADPUMP,NA,NA,NA,NA,NA,NA,NA,NA,Cyclopoid,NA,NA,NA,NA,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1975,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-CYCJUV,CYCJUV,NA,NA,NA,NA,NA,cyclopoid copepodid,Cyclopoid copepodid,NA,Cyclopoida copepodid,NA,NA,Cyclopoid_UNID_copepodid,NA,Juvenile,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1972,1994,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,OTHCYCAD,NA,OTHCYCAD,NA,OTHCYCAD,NA,Other cyclopoid,Cyclopoid Other,Cyclopoid Other,Cyclopoida adult,NA,NA,NA,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,UnID cyclopoid,NA,NA,NA,NA,NA,Cyclopoid_UNID_adult,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Diacyclops,NA,Diacyclops thomasi adult,NA,NA,NA,NA,Adult,Diacyclops thomasi,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopodidae,Diacyclops,thomasi,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops,NA,Eucyclops sp. adult,NA,NA,NA,NA,Adult,Eucyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops elegans,NA,NA,NA,NA,NA,NA,Adult,Eucyclops elegans,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,elegans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Halicyclops,NA,NA,NA,NA,NA,NA,Adult,Halicyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Halicyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Homocyclops,NA,NA,NA,NA,NA,NA,Adult,Homocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Homocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-LIMNOJUV,LIMNOJUV,NA,LIMNOJUV,NA,LIMNOJUV,NA,Limnoithona juvenile,Limnoithona juvenile,NA,Limnoithona sp. copepodid,NA,NA,Limnoithona_spp_copepodid,NA,Juvenile,Limnoithona,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,NA,1979,1995,NA,1995,NA,2006,NA,NA,2017,NA,NA,NA
-LIMNOSINE,LIMNOSINE,NA,LIMNOSINE,NA,LIMNOSINE,NA,Limnoithona sinensis,Limnoithona sinensis,NA,Limnoithona sinensis adult,NA,NA,Limnoithona_sinensis_adult,NA,Adult,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,2007,NA,2007,NA,2006,NA,NA,2017,NA,NA,NA
-LIMNOSPP,LIMNOSPP,NA,LIMNOSPP,NA,LIMNOSPP,NA,Limnoithona spp_,Limnoithona spp.,NA,Limnoithona sp. adult,NA,NA,Limnoithona_spp_adult,NA,Adult,Limnoithona,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,NA,1979,1979,NA,1979,NA,1995,NA,NA,2017,NA,NA,NA
-LIMNOTET,LIMNOTET,NA,LIMNOTET,NA,LIMNOTET,NA,Limnoithona tetraspina,Limnoithona tetraspina,NA,Limnoithona tetraspina adult,NA,NA,Limnoithona_tetraspina_adult,NA,Adult,Limnoithona tetraspina,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona tetraspina,1993,2007,NA,2007,NA,2006,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Macrocyclops,NA,Macrocyclops sp. adult,NA,NA,NA,NA,Adult,Macrocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Macrocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mesocyclops,NA,NA,NA,NA,NA,NA,Adult,Mesocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Mesocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops,NA,NA,NA,NA,NA,NA,Adult,Microcyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-OITHDAV,OITHDAV,NA,OITHDAV,NA,OITHDAV,NA,Oithona davisae,Oithona davisae,NA,Oithona davisae adult,NA,NA,Oithona_davisae_adult,NA,Adult,Oithona davisae,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona davisae,1963,1980,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
-OITHJUV,OITHJUV,NA,OITHJUV,NA,OITHJUV,NA,Oithona juvenile,Oithona juvenile,NA,Oithona sp. copepodid,NA,NA,Oithona_spp_copepodid,NA,Juvenile,Oithona,Genus,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,NA,1963,1995,NA,1995,NA,2006,NA,NA,2017,NA,NA,NA
-OITHSIM,OITHSIM,NA,OITHSIM,NA,OITHSIM,NA,Oithona similis,Oithona similis,NA,Oithona similis adult,NA,NA,Oithona_similis_adult,NA,Adult,Oithona similis,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona similis,NA,1980,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
-OITHSPP,OITHSPP,NA,OITHSPP,NA,OITHSPP,NA,Oithona spp_,Oithona spp.,NA,Oithona sp. adult,NA,NA,Oithona_spp_adult,NA,Adult,Oithona,Genus,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,NA,1963,2007,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops,NA,Paracyclops sp. adult,NA,NA,NA,NA,Adult,Paracyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops chiltoni,NA,NA,NA,NA,NA,NA,Adult,Paracyclops chiltoni,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,chiltoni,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops sp.,NA,NA,NA,NA,NA,NA,Adult,Paracyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops prasinus mexicanus,NA,NA,NA,NA,NA,NA,Adult,Tropocyclops prasinus mexicanus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,prasinus mexicanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Acanthocyclops vernalis copepodid,NA,NA,Acanthocyclops_vernalis_copepodid,NA,Juvenile,Acanthocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Acanthocyclops_vernalis_adult,NA,Adult,Acanthocyclops vernalis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,vernalis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ditrichocorycaeus_affinis_adult,NA,Adult,Corycaecus affinis,Species,Arthropoda,Copepoda,Cyclopoida,Corycaeidae,Ditrichocorycaeus,affinis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-OTHCYCJUV,OTHCYCJUV,NA,OTHCYCJUV,NA,OTHCYCJUV,NA,NA,NA,NA,NA,NA,NA,NA,NA,Juvenile,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1995,NA,1995,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cyclopodia,Cyclopodia,NA,NA,Undifferentiated,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diacyclops sp. adult,NA,NA,NA,NA,Adult,Diacyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopodidae,Diacyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ergasilus sp. adult,NA,NA,NA,NA,Adult,Ergasilus,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Ergasilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ergasilus sp. copepodid,NA,NA,NA,NA,Juvenile,Ergasilus,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Ergasilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops agilis adult,NA,NA,NA,NA,Adult,Eucyclops agilis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,agilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops elegans adult,NA,NA,NA,NA,Adult,Eucyclops elegans,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,elegans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops pectinifer adult,NA,NA,NA,NA,Adult,Eucyclops pectinifer,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,pectinifer,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops prionophorus adult,NA,NA,NA,NA,Adult,Eucyclops prionophorus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,prionophorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Lernaea sp. undifferentiated,NA,NA,NA,NA,Adult,Lernaea,Genus,Arthropoda,Copepoda,Cyclopoida,Lernaeidae,Lernaea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona_sinensis_copepodid,NA,Juvenile,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona sinensis,Limnoithona sinensis,NA,NA,Undifferentiated,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona_tetraspina_copepodid,NA,Juvenile,Limnoithona tetraspina,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona tetraspina,1993,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Macrocyclops albidus adult,NA,NA,NA,NA,Adult,Macrocyclops albidus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Macrocyclops,albidus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mesocyclops edax adult,NA,NA,NA,NA,Adult,Mesocyclops edax,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Mesocyclops,edax,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops sp. adult,NA,NA,NA,NA,Adult,Microcyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops rubellus adult,NA,NA,NA,NA,Adult,Microcyclops rubellus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,rubellus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oithona_davisae_copepodid,NA,Juvenile,Oithona davisae,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona davisae,1963,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oithona_similis_copepodid,NA,Juvenile,Oithona similis,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona similis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops chiltoni adult,NA,NA,NA,NA,Adult,Paracyclops chiltoni,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,chiltoni,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops fimbriatus adult,NA,NA,NA,NA,Adult,Paracyclops fimbriatus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,fimbriatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops poppei adult,NA,NA,NA,NA,Adult,Paracyclops poppei,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,poppei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ectocyclops phaleratus adult,NA,NA,NA,NA,Adult,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops phaleratus adult,NA,NA,NA,NA,Adult,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ectocyclops phaleratus copepodid,NA,NA,NA,NA,Juvenile,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops sp. adult,NA,NA,NA,NA,Adult,Tropocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops prasinus adult,NA,NA,NA,NA,Adult,Tropocyclops prasinus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,prasinus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Cyprinid spp.,Cyprinid spp.,NA,NA,NA,NA,NA,Juvenile,Cyprinidae,Family,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Goldfish,NA,NA,NA,NA,NA,NA,Juvenile,Carassius auratus,Species,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Carassius,auratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Sacramento Sucker,NA,NA,NA,NA,NA,Juvenile,Catosomus occidentalis,Species,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Catostomus,occidentalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,CRABZOEA,NA,CRABZOEA,NA,CRABZOEA,NA,crab zoea,Crab zoea,Crab zoea,NA,NA,NA,Crab_UNID_zoea,NA,Larva,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,1976,NA,1976,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Crayfish,NA,NA,NA,NA,NA,Adult,Pacifastacus,Genus,Arthropoda,Malacostraca,Decapoda,Astacidae,Pacifastacus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Decapod larvae unid,NA,NA,NA,NA,NA,Larva,Decapoda,NA,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Harris Mud Crab,NA,NA,NA,NA,NA,NA,Adult,Rhithropanopeus harrisii,Species,Arthropoda,Malacostraca,Decapoda,Panopeidae,Rhithropanopeus,harrisii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Palaemon,NA,NA,NA,NA,NA,Adult,Palaemon,Genus,Arthropoda,Malacostraca,Decapoda,Palaemonidae,Palaemon,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Shrimp juvenile,NA,NA,NA,NA,NA,Juvenile,Shrimp,Class,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Crustacea undifferentiated,NA,NA,NA,NA,Undifferentiated,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Earwig,NA,NA,NA,NA,NA,Adult,Dermaptera,Order,Arthropoda,Insecta,Dermaptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Anchistropus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Anchistropus,Genus,Arthropoda,Branchiopoda,Diplostraca,Chydoridae,Anchistropus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Camptocercus sp. undifferentiated,NA,NA,Camptocercus_spp,NA,Undifferentiated,Camptocercus,Genus,Arthropoda,Branchiopoda,Diplostraca,Eurycercidae,Camptocercus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachycera Larvae,NA,NA,NA,NA,NA,Larva,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachycera Pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Ceratopogonidae larvae,Ceratopogonidae larvae,NA,NA,NA,NA,NA,Larva,Ceratopogonidae,Family,Arthropoda,Insecta,Diptera,Ceratopogonidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Chaoboridgae larvae,NA,NA,NA,NA,NA,Larva,Chaoboridgae,Family,Arthropoda,Insecta,Diptera,Chaoboridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,Chironomid larvae,Chironomid Larvae,Chironomid Larvae,Chironomidae larva,NA,NA,NA,NA,Larva,Chironomidae,Family,Arthropoda,Insecta,Diptera,Chironomidae,NA,NA,NA,NA,NA,NA,NA,1995,2006,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Culicidae Larvae,NA,NA,NA,NA,NA,Larva,Culicidae,Family,Arthropoda,Insecta,Diptera,Culicidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Diptera Adult,Diptera Adult,NA,NA,NA,NA,NA,Adult,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Diptera Larvae UNID,Diptera Larvae UNID,NA,NA,NA,NA,NA,Larva,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Diptera Pupae,Diptera Pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Dolichopodidae larvae,NA,NA,NA,NA,NA,Larva,Dolichopodidae,Family,Arthropoda,Insecta,Diptera,Dolichopodidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Ephydridae Larvae,NA,NA,NA,NA,NA,Larva,Ephydridae,Family,Arthropoda,Insecta,Diptera,Ephydridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Muscidae,NA,NA,NA,NA,NA,Adult,Muscidae,Family,Arthropoda,Insecta,Diptera,Muscidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Nematocera pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Psychodidae larvae,NA,NA,NA,NA,NA,Larva,Psychodidae,Family,Arthropoda,Insecta,Diptera,Psychodidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Sciomyzidae Larvae,NA,NA,NA,NA,NA,Larva,Sciomyzidae,Family,Arthropoda,Insecta,Diptera,Sciomyzidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Simuliidae,NA,NA,NA,NA,NA,Adult,Simuliidae,Family,Arthropoda,Insecta,Diptera,Simuliidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
@@ -266,30 +90,19 @@ NA,NA,NA,NA,NA,NA,NA,NA,NA,Tabanidae,NA,NA,NA,NA,NA,Larva,Tabanidae,Family,Arthr
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Tipulidae larvae,NA,NA,NA,NA,NA,Larva,Tipulidae,Family,Arthropoda,Insecta,Diptera,Tipulidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Baetidae,NA,NA,NA,NA,NA,Larva,Baetidae,Family,Arthropoda,Insecta,Ephemeroptera,Baetidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Caenidae,NA,NA,NA,NA,NA,Larva,Caenidae,Family,Arthropoda,Insecta,Ephemeroptera,Caenidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Ephemeroptera Adult,NA,NA,NA,NA,NA,Adult,Ephemeroptera,Order,Arthropoda,Insecta,Ephemeroptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Ephemeroptera larvae UNID,Ephemeroptera larvae UNID,NA,NA,NA,NA,NA,Larva,Ephemeroptera,Order,Arthropoda,Insecta,Ephemeroptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Leptohyphidae mayfly larvae,NA,NA,NA,NA,NA,Larva,Tricorythodes minutus,Species,Arthropoda,Insecta,Ephemeroptera,Leptohyphidae,Tricorythodes,minutus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Heptageniidae nymph,NA,NA,NA,NA,NA,Larva,Heptageniidae,Family,Arthropoda,Insecta,Ephemoroptera,Heptageniidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Conochiloides sp.,NA,NA,NA,NA,NA,NA,Adult,Conochiloides,Genus,Rotifera,Monogononta,Flosculariaceae,Conochilidae,Conochiloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Conochilus_spp,NA,Adult,Conochilus,Genus,Rotifera,Eurotatoria,Flosculariaceae,Conochilidae,Conochilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Goby unid,NA,NA,NA,NA,NA,Larva,Gobiidae,Family,Chordata,Actinopterygii,Gobiformes,Gobiidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Lumbricidae,NA,NA,NA,NA,NA,Undifferentiated,Lumbricidae,Family,Annelida,Oligochaeta,Haplotaxida,Lumbricidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Stylaria,Stylaria,NA,NA,NA,NA,NA,Undifferentiated,Stylaria,Genus,Annelida,Oligochaeta,Haplotaxida,Naididae,Stylaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-HARPACT,HARPACT,NA,HARPACT,NA,HARPACT,NA,Harpacticoids,Harpacticoids,Harpacticoids,Harpacticoida undifferentiated,NA,NA,Harpacticoid_UNID,NA,Undifferentiated,Harpacticoida,Order,Arthropoda,Copepoda,Harpacticoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Aphididae,Aphididae,NA,NA,NA,NA,NA,Adult,Aphididae,Family,Arthropoda,Insecta,Hemiptera,Aphididae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Aphididae Adult,Aphididae Adult,NA,NA,NA,NA,NA,Adult,Aphididae,Family,Arthropoda,Insecta,Hemiptera,Aphididae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Aphididae Larvae,Aphididae Larvae,NA,NA,NA,NA,NA,Larva,Aphididae,Family,Arthropoda,Insecta,Hemiptera,Aphididae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Belostomatidae,NA,NA,NA,NA,NA,Adult,Belostomatidae,Family,Arthropoda,Insecta,Hemiptera,Belostomatidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Coccidae Adult,Coccidae Adult,NA,NA,NA,NA,NA,Adult,Coccidae,Family,Arthropoda,Hexapoda,Hemiptera,Coccidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Corisella sp.Larvae,NA,NA,NA,NA,NA,NA,Larva,Corisella,Genus,Arthropoda,Insecta,Hemiptera,Corixidae,Corisella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Corixidae,Corixidae,NA,NA,NA,NA,NA,Adult,Corixidae,Family,Arthropoda,Insecta,Hemiptera,Corixidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Delphacidae,NA,NA,NA,NA,NA,Adult,Delphacidae,NA,Arthropoda,Insecta,Hemiptera,Delphacidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Delphacidae,NA,NA,NA,NA,NA,Adult,Delphacidae,Family,Arthropoda,Insecta,Hemiptera,Delphacidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Gerridae,NA,NA,NA,NA,NA,Adult,Gerridae,Family,Arthropoda,Insecta,Hemiptera,Gerridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Hebridae,NA,NA,NA,NA,NA,Adult,Hebridae,Family,Arthropoda,Insecta,Hemiptera,Hebridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Hemiptera Other,Hemiptera Other,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Homoptera,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydrometridae,NA,NA,NA,NA,NA,Adult,Hydrometridae,Family,Arthropoda,Insecta,Hemiptera,Hydrometridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Hymenoptera Other,Hymenoptera Other,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Leafhopper,NA,NA,NA,NA,NA,Adult,Cicadellidae,Family,Arthropoda,Insecta,Hemiptera,Cicadellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Leafhopper adult,NA,NA,NA,NA,NA,Adult,Leafhopper,Family,Arthropoda,Insecta,Hemiptera,Cicadellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Leafhopper juvenile,NA,NA,NA,NA,NA,Juvenile,Leafhopper,Family,Arthropoda,Insecta,Hemiptera,Cicadellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
@@ -298,176 +111,363 @@ NA,NA,NA,NA,NA,NA,NA,NA,NA,Nepidae,NA,NA,NA,NA,NA,Adult,Nepidae,Family,Arthropod
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Notonectidae,NA,NA,NA,NA,NA,Adult,Notonectidae,Family,Arthropoda,Insecta,Hemiptera,Notonectidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Psyllidae,Psyllidae,NA,NA,NA,NA,NA,Adult,Psyllidae,Family,Arthropoda,Insecta,Hemiptera,Psyllidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Psyllidae Larvae,NA,NA,NA,NA,NA,Larva,Psyllidae,Family,Arthropoda,Insecta,Hemiptera,Psyllidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Trichocorixa sp.Larvae,NA,NA,NA,NA,NA,NA,Larva,Trichocorixa,Genus,Arthropoda,Insecta,Hemiptera,Corixidae,Trichocorixa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Vellidae,NA,NA,NA,NA,NA,Adult,Veliidae,Family,Arthropoda,Insecta,Hemiptera,Veliidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mite,Mite,NA,NA,NA,NA,NA,Adult,Hydrachnidia,Order,Arthropoda,Arachnida,Hydrachnidia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Hydra,Hydra,NA,NA,NA,NA,NA,Adult,Hydra,Genus,Cnidaria,Hydrozoa,Hydrida,Hydridae,Hydra,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Gyraulus,Gyraulus,NA,NA,NA,NA,NA,Adult,Gyraulus,Genus,Mollusca,Gastropoda,Hygrophila,Planorbidae,Gyraulus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Physa,Physa,NA,NA,NA,NA,NA,Adult,Physa,Genus,Mollusca,Gastropoda,Hygrophila,Physidae,Physa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Planorbella,Planorbella,NA,NA,NA,NA,NA,Adult,Planorbella,Genus,Mollusca,Gastropoda,Hygrophila,Planorbidae,Planorbella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Planorbidae UNID,NA,NA,NA,NA,NA,Adult,Planorbidae,Family,Mollusca,Gastropoda,Hygrophila,Planorbidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Ant,Ant,NA,NA,NA,NA,NA,Adult,Formicidae,Family,Arthropoda,Insecta,Hymenoptera,Formicidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Anthuridae,NA,NA,NA,NA,NA,Adult,Anthuridae,Family,Arthropoda,Malacostraca,Isopoda,Anthuridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Asellidae,Asellidae,NA,NA,NA,NA,NA,Adult,Asellidae,Family,Arthropoda,Malacostraca,Isopoda,Asellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Asellus,Asellus,NA,NA,NA,NA,NA,Adult,Asellus,Family,Arthropoda,Malacostraca,Isopoda,Asellidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Caecidotea,NA,NA,NA,NA,NA,Adult,Caecidotea,Genus,Arthropoda,Malacostraca,Isopoda,Asellidae,Caecidotea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Gnorimosphaeroma,Gnorimosphaeroma,NA,NA,NA,NA,NA,Adult,Gnorimosphaeroma insulare,Species,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma,insulare,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Isopod juvenile,Isopod juvenile,NA,NA,NA,NA,NA,Juvenile,Isopod,Class,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Isopod UNID,Isopod UNID,NA,NA,NA,NA,NA,Adult,Isopod,Class,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Ligidium,NA,NA,NA,NA,NA,Adult,Ligidium lates,Species,Arthropoda,Malacostraca,Isopoda,Ligiidae,Ligidium,lates,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Munnidae,Munnidae,NA,NA,NA,NA,NA,Adult,Munnidae,Family,Arthropoda,Malacostraca,Isopoda,Munnidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Synidotea,NA,NA,NA,NA,NA,Adult,Synidotea,Family,Arthropoda,Malacostraca,Isopoda,Synidotea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Isoptera,NA,NA,NA,NA,NA,Adult,Isoptera,Order,Arthropoda,Insecta,Isoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Lepidoptera Larvae,Lepidoptera Larvae,NA,NA,NA,NA,NA,Larva,Lepidoptera,Order,Arthropoda,Insecta,Lepidoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Maeotias,Maeotias,NA,NA,NA,NA,NA,Undifferentiated,Maeotias,Genus,Cnidaria,Hydrozoa,Limnomedusae,Olindiidae,Maeotias,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Fluminicola,Fluminicola,NA,NA,NA,NA,NA,Adult,Fluminicola,Genus,Mollusca,Gastopoda,Littorinimorpha,Lythoglyphidae,Fluminicola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Hydrobiidae,Hydrobiidae,NA,NA,NA,NA,NA,Adult,Hydrobiidae,Family,Mollusca,Gastropoda,Littorinimorpha,Hydrobiidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Prostoma,NA,NA,NA,NA,NA,Undifferentiated,Prostoma,Genus,Nemertea,Enopla,Monostilifera,Tetrastemmatidae,Prostoma,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Potamocorbula,NA,NA,NA,NA,NA,Adult,Potamocorbula amurensis,Species,Mollusca,Bivalvia,Myoida,Corbulidae,Potamocorbula,amurensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,H_longirostris,NA,Hyperacanthomysis longirostris,NA,Hyperacanthomysis_longirostris,NA,Hyperacanthomysis longirostris,Hyperacanthomysis longirostris,NA,NA,NA,NA,NA,Adult,Hyperacanthomysis longirostris,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Hyperacanthomysis,longirostris,1993,1993,NA,2007,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mysidae undifferentiated,NA,NA,NA,NA,Undifferentiated,Mysidae,Family,Arthropoda,Malacostraca,Mysida,Mysidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mysid juvenile,Mysid juvenile,NA,NA,NA,NA,NA,Juvenile,Mysid,Order,Arthropoda,Malacostraca,Mysidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,American Shad,NA,NA,NA,NA,NA,Juvenile,Alosa sapidissima,Species,Chordata,Actinopterygii,NA,Clupeidae,Alosa,sapidissima,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Animal material UNID,NA,Other,Other,NA,NA,Undifferentiated,Animal material,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Arrow Goby,NA,NA,NA,NA,NA,Juvenile,Clevelandia ios,Species,Chordata,Actinopterygii,NA,Gobiidae,Clevelandia,ios,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Arrow worm,NA,NA,NA,NA,NA,Adult,Chaetognatha,Phylum,Chaetognatha,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Barnacle cyprid,NA,NA,NA,NA,NA,NA,Larva,Barnacle cyprid,Class,Arthropoda,Maxillopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-BARNNAUP,BARNNAUP,NA,BARNNAUP,NA,BARNNAUP,NA,barnacle nauplii,Barnacle Nauplii,Barnacle Nauplii,Cirripedia nauplius,NA,NA,Barnacle_UNID_nauplii,NA,Larva,Cirripedia,Class,Arthropoda,Cirripedia,NA,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Bigscale Logperch,Bigscale Logperch,NA,NA,NA,NA,NA,Juvenile,Percidae macrolepida,Species,Chordata,Actinopterygii,NA,Percidae,Percidae,macrolepida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Black Crappie,NA,NA,NA,NA,NA,Juvenile,Pomoxis nigromaculatus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Pomoxis,nigromaculatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Bluegill,NA,NA,NA,NA,NA,Juvenile,Lepomis macrochirus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,macrochirus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Bryozoa unid,NA,NA,NA,NA,NA,Adult,Bryozoa,Phylum,Bryozoa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Clam Juvenile,Clam Juvenile,Bivalvia larva,NA,NA,NA,NA,Juvenile,Bivalvia,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Clam UNID,Clam UNID,Bivalvia undifferentiated,Bivalvia,Bivalvia,NA,NA,Undifferentiated,Bivalvia,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Cnidaria Other,NA,NA,NA,NA,NA,Undifferentiated,Cnidaria,Phylum,Cnidaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Collembola,Collembola,NA,NA,NA,NA,NA,Undifferentiated,Collembola,Class,Arthropoda,Collembola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Common Carp,Common Carp,NA,NA,NA,NA,NA,Juvenile,Cyprinus carpio,Species,Chordata,Actinopterygii,NA,Cyprinidae,Cyprinus,carpio,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-OTHCOPNAUP,OTHCOPNAUP,NA,OTHCOPNAUP,NA,OTHCOPNAUP,NA,NA,Copepod Nauplii,NA,NA,NA,NA,NA,NA,Larva,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,1989,NA,1989,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Copepod other adult,NA,NA,NA,NA,NA,NA,Adult,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Copepod Other juvenile,Copepod Other juvenile,NA,NA,NA,NA,NA,Juvenile,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Delta Smelt,NA,NA,NA,NA,NA,Juvenile,Hypomesus transpacificus,Species,Chordata,Actinopterygii,NA,Osmeridae,Hypomesus,transpacificus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Egg Sacs,NA,NA,NA,NA,NA,Egg,Egg,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Eggs UNID,NA,NA,NA,NA,NA,Egg,Egg,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Fathead Minnow,NA,NA,NA,NA,NA,Juvenile,Pimephales promelas,Species,Chordata,Actinopterygii,NA,Cyprinidae,Pimephales,promelas,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Fish Eggs,Actinopterygii eggs,NA,NA,NA,NA,Egg,Chordata,Phylum,Chordata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Fish UNID,Fish UNID,NA,NA,NA,NA,NA,Juvenile,Fish,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Golden Shiner,Golden Shiner,NA,NA,NA,NA,NA,Juvenile,Notemigonus crysoleucas,Species,Chordata,Actinopterygii,NA,Cyprinidae,Notemigonus,crysoleucas,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Green Sunfish,NA,NA,NA,NA,NA,Juvenile,Lepomis cyanellus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,cyanellus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Hitch,NA,NA,NA,NA,NA,Juvenile,Lavinia exilicauda,Species,Chordata,Actinopterygii,NA,Cyprinidae,Lavinia,exilicauda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Hydrozoa,NA,NA,NA,NA,NA,NA,Undifferentiated,Hydrozoa,Class,Cnidaria,Hydrozoa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,Other Insect larvae,Insect larvae UNID,Insect larvae UNID,Insecta larva,NA,NA,NA,NA,Larva,Insecta,Class,Arthropoda,Insecta,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,1999,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Insect UNID,Insect UNID,NA,NA,NA,NA,NA,Undifferentiated,Insect,Class,Arthropoda,Insecta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Invertebrate UNID,Invertebrate UNID,Unidentified undifferentiated,NA,NA,NA,NA,Adult,UnID Invertebrate,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Jacksmelt,NA,NA,NA,NA,NA,Juvenile,Atherinopsis californiensis,Species,Chordata,Actinopterygii,NA,Atherinopsidae,Atherinopsis,californiensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Jellyfish UNID,Jellyfish UNID,NA,NA,NA,NA,NA,Undifferentiated,Jellyfish,Phylum,Cnidaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Leech,Leech,NA,NA,NA,NA,NA,Undifferentiated,Hirudinea,Class,Annelida,Hirudinea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Limpet,Limpet,NA,NA,NA,NA,NA,Adult,Limpet,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Longfin Smelt,NA,NA,NA,NA,NA,Juvenile,Spirinchus thaleichthys,Species,Chordata,Actinopterygii,NA,Osmeridae,Spirinchus,thaleichthys,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Longfin Smelt (Yolk-Sac),NA,NA,NA,NA,NA,Larva,Spirinchus thaleichthys,Species,Chordata,Actinopterygii,NA,Osmeridae,Spirinchus,thaleichthys,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Millipede,NA,NA,NA,NA,NA,Adult,Millipede,Class,Arthropoda,Diplopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mississippi Silverside,Mississippi Silverside,NA,NA,NA,NA,NA,Juvenile,Menidia audens,Species,Chordata,Actinopterygii,NA,Atherinidae,Menidia,audens,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mosquitofish,Mosquitofish,NA,NA,NA,NA,NA,Juvenile,Gambusia affinis,Species,Chordata,Actinopterygii,NA,Poeciliidae,Gambusia,affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mussel UNID,NA,NA,NA,NA,NA,NA,Undifferentiated,Mussel,Class,Mollusca,Bivalvia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Nematode,Nematode,NA,NA,NA,NA,NA,Undifferentiated,Nematoda,Phylum,Nematoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Nemertea,NA,NA,NA,NA,NA,Undifferentiated,Nemertea,Phylum,Nemertea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Northern Anchovy,NA,NA,NA,NA,NA,Juvenile,Engraulis Mordax,Species,Chordata,Actinopterygii,NA,Engraulidae,Engraulis,Mordax,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Oligocheate,Oligocheate,NA,NA,NA,NA,NA,Undifferentiated,Oligochaeta,Class,Annelida,Oligochaeta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Osmeridae spp.,NA,NA,NA,NA,NA,Juvenile,Osmeridae,Family,Chordata,Actinopterygii,NA,Osmeridae,unknown,unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,OSTRACOD,NA,OSTRACOD,NA,Ostracods,Ostracods,Ostracods,Ostracoda undifferentiated,NA,NA,Ostracoda_UNID,NA,Adult,Ostracoda,Class,Arthropoda,Ostracoda,NA,NA,NA,NA,NA,NA,NA,2002,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Pacific Herring,NA,NA,NA,NA,NA,Juvenile,Clupea pallasi,Species,Chordata,Actinopterygii,NA,Clupeidae,Clupea,pallasi,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Pacific Staghorn Sculpin,NA,NA,NA,NA,NA,Juvenile,Leptocottus armatus,Species,Chordata,Actinopterygii,NA,Cottidae,Leptocottus,armatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Polychaete,Polychaete,NA,NA,NA,NA,NA,Undifferentiated,Polychaeta,Class,Annelida,Polychaeta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Prickly Sculpin,Prickly Sculpin,NA,NA,NA,NA,NA,Juvenile,Cottus asper,Species,Chordata,Actinopterygii,NA,Cottidae,Cottus,asper,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Rainwater Killifish,Rainwater Killifish,NA,NA,NA,NA,NA,Juvenile,Lucania parva,Species,Chordata,Actinopterygii,NA,Fundulidae,Lucania,parva,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Redear,NA,NA,NA,NA,NA,Juvenile,Lepomis microlophus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,microlophus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,River Lamprey,NA,NA,NA,NA,NA,Juvenile,Lampetra RL,Species,Chordata,Actinopterygii,NA,Petromyzontidae,Lampetra,RL,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-OTHROT,OTHROT,NA,OTHROT,NA,OTHROT,NA,Other rotifer,Rotifer UNID,NA,NA,NA,NA,NA,NA,Adult,Rotifera,Phylum,Rotifera,NA,NA,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Sacramento Blackfish,NA,NA,NA,NA,NA,NA,Juvenile,Orthodon microlepidotus,Species,Chordata,Actinopterygii,NA,Cyprinidae,Orthodon,microlepidotus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Shimofuri Goby,NA,NA,NA,NA,NA,Juvenile,Tridentiger bifasciatus,Species,Chordata,Actinopterygii,NA,Gobiidae,Tridentiger,bifasciatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Silverside unid larvae,Silverside unid larvae,NA,NA,NA,NA,NA,Larva,Atherinidae,Family,Chordata,Actinopterygii,NA,Atherinidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Slug,NA,NA,NA,NA,NA,Adult,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Snail UNID,Snail UNID,NA,NA,NA,NA,NA,Adult,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Splittail,Splittail,NA,NA,NA,NA,NA,Juvenile,Pogonichthys macrolepidotus,Species,Chordata,Actinopterygii,NA,Cyprinidae,Pogonichthys,macrolepidotus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Striped Bass,Striped Bass,NA,NA,NA,NA,NA,Juvenile,Morone saxatilis,Species,Chordata,Actinopterygii,NA,Percichthyidae,Morone,saxatilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Tardigrade,NA,NA,NA,NA,NA,NA,Adult,Tardigrada,Phylum,Tardigrada,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Threadfin Shad,Threadfin Shad,NA,NA,NA,NA,NA,Juvenile,Dorosoma petenense,Species,Chordata,Actinopterygii,NA,Clupeidae,Dorosoma,petenense,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Threespine Stickleback,Threespine Stickleback,NA,NA,NA,NA,NA,Juvenile,Gasterosteus aculeatus,Species,Chordata,Actinopterygii,NA,Gasterosteidae,Gasterosteus,aculeatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Topsmelt,Topsmelt,NA,NA,NA,NA,NA,Juvenile,Atherinopsis affinis,Species,Chordata,Actinopterygii,NA,Atherinopsidae,Atherinopsidae,affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Tridentiger Spp.,Tridentiger Spp.,NA,NA,NA,NA,NA,Juvenile,Tridentiger,Genus,Chordata,Actinopterygii,NA,Gobiidae,Tridentiger,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Worm UNID,Worm UNID,NA,NA,NA,NA,NA,Adult,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Yellowfin Goby,NA,NA,NA,NA,NA,Juvenile,Acanthogobius flavimanus,Species,Chordata,Actinopterygii,NA,Gobiidae,Acanthogobius,flavimanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Actinopterygii larva,NA,NA,NA,NA,Larva,Actinopterygii,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Actinopterygii undifferentiated,NA,NA,NA,NA,Undifferentiated,Actinopterygii,Class,Chordata,Actinopterygii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Annelid worms,NA,NA,NA,NA,NA,NA,NA,Adult,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,2005,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Annelida undifferentiated,NA,NA,NA,NA,Undifferentiated,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Arthropoda nauplius,NA,NA,NA,NA,Larva,Arthropoda,Phylum,Arthropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-COPNAUP,COPNAUP,NA,NA,NA,NA,NA,copepod nauplii,NA,NA,Copepoda nauplius,NA,NA,Copepod_UNID_nauplii,NA,Larva,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,1972,1988,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Copepoda,Copepoda,NA,NA,Undifferentiated,Copepoda,Class,Arthropoda,Copepoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mollusca larva,NA,NA,NA,NA,Juvenile,Gastropoda,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mollusca undifferentiated,Gastropoda,Gastropoda,NA,NA,Undifferentiated,Mollusca,Class,Mollusca,Gastropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,Unid rotifer,NA,NA,Rotifera undifferentiated,NA,Rotifera,Rotifer_UNID,NA,Adult,Rotifera,Phylum,Rotifera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tardigrada,Tardigrada,NA,NA,Adult,Tardigrada,Phylum,Tardigrada,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Teleosti,Teleosti,NA,NA,Undifferentiated,Teleostei,Class,Chordata,Teleostei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Teleosti,Teleosti,NA,NA,Undifferentiated,Teleostei,Class,Chordata,Teleostei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Sisyridae Larvae,NA,NA,NA,NA,NA,Larva,Sisyridae,Family,Arthropoda,Insecta,Neuroptera,Sisyridae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Nudibranch,NA,NA,NA,NA,NA,Undifferentiated,Nudibranchia,Order,Mollusca,Gastropoda,Nudibranchia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Aeshnidae larvae,NA,NA,NA,NA,NA,Larva,Aeshnidae,Family,Arthropoda,Insecta,Odonata,Aeshnidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Coenagrionidae larvae,Coenagrionidae larvae,NA,NA,NA,NA,NA,Larva,Coenagrionidae,Family,Arthropoda,Insecta,Odonata,Coenagrionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Gomphidae larvae,NA,NA,NA,NA,NA,Larva,Gomphidae,Family,Arthropoda,Insecta,Odonata,Gomphidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Libellulidae,NA,NA,NA,NA,NA,Larva,Libellulidae,Family,Arthropoda,Insecta,Odonata,Libellulidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Odonata larvae Other,NA,NA,NA,NA,NA,Larva,Odonata,Order,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Odonata Other,Odonata Other,NA,NA,NA,NA,NA,Larva,Odonata,Family,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Zygoptera Adult,NA,NA,NA,NA,NA,Adult,Odonata,Order,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Orthoptera,NA,NA,NA,NA,NA,Adult,Orthoptera,Order,Arthropoda,Insecta,Orthoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Black Bass (unknown species),NA,NA,NA,NA,NA,Juvenile,Centrarchidae,Family,Chordata,Actinopterygii,Perciformes,Centrarchidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Centrarchidae larvae unknown,Centrarchidae larvae unknown,NA,NA,NA,NA,NA,Larva,Centrarchidae,Family,Chordata,Actinopterygii,Perciformes,Centrarchidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Sunfish (unknown species),NA,NA,NA,NA,NA,Juvenile,Centrarchidae,Family,Chordata,Actinopterygii,Perciformes,Centrarchidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Hediste limnicola,NA,NA,NA,NA,NA,Undifferentiated,Hediste limnicola,Species,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Adult Caddisfly,NA,NA,NA,NA,NA,Adult,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Larvae Caddisfly,Hydroptilidae Larvae Caddisfly,NA,NA,NA,NA,NA,Larva,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Pupae Caddisfly,NA,NA,NA,NA,NA,Pupa,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,Oedicerotidae_sp,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oedicerotidae_UNID,Adult,Oedicerotidae,Family,Arthropoda,Malacostraca,Amphipoda,Oedicerotidae,NA,NA,NA,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,Pleustidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pleustidae_UNID,Adult,Pleustidae,Family,Arthropoda,Malacostraca,Amphipoda,Pleustidae,NA,NA,NA,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Americophium sp. undifferentiated,NA,NA,NA,Americorophium_spp,Adult,Americophium,Genus,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,Ampithoe_sp,NA,NA,NA,NA,NA,NA,Ampithoe,NA,NA,NA,NA,Ampithoe_spp,Adult,Ampithoe,Genus,Arthropoda,Malacostraca,Amphipoda,Ampithoidae,Ampithoe,NA,1941,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Crangon,NA,NA,NA,NA,Crangon_spp,Adult,Crangon,Genus,Arthropoda,Malacostraca,Decapoda,Crangonidae,Crangon,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,Crangonyx_sp,NA,Crangonyx sp_,NA,Crangonyx_sp,NA,Crangonyx,Crangonyx,NA,NA,NA,NA,Crangonyx_spp,Adult,Crangonyx,Genus,Arthropoda,Malacostraca,Amphipoda,Crangonycitidae,Crangonyx,NA,1995,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Eogammarus,Eogammarus,NA,NA,NA,NA,Eogammarus_spp,Adult,Eogammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Anisogammaridae,Eogammarus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
+NA,NA,Hyalella_sp,NA,Hyalella sp_,NA,Hyalella_sp,NA,Hyalella,Hyalella,NA,NA,NA,NA,Hyalella_spp,Adult,Hyalella,Genus,Arthropoda,Malacostraca,Amphipoda,Hyalellidae,Hyalella,NA,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Leptodora,NA,NA,NA,NA,Leptodora_spp,Leptodora_spp,Adult,Leptodora,Genus,Arthropoda,Branchiopoda,Cladocera,Leptodoridae,Leptodora,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,Unidentified_Gammarus,NA,Unidentified Gammarus,NA,Unidentified_Gammarus,Gammarus,Gammarus,Gammarus,NA,NA,NA,NA,NA,Adult,Gammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,NA,1986,2014,NA,2013,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Grandidierella,Grandidierella,NA,NA,NA,NA,NA,Adult,Grandidierella,Genus,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella,NA,1966,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Melita,NA,NA,NA,NA,NA,Adult,Melita,Genus,Arthropoda,Malacostraca,Amphipoda,Hadzioidea,Melita,NA,1938,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Gammarus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Gammarus,Genus,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,Monocorophium_sp,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Adult,Monocorophium,Genus,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,NA,NA,2014,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Moerisia spp,Moerisia spp,NA,NA,NA,NA,NA,Adult,Moerisia,Genus,Cnidaria,Hydrozoa,Anthoathecata,Moerisiidae,Moerisia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Fossaria,NA,NA,NA,NA,NA,Adult,Galba,Genus,Mollusca,Gastropoda,Basommatophora,Lymnaeidae,Galba,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Lymnaea,Lymnaea,NA,NA,NA,NA,NA,Adult,Lymnaea,Genus,Mollusca,Gastropoda,Basommatophora,Lymnaeidae,Lymnaea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,ACARJUV,NA,ACARJUV,NA,ACARJUV,NA,Acartia copepodid,Acartia copepodid,NA,NA,NA,NA,Acartia_spp_copepodid,NA,Juvenile,Acartia,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartia,NA,NA,2006,NA,2006,NA,2006,NA,NA,2017,NA,NA,NA
+NA,ACARTIA,NA,ACARTIA,NA,ACARTIA,NA,Acartia spp_,Acartia spp.,NA,Acartia sp. adult,NA,NA,Acartia_spp_adult,NA,Adult,Acartia,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartia,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Eurytemora nauplii,Eurytemora nauplii,NA,NA,NA,NA,Eurytemora_spp_nauplii,NA,Larva,Eurytemora,Genus,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,NA,NA,NA,NA,NA,NA,2006,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Osphranticum copepodid,NA,Osphranticum sp. copepodid,NA,NA,Osphranticum_labronectum_copepodid,NA,Juvenile,Osphranticum,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Osphranticum,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
+NA,PDIAPJUV,NA,PDIAPJUV,NA,PDIAPJUV,NA,Pseudodiaptomus copepodid,Pseudodiaptomus copepodid,NA,NA,NA,NA,Pseudodiaptomus_spp_copepodid,NA,Juvenile,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,1990,NA,1990,NA,1998,NA,NA,2017,NA,NA,NA
+PDIAPNAUP,PDIAPNAUP,NA,PDIAPNAUP,NA,PDIAPNAUP,NA,Pseudodiaptomus nauplii,Pseudodiaptomus nauplii,NA,NA,NA,NA,Pseudodiaptomus_spp_nauplii,NA,Larva,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,2000,NA,2000,NA,2006,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus spp_,NA,NA,Pseudodiaptomus sp. adult,NA,NA,Pseudodiaptomus_spp_adult,NA,Adult,Pseudodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,NA,1986,NA,NA,NA,NA,1995,NA,NA,2017,2019,NA,NA
+NA,SINOCALJUV,NA,SINOCALJUV,NA,SINOCALJUV,NA,Sinocalanus copepodid,Sinocalanus copepodid,NA,NA,NA,NA,NA,NA,Juvenile,Sinocalanus,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,NA,1978,1989,NA,1989,NA,2006,NA,NA,NA,NA,NA,NA
+NA,TORTANUS,NA,TORTANUS,NA,TORTANUS,NA,Tortanus,Tortanus,NA,Tortanus sp. adult,NA,NA,NA,NA,Adult,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,1993,1994,NA,1994,NA,1995,NA,NA,NA,NA,NA,NA
+NA,TORTJUV,NA,TORTJUV,NA,TORTJUV,NA,Tortanus copepodid,Tortanus copepodid,NA,NA,NA,NA,Tortanus_spp_copepodid,NA,Juvenile,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,1993,2006,NA,2006,NA,2006,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Acartiella copepodid,NA,NA,Acartiella sp. copepodid,NA,NA,NA,NA,Juvenile,Acartiella,Genus,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,NA,1993,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Diaptomus spp_,NA,NA,Diaptomus sp. adult,NA,NA,Diaptomidae_UNID_adult,NA,Adult,Diaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Diaptomus copepodid,NA,NA,Diaptomus sp. copepodid,NA,NA,Diaptomidae_UNID_copepodid,NA,Juvenile,Diaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,NA,NA,NA,NA,NA,NA,2006,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurytemora sp. adult,NA,NA,NA,NA,Adult,Eurytemora,Genus,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus sp. adult,NA,NA,NA,NA,Adult,Hesperodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Labidocera_spp_adult,NA,Adult,Labidocera,Genus,Arthropoda,Copepoda,Calanoida,Pontellidae,Labidocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Labidocera_spp_copepodid,NA,Juvenile,Labidocera,Genus,Arthropoda,Copepoda,Calanoida,Pontellidae,Labidocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Sinocalanus nauplii,NA,NA,NA,NA,NA,NA,NA,Larva,Sinocalanus,Genus,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,NA,1978,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Skistodiaptomus sp. adult,NA,NA,NA,NA,Adult,Skistodiaptomus,Genus,Arthropoda,Copepoda,Calanoida,Diaptomidae,Skistodiaptomus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tortanus sp. copepodid,NA,NA,NA,NA,Juvenile,Tortanus,Genus,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Ceriodaphnia,Ceriodaphnia,NA,NA,NA,NA,NA,NA,Adult,Ceriodaphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Ceriodaphnia,NA,NA,NA,NA,NA,NA,1995,NA,NA,NA,NA,NA,NA
+NA,DAPHNIA,NA,DAPHNIA,NA,DAPHNIA,NA,Daphnia,Daphnia,NA,NA,NA,NA,NA,NA,Adult,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,1972,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,DIAPHAN,NA,DIAPHAN,NA,DIAPHAN,NA,Diaphanosoma,Diaphanosoma,NA,NA,NA,NA,NA,NA,Adult,Diaphanosoma,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Diaphanosoma,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Holopedium,NA,NA,NA,NA,NA,NA,Adult,Holopedium,Genus,Arthropoda,Branchiopoda,Cladocera,Holopedidae,Holopedium,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Ilyocryptus,NA,Ilyocryptus sp. undifferentiated,NA,NA,Ilyocryptus_spp,NA,Adult,Ilyocryptus,Genus,Arthropoda,Branchiopoda,Cladocera,Ilyocryptidae,Ilyocryptus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Latona,NA,NA,NA,NA,NA,NA,Adult,Latona,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Latona,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Moina,NA,NA,NA,NA,Moina_spp,NA,Adult,Moina,Genus,Arthropoda,Branchiopoda,Cladocera,Moinidae,Moina,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Scapholeberis,NA,NA,NA,NA,NA,NA,Adult,Scapholeberis,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Scapholeberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Sida,NA,Sida sp. undifferentiated,NA,NA,Sididae_UNID,NA,Adult,Sida,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Sida,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Simocephalus,NA,NA,NA,NA,NA,NA,Adult,Simocephalus,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Simocephalus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Alona sp. undifferentiated,NA,NA,Alona_spp,NA,Adult,Alona,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Alona,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Alonella sp. undifferentiated,NA,NA,NA,NA,Adult,Alonella,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Alonella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ceriodaphnia sp. undifferentiated,NA,NA,NA,NA,Adult,Ceriodaphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Ceriodaphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Chydorus sp. undifferentiated,NA,NA,Chydorus_spp,NA,Adult,Chydorus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Chydorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Daphnia sp. undifferentiated,NA,NA,Daphnia_spp,NA,Adult,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Daphnia sp. juvenile,NA,NA,NA,NA,Juvenile,Daphnia,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Daphnia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaphanosoma sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Diaphanosoma,Genus,Arthropoda,Branchiopoda,Cladocera,Sididae,Diaphanosoma,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Disparalona sp. undifferentiated,NA,NA,NA,NA,Adult,Disparalona,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Disparalona,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurycercus sp. undifferentiated,NA,NA,NA,NA,Adult,Eurycercus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Eurycercus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Graptoleberis sp. undifferentiated,NA,NA,NA,NA,Adult,Graptoleberis,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Graptoleberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Kurzia sp. undifferentiated,NA,NA,NA,NA,Adult,Kurzia,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Kurzia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Leydigia sp. undifferentiated,NA,NA,NA,NA,Adult,Leydigia,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Leydigia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Macrothrix sp. undifferentiated,NA,NA,Macrothrix_spp,NA,Adult,Macrothrix,Genus,Arthropoda,Branchiopoda,Cladocera,Macrothricidae,Macrothrix,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Moina sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Moina,Genus,Arthropoda,Branchiopoda,Cladocera,Moinidae,Moina,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monospilus sp. undifferentiated,NA,NA,NA,NA,Adult,Monospilus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Monospilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Picripleuroxus sp. undifferentiated,NA,NA,NA,NA,Adult,Picripleuroxus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Picripleuroxus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pleuroxus sp. undifferentiated,NA,NA,NA,NA,Adult,Pleuroxus,Genus,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pleuroxus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Scapholeberis sp. undifferentiated,NA,NA,Scapholeberis_spp,NA,Adult,Scapholeberis,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Scapholeberis,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Simocephalus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Simocephalus,Genus,Arthropoda,Branchiopoda,Cladocera,Daphniidae,Simocephalus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Scolytinae Adult,NA,NA,NA,NA,NA,Adult,Scolytus,Genus,Arthropoda,Insecta,Coleoptera,Curculionidae,Scolytus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,ACANTHO,NA,ACANTHO,NA,ACANTHO,NA,Acanthocyclops,Acanthocyclops,NA,Acanthocyclops sp. adult,NA,NA,Acanthocyclops_spp_adult,NA,Adult,Acanthocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,NA,NA,1972,NA,1972,NA,1995,2010,2014,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops,NA,Eucyclops sp. adult,NA,NA,NA,NA,Adult,Eucyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Halicyclops,NA,NA,NA,NA,NA,NA,Adult,Halicyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Halicyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Homocyclops,NA,NA,NA,NA,NA,NA,Adult,Homocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Homocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+LIMNOJUV,LIMNOJUV,NA,LIMNOJUV,NA,LIMNOJUV,NA,Limnoithona juvenile,Limnoithona juvenile,NA,Limnoithona sp. copepodid,NA,NA,Limnoithona_spp_copepodid,NA,Juvenile,Limnoithona,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,NA,1979,1995,NA,1995,NA,2006,NA,NA,2017,NA,NA,NA
+LIMNOSPP,LIMNOSPP,NA,LIMNOSPP,NA,LIMNOSPP,NA,Limnoithona spp_,Limnoithona spp.,NA,Limnoithona sp. adult,NA,NA,Limnoithona_spp_adult,NA,Adult,Limnoithona,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,NA,1979,1979,NA,1979,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Macrocyclops,NA,Macrocyclops sp. adult,NA,NA,NA,NA,Adult,Macrocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Macrocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mesocyclops,NA,NA,NA,NA,NA,NA,Adult,Mesocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Mesocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops,NA,NA,NA,NA,NA,NA,Adult,Microcyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+OITHJUV,OITHJUV,NA,OITHJUV,NA,OITHJUV,NA,Oithona juvenile,Oithona juvenile,NA,Oithona sp. copepodid,NA,NA,Oithona_spp_copepodid,NA,Juvenile,Oithona,Genus,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,NA,1963,1995,NA,1995,NA,2006,NA,NA,2017,NA,NA,NA
+OITHSPP,OITHSPP,NA,OITHSPP,NA,OITHSPP,NA,Oithona spp_,Oithona spp.,NA,Oithona sp. adult,NA,NA,Oithona_spp_adult,NA,Adult,Oithona,Genus,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,NA,1963,2007,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops,NA,Paracyclops sp. adult,NA,NA,NA,NA,Adult,Paracyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops sp.,NA,NA,NA,NA,NA,NA,Adult,Paracyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Acanthocyclops vernalis copepodid,NA,NA,Acanthocyclops_vernalis_copepodid,NA,Juvenile,Acanthocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diacyclops sp. adult,NA,NA,NA,NA,Adult,Diacyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopodidae,Diacyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ergasilus sp. adult,NA,NA,NA,NA,Adult,Ergasilus,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Ergasilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ergasilus sp. copepodid,NA,NA,NA,NA,Juvenile,Ergasilus,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Ergasilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Lernaea sp. undifferentiated,NA,NA,NA,NA,Adult,Lernaea,Genus,Arthropoda,Copepoda,Cyclopoida,Lernaeidae,Lernaea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops sp. adult,NA,NA,NA,NA,Adult,Microcyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops sp. adult,NA,NA,NA,NA,Adult,Tropocyclops,Genus,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Crayfish,NA,NA,NA,NA,NA,Adult,Pacifastacus,Genus,Arthropoda,Malacostraca,Decapoda,Astacidae,Pacifastacus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Palaemon,NA,NA,NA,NA,NA,Adult,Palaemon,Genus,Arthropoda,Malacostraca,Decapoda,Palaemonidae,Palaemon,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Anchistropus sp. undifferentiated,NA,NA,NA,NA,Undifferentiated,Anchistropus,Genus,Arthropoda,Branchiopoda,Diplostraca,Chydoridae,Anchistropus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Camptocercus sp. undifferentiated,NA,NA,Camptocercus_spp,NA,Undifferentiated,Camptocercus,Genus,Arthropoda,Branchiopoda,Diplostraca,Eurycercidae,Camptocercus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Conochiloides sp.,NA,NA,NA,NA,NA,NA,Adult,Conochiloides,Genus,Rotifera,Monogononta,Flosculariaceae,Conochilidae,Conochiloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Conochilus_spp,NA,Adult,Conochilus,Genus,Rotifera,Eurotatoria,Flosculariaceae,Conochilidae,Conochilus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Stylaria,Stylaria,NA,NA,NA,NA,NA,Undifferentiated,Stylaria,Genus,Annelida,Oligochaeta,Haplotaxida,Naididae,Stylaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Corisella sp.Larvae,NA,NA,NA,NA,NA,NA,Larva,Corisella,Genus,Arthropoda,Insecta,Hemiptera,Corixidae,Corisella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Trichocorixa sp.Larvae,NA,NA,NA,NA,NA,NA,Larva,Trichocorixa,Genus,Arthropoda,Insecta,Hemiptera,Corixidae,Trichocorixa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Hydra,Hydra,NA,NA,NA,NA,NA,Adult,Hydra,Genus,Cnidaria,Hydrozoa,Hydrida,Hydridae,Hydra,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Gyraulus,Gyraulus,NA,NA,NA,NA,NA,Adult,Gyraulus,Genus,Mollusca,Gastropoda,Hygrophila,Planorbidae,Gyraulus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Physa,Physa,NA,NA,NA,NA,NA,Adult,Physa,Genus,Mollusca,Gastropoda,Hygrophila,Physidae,Physa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Planorbella,Planorbella,NA,NA,NA,NA,NA,Adult,Planorbella,Genus,Mollusca,Gastropoda,Hygrophila,Planorbidae,Planorbella,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Caecidotea,NA,NA,NA,NA,NA,Adult,Caecidotea,Genus,Arthropoda,Malacostraca,Isopoda,Asellidae,Caecidotea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Maeotias,Maeotias,NA,NA,NA,NA,NA,Undifferentiated,Maeotias,Genus,Cnidaria,Hydrozoa,Limnomedusae,Olindiidae,Maeotias,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Fluminicola,Fluminicola,NA,NA,NA,NA,NA,Adult,Fluminicola,Genus,Mollusca,Gastopoda,Littorinimorpha,Lythoglyphidae,Fluminicola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Prostoma,NA,NA,NA,NA,NA,Undifferentiated,Prostoma,Genus,Nemertea,Enopla,Monostilifera,Tetrastemmatidae,Prostoma,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Tridentiger Spp.,Tridentiger Spp.,NA,NA,NA,NA,NA,Juvenile,Tridentiger,Genus,Chordata,Actinopterygii,NA,Gobiidae,Tridentiger,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 ASPLANCH,ASPLANCH,NA,ASPLANCH,NA,ASPLANCH,NA,Asplanchna,Asplanchna,NA,NA,NA,NA,Asplanchna_spp,NA,Adult,Asplanchna,Genus,Rotifera,Eurotatoria,Ploima,Asplanchnidae,Asplanchna,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Branchionus,NA,NA,NA,NA,Brachionus_spp,NA,Adult,Branchionus,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Branchionus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Kellicottia,NA,NA,NA,NA,NA,NA,Adult,Kellicottia,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Kellicottia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+KERATELA,KERATELA,NA,KERATELA,NA,KERATELA,NA,Keratella,Keratella,NA,NA,NA,NA,Keratella_spp,NA,Adult,Keratella,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Keratella,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Lecane sp.,NA,NA,NA,NA,NA,NA,Adult,Lecane sp.,Genus,Rotifera,Eurotatoria,Ploima,Lecanidae,Lecane,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mytilina sp.,NA,NA,NA,NA,NA,NA,Adult,Mytilina,Genus,Rotifera,Eurotatoria,Ploima,Mytillinidae,Mytilina,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Platyias,NA,NA,NA,NA,Platyias_spp,NA,Adult,Platyias,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Platyias,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
+POLYARTH,POLYARTH,NA,POLYARTH,NA,POLYARTH,NA,Polyarthra,Polyarthra,NA,NA,NA,NA,Polyarthra_spp,NA,Adult,Polyarthra,Genus,Rotifera,Eurotatoria,Ploima,Synchaetidae,Polyarthra,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+SYNCH,SYNCH,NA,SYNCH,NA,SYNCH,NA,Synchaeta,Synchaeta,NA,NA,NA,NA,Synchaeta_spp,NA,Adult,Synchaeta,Genus,Rotifera,Eurotatoria,Ploima,Synchaetidae,Synchaeta,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+TRICHO,TRICHO,NA,TRICHO,NA,TRICHO,NA,Trichocerca,Trichocerca,NA,NA,NA,NA,Trichocerca_spp,NA,Adult,Trichocerca,Genus,Rotifera,Eurotatoria,Ploima,Trichocercidae,Trichocerca,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachionidae_UNID,NA,Adult,Branchionidae,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Notholca_spp,NA,Adult,Notholca,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Notholca,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Pisidium,NA,NA,NA,NA,NA,Adult,Pisidium,Genus,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,Unidentified_Amphipod,NA,Unidentified Amphipod,NA,Unidentified_Amphipod,NA,Amphipod UNID,Amphipod UNID,NA,NA,NA,NA,Amphipod_UNID,Adult,Amphipoda,Order,Arthropoda,Malacostraca,Amphipoda,NA,NA,NA,NA,1996,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,CUMAC,NA,CUMAC,NA,Cumaceans,Cumaceans,Cumaceans,Cumacea undifferentiated,NA,NA,NA,Cumacean_UNID,Undifferentiated,Cumacea,Order,Arthropoda,Malacostraca,Cumacea,NA,NA,NA,NA,NA,NA,2001,NA,1995,2006,NA,2018,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Isopoda undifferentiated,NA,NA,NA,Isopoda_UNID,Undifferentiated,Isopoda,Order,Arthropoda,Malacostraca,Isopoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
+NA,NA,Unidentified_mysid,NA,Unidentified Mysid,NA,Unidentified_Mysid,NA,Mysid Other,Mysid Other,NA,NA,NA,NA,Mysid_UNID,Adult,Mysida,Order,Arthropoda,Malacostraca,Mysida,NA,NA,NA,NA,2007,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Amphipod juvenile,NA,NA,NA,NA,NA,NA,Juvenile,Amphipoda,Order,Arthropoda,Malacostraca,Amphipoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Tadpole,NA,NA,NA,NA,NA,Larva,Anura,Order,Chordata,Amphibia,Anura,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Spider,Spider,NA,NA,NA,NA,NA,Adult,Araneae,Order,Arthropoda,Arachnida,Araneae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Calanoid,NA,Calanoida adult,NA,NA,Calanoid_UNID_adult,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,CALJUV,NA,NA,NA,NA,NA,calanoid copepodid,Calanoid copepodid,NA,NA,NA,NA,NA,NA,Juvenile,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1972,1988,NA,NA,1995,NA,NA,NA,NA,NA,NA
+NA,OTHCALAD,NA,OTHCALAD,NA,OTHCALAD,NA,Other calanoid,NA,NA,NA,NA,NA,NA,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,UnID calanoid,Calanoid UNID,Calanoid UNID,NA,NA,NA,NA,NA,Adult,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
+NA,OTHCALJUV,NA,OTHCALJUV,NA,OTHCALJUV,NA,NA,NA,NA,Calanoida copepodid,NA,NA,Calanoid_UNID_copepodid,NA,Juvenile,Calanoida,Order,Arthropoda,Copepoda,Calanoida,NA,NA,NA,NA,1989,NA,1989,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,UnID cladocera,Cladocera UNID,Cladocera UNID,NA,NA,NA,NA,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,2006,NA,NA,NA,NA,NA,NA
+NA,OTHCLADO,NA,OTHCLADO,NA,OTHCLADO,NA,Other cladocera,NA,NA,NA,NA,NA,NA,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cladocera undifferentiated,Cladocera,Cladocera,Cladocera_UNID,NA,Adult,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cladocera nauplius,NA,NA,NA,NA,Larva,Cladocera,Order,Arthropoda,Branchiopoda,Cladocera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Larvae,Coleoptera Larvae,NA,NA,NA,NA,NA,Larva,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Other,NA,NA,NA,NA,NA,Adult,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Coleoptera Other adult,Coleoptera Other adult,NA,NA,NA,NA,NA,Adult,Coleoptera,Order,Arthropoda,Insecta,Coleoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+OTHCYCADPUMP,NA,NA,NA,NA,NA,NA,NA,NA,Cyclopoid,NA,NA,NA,NA,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1975,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+CYCJUV,CYCJUV,NA,NA,NA,NA,NA,cyclopoid copepodid,Cyclopoid copepodid,NA,Cyclopoida copepodid,NA,NA,Cyclopoid_UNID_copepodid,NA,Juvenile,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1972,1994,NA,NA,1995,NA,NA,2017,NA,NA,NA
+NA,OTHCYCAD,NA,OTHCYCAD,NA,OTHCYCAD,NA,Other cyclopoid,Cyclopoid Other,Cyclopoid Other,Cyclopoida adult,NA,NA,NA,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,UnID cyclopoid,NA,NA,NA,NA,NA,Cyclopoid_UNID_adult,NA,Adult,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
+OTHCYCJUV,OTHCYCJUV,NA,OTHCYCJUV,NA,OTHCYCJUV,NA,NA,NA,NA,NA,NA,NA,NA,NA,Juvenile,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,1995,NA,1995,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Cyclopodia,Cyclopodia,NA,NA,Undifferentiated,Cyclopoida,Order,Arthropoda,Copepoda,Cyclopoida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,CRABZOEA,NA,CRABZOEA,NA,CRABZOEA,NA,crab zoea,Crab zoea,Crab zoea,NA,NA,NA,Crab_UNID_zoea,NA,Larva,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,1976,NA,1976,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Decapod larvae unid,NA,NA,NA,NA,NA,Larva,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Crustacea undifferentiated,NA,NA,NA,NA,Undifferentiated,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Earwig,NA,NA,NA,NA,NA,Adult,Dermaptera,Order,Arthropoda,Insecta,Dermaptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachycera Larvae,NA,NA,NA,NA,NA,Larva,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachycera Pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Diptera Adult,Diptera Adult,NA,NA,NA,NA,NA,Adult,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Diptera Larvae UNID,Diptera Larvae UNID,NA,NA,NA,NA,NA,Larva,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Diptera Pupae,Diptera Pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Nematocera pupae,NA,NA,NA,NA,NA,Pupa,Diptera,Order,Arthropoda,Insecta,Diptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Ephemeroptera Adult,NA,NA,NA,NA,NA,Adult,Ephemeroptera,Order,Arthropoda,Insecta,Ephemeroptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Ephemeroptera larvae UNID,Ephemeroptera larvae UNID,NA,NA,NA,NA,NA,Larva,Ephemeroptera,Order,Arthropoda,Insecta,Ephemeroptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+HARPACT,HARPACT,NA,HARPACT,NA,HARPACT,NA,Harpacticoids,Harpacticoids,Harpacticoids,Harpacticoida undifferentiated,NA,NA,Harpacticoid_UNID,NA,Undifferentiated,Harpacticoida,Order,Arthropoda,Copepoda,Harpacticoida,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Hemiptera Other,Hemiptera Other,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Homoptera,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Hymenoptera Other,Hymenoptera Other,NA,NA,NA,NA,NA,Adult,Hemiptera,Order,Arthropoda,Insecta,Hemiptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mite,Mite,NA,NA,NA,NA,NA,Adult,Hydrachnidia,Order,Arthropoda,Arachnida,Hydrachnidia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Isoptera,NA,NA,NA,NA,NA,Adult,Isoptera,Order,Arthropoda,Insecta,Isoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Lepidoptera Larvae,Lepidoptera Larvae,NA,NA,NA,NA,NA,Larva,Lepidoptera,Order,Arthropoda,Insecta,Lepidoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mysid juvenile,Mysid juvenile,NA,NA,NA,NA,NA,Juvenile,Mysid,Order,Arthropoda,Malacostraca,Mysidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Nudibranch,NA,NA,NA,NA,NA,Undifferentiated,Nudibranchia,Order,Mollusca,Gastropoda,Nudibranchia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Odonata larvae Other,NA,NA,NA,NA,NA,Larva,Odonata,Order,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Odonata Other,Odonata Other,NA,NA,NA,NA,NA,Larva,Odonata,Order,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Zygoptera Adult,NA,NA,NA,NA,NA,Adult,Odonata,Order,Arthropoda,Insecta,Odonata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Orthoptera,NA,NA,NA,NA,NA,Adult,Orthoptera,Order,Arthropoda,Insecta,Orthoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Psocoptera Adult,NA,NA,NA,NA,NA,Adult,Psocoptera,Order,Arthropoda,Insecta,Psocoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Psocoptera Larvae,NA,NA,NA,NA,NA,Larva,Psocoptera,Order,Arthropoda,Insecta,Psocoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Thrips,Thrips,NA,NA,NA,NA,NA,Adult,Thysanoptera,Order,Arthropoda,Insecta,Thysanoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Trichoptera Adult,Trichoptera Adult,NA,NA,NA,NA,NA,Adult,Trichoptera,Order,Arthropoda,Insecta,Trichoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Trichoptera larvae Other,Trichoptera larvae Other,NA,NA,NA,NA,NA,Larva,Trichoptera,Order,Arthropoda,Insecta,Trichoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Shrimp Other,Shrimp Other,NA,NA,NA,NA,Shrimp_UNID,Adult,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Shrimp_UNID_larvae,Larva,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Tanaid,Tanaid,NA,NA,NA,NA,Tanaidacea_UNID,Undifferentiated,Tanaidacea,Order,Arthropoda,Malacostraca,Tanaidacea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,2019,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Animal material UNID,NA,Other,Other,NA,NA,Undifferentiated,Animal material,NA,Unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Arrow worm,NA,NA,NA,NA,NA,Adult,Chaetognatha,Phylum,Chaetognatha,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Bryozoa unid,NA,NA,NA,NA,NA,Adult,Bryozoa,Phylum,Bryozoa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Cnidaria Other,NA,NA,NA,NA,NA,Undifferentiated,Cnidaria,Phylum,Cnidaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Egg Sacs,NA,NA,NA,NA,NA,Egg,Egg,NA,Unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Eggs UNID,NA,NA,NA,NA,NA,Egg,Egg,NA,Unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Fish Eggs,Actinopterygii eggs,NA,NA,NA,NA,Egg,Chordata,Phylum,Chordata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Invertebrate UNID,Invertebrate UNID,Unidentified undifferentiated,NA,NA,NA,NA,Adult,UnID Invertebrate,NA,Unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Jellyfish UNID,Jellyfish UNID,NA,NA,NA,NA,NA,Undifferentiated,Jellyfish,Phylum,Cnidaria,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Nematode,Nematode,NA,NA,NA,NA,NA,Undifferentiated,Nematoda,Phylum,Nematoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Nemertea,NA,NA,NA,NA,NA,Undifferentiated,Nemertea,Phylum,Nemertea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+OTHROT,OTHROT,NA,OTHROT,NA,OTHROT,NA,Other rotifer,Rotifer UNID,NA,NA,NA,NA,NA,NA,Adult,Rotifera,Phylum,Rotifera,NA,NA,NA,NA,NA,NA,1972,NA,1972,NA,1995,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Tardigrade,NA,NA,NA,NA,NA,NA,Adult,Tardigrada,Phylum,Tardigrada,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Worm UNID,Worm UNID,NA,NA,NA,NA,NA,Adult,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Annelid worms,NA,NA,NA,NA,NA,NA,NA,Adult,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,2005,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Annelida undifferentiated,NA,NA,NA,NA,Undifferentiated,Annelida,Phylum,Annelida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Arthropoda nauplius,NA,NA,NA,NA,Larva,Arthropoda,Phylum,Arthropoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Unid rotifer,NA,NA,Rotifera undifferentiated,NA,Rotifera,Rotifer_UNID,NA,Adult,Rotifera,Phylum,Rotifera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tardigrada,Tardigrada,NA,NA,Adult,Tardigrada,Phylum,Tardigrada,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,A_macropsis,NA,Alienacanthomysis macropsis,NA,Alienacanthomysis_macropsis,NA,NA,Alienacanthomysis macropsis,NA,NA,NA,NA,Alienacanthomysis_macropsis,Adult,Alienacanthomysis macropsis,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Alienacanthomysis,macropsis,NA,1994,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,A_spinicorne,NA,Americorophium spinicorne,NA,Americorophium_spinicorne,NA,Americorophium spinicorne,Americorophium spinicorne,NA,NA,NA,NA,Americorophium_spinicorne,Adult,Americorophium spinicorne,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,spinicorne,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,A_stimpsoni,NA,Americorophium stimpsoni,NA,Americorophium_stimpsoni,NA,Americorophium stimpsoni,Americorophium stimpsoni,NA,NA,NA,NA,Americorophium_stimpsoni,Adult,Americorophium stimpsoni,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium,stimpsoni,NA,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,A_abdita,NA,Ampelisca abdita,NA,Ampelisca_abdita,NA,NA,NA,NA,NA,NA,NA,Ampelisca_abdita,Adult,Ampelisca abdita,Species,Arthropoda,Malacostraca,Amphipoda,Ampeliscidae,Ampelisca,abdita,1954,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ampithoe_valida,Adult,Ampithoe valida,Species,Arthropoda,Malacostraca,Amphipoda,Ampithoidae,Ampithoe,valida,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,D_holmquistae,NA,Deltamysis holmquistae,NA,Deltamysis_holmquistae,NA,NA,Deltamysis homquistae,NA,NA,NA,NA,Deltamysis_holmquistae,Adult,Deltamysis holmquistae,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Deltamysis,holmquistae,1977,1979,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Exopalaemon,NA,NA,NA,NA,Exopalaemon_spp,Adult,Exopalaemon modestus,Species,Arthropoda,Malacostraca,Decapoda,Palaemonidae,Exopalaemon,modestus,NA,NA,NA,NA,NA,NA,NA,NA,2018,2020,NA,NA
+NA,NA,G_daiberi,NA,Gammarus daiberi,NA,Gammarus_daiberi,NA,NA,NA,NA,NA,NA,NA,Gammarus_daiberi,Adult,Gammarus daiberi,Species,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus,daiberi,1983,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,G_japonica,NA,NA,NA,Grandidierella_japonica,NA,NA,NA,NA,NA,NA,NA,Grandidierella_japonica,Adult,Grandidierella japonica,Species,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella,japonica,NA,2017,NA,2019,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Grandifoxus_grandis,Adult,Grandifoxus grandis,Species,Arthropoda,Malacostraca,Amphipoda,Phoxocephalidae,Grandifoxus,grandis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hyperacanthomysis_longirostris,Adult,Hyperacanthomysis longirostris,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Hyperacanthomysis,longirostris,1993,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Incisocalliope derzhavini,NA,NA,NA,NA,Incisocalliope_derzhavini,Adult,Incisocalliope derzhavini,Species,Arthropoda,Malacostraca,Amphipoda,Pleustidae,Incisocalliope,derzhavini,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monocorophium_acherusicum,Adult,Monocorophium acherusicum,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,acherusicum,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monocorophium_insidiosum,Adult,Monocorophium insidiosum,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Monocorophium,insidiosum,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Kurzia latissima,NA,NA,NA,NA,NA,NA,Adult,Kurzia latissima,Species,Arthropoda,Branchiopoda,Anomopoda,Chydoridae,Kurzia,latissima,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Melanoides tuberculata,NA,NA,NA,NA,NA,Adult,Melanoides tuberculata,Species,Mollusca,Gastropoda,Caenogastropoda,Thiaridae,Melanoides,tuberculata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,ACARTELA,NA,ACARTELA,NA,ACARTELA,NA,Acartiella,Acartiella,NA,Acartiella sinensis adult,NA,NA,Acartiella_sinensis_adult,NA,Adult,Acartiella sinensis,Species,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,Acartiella sinensis,1993,1994,NA,1994,NA,1995,NA,NA,2017,NA,NA,NA
+NA,ASINEJUV,NA,ASINEJUV,NA,ASINEJUV,NA,NA,Acartiella copepodid,NA,NA,NA,NA,Acartiella_sinensis_copepodid,NA,Juvenile,Acartiella sinensis,Species,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella,Acartiella sinensis,1993,2006,NA,2006,NA,NA,NA,NA,2017,NA,NA,NA
+NA,EURYTEM,NA,EURYTEM,NA,EURYTEM,NA,Eurytemora spp_,Eurytemora affinis,NA,Eurytemora affinis adult,NA,NA,Eurytemora_affinis_adult,NA,Adult,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,EURYJUV,NA,EURYJUV,NA,EURYJUV,NA,Eurytemora copepodid,Eurytemora copepodid,NA,Eurytemora affinis copepodid,NA,NA,Eurytemora_affinis_copepodid,NA,Juvenile,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1989,NA,1989,NA,1998,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Osphranticum,Osphranticum,NA,Osphranticum labronectum adult,NA,NA,Osphranticum_labronectum_adult,NA,Adult,Osphranticum labronectum,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Osphranticum,Osphranticum labronectum,NA,NA,NA,NA,NA,1995,NA,NA,2018,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,Pseudodiaptomus_euryhalinus_adult,NA,Adult,Pseudodiaptomus euryhalinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,2006,NA,NA,2020,NA,NA,NA
+NA,PDIAPFOR,NA,PDIAPFOR,NA,PDIAPFOR,NA,Pseudodiaptomus forbesii,Pseudodiaptomus forbesi,NA,Pseudodiaptomus forbesi adult,NA,NA,Pseudodiaptomus_forbesi_adult,NA,Adult,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,1988,NA,1988,NA,2006,NA,NA,2017,NA,NA,NA
+NA,PDIAPMAR,NA,PDIAPMAR,NA,PDIAPMAR,NA,Pseudodiaptomus marinus,Pseudodiaptomus marinus,NA,NA,NA,NA,Pseudodiaptomus_marinus_adult,NA,Adult,Pseudodiaptomus marinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus marinus,1986,1988,NA,1988,NA,2006,NA,NA,2017,NA,NA,NA
+NA,SINOCAL,NA,SINOCAL,NA,SINOCAL,NA,Sinocalanus,Sinocalanus,NA,Sinocalanus doerrii adult,NA,NA,Sinocalanus_doerrii_adult,NA,Adult,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,1978,NA,1978,NA,1995,NA,NA,2017,NA,NA,NA
+SINONAUP,SINONAUP,NA,SINONAUP,NA,SINONAUP,NA,NA,Sinocalanus nauplii,NA,NA,NA,NA,Sinocalanus_doerrii_nauplii,NA,Larva,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,1989,NA,1989,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Tortanus dextrilobatus,Tortanus dextrilobatus,NA,NA,NA,NA,Tortanus_dextrilobatus_adult,NA,Adult,Tortanus dextrilobatus,Species,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,Tortanus dextrilobatus,1993,NA,NA,NA,NA,2006,2010,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,Tortanus discaudatus,Tortanus discaudatus,NA,NA,NA,NA,Tortanus discaudatus,NA,Adult,Tortanus discaudatus,Species,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,Tortanus discaudatus,NA,NA,NA,NA,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Arctodiaptomus dorsalis adult,NA,NA,NA,NA,Adult,Arctodiaptomus dorsalis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Arctodiaptomus,dorsalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaptomus dorsalis adult,NA,NA,NA,NA,Adult,Diaptomus dorsalis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,dorsalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Diaptomus siciloides adult,NA,NA,NA,NA,Adult,Diaptomus siciloides,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Diaptomus,siciloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+EURYNAUP,EURYNAUP,NA,EURYNAUP,NA,EURYNAUP,NA,NA,NA,NA,NA,NA,NA,NA,NA,Larva,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,1989,NA,1989,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eurytemora affinis,Eurytemora affinis,NA,NA,Undifferentiated,Eurytemora affinis,Species,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,Eurytemora affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus cf. californiensis adult,NA,NA,NA,NA,Adult,Hesperodiaptomus californiensis,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,californiensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Hesperodiaptomus franciscanus adult,NA,NA,NA,NA,Adult,Hesperodiaptomus franciscanus,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Hesperodiaptomus,franciscanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Leptodiaptomus siciloides adult,NA,NA,NA,NA,Adult,Leptodiaptomus siciloides,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Leptodiaptomus,siciloides,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracalanus_parvus_adult,NA,Adult,Paracalanus parvus,Species,Arthropoda,Copepoda,Calanoida,Paracalanidae,Paracalanus,parvus,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracalanus_parvus_copepodid,NA,Juvenile,Paracalanus parvus,Species,Arthropoda,Copepoda,Calanoida,Paracalanidae,Paracalanus,parvus,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus_euryhalinus_copepodid,NA,Juvenile,Pseudodiaptomus euryhalinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus euryhalinus,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus forbesi copepodid,NA,NA,Pseudodiaptomus_forbesi_copepodid,NA,Juvenile,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus forbesi,Pseudodiaptomus forbesi,NA,NA,Undifferentiated,Pseudodiaptomus forbesi,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus forbesi,1987,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudodiaptomus_marinus_copepodid,NA,Juvenile,Pseudodiaptomus marinus,Species,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus,Pseudodiaptomus marinus,1986,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinoclanus doerii adult,NA,NA,NA,NA,Adult,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinocalanus doerrii copepodid,NA,NA,Sinocalanus_doerrii_copepodid,NA,Juvenile,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinocalanus doerrii,Sinocalanus doerrii,NA,NA,Undifferentiated,Sinocalanus doerrii,Species,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus,Sinocalanus doerrii,1978,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Skistodiaptomus pallidus adult,NA,NA,NA,NA,Adult,Skistodiaptomus pallidus,Species,Arthropoda,Copepoda,Calanoida,Diaptomidae,Skistodiaptomus,pallidus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,BOSMINA,NA,BOSMINA,NA,BOSMINA,NA,Bosmina,Bosmina,NA,Bosmina longirostris undifferentiated,NA,NA,Bosmina_longirostris,NA,Adult,Bosmina longirostris,Species,Arthropoda,Branchiopoda,Cladocera,Bosminidae,Bosmina,Bosmina longirostris,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Holopedium_gibberum,NA,Adult,Holopedium gibberum,Species,Arthropoda,Branchiopoda,Cladocera,Holopedidae,Holopedium,gibberum,NA,NA,NA,NA,NA,NA,NA,NA,2020,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Monospilus dispar undifferentiated,NA,NA,NA,NA,Adult,Monospilus dispar,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Monospilus,dispar,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudochydorus sp. undifferentiated,NA,NA,NA,NA,Adult,Pseudochydorus,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pseudochydorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pseudochydorus globosus undifferentiated,NA,NA,NA,NA,Adult,Pseudochydorus globosus,Species,Arthropoda,Branchiopoda,Cladocera,Chydoridae,Pseudochydorus,globosus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Diacyclops,NA,Diacyclops thomasi adult,NA,NA,NA,NA,Adult,Diacyclops thomasi,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopodidae,Diacyclops,thomasi,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops elegans,NA,NA,NA,NA,NA,NA,Adult,Eucyclops elegans,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,elegans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+LIMNOSINE,LIMNOSINE,NA,LIMNOSINE,NA,LIMNOSINE,NA,Limnoithona sinensis,Limnoithona sinensis,NA,Limnoithona sinensis adult,NA,NA,Limnoithona_sinensis_adult,NA,Adult,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,2007,NA,2007,NA,2006,NA,NA,2017,NA,NA,NA
+LIMNOTET,LIMNOTET,NA,LIMNOTET,NA,LIMNOTET,NA,Limnoithona tetraspina,Limnoithona tetraspina,NA,Limnoithona tetraspina adult,NA,NA,Limnoithona_tetraspina_adult,NA,Adult,Limnoithona tetraspina,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona tetraspina,1993,2007,NA,2007,NA,2006,NA,NA,2017,NA,NA,NA
+OITHDAV,OITHDAV,NA,OITHDAV,NA,OITHDAV,NA,Oithona davisae,Oithona davisae,NA,Oithona davisae adult,NA,NA,Oithona_davisae_adult,NA,Adult,Oithona davisae,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona davisae,1963,1980,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
+OITHSIM,OITHSIM,NA,OITHSIM,NA,OITHSIM,NA,Oithona similis,Oithona similis,NA,Oithona similis adult,NA,NA,Oithona_similis_adult,NA,Adult,Oithona similis,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona similis,NA,1980,NA,1980,NA,1995,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops chiltoni,NA,NA,NA,NA,NA,NA,Adult,Paracyclops chiltoni,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,chiltoni,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops prasinus mexicanus,NA,NA,NA,NA,NA,NA,Adult,Tropocyclops prasinus mexicanus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,prasinus mexicanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Acanthocyclops_vernalis_adult,NA,Adult,Acanthocyclops vernalis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,vernalis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ditrichocorycaeus_affinis_adult,NA,Adult,Corycaecus affinis,Species,Arthropoda,Copepoda,Cyclopoida,Corycaeidae,Ditrichocorycaeus,affinis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops agilis adult,NA,NA,NA,NA,Adult,Eucyclops agilis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,agilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops elegans adult,NA,NA,NA,NA,Adult,Eucyclops elegans,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,elegans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops pectinifer adult,NA,NA,NA,NA,Adult,Eucyclops pectinifer,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,pectinifer,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops prionophorus adult,NA,NA,NA,NA,Adult,Eucyclops prionophorus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Eucyclops,prionophorus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona_sinensis_copepodid,NA,Juvenile,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona sinensis,Limnoithona sinensis,NA,NA,Undifferentiated,Limnoithona sinensis,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona sinensis,1979,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Limnoithona_tetraspina_copepodid,NA,Juvenile,Limnoithona tetraspina,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona,Limnoithona tetraspina,1993,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Macrocyclops albidus adult,NA,NA,NA,NA,Adult,Macrocyclops albidus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Macrocyclops,albidus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Mesocyclops edax adult,NA,NA,NA,NA,Adult,Mesocyclops edax,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Mesocyclops,edax,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Microcyclops rubellus adult,NA,NA,NA,NA,Adult,Microcyclops rubellus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Microcyclops,rubellus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oithona_davisae_copepodid,NA,Juvenile,Oithona davisae,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona davisae,1963,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oithona_similis_copepodid,NA,Juvenile,Oithona similis,Species,Arthropoda,Copepoda,Cyclopoida,Oithonidae,Oithona,Oithona similis,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops chiltoni adult,NA,NA,NA,NA,Adult,Paracyclops chiltoni,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,chiltoni,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops fimbriatus adult,NA,NA,NA,NA,Adult,Paracyclops fimbriatus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,fimbriatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Paracyclops poppei adult,NA,NA,NA,NA,Adult,Paracyclops poppei,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Paracyclops,poppei,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ectocyclops phaleratus adult,NA,NA,NA,NA,Adult,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Eucyclops phaleratus adult,NA,NA,NA,NA,Adult,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Ectocyclops phaleratus copepodid,NA,NA,NA,NA,Juvenile,Platycyclops phaleratus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Platycyclops,phaleratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Tropocyclops prasinus adult,NA,NA,NA,NA,Adult,Tropocyclops prasinus,Species,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Tropocyclops,prasinus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Goldfish,NA,NA,NA,NA,NA,NA,Juvenile,Carassius auratus,Species,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Carassius,auratus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Sacramento Sucker,NA,NA,NA,NA,NA,Juvenile,Catosomus occidentalis,Species,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Catostomus,occidentalis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Harris Mud Crab,NA,NA,NA,NA,NA,NA,Adult,Rhithropanopeus harrisii,Species,Arthropoda,Malacostraca,Decapoda,Panopeidae,Rhithropanopeus,harrisii,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Leptohyphidae mayfly larvae,NA,NA,NA,NA,NA,Larva,Tricorythodes minutus,Species,Arthropoda,Insecta,Ephemeroptera,Leptohyphidae,Tricorythodes,minutus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Gnorimosphaeroma,Gnorimosphaeroma,NA,NA,NA,NA,NA,Adult,Gnorimosphaeroma insulare,Species,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma,insulare,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Ligidium,NA,NA,NA,NA,NA,Adult,Ligidium lates,Species,Arthropoda,Malacostraca,Isopoda,Ligiidae,Ligidium,lates,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Potamocorbula,NA,NA,NA,NA,NA,Adult,Potamocorbula amurensis,Species,Mollusca,Bivalvia,Myoida,Corbulidae,Potamocorbula,amurensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,H_longirostris,NA,Hyperacanthomysis longirostris,NA,Hyperacanthomysis_longirostris,NA,Hyperacanthomysis longirostris,Hyperacanthomysis longirostris,NA,NA,NA,NA,NA,Adult,Hyperacanthomysis longirostris,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Hyperacanthomysis,longirostris,1993,1993,NA,2007,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,American Shad,NA,NA,NA,NA,NA,Juvenile,Alosa sapidissima,Species,Chordata,Actinopterygii,NA,Clupeidae,Alosa,sapidissima,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Arrow Goby,NA,NA,NA,NA,NA,Juvenile,Clevelandia ios,Species,Chordata,Actinopterygii,NA,Gobiidae,Clevelandia,ios,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Bigscale Logperch,Bigscale Logperch,NA,NA,NA,NA,NA,Juvenile,Percidae macrolepida,Species,Chordata,Actinopterygii,NA,Percidae,Percidae,macrolepida,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Black Crappie,NA,NA,NA,NA,NA,Juvenile,Pomoxis nigromaculatus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Pomoxis,nigromaculatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Bluegill,NA,NA,NA,NA,NA,Juvenile,Lepomis macrochirus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,macrochirus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Common Carp,Common Carp,NA,NA,NA,NA,NA,Juvenile,Cyprinus carpio,Species,Chordata,Actinopterygii,NA,Cyprinidae,Cyprinus,carpio,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Delta Smelt,NA,NA,NA,NA,NA,Juvenile,Hypomesus transpacificus,Species,Chordata,Actinopterygii,NA,Osmeridae,Hypomesus,transpacificus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Fathead Minnow,NA,NA,NA,NA,NA,Juvenile,Pimephales promelas,Species,Chordata,Actinopterygii,NA,Cyprinidae,Pimephales,promelas,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Golden Shiner,Golden Shiner,NA,NA,NA,NA,NA,Juvenile,Notemigonus crysoleucas,Species,Chordata,Actinopterygii,NA,Cyprinidae,Notemigonus,crysoleucas,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Green Sunfish,NA,NA,NA,NA,NA,Juvenile,Lepomis cyanellus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,cyanellus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Hitch,NA,NA,NA,NA,NA,Juvenile,Lavinia exilicauda,Species,Chordata,Actinopterygii,NA,Cyprinidae,Lavinia,exilicauda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Jacksmelt,NA,NA,NA,NA,NA,Juvenile,Atherinopsis californiensis,Species,Chordata,Actinopterygii,NA,Atherinopsidae,Atherinopsis,californiensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Longfin Smelt,NA,NA,NA,NA,NA,Juvenile,Spirinchus thaleichthys,Species,Chordata,Actinopterygii,NA,Osmeridae,Spirinchus,thaleichthys,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Longfin Smelt (Yolk-Sac),NA,NA,NA,NA,NA,Larva,Spirinchus thaleichthys,Species,Chordata,Actinopterygii,NA,Osmeridae,Spirinchus,thaleichthys,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mississippi Silverside,Mississippi Silverside,NA,NA,NA,NA,NA,Juvenile,Menidia audens,Species,Chordata,Actinopterygii,NA,Atherinidae,Menidia,audens,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Mosquitofish,Mosquitofish,NA,NA,NA,NA,NA,Juvenile,Gambusia affinis,Species,Chordata,Actinopterygii,NA,Poeciliidae,Gambusia,affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Northern Anchovy,NA,NA,NA,NA,NA,Juvenile,Engraulis Mordax,Species,Chordata,Actinopterygii,NA,Engraulidae,Engraulis,Mordax,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Pacific Herring,NA,NA,NA,NA,NA,Juvenile,Clupea pallasi,Species,Chordata,Actinopterygii,NA,Clupeidae,Clupea,pallasi,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Pacific Staghorn Sculpin,NA,NA,NA,NA,NA,Juvenile,Leptocottus armatus,Species,Chordata,Actinopterygii,NA,Cottidae,Leptocottus,armatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Prickly Sculpin,Prickly Sculpin,NA,NA,NA,NA,NA,Juvenile,Cottus asper,Species,Chordata,Actinopterygii,NA,Cottidae,Cottus,asper,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Rainwater Killifish,Rainwater Killifish,NA,NA,NA,NA,NA,Juvenile,Lucania parva,Species,Chordata,Actinopterygii,NA,Fundulidae,Lucania,parva,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Redear,NA,NA,NA,NA,NA,Juvenile,Lepomis microlophus,Species,Chordata,Actinopterygii,NA,Centrarchidae,Lepomis,microlophus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,River Lamprey,NA,NA,NA,NA,NA,Juvenile,Lampetra RL,Species,Chordata,Actinopterygii,NA,Petromyzontidae,Lampetra,RL,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Sacramento Blackfish,NA,NA,NA,NA,NA,NA,Juvenile,Orthodon microlepidotus,Species,Chordata,Actinopterygii,NA,Cyprinidae,Orthodon,microlepidotus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Shimofuri Goby,NA,NA,NA,NA,NA,Juvenile,Tridentiger bifasciatus,Species,Chordata,Actinopterygii,NA,Gobiidae,Tridentiger,bifasciatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Splittail,Splittail,NA,NA,NA,NA,NA,Juvenile,Pogonichthys macrolepidotus,Species,Chordata,Actinopterygii,NA,Cyprinidae,Pogonichthys,macrolepidotus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Striped Bass,Striped Bass,NA,NA,NA,NA,NA,Juvenile,Morone saxatilis,Species,Chordata,Actinopterygii,NA,Percichthyidae,Morone,saxatilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Threadfin Shad,Threadfin Shad,NA,NA,NA,NA,NA,Juvenile,Dorosoma petenense,Species,Chordata,Actinopterygii,NA,Clupeidae,Dorosoma,petenense,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Threespine Stickleback,Threespine Stickleback,NA,NA,NA,NA,NA,Juvenile,Gasterosteus aculeatus,Species,Chordata,Actinopterygii,NA,Gasterosteidae,Gasterosteus,aculeatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,Topsmelt,Topsmelt,NA,NA,NA,NA,NA,Juvenile,Atherinopsis affinis,Species,Chordata,Actinopterygii,NA,Atherinopsidae,Atherinopsidae,affinis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Yellowfin Goby,NA,NA,NA,NA,NA,Juvenile,Acanthogobius flavimanus,Species,Chordata,Actinopterygii,NA,Gobiidae,Acanthogobius,flavimanus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,Hediste limnicola,NA,NA,NA,NA,NA,Undifferentiated,Hediste limnicola,Species,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Brachionus angularis,NA,NA,NA,NA,NA,NA,Adult,Brachionus angularis,Species,Rotifera,Monogononta,Ploima,Brachionidae,Brachionus,angularis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Brachionus bidentata,NA,NA,NA,NA,NA,NA,Adult,Brachionus bidentata,Species,Rotifera,Monogononta,Ploima,Brachionidae,Brachionus,bidentata,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Brachionus plicatilis,NA,NA,NA,NA,NA,NA,Adult,Brachionus plicatilis,Species,Rotifera,Monogononta,Ploima,Brachionidae,Brachionus,plicatilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Brachionus quadridentatus,NA,NA,NA,NA,NA,NA,Adult,Brachionus quadridentatus,Species,Rotifera,Monogononta,Ploima,Brachionidae,Brachionus,quadridentatus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Brachionus variabilis,NA,NA,NA,NA,NA,NA,Adult,Brachionus variabilis,Species,Rotifera,Monogononta,Ploima,Brachionidae,Brachionus,variabilis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Branchionus,NA,NA,NA,NA,Brachionus_spp,NA,Adult,Branchionus,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Branchionus,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Kellicottia,NA,NA,NA,NA,NA,NA,Adult,Kellicottia,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Kellicottia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Kellicottia bostoniensis,NA,NA,NA,NA,NA,NA,Adult,Kellicottia bostoniensis,Species,Rotifera,Eurotatoria,Ploima,Brachionidae,Kellicottia,bostoniensis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-KERATELA,KERATELA,NA,KERATELA,NA,KERATELA,NA,Keratella,Keratella,NA,NA,NA,NA,Keratella_spp,NA,Adult,Keratella,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Keratella,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Keratella cochlearis,NA,NA,NA,NA,NA,NA,Adult,Keratella cochlearis,Species,Rotifera,Eurotatoria,Ploima,Brachionidae,Keratella,cochlearis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Keratella valga,NA,NA,NA,NA,NA,NA,Adult,Keratella valga,Species,Rotifera,Eurotatoria,Ploima,Brachionidae,Keratella,valga,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Lecane sp.,NA,NA,NA,NA,NA,NA,Adult,Lecane sp.,Genus,Rotifera,Eurotatoria,Ploima,Lecanidae,Lecane,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Mytilina sp.,NA,NA,NA,NA,NA,NA,Adult,Mytilina,Genus,Rotifera,Eurotatoria,Ploima,Mytillinidae,Mytilina,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Platyias,NA,NA,NA,NA,Platyias_spp,NA,Adult,Platyias,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Platyias,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Platyias patulus,NA,NA,NA,NA,NA,NA,Adult,Platyias patulus,Species,Rotifera,Eurotatoria,Ploima,Brachionidae,Platyias,patulus,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-POLYARTH,POLYARTH,NA,POLYARTH,NA,POLYARTH,NA,Polyarthra,Polyarthra,NA,NA,NA,NA,Polyarthra_spp,NA,Adult,Polyarthra,Genus,Rotifera,Eurotatoria,Ploima,Synchaetidae,Polyarthra,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-SYNCH,SYNCH,NA,SYNCH,NA,SYNCH,NA,Synchaeta,Synchaeta,NA,NA,NA,NA,Synchaeta_spp,NA,Adult,Synchaeta,Genus,Rotifera,Eurotatoria,Ploima,Synchaetidae,Synchaeta,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
 SYNCHBIC,SYNCHBIC,NA,NA,NA,NA,NA,Synchaeta bicornis,NA,NA,NA,NA,NA,Synchaeta_bicornis,NA,Adult,Synchaeta bicornis,Species,Rotifera,Eurotatoria,Ploima,Synchaetidae,Synchaeta,Synchaeta bicornis,NA,1972,NA,NA,NA,1995,NA,NA,2018,NA,NA,NA
-TRICHO,TRICHO,NA,TRICHO,NA,TRICHO,NA,Trichocerca,Trichocerca,NA,NA,NA,NA,Trichocerca_spp,NA,Adult,Trichocerca,Genus,Rotifera,Eurotatoria,Ploima,Trichocercidae,Trichocerca,NA,NA,1972,NA,1972,NA,1995,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Brachionidae_UNID,NA,Adult,Branchionidae,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2019,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Notholca_spp,NA,Adult,Notholca,Genus,Rotifera,Eurotatoria,Ploima,Brachionidae,Notholca,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,Magnificent Bryozoan,NA,NA,NA,NA,NA,Adult,Pectinatella magnifica,Species,Bryozoa,Phylactolaemata,Plumatellida,Pectinatellidae,Pectinatella,magnifica,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Psocoptera Adult,NA,NA,NA,NA,NA,Adult,Psocoptera,Order,Arthropoda,Insecta,Psocoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Psocoptera Larvae,NA,NA,NA,NA,NA,Larva,Psocoptera,Order,Arthropoda,Insecta,Psocoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Manayunkia speciosa,NA,NA,NA,NA,NA,NA,Adult,Manayunkia speciosa,Species,Annelida,Polychaeta,Sabellidae,Fabriciidae,Manayunkia,speciosa,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Pisidium,NA,NA,NA,NA,NA,Adult,Pisidium,Genus,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Thrips,Thrips,NA,NA,NA,NA,NA,Adult,Thysanoptera,Order,Arthropoda,Insecta,Thysanoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Adult Caddisfly,NA,NA,NA,NA,NA,Adult,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Larvae Caddisfly,Hydroptilidae Larvae Caddisfly,NA,NA,NA,NA,NA,Larva,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,Hydroptilidae Pupae Caddisfly,NA,NA,NA,NA,NA,Pupa,Hydroptilidae,Family,Arthropoda,Insecta,Trichoptera,Hydroptilidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Trichoptera Adult,Trichoptera Adult,NA,NA,NA,NA,NA,Adult,Trichoptera,Order,Arthropoda,Insecta,Trichoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Trichoptera larvae Other,Trichoptera larvae Other,NA,NA,NA,NA,NA,Larva,Trichoptera,Order,Arthropoda,Insecta,Trichoptera,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Trichotria pocillum,NA,NA,NA,NA,NA,NA,Adult,Trichotria pocillum,Species,Arthropoda,Insecta,Trichoptera,Trichotriidae,Trichotria,pocillum,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Trichotria tetractis,NA,NA,NA,NA,NA,NA,Adult,Trichotria tetractis,Species,Arthropoda,Insecta,Trichoptera,Trichotriidae,Trichotria,tetractis,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Planaria,Planaria,NA,NA,NA,NA,NA,Undifferentiated,Girardia tigrina,Species,Platyhelminthes,Rhabditophora,Tricladida,Dugesiidae,Girardia,tigrina,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,Corbicula,Corbicula,NA,NA,NA,NA,NA,Adult,Corbicula fluminea,Species,Mollusca,Bivalvia,Veneroida,Corbiculidae,Corbicula,fluminea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 NA,NA,N_kadiakensis,NA,Neomysis kadiakensis,NA,Neomysis_kadiakensis,NA,Neomysis kadiakensis,Neomysis kadiakensis,NA,NA,NA,NA,Neomysis_kadiakensis,Adult,Neomysis kadiakensis,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Neomysis,kadiakensis,NA,1980,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,N_mercedis,NA,Neomysis mercedis,NA,Neomysis_mercedis,NA,Neomysis mercedis,Neomysis mercedis,NA,NA,NA,NA,Neomysis_mercedis,Adult,Neomysis mercedis,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Neomysis,mercedis,NA,1972,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Oedicerotidae_sp,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Oedicerotidae_UNID,Adult,Oedicerotidae,Family,Arthropoda,Malacostraca,Amphipoda,Oedicerotidae,NA,NA,NA,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,A_aspera,NA,Acanthomysis aspera,NA,Acanthomysis_aspera,Acanthomysis aspera,NA,NA,NA,NA,NA,NA,Orientomysis_aspera,Adult,Orientomysis aspera,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Orientomysis,Orientomysis aspera,1992,1992,NA,2007,NA,1995,NA,NA,2017,NA,NA,NA
 NA,NA,A_hwanhaiensis,NA,Acanthomysis hwanhaiensis,NA,Acanthomysis_hwanhaiensis,NA,NA,NA,NA,NA,NA,NA,Orientomysis_hwanhaiensis,Adult,Orientomysis hwanhaiensis,Species,Arthropoda,Malacostraca,Mysida,Mysidae,Orientomysis,hwanhaiensis,1997,1993,NA,2007,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,Pleustidae,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Pleustidae_UNID,Adult,Pleustidae,Family,Arthropoda,Malacostraca,Amphipoda,Pleustidae,NA,NA,NA,2014,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Shrimp Other,Shrimp Other,NA,NA,NA,NA,Shrimp_UNID,Adult,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2017,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Shrimp_UNID_larvae,Larva,Decapoda,Order,Arthropoda,Malacostraca,Decapoda,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
 NA,NA,C_alienense,NA,Corophium alienense,NA,Corophium_alienense,NA,NA,Corophium alienense,NA,NA,NA,NA,Sinocorophium_alienense,Adult,Sinocorophium alienense,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Sinocorophium,alienense,1973,2014,NA,2013,NA,NA,NA,NA,2017,NA,NA,NA
 NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Sinocorophium_heteroceratum,Adult,Sinocorophium heteroceratum,Species,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Sinocorophium,heteroceratum,NA,NA,NA,NA,NA,NA,NA,NA,2018,NA,NA,NA
-NA,NA,NA,NA,NA,NA,NA,NA,Tanaid,Tanaid,NA,NA,NA,NA,Tanaidacea_UNID,Undifferentiated,Tanaidacea,Order,Arthropoda,Malacostraca,Tanaidacea,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2018,2019,NA,NA

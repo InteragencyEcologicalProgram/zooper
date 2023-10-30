@@ -303,8 +303,8 @@ Zoopsynther<-function(
     dplyr::distinct()%>%
     dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
-                     by="Taxname"#,
-                     #relationship = "many-to-one"
+                     by="Taxname",
+                     relationship = "many-to-one"
                      )%>%
     dplyr::filter(.data$Level!="Species")%>%
     dplyr::pull("Taxname")
@@ -408,7 +408,7 @@ Zoopsynther<-function(
     if(Time_consistency){
       datasets<-Zoop%>%
         dplyr::select("Source", "SizeClass")%>%
-        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm", "DOP"))%>%
+        dplyr::filter(.data$Source%in%c("EMP", "STN", "FMWT", "twentymm", "DOP", "FRP"))%>%
         dplyr::mutate(Source=dplyr::recode(.data$Source, STN="FMWT"))%>% #STN currently represented as FMWT for start/end years
         dplyr::distinct()
 
@@ -538,7 +538,7 @@ Zoopsynther<-function(
     Zoop<-Zoop%>%
       dplyr::left_join(Lumpedkey%>%
                          dplyr::select("Taxlifestage", "Taxname_new", "SizeClass"),
-                       by=c("Taxlifestage", "SizeClass"), relationship = "many-to-many")%>%
+                       by=c("Taxlifestage", "SizeClass"))%>%
       dplyr::mutate(Taxname = dplyr::if_else(is.na(.data$Taxname_new), .data$Taxname, .data$Taxname_new))%>%
       dplyr::select(-"Taxname_new")%>%
       dplyr::filter(.data$Taxname!="REMOVE")%>%
@@ -574,8 +574,7 @@ Zoopsynther<-function(
   }
 
   Zoop<-Zoop%>%
-    dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm")) %>%
-    dplyr::distinct()
+    dplyr::mutate(Source = dplyr::recode(.data$Source, twentymm = "20mm"))
 
   out<-list(Data=Zoop, Caveats=caveats)
 

@@ -80,19 +80,25 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_f
   names()
 
 
-# FRP Meso ----------------------------------------------------------------
+# FRP ----------------------------------------------------------------
 
 Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=5218ffbc7b8f38959704a46ffb668ad9",
       destfile=file.path(Data_folder, "zoopsFRP2021.csv"), mode="wb", method=Download_method)
 Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
       destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
+      destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
+
 zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2021.csv"), na=c("", "NA"))
-sites_FRP_Meso <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
+sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
 
-#join environmental data to taxa counts and fix some wonky names
-FRP_all = dplyr::left_join(zoo_FRP_Meso, sites_FRP_Meso)
 
-names_FRP_Meso <- names(FRP_all)
+names_FRP_Macro <- names(zoo_FRP_Macro)
+
+names_FRP_sites <- names(sites_FRP_Macro)
+
+names_FRP_Meso <- names(zoo_FRP_Meso)
 
 
 # YBFMP Meso/Micro --------------------------------------------------------
@@ -117,23 +123,6 @@ Tryer(n=3, fun=download.file, url=EMP_Micro_URL,
 names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                  col_types=cols(.default=col_character()))%>%
   names()
-
-
-# FRP Macro ---------------------------------------------------------------
-
-
-Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
-      destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
-Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
-      destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
-
-zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
-sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
-
-#join environmental data to taxa counts and fix some wonky names
-FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -Date, -Location), sites_FRP_Macro, by = "VisitNo")
-
-names_FRP_Macro <- names(FRP_allmac)
 
 
 # EMP Macro ---------------------------------------------------------------
@@ -266,15 +255,13 @@ test_that("20mm Meso column names have not changed", {
 })
 
 test_that("FRP Meso column names have not changed", {
-  expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo", "subsample" ,
+  expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo","Location", "Date",
+                                     "subsample" ,
                                       "Count" , "AdjCount" ,"CPUE","Flagged_Data", "StartTime",
                                      "EndTime",  "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",
                                      "DepthOfSample", "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
                                      "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "effort",   "LAB_NAME",
-                                     "Location", "Date",  "Comments", "Temp", "SC",
-                                     "pH",  "DO",  "Turbidity", "Chlorophyll", "Phycocyanin",
-                                     "FDOM", "Secchi", "Microcystis", "Tide", "Weather",
-                                     "WindWaves"))
+                                      "Comments"))
 })
 
 test_that("YBFMP column names have not changed", {
@@ -299,15 +286,21 @@ test_that("EMP Micro column names have not changed", {
 
 test_that("FRP Macro column names have not changed", {
   expect_setequal(names_FRP_Macro, c("SampleID_key","SampleID_frp", "CommonName", "VisitNo", "subsample",
-                                     "Count", "AdjCount", "Flagged_Data.x","Flagged_Data.y",  "StartTime", "EndTime",
+                                     "Count", "AdjCount", "Flagged_Data", "StartTime", "EndTime",
                                      "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
                                      "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",        "Boulder",
                                      "Cobble", "Gravel", "Organics", "Sand", "Silt",
                                      "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "LAB_NAME",   "Location",
+                                     "Date","Comments", "effort", "CPUE"))
+})
+
+test_that("FRP site data column names have not changed", {
+  expect_setequal(names_FRP_sites, c("VisitNo", "Location",
                                      "Date","Comments", "effort","CPUE" ,       "Temp",
                                      "SC", "pH", "DO", "Turbidity", "Chlorophyll",
                                      "Phycocyanin", "FDOM","Secchi",  "Microcystis", "Tide",
                                      "Weather","WindWaves"))
+
 })
 
 test_that("EMP Macro column names have not changed", {
