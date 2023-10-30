@@ -304,8 +304,7 @@ Zoopsynther<-function(
     dplyr::left_join(dplyr::select(Crosswalk, "Taxname", "Level")%>%
                        dplyr::distinct(),
                      by="Taxname",
-                     relationship = "many-to-one"
-                     )%>%
+                     relationship = "many-to-one")%>%
     dplyr::filter(.data$Level!="Species")%>%
     dplyr::pull("Taxname")
 
