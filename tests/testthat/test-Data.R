@@ -20,8 +20,6 @@ test_that("No samples are duplicated in zoopComb", {
   expect_equal(length(unique(paste(zoopComb$SampleID, zoopComb$Taxlifestage, zoopComb$SizeClass))), nrow(zoopComb))
 })
 
-
-
 test_that("No samples are duplicated in zoopEnvComb", {
   expect_equal(length(unique(zoopEnvComb$SampleID)), nrow(zoopEnvComb))
 })
@@ -35,7 +33,8 @@ test_that("Not all CPUEs are 0", {
 })
 
 test_that("Only the expected stations are missing coordinates", {
-  expect_setequal(unique(No_coords$Station), c("20mm 798", "20mm 799", "20mm 794", "20mm 795", "20mm 796", "20mm 797", "DOP 19-11-LSC-01", "DOP 19-11-LSC-02"))
+  expect_setequal(unique(No_coords$Station), c("20mm 798", "20mm 799", "20mm 794", "20mm 795",
+                                               "20mm 796", "20mm 797", "DOP 19-11-LSC-01", "DOP 19-11-LSC-02"))
 })
 
 test_that("Date and Datetime and displaying the same dates", {
@@ -47,8 +46,8 @@ test_that("Timezone is correct", {
 })
 
 test_that("Very few times are before 5AM or after 6PM", {
-  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)<5)), 50)
-  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)>18)), 50)
+  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)<5)), 60)
+  expect_lt(nrow(filter(zoopEnvComb, hour(Datetime)>18)), 60)
 })
 
 test_that("Bottom depths are within reasonable limits", {

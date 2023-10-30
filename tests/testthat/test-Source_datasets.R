@@ -80,15 +80,25 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, names(twentymm_Meso_f
   names()
 
 
-# FRP Meso ----------------------------------------------------------------
+# FRP ----------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
-           destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method="curl")
+Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=5218ffbc7b8f38959704a46ffb668ad9",
+      destfile=file.path(Data_folder, "zoopsFRP2021.csv"), mode="wb", method=Download_method)
+Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
+      destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
+      destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
 
-names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
-                                  col_types = cols(.default=col_character()))%>%
-  names()
+zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2021.csv"), na=c("", "NA"))
+zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
+sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
 
+
+names_FRP_Macro <- names(zoo_FRP_Macro)
+
+names_FRP_sites <- names(sites_FRP_Macro)
+
+names_FRP_Meso <- names(zoo_FRP_Meso)
 
 
 # YBFMP Meso/Micro --------------------------------------------------------
@@ -112,16 +122,6 @@ Tryer(n=3, fun=download.file, url=EMP_Micro_URL,
 
 names_EMP_Micro<-readr::read_csv(file.path(Data_folder, EMP_Micro_file),
                                  col_types=cols(.default=col_character()))%>%
-  names()
-
-
-# FRP Macro ---------------------------------------------------------------
-
-Tryer(n=3, fun=download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
-           destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method="curl")
-
-names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
-                                   col_types = cols(.default=col_character()))%>%
   names()
 
 
@@ -255,9 +255,13 @@ test_that("20mm Meso column names have not changed", {
 })
 
 test_that("FRP Meso column names have not changed", {
-  expect_setequal(names_FRP_Meso, c('SampleID', 'Date', 'time', 'Latitude', 'Longitude', 'Temp', 'SC', 'pH', 'DO', 'Secchi',
-                                    'Turbidity', 'Tide', 'Microcystis', 'CommonName', 'subsample', 'volume', 'Count',
-                                    'AdjCount', 'CPUE', 'Station'))
+  expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo","Location", "Date",
+                                     "subsample" ,
+                                      "Count" , "AdjCount" ,"CPUE","Flagged_Data", "StartTime",
+                                     "EndTime",  "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",
+                                     "DepthOfSample", "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
+                                     "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "effort",   "LAB_NAME",
+                                      "Comments"))
 })
 
 test_that("YBFMP column names have not changed", {
@@ -281,9 +285,22 @@ test_that("EMP Micro column names have not changed", {
 })
 
 test_that("FRP Macro column names have not changed", {
-  expect_setequal(names_FRP_Macro, c('SampleID', 'Date', 'time', 'Sampletype', 'Latitude', 'Longitude', 'Temp',
-                                     'SC', 'pH', 'DO', 'Secchi', 'Turbidity', 'Tide', 'Microcystis', 'volume', 'subsample',
-                                     'VegWeight', 'CommonName', 'Count', 'AdjCount', 'Station'))
+  expect_setequal(names_FRP_Macro, c("SampleID_key","SampleID_frp", "CommonName", "VisitNo", "subsample",
+                                     "Count", "AdjCount", "Flagged_Data", "StartTime", "EndTime",
+                                     "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
+                                     "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",        "Boulder",
+                                     "Cobble", "Gravel", "Organics", "Sand", "Silt",
+                                     "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "LAB_NAME",   "Location",
+                                     "Date","Comments", "effort", "CPUE"))
+})
+
+test_that("FRP site data column names have not changed", {
+  expect_setequal(names_FRP_sites, c("VisitNo", "Location",
+                                     "Date","Comments", "effort","CPUE" ,       "Temp",
+                                     "SC", "pH", "DO", "Turbidity", "Chlorophyll",
+                                     "Phycocyanin", "FDOM","Secchi",  "Microcystis", "Tide",
+                                     "Weather","WindWaves"))
+
 })
 
 test_that("EMP Macro column names have not changed", {

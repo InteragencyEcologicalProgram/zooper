@@ -40,5 +40,6 @@ test_that("SourceTaxaKeyer returns correct number Taxnames", {
   expect_equal(SourceTaxaKey%>%select(Taxname, Source, SizeClass),
                tibble::tibble(Taxname=paste0("Spec", c(1,2,3,3,4,5,6,7,8,6,7,9,4,5,10,7,9)),
                               Source=c(rep("EMP", 9), rep("FMWT", 6), rep("STN",2)),
-                              SizeClass=c(rep("Micro", 3), rep("Meso", 3), rep("Macro", 3), rep("Macro", 3), rep("Meso", 3), rep("Macro", 2))))
+                              SizeClass=c(rep("Micro", 3), rep("Meso", 3), rep("Macro", 3),
+                                          rep("Macro", 3), rep("Meso", 3), rep("Macro", 2))))
 })

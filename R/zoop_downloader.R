@@ -623,35 +623,58 @@ Zoopdownloader <- function(
     # Import the FRP data
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "zoopsFRP2018.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/d4c76f209a0653aa86bab1ff93ab9853",
-            destfile=file.path(Data_folder, "zoopsFRP2018.csv"), mode="wb", method=Download_method)
+    if (!file.exists(file.path(Data_folder, "zoopsFRP2021.csv")) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=5218ffbc7b8f38959704a46ffb668ad9",
+            destfile=file.path(Data_folder, "zoopsFRP2021.csv"), mode="wb", method=Download_method)
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
+       destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+
     }
 
-    zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2018.csv"),
-                                    col_types = "cccddddddddcccdddddc", na=c("", "NA"))
+    zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP2021.csv"), na=c("", "NA"))
+    sites_FRP_Meso <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+
+    #join environmental data to taxa counts and fix some wonky names
+    FRP_all = dplyr::left_join(zoo_FRP_Meso, sites_FRP_Meso) %>%
+      dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID",
+                                                  CommonName == "Insect Unid" ~ "Insect UNID",
+                                                  CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                                  CommonName == "Asellidae UNID" ~ "Asellidae",
+                                                  CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
+                                                  CommonName == "Fish larvae" ~ "Fish UNID",
+                                    CommonName == "Insect Unid" ~ "Insect UNID",
+                                    CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                    TRUE ~ CommonName))
 
     #Already in long format
-    data.list[["FRP_Meso"]] <- zoo_FRP_Meso%>%
+    data.list[["FRP_Meso"]] <- FRP_all%>%
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
-      dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr"))%>% #Rename inconsistent station names to match
-      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$time),
+      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$StartTime),
                                                                        NA_character_,
-                                                                       paste(.data$Date, .data$time)),
+                                                                       paste(.data$Date, .data$StartTime)),
                                                         "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))%>% #Create a variable for datetime
       dplyr::mutate(Source="FRP", #add variable for data source
                     SizeClass="Meso",
-                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
-      dplyr::select("Source", "Date", "Datetime", "Latitude", "Longitude",
-                    "Station", CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass",
-                    Temperature = "Temp", Volume = "volume", FRP_Meso = "CommonName", "CPUE", "SampleID")%>% #Select for columns in common and rename columns to match
+                    TowType= dplyr::case_when(GearTypeAbbreviation == "ZOOP" ~ "Surface",
+
+                                       GearTypeAbbreviation == "ZOBL" ~ "Oblique",
+
+                                       GearTypeAbbreviation == "ZBEN" ~ "Bottom",
+                                       TRUE ~ "Surface"),
+                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium` = "3"))%>%
+      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
+                    CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
+                    Temperature = "Temp", Volume = "effort", FRP_Meso = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
+      dplyr::filter(!is.na(Latitude)) %>% #remove samples with no gps coordinates
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Meso", values_from="CPUE", values_fill=list(CPUE=0))%>%
       tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime",
                                  -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"Turbidity",
                                  -"Tide", -"Microcystis", -"SizeClass", -"Latitude", -"Longitude",
-                                 -"Temperature", -"Volume", -"SampleID"),
+                                 -"Temperature", -"Volume", -"SampleID", -"TowType"),
                           names_to="FRP_Meso", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FRP_Meso", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species")%>% #only retain FRP codes
@@ -665,8 +688,7 @@ Zoopdownloader <- function(
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID),
-                    TowType="Surface") #Create identifier for each sample
+      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
     cat("\nFRP_Meso finished!\n\n")
   }
 
@@ -843,37 +865,61 @@ Zoopdownloader <- function(
     # Import the FRP data
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "bugsFRP2018.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url="https://pasta.lternet.edu/package/data/eml/edi/269/2/630f16b33a9cbf75f1989fc18690a6b3",
-            destfile=file.path(Data_folder, "bugsFRP2018.csv"), mode="wb", method=Download_method)
+    if (!file.exists(file.path(Data_folder, "bugsFRP2021.csv")) | Redownload_data) {
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=8de785ee47220f3893654478c79b5f8f",
+            destfile=file.path(Data_folder, "bugsFRP2021.csv"), mode="wb", method=Download_method)
+      Tryer(n=3, fun=utils::download.file, url="https://portal.edirepository.org/nis/dataviewer?packageid=edi.269.3&entityid=fa84750e51c319d309f97357b7d34315",
+            destfile=file.path(Data_folder, "sitesFRP2021.csv"), mode="wb", method=Download_method)
+
     }
 
-    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2018.csv"),
-                                     col_types = "ccccddddddddccdddcddc", na=c("", "NA"))
+    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "bugsFRP2021.csv"), na=c("", "NA"))
+    sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP2021.csv"), na=c("", "NA"))
+
+    #join environmental data to taxa counts and fix some wonky names
+    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -Date, -Location), sites_FRP_Macro, by = "VisitNo") %>%
+      dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID", #fix some wonky common names
+                                    CommonName == "Insect Unid" ~ "Insect UNID",
+                                    CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                    CommonName == "Tricoptera larvae Other" ~ "Tricoptera larvae UNID",
+                                    CommonName == "Palaemonectes" ~ "Palaemon",
+                                    CommonName == "Palaemonetes" ~ "Palaemon",
+                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                    CommonName == "Asellidae UNID" ~ "Asellidae",
+                                    CommonName == "Diptera adult" ~ "Diptera Adult",
+                                    CommonName == "Coleoptera other" ~ "Coleoptera Other",
+                                    CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
+                                    TRUE ~ CommonName))
 
     #Already in long format
-    data.list[["FRP_Macro"]] <- zoo_FRP_Macro%>%
-      dplyr::filter(.data$Sampletype=="trawl")%>%
+    data.list[["FRP_Macro"]] <- FRP_allmac%>%
+      dplyr::filter(.data$GearTypeAbbreviation %in% c("MAC", "MACOBL", "MACBEN"))%>%
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
-      dplyr::mutate(Station=dplyr::recode(.data$Station, `Lindsey Tules`="Lindsey tules", LinBR="LinBr", MINSLO1="MinSlo1", ProBR="ProBr", WinBR="WinBr"))%>% #Rename inconsistent station names to match
-      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$time),
+      dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$StartTime),
                                                                        NA_character_,
-                                                                       paste(.data$Date, .data$time)),
+                                                                       paste(.data$Date, as.character(.data$StartTime))),
                                                         "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))%>% #Create a variable for datetime
       dplyr::mutate(Source = "FRP",
                     SizeClass = "Macro",
-                    CPUE = .data$AdjCount/.data$volume, #add variable for data source and calculate CPUE
-                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2"))%>%
-      dplyr::select("Source", "Date", "Datetime", "Latitude", "Longitude",
-                    "Station", CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass",
-                    Temperature = "Temp", Volume = "volume", FRP_Macro = "CommonName", "CPUE", "SampleID")%>% #Select for columns in common and rename columns to match
+                    TowType= dplyr::case_when(GearTypeAbbreviation == "MAC" ~ "Surface",
+                                       GearTypeAbbreviation == "MACOBL" ~ "Oblique",
+                                       GearTypeAbbreviation == "MACBEN" ~ "Bottom",
+                                       TRUE ~ "Surface"),
+                    CPUE = .data$AdjCount/.data$effort, #add variable for data source and calculate CPUE
+                    Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium`="3"))%>%
+
+      dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart",Longitude = "LongitudeStart", Station = "Location",
+                    CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
+                    Temperature = "Temp", Volume = "effort", FRP_Macro = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
+      dplyr::filter(!is.na(Latitude)) %>%
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Macro", values_from="CPUE", values_fill=list(CPUE=0))%>%
-      tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime", -"Latitude", -"Longitude",
-                                 -"Station", -"CondSurf", -"Secchi", -"pH",
-                                 -"DO", -"Turbidity", -"Tide", -"Microcystis", -"SizeClass",
-                                 -"Temperature", -"Volume", -"SampleID"),
+      tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime",
+                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"Turbidity",
+                                 -"Tide", -"Microcystis", -"SizeClass", -"Latitude", -"Longitude",
+                                 -"Temperature", -"Volume", -"SampleID", -"TowType"),
                           names_to="FRP_Macro", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FRP_Macro", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species")%>% #only retain FRP codes
@@ -884,12 +930,12 @@ Zoopdownloader <- function(
       dplyr::select(-"FRP_Macro")%>% #Remove FRP taxa codes
       dtplyr::lazy_dt()%>% #Speed up code
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T))%>% #this just adds up those duplications
+      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #this just adds up those duplications
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
-      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID),
-                    TowType="Surface") #Create identifier for each sample
+      dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
     cat("\nFRP_Macro finished!\n\n")
+
   }
 
   # EMP Macro ---------------------------------------------------------------
