@@ -10,6 +10,8 @@ crosswalk_starts<-zooper::crosswalk%>%
          DOP=if_else(!is.na(DOP_Meso) | !is.na(DOP_Macro), "Y", NA_character_),
          FRP=if_else(!is.na(FRP_Meso) | !is.na(FRP_Macro), "Y", NA_character_))
 
+taxlifestages<-unique(paste(zooper::crosswalk$Taxname, zooper::crosswalk$Lifestage))
+
 starts<-zooper::startDates%>%
   group_by(Source)%>%
   summarise(Startdate=year(min(Startdate)), .groups="drop")%>%
@@ -42,4 +44,24 @@ test_that("Crosswalk start dates are not earlier than survey start dates", {
   expect_true(all(is.na(crosswalk_starts$EMPstart) | starts$EMP <= year(crosswalk_starts$EMPstart)))
   expect_true(all(is.na(crosswalk_starts$FMWTstart) | starts$FMWT <= year(crosswalk_starts$FMWTstart)))
   expect_true(all(is.na(crosswalk_starts$FRPstart) | starts$FRP <= year(crosswalk_starts$FRPstart)))
+})
+
+test_that("No survey species codes are repeated in the crosswalk", {
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Micro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$FMWT_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$FMWT_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$twentymm_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$FRP_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$FRP_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$YBFMP))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$DOP_Meso))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$DOP_Macro))))
+})
+
+test_that("All Taxlifestage values in zoopComb appear in crossswalk", {
+  expect_true(all(unique(zooper::zoopComb$Taxlifestage)%in%taxlifestages))
 })
