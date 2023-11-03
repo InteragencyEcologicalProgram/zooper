@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Updated FRP data
 * Fixing malfunctions in the taxonomic consistency over time approach. Uses of that function prior to this fix may not have appropriately resolved for changes in taxonomic consistency over time.
 
 # zooper 2.5.1
