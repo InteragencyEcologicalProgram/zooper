@@ -38,6 +38,7 @@ NTU
 Nematoda
 PLOS
 PPT
+Pseudodiaptomus
 QAQC
 Rds
 SMSCG
@@ -58,6 +59,7 @@ Tibble
 TowType
 Townet
 Trophic
+UnID
 Undersampled
 YBFMP
 Yolo
@@ -71,10 +73,12 @@ doi
 dtplyr
 erroring
 filelib
+forbesi
 github
 https
 lifestage
 macrozooplankton
+marinus
 meso
 mesozooplankton
 microzooplankton
@@ -88,6 +92,7 @@ redownloading
 rotifers
 rvest
 salinities
+spp
 taxlifestages
 testthat
 tibble
