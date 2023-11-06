@@ -272,4 +272,35 @@ test_that("Single source taxa dataset is created and contains all sources", {
   expect_equal(taxind$N, taxind$N_Taxsamples)
 })
 
+# Code to identify taxa not counted in all surveys
 
+com <- Zoopsynther(Data_type="Community")
+
+taxlifestages<-com%>%
+  group_by(SizeClass)%>%
+  summarise(taxlifestages=list(unique(Taxlifestage)))%>%
+  unnest(taxlifestages)%>%
+  unstack(taxlifestages~SizeClass)
+
+missing<-com%>%
+  group_by(Source, SizeClass)%>%
+  summarise(n=n_distinct(Taxlifestage),
+            Taxlifestage=list(unique(Taxlifestage)),
+            missing=list(setdiff(taxlifestages[[unique(SizeClass)]], unlist(Taxlifestage))),
+            .groups="drop")%>%
+  rowwise()%>%
+  filter(length(unlist(missing))>0)%>%
+  ungroup()%>%
+  unnest(missing)%>%
+  mutate(missing=paste(missing, SizeClass))%>%
+  pull(missing)%>%
+  unique()
+
+test_that("Only the expected taxlifestages not present in every survey are retained after the community approach", {
+expect_setequal(missing,
+                c("Copepoda_UnID Adult Meso", "Copepoda_UnID Juvenile Meso",
+                  "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso"))
+})
+
+rm(com, taxlifestages)
+gc()
