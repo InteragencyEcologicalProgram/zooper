@@ -120,6 +120,7 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @param Data Zooplankton dataset including columns named the same as the \code{Groupers}, a \code{Taxname} column, "CPUE", and no other taxonomic identifying columns.
 #' @param Taxalevel The value of Groupers on which to apply this function.
 #' @param Groupers A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.
+#' @inheritParams Zoopsynther
 #' @keywords Taxonomy zooplankton
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -139,7 +140,7 @@ Commontaxer<-function(Source_taxa_key, Taxa_level, Size_class){
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{zoopComb}}
 #' @export
 
-LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")){
+LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g"), Response="CPUE"){
   Taxalevel2<-rlang::sym(Taxalevel) #unquote input
   Taxalevel2<-rlang::enquo(Taxalevel2) #capture expression to pass on to functions below
   Groupers <- Groupers[Groupers!=Taxalevel]
@@ -151,8 +152,8 @@ LCD_Taxa<-function(Data, Taxalevel, Groupers = c("Genus_g", "Family_g", "Order_g
     dplyr::ungroup()%>%
     dplyr::select(-tidyselect::all_of(c("N", "Taxname", Groupers)))%>%
     dtplyr::lazy_dt()%>%
-    dplyr::group_by(dplyr::across(-"CPUE"))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
-    dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Add up all members of each grouping taxon
+    dplyr::group_by(dplyr::across(-tidyselect::all_of(Response)))%>% #Group data by relavent grouping variables (including taxonomic group) for later data summation
+    dplyr::summarise(dplyr::across(c(Response), ~sum(.x, na.rm=TRUE)))%>% #Add up all members of each grouping taxon
     dplyr::ungroup()%>%
     tibble::as_tibble()%>%
     dplyr::mutate(Taxname=!!Taxalevel2) #Add summarized group names to Taxname

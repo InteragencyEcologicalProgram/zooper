@@ -10,6 +10,7 @@
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
 #' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Only available for the Community option.
 #' @param Intro_lag Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.
+#' @param Response Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort).
 #' @param Taxa If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.
 #' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
 #' @param Months Months (as integers) to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the months you wish to be included. Defaults to \code{Months = NA}, which includes all months.
@@ -74,6 +75,7 @@ Zoopsynther<-function(
   Size_class = c("Micro", "Meso", "Macro"),
   Time_consistency = FALSE,
   Intro_lag = 2,
+  Response="CPUE",
   Taxa = NULL,
   Date_range = c(NA, NA),
   Months = NA,
@@ -121,6 +123,9 @@ Zoopsynther<-function(
 
   if (!(Data_type=="Taxa" | Data_type=="Community")){
     stop("Data_type must be either 'Taxa' or 'Community'")
+  }
+  if (!purrr::every(Response, ~.%in%c("CPUE", "BPUE"))){
+    stop("Response must contain one or more of the following options: CPUE, BPUE")
   }
 
   if(!purrr::every(list(Shiny, Reload_data, Redownload_data, All_env, Time_consistency), is.logical)){
@@ -560,8 +565,8 @@ Zoopsynther<-function(
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species")%>%
       dtplyr::lazy_dt()%>%
-      dplyr::group_by(dplyr::across(-"CPUE"))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>%
+      dplyr::group_by(dplyr::across(-tidyselect::all_of(Response)))%>%
+      dplyr::summarise(dplyr::across(Response, ~sum(.x, na.rm=TRUE)))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%
