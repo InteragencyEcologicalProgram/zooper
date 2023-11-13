@@ -50,7 +50,7 @@ library(dplyr)
 library(purrr)
 library(tibble)
 library(tidyr)
-require(stringr)
+library(stringr)
 
 #Test on all datasets
 
@@ -299,7 +299,8 @@ missing<-com%>%
 test_that("Only the expected taxlifestages not present in every survey are retained after the community approach", {
 expect_setequal(missing,
                 c("Copepoda_UnID Adult Meso", "Copepoda_UnID Juvenile Meso",
-                  "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso"))
+                  "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso",
+                  "Brachionidae_UnID Adult Meso", "Americorophium_UnID Adult Macro"))
 })
 
 rm(com, taxlifestages)

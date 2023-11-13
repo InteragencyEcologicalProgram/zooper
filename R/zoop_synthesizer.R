@@ -115,6 +115,10 @@ Zoopsynther<-function(
     stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, STN, 20mm, DOP")
   }
 
+  if (!purrr::every(Size_class, ~.%in%c("Micro", "Meso", "Macro"))){
+    stop("Size_class must contain one or more of the following options: Micro, Meso, Macro")
+  }
+
 
   if (is.null(Data_type)){
     stop("You must set Data_type to either 'Taxa' or 'Community'")
@@ -566,7 +570,7 @@ Zoopsynther<-function(
       dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species")%>%
       dtplyr::lazy_dt()%>%
       dplyr::group_by(dplyr::across(-tidyselect::all_of(Response)))%>%
-      dplyr::summarise(dplyr::across(Response, ~sum(.x, na.rm=TRUE)))%>%
+      dplyr::summarise(dplyr::across(tidyselect::all_of(Response), ~sum(.x, na.rm=TRUE)))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%

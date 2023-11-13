@@ -800,7 +800,7 @@ Zoopdownloader <- function(
     sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
-    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -.data$Date, -.data$Location), sites_FRP_Macro, by = "VisitNo") %>%
+    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -"Date", -"Location"), sites_FRP_Macro, by = "VisitNo") %>%
       dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID", #fix some wonky common names
                                     CommonName == "Insect Unid" ~ "Insect UNID",
                                     CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",

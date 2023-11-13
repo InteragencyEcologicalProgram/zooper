@@ -69,9 +69,19 @@ test_that("All Taxlifestage values in zoopComb appear in crossswalk", {
 taxname_check<-zooper::crosswalk%>%
   filter(!is.na(Level))%>%
   rowwise()%>%
-  mutate(verify=cur_data()[[Level]])%>%
+  mutate(verify=pick(Phylum, Class, Order, Family, Genus, Species)[[Level]])%>%
   ungroup()
 
 test_that("All Taxnames correspond to the specified taxonomic level", {
   expect_equal(taxname_check$Taxname, taxname_check$verify)
+})
+
+taxname_level<-select(zooper::crosswalk, "Taxname", "Level")%>%
+  distinct()%>%
+  pull(Taxname)%>%
+  duplicated()%>%
+  which()
+
+test_that("Taxnames are entered with a consistent taxonomic level", {
+  expect_equal(length(taxname_level), 0)
 })
