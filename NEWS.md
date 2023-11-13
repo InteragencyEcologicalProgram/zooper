@@ -1,5 +1,6 @@
 # zooper (development version)
 
+* Fixed issue with crosswalk that may impact Zoopsynther community output (values in the species column weren't consistent, some were genus species, some just species)
 * Updated FRP data
 * Fixing malfunctions in the taxonomic consistency over time approach. Uses of that function prior to this fix may not have appropriately resolved for changes in taxonomic consistency over time.
 

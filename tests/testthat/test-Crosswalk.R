@@ -65,3 +65,13 @@ test_that("No survey species codes are repeated in the crosswalk", {
 test_that("All Taxlifestage values in zoopComb appear in crossswalk", {
   expect_true(all(unique(zooper::zoopComb$Taxlifestage)%in%taxlifestages))
 })
+
+taxname_check<-zooper::crosswalk%>%
+  filter(!is.na(Level))%>%
+  rowwise()%>%
+  mutate(verify=cur_data()[[Level]])%>%
+  ungroup()
+
+test_that("All Taxnames correspond to the specified taxonomic level", {
+  expect_equal(taxname_check$Taxname, taxname_check$verify)
+})
