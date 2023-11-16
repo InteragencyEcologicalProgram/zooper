@@ -37,6 +37,7 @@ Zoopdownloader <- function(
                 "20mm_Meso", "FRP_Meso", "EMP_Micro",
                 "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                 "STN_Macro", "DOP_Meso", "DOP_Macro"),
+  Lengths = FALSE,
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
@@ -71,6 +72,10 @@ Zoopdownloader <- function(
     stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
   }
 
+  if(Lengths & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
+    stop("Lengths are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
+  }
+
   # Load station key to later incorporate latitudes and longitudes
 
   stations <- Stations
@@ -79,6 +84,9 @@ Zoopdownloader <- function(
 
   data.list<-list()
 
+  if(Lengths){
+  lengths.list<-list()
+    }
 
   # Find URLs ---------------------------------------------------------------
 
@@ -933,6 +941,27 @@ Zoopdownloader <- function(
     dplyr::left_join(stations, by=c("Source", "Station"))
 
     cat("\nEMP_Macro finished!\n\n")
+
+    if(Lengths){
+      #download the file
+      if (!file.exists(file.path(Data_folder, "EMP_Lengths.csv")) | Redownload_data) {
+        Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Lengths,
+              destfile=file.path(Data_folder, "EMP_Lengths.csv"), mode="wb", method=Download_method)
+
+        lengths.list[["EMP_Lengths"]]<-readr::read_csv(file.path(Data_folder, "EMP_Lengths.csv"),
+                                       col_types=readr::cols_only(SampleDate="c", StationNZ="c",
+                                                                  SpeciesName="c", Size="d", AdjustedFreq="d"))%>%
+          dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+          rename(Date="SampleDate", Station="StationNZ", EMP_Lengths="SpeciesName", Length="Size", Count="AdjustedFreq")%>%
+          dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                             dplyr::select("EMP_Lengths", "Lifestage", "Taxname")%>% #only retain EMP codes
+                             dplyr::filter(!is.na(.data$EMP_Lengths))%>% #Only retain Taxnames corresponding to EMP codes
+                             dplyr::distinct(),
+                           by="EMP_Lengths")%>%
+          dplyr::filter(!is.na(.data$Taxname))
+      }
+    }
+
   }
   # FMWT Macro --------------------------------------------------------------
 
@@ -1088,6 +1117,8 @@ Zoopdownloader <- function(
     dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
                   "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE")
 
+  zoop_lengths<-dplyr::bind_rows(lengths.list)
+
   if(Save_object){
     saveRDS(zoop, file=paste0(Zoop_path, ".Rds"))
     saveRDS(zoopEnv, file=paste0(Env_path, ".Rds"))
@@ -1099,7 +1130,7 @@ Zoopdownloader <- function(
       return(zoop_full)
     }
     if(Return_object_type=="List"){
-      return(list(Zooplankton = zoop, Environment = zoopEnv))
+      return(list(Zooplankton = zoop, Environment = zoopEnv, Lengths=zoop_lengths))
     }
   }
 

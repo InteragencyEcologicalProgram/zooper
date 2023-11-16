@@ -3,7 +3,7 @@ require(magrittr)
 require(zooper)
 
 crosswalk<-readr::read_csv(file.path("data-raw", "crosswalk.csv"),
-                           col_types=readr::cols_only(EMP_Micro="c", EMP_Meso="c", EMP_Macro="c",
+                           col_types=readr::cols_only(EMP_Micro="c", EMP_Meso="c", EMP_Macro="c", EMP_Lengths="c",
                                                       STN_Meso="c", STN_Macro="c", FMWT_Meso="c",
                                                       FMWT_Macro="c", twentymm_Meso="c", FRP_Meso="c",
                                                       FRP_Macro="c", YBFMP="c", LI_Meso="c",

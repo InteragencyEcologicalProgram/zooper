@@ -50,6 +50,7 @@ test_that("No survey species codes are repeated in the crosswalk", {
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Meso))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Micro))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Lengths))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Meso))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Macro))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$FMWT_Meso))))
@@ -76,8 +77,8 @@ test_that("All Taxnames correspond to the specified taxonomic level", {
   expect_equal(taxname_check$Taxname, taxname_check$verify)
 })
 
-taxname_level<-select(zooper::crosswalk, "Taxname", "Level")%>%
-  distinct()%>%
+taxname_level<-zooper::crosswalk%>%
+  distinct(Taxname, Level, Phylum, Class, Order, Family, Genus, Species)%>%
   pull(Taxname)%>%
   duplicated()%>%
   which()
