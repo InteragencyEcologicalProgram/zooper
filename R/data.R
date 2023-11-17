@@ -138,6 +138,25 @@
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopEnvComb"
 
+#' Zooplankton length dataset
+#'
+#' Zooplankton length data. Currently only available for EMP.
+#'
+#' @format a tibble with 246,599 rows and 9 columns.
+#' \describe{
+#'   \item{Source}{Abbreviated name of the source dataset. "EMP"=Environmental Monitoring Program, "FRP"=Fish Restoration Program, "FMWT"= Fall Midwater Trawl, "STN"= Townet Survey, "20mm" =20mm survey, "DOP" = Directed Outflow Project Lower Trophic Study, and "YBFMP"= Yolo Bypass Fish Monitoring Program.}
+#'   \item{SizeClass}{Net size class. Micro corresponds to 43-50 \eqn{\mu}m mesh, Meso corresponds to 150-160 \eqn{\mu}m mesh, and Macro corresponds to 500-505 \eqn{\mu}m mesh. However, prior to 1974 EMP macrozooplankton were sampled with a 930 \eqn{\mu}m mesh net.}
+#'   \item{Lifestage}{Zooplankton life stage}
+#'   \item{Taxname}{Scientific name}
+#'   \item{Taxlifestage}{Combined Taxname and Lifestage}
+#'   \item{SampleID}{Unique ID of the zooplankton sample. This key and \code{SizeClass} link to the \code{zoopEnvComb} dataset}
+#'   \item{Length}{Individual length (mm)}
+#'   \item{Count}{The number of individuals of the given length}
+#' }
+#' @details For more information on the source datasets see \code{\link{zooper}}.
+#' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
+"zoopLengths"
+
 
 #' All taxonomic names
 #'

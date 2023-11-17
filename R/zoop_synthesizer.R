@@ -570,7 +570,7 @@ Zoopsynther<-function(
       dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species")%>%
       dtplyr::lazy_dt()%>%
       dplyr::group_by(dplyr::across(-tidyselect::all_of(Response)))%>%
-      dplyr::summarise(dplyr::across(tidyselect::all_of(Response), ~sum(.x, na.rm=TRUE)))%>%
+      dplyr::summarise(dplyr::across(tidyselect::all_of(Response), ~sum(.x)))%>%
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::left_join(Crosswalk%>%

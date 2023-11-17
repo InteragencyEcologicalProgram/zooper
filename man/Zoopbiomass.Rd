@@ -9,7 +9,8 @@ Zoopbiomass(
   Sources,
   Size_class,
   Zoop = zooper::zoopComb,
-  Biomass_mesomicro = zooper::biomass_mesomicro
+  Biomass_mesomicro = zooper::biomass_mesomicro,
+  Biomass_macro = zooper::biomass_macro
 )
 }
 \arguments{
@@ -19,7 +20,9 @@ Zoopbiomass(
 
 \item{Zoop}{Zooplankton data. You must provide the "Zooplankton" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Zoop_path}.}
 
-\item{Biomass_mesomicro}{The biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
+\item{Biomass_mesomicro}{The micro and meso zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
+
+\item{Biomass_macro}{The macro zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
 }
 \description{
 Convert CPUE to biomass
