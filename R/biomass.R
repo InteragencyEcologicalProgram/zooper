@@ -1,35 +1,25 @@
 #' Convert CPUE to biomass
 #' This function converts zooplankton CPUE to biomass for taxa with conversion equations.
 #'
-#' @inheritParams Zoopsynther
+#' @param Zoop Zooplankton count dataset
+#' @param ZoopLengths Zooplankton length dataset for macrozooplankton.
 #' @param Biomass_mesomicro The micro and meso zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}
-#' @param Biomass_macro The macro zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}
-#'
+#' @param Biomass_macro The macro zooplankton biomass conversion table. The default is \code{\link{biomass_macro}}
 
-Zoopbiomass<-function(Sources,
-                      Size_class,
-                      Zoop = zooper::zoopComb,
+Zoopbiomass<-function(Zoop,
+                      ZoopLengths,
                       Biomass_mesomicro=zooper::biomass_mesomicro,
                       Biomass_macro=zooper::biomass_macro) {
 
   #Warnings for improper arguments
-  if("YBFMP" %in% Sources){
-    stop("YBFMP data cannot be converted to biomass with this function due to taxonomic and life stage issues with that dataset.")
-  }
 
-  if (!purrr::every(Sources, ~.%in%c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP"))){
-    stop("Sources must contain one or more of the following options: EMP, FRP, FMWT, STN, 20mm, DOP")
-  }
+  Size_class<-unique(Zoop$SizeClass)
 
-  if (!purrr::every(Size_class, ~.%in%c("Micro", "Meso", "Macro"))){
-    stop("Size_class must contain one or more of the following options: Micro, Meso, Macro")
-  }
-
-  if ("Macro"%in%Size_class & !"EMP"%in%Sources){
+  if ("Macro"%in%Size_class & !"EMP"%in%unique(Zoop$Source)){
     stop("Macro zooplankton biomass conversion is currently only available for EMP")
   }
 
-  if ("Macro"%in%Size_class & any(c("FRP", "FMWT", "STN", "DOP")%in%Sources)){
+  if ("Macro"%in%Size_class & any(c("FRP", "FMWT", "STN", "DOP")%in%unique(Zoop$Source))){
     message("Note that macro zooplankton biomass conversion is currently only available for EMP, so biomass will not be returned for other surveys")
   }
 
@@ -70,33 +60,39 @@ Zoopbiomass<-function(Sources,
 
     zoop_list[["Macro"]]<-Zoop%>%
       dplyr::filter(.data$SizeClass%in%c("Macro"))%>%
-      dplyr::left_join(zoopLengths%>%
+      dplyr::left_join(ZoopLengths%>%
                          dplyr::left_join(Biomass_macro, by="Taxname")%>%
                          dplyr::filter(!is.na(a))%>%
-                         dplyr::mutate(Mass=0.4*(.data$a*.data$Length^.data$b))%>%
+                         dplyr::mutate(Mass=0.1*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
                          dplyr::group_by(.data$SampleID, .data$Taxlifestage)%>%
-                         dplyr::summarise(Mass=sum(.data$Mass)),
-                       by="Taxlifestage")%>%
+                         dplyr::summarise(Mass=sum(.data$Mass), .groups="drop"),
+                       by=c("Taxlifestage", "SampleID"))%>%
       dplyr::mutate(Mass=dplyr::case_when(
         .data$Taxname%in%unique(Biomass_macro$Taxname) &
-          .data$Source%in%unique(zoopLengths$Source) &
+          .data$Source%in%unique(ZoopLengths$Source) &
           .data$CPUE==0 ~ 0,
         !is.na(.data$Mass) ~ Mass,
-        TRUE, NA_real_))
+        TRUE ~ NA_real_))
   }
 
 Zoop<-dplyr::bind_rows(zoop_list)%>%
     dplyr::mutate(BPUE=.data$Mass/.data$Volume)
 
-  removed<-Zoop%>%
+  nomass<-Zoop%>%
     dplyr::filter(is.na(.data$Mass))%>%
-    dplyr::pull(.data$Taxlifestage)%>%
+    dplyr::distinct(.data$Taxlifestage, .data$SizeClass)%>%
+    dplyr::mutate(nomass=paste(.data$Taxlifestage, .data$SizeClass))%>%
+    dplyr::pull(.data$nomass)%>%
     unique()
 
-  cat(paste("The following taxlifestages were removed because biomass conversations were not available:",
-            paste(removed, collapse=", ")))
+  Zoop<-Zoop%>%
+    dplyr::select(-"Mass")
 
-  out<-list(removed=removed, zoop=Zoop)
-  return(out)
+  cat(paste("Biomass could not be calculated for the following taxlifestages
+            in the listed sizeclass because biomass conversations or lengths
+            (for macrozooplankton) were not available:",
+            paste(nomass, collapse=", ")))
+
+  return(Zoop)
 }
 

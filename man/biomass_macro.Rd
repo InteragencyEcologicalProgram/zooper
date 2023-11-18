@@ -14,8 +14,8 @@ a tibble with 23 rows and 9 columns.
   \item{N}{The number of individuals used in developing the equation.}
   \item{Min_length}{Minimum length (mm) of individuals used in developing the equation.}
   \item{Max_length}{Maximum length (mm) of individuals used in developing the equation.}
-  \item{a}{Coefficient a in the equation Weight (g) = a * Length (mm) ^ b.}
-  \item{b}{Coefficient b in the equation Weight (g) = a * Length (mm) ^ b.}
+  \item{a}{Coefficient a in the equation Weight (mg) = a * Length (mm) ^ b.}
+  \item{b}{Coefficient b in the equation Weight (mg) = a * Length (mm) ^ b.}
 }
 }
 \usage{
@@ -23,7 +23,9 @@ biomass_macro
 }
 \description{
 Length-weight equations for macro zooplankton to be used for biomass conversions.
-The equations relate length in mm to mass in grams.
+The equations relate length in mm to dry mass in milligrams. Dry mass can be converted
+to carbon mass by assuming 40% of dry mass is carbon mass, after Uye 1982.
+Uye, S. 1982. Length-weight relationships of important zooplankton from the Inland Sea of Japan. Journal of the Oceanographical Society of Japan 38:149–158.
 }
 \seealso{
 \code{\link{biomass_mesomicro}}

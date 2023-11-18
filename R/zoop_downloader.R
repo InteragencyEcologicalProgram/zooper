@@ -37,7 +37,7 @@ Zoopdownloader <- function(
                   "20mm_Meso", "FRP_Meso", "EMP_Micro",
                   "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                   "STN_Macro", "DOP_Meso", "DOP_Macro"),
-    Lengths = FALSE,
+    Biomass = FALSE,
     Data_folder = tempdir(),
     Save_object = TRUE,
     Return_object = FALSE,
@@ -72,8 +72,8 @@ Zoopdownloader <- function(
     stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
   }
 
-  if(Lengths & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
-    stop("Lengths are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
+  if(Biomass & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
+    stop("Biomass are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
   }
 
   # Load station key to later incorporate latitudes and longitudes
@@ -84,7 +84,7 @@ Zoopdownloader <- function(
 
   data.list<-list()
 
-  if(Lengths){
+  if(Biomass){
     lengths.list<-list()
   }
 
@@ -942,7 +942,7 @@ Zoopdownloader <- function(
 
     cat("\nEMP_Macro finished!\n\n")
 
-    if(Lengths){
+    if(Biomass){
       #download the file
       if (!file.exists(file.path(Data_folder, "EMP_Lengths.csv")) | Redownload_data) {
         Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Lengths,
@@ -960,9 +960,9 @@ Zoopdownloader <- function(
                            by="EMP_Lengths")%>%
           dplyr::filter(!is.na(.data$Taxname))%>%
           dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage),
-                 Source="EMP",
-                 SizeClass="Macro",
-                 SampleID=paste(.data$Source, .data$Station, .data$Date))%>%
+                        Source="EMP",
+                        SizeClass="Macro",
+                        SampleID=paste(.data$Source, .data$Station, .data$Date))%>%
           dplyr::select(-"EMP_Lengths", -"Date", -"Station")
 
         cat("\nEMP_Macro lengths finished!\n\n")
@@ -1124,8 +1124,12 @@ Zoopdownloader <- function(
     dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
                   "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE")
 
-  if(Lengths){
+  if(Biomass){
     zoop_lengths<-dplyr::bind_rows(lengths.list)
+    Zoop<-Zoopbiomass(zoop, zoop_lengths)%>%
+      dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
+                    "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE", "BPUE")
+
   }
 
   if(Save_object){
@@ -1139,11 +1143,7 @@ Zoopdownloader <- function(
       return(zoop_full)
     }
     if(Return_object_type=="List"){
-      if(Lengths){
-        return(list(Zooplankton = zoop, Environment = zoopEnv, Lengths=zoop_lengths))
-      }else{
         return(list(Zooplankton = zoop, Environment = zoopEnv))
-      }
     }
   }
 

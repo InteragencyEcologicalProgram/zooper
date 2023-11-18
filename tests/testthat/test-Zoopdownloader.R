@@ -1,14 +1,14 @@
 library(zooper)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
-              "20mm_Meso", "FRP_Meso","EMP_Micro",
-              "FRP_Macro", "EMP_Macro", "FMWT_Macro",
-              "STN_Macro", "YBFMP_Meso", "YBFMP_Micro",
-              "DOP_Meso", "DOP_Macro")
+               "20mm_Meso", "FRP_Meso","EMP_Micro",
+               "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+               "STN_Macro", "YBFMP_Meso", "YBFMP_Micro",
+               "DOP_Meso", "DOP_Macro")
 
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
-                         Save_object = FALSE, Redownload_data = TRUE,
-                         Data_sets = Data_sets)
+                       Save_object = FALSE, Redownload_data = TRUE,
+                       Biomass=TRUE, Data_sets = Data_sets)
 
 No_coords2<-dplyr::filter(Data$Environment, is.na(Latitude) & !stringr::str_detect(Station, "NZEZ"))%>%
   dplyr::mutate(Station=paste(Source, Station))
@@ -66,3 +66,21 @@ test_that("TowType only has the expected levels", {
   expect_setequal(Data$Environment$TowType, c("Surface", "Bottom", "Oblique", "Vertical pump"))
 })
 
+# Mass
+
+test_that("When biomass is 0, CPUE is 0", {
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & Mass==0)$CPUE), 0)
+})
+
+test_that("When CPUE is 0, Biomass is 0", {
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & CPUE==0 & &
+                               !is.na(Volume) & Source=="EMP" & Taxname%in%unique(Biomass_macro$Taxname))$Mass), 0)
+})
+
+test_that("The only Macro masses are from EMP", {
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(Mass))$Source), "EMP")
+})
+
+test_that("The only Macro species with biomasses are those we expect", {
+  expect_setequal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &   !is.na(Mass))$Taxlifestage),
+                  c("Hyperacanthomysis longirostris Adult", "Neomysis mercedis Adult"))

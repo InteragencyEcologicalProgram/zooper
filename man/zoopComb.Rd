@@ -21,6 +21,7 @@ a tibble with 3,615,105 rows and 14 columns.
   \item{Taxlifestage}{Combined Taxname and Lifestage}
   \item{SampleID}{Unique ID of the zooplankton sample. This key and \code{SizeClass} link to the \code{zoopEnvComb} dataset}
   \item{CPUE}{Catch per unit effort (number \ifelse{html}{\out{m<sup>-3</sup>}}{\eqn{m^{-3}}})}
+  \item{BPUE}{Biomass per unit effort (\eqn{\mu}/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})}
 }
 }
 \usage{

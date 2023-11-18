@@ -29,12 +29,11 @@ zoop<-Zoopdownloader(Data_sets=c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                  "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                                  "STN_Macro", "YBFMP_Meso", "YBFMP_Micro", "DOP_Macro", "DOP_Meso"),
                      Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE,
-                     Redownload_data=TRUE, Crosswalk=crosswalk, Lengths=TRUE)
+                     Redownload_data=TRUE, Crosswalk=crosswalk, Biomass=TRUE)
 
 zoopComb <- zoop$Zooplankton
 
 zoopEnvComb <- zoop$Environment
-zoopLengths <- zoop$Lengths
 
 startDates<-zoopComb%>%
   dplyr::left_join(zoopEnvComb%>%
@@ -45,4 +44,4 @@ startDates<-zoopComb%>%
   dplyr::group_by(Source, SizeClass)%>%
   dplyr::summarise(Startdate = min(Date), .groups="drop")
 
-usethis::use_data(zoopComb, zoopEnvComb, zoopLengths, startDates, crosswalk, overwrite = TRUE)
+usethis::use_data(zoopComb, zoopEnvComb, startDates, crosswalk, overwrite = TRUE)

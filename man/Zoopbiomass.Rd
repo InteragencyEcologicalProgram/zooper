@@ -6,23 +6,20 @@
 This function converts zooplankton CPUE to biomass for taxa with conversion equations.}
 \usage{
 Zoopbiomass(
-  Sources,
-  Size_class,
-  Zoop = zooper::zoopComb,
+  Zoop,
+  ZoopLengths,
   Biomass_mesomicro = zooper::biomass_mesomicro,
   Biomass_macro = zooper::biomass_macro
 )
 }
 \arguments{
-\item{Sources}{Source datasets to be included. Choices include "EMP" (Environmental Monitoring Program), "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "DOP" (Directed Outflow Project), and "20mm" (20mm survey). The YBFMP datasets cannot be used in this function due to taxonomic and life stage issues with that dataset. Defaults to \code{Sources = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP")}.}
+\item{Zoop}{Zooplankton count dataset}
 
-\item{Size_class}{Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.}
-
-\item{Zoop}{Zooplankton data. You must provide the "Zooplankton" element from the list returned from \code{\link{Zoopdownloader}(Save_object = FALSE, Return_object = TRUE, Return_object_type="List")}. The default argument provides the built-in (and possibly outdated) version of this combined dataset. If you instead wish to provide paths to saved datasets from the \code{\link{Zoopdownloader}} function, set \code{Data_list = NULL} and provide \code{Zoop_path}.}
+\item{ZoopLengths}{Zooplankton length dataset for macrozooplankton.}
 
 \item{Biomass_mesomicro}{The micro and meso zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
 
-\item{Biomass_macro}{The macro zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
+\item{Biomass_macro}{The macro zooplankton biomass conversion table. The default is \code{\link{biomass_macro}}}
 }
 \description{
 Convert CPUE to biomass
