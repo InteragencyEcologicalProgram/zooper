@@ -54,7 +54,7 @@ Zoopsynther(
 
 \item{Intro_lag}{Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.}
 
-\item{Response}{Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort).}
+\item{Response}{Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort). Defaults to \code{Response = "CPUE"}.}
 
 \item{Taxa}{If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.}
 

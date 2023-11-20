@@ -66,21 +66,23 @@ test_that("TowType only has the expected levels", {
   expect_setequal(Data$Environment$TowType, c("Surface", "Bottom", "Oblique", "Vertical pump"))
 })
 
-# Mass
+# BPUE
 
 test_that("When biomass is 0, CPUE is 0", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & Mass==0)$CPUE), 0)
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & BPUE==0)$CPUE), 0)
 })
 
 test_that("When CPUE is 0, Biomass is 0", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & CPUE==0 & &
-                               !is.na(Volume) & Source=="EMP" & Taxname%in%unique(Biomass_macro$Taxname))$Mass), 0)
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & CPUE==0 &
+                               !is.na(Volume) & Source=="EMP" &
+                               Taxlifestage%in%c("Hyperacanthomysis longirostris Adult", "Neomysis mercedis Adult"))$BPUE), 0)
 })
 
 test_that("The only Macro masses are from EMP", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(Mass))$Source), "EMP")
+  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Source), "EMP")
 })
 
 test_that("The only Macro species with biomasses are those we expect", {
-  expect_setequal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &   !is.na(Mass))$Taxlifestage),
+  expect_setequal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Taxlifestage),
                   c("Hyperacanthomysis longirostris Adult", "Neomysis mercedis Adult"))
+})

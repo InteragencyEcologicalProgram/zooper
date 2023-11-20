@@ -20,7 +20,7 @@ Zoopbiomass<-function(Zoop,
   }
 
   if ("Macro"%in%Size_class & any(c("FRP", "FMWT", "STN", "DOP")%in%unique(Zoop$Source))){
-    message("Note that macro zooplankton biomass conversion is currently only available for EMP, so biomass will not be returned for other surveys")
+    message("Note that macro zooplankton biomass conversion is currently only available for EMP, so macrozooplankton biomass will not be returned for other surveys")
   }
 
   zoop_list<-list()
@@ -55,14 +55,14 @@ Zoopbiomass<-function(Zoop,
 
   if("Macro"%in%unique(Zoop$SizeClass) & "Macro"%in%Size_class){
     Biomass_macro<-Biomass_macro%>%
-      dplyr::filter(Preservative=="Formalin" & Weight_type=="Dry")%>%
+      dplyr::filter(.data$Preservative=="Formalin" & .data$Weight_type=="Dry")%>%
       dplyr::select("Taxname", "a", "b")
 
     zoop_list[["Macro"]]<-Zoop%>%
       dplyr::filter(.data$SizeClass%in%c("Macro"))%>%
       dplyr::left_join(ZoopLengths%>%
                          dplyr::left_join(Biomass_macro, by="Taxname")%>%
-                         dplyr::filter(!is.na(a))%>%
+                         dplyr::filter(!is.na(.data$a))%>%
                          dplyr::mutate(Mass=0.1*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
                          dplyr::group_by(.data$SampleID, .data$Taxlifestage)%>%
                          dplyr::summarise(Mass=sum(.data$Mass), .groups="drop"),

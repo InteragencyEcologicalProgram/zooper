@@ -10,7 +10,7 @@
 #' @param Size_class Zooplankton size classes (as defined by net mesh sizes) to be included in the integrated dataset. Choices include "Micro" (43 \eqn{\mu}m), "Meso" (150 - 160 \eqn{\mu}m), and "Macro" (500-505 \eqn{\mu}m). Defaults to \code{Size_class = c("Micro", "Meso", "Macro")}.
 #' @param Time_consistency Would you like to apply a fix to enforce consistent taxonomic resolution over time? Only available for the Community option.
 #' @param Intro_lag Only applicable if \code{Time_consistency = TRUE}. How many years after a species is introduced should we expect surveys to start counting them? Defaults to 2.
-#' @param Response Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort).
+#' @param Response Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort). Defaults to \code{Response = "CPUE"}.
 #' @param Taxa If you only wish to include a subset of taxa, provide a character vector of the taxa you wish included. This can include taxa of any taxonomic level (e.g., \code{Taxa = "Calanoida"}) to include only calanoids. NOTE: we do not recommend you use this feature AND set \code{Data_type="Community"}. This is better suited to selecting higher-level taxa. If you wish to just include one or a few species, it would be faster to just filter the output of \code{\link{Zoopdownloader}} to include those taxa. Defaults to \code{NULL}, which includes all taxa.
 #' @param Date_range Range of dates to include in the final dataset. To filter within a range of dates, include a character vector of 2  dates formatted in the yyyy-mm-dd format exactly, specifying the upper and lower bounds. To specify an infinite upper or lower bound (to include all values above or below a limit) input \code{NA} for that infinite bound. Defaults to \code{Date_range = c(NA, NA)}, which includes all dates.
 #' @param Months Months (as integers) to be included in the integrated dataset. If you wish to only include data from a subset of months, input a vector of integers corresponding to the months you wish to be included. Defaults to \code{Months = NA}, which includes all months.
@@ -256,7 +256,8 @@ Zoopsynther<-function(
     unique()
 
   #Retain remaining samples and filter to preferred size classes
-  Zoop<-dplyr::filter(Zoop, .data$SampleID%in%Samples & .data$SizeClass%in%Size_class)
+  Zoop<-dplyr::filter(Zoop, .data$SampleID%in%Samples & .data$SizeClass%in%Size_class)%>%
+    dplyr::select(-tidyselect::any_of(setdiff(c("CPUE", "BPUE"), Response)))
 
   #Also filter zoopEnv to only contain samples in Zoop
   ZoopEnv<-dplyr::filter(ZoopEnv, .data$SampleID%in%unique(Zoop$SampleID))
@@ -380,7 +381,8 @@ Zoopsynther<-function(
 
     # Calculate summed groups and create a final dataset
     Zoop<-purrr::map_dfr(Taxcats_g, .f=LCD_Taxa, Data=Zoop%>%
-                           dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species", -"Taxlifestage"))%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
+                           dplyr::select(-"Phylum", -"Class", -"Order", -"Family", -"Genus", -"Species", -"Taxlifestage"),
+                         Response=Response)%>% #Taxonomic level by level, summarise for each of these grouping categories and bind them all together
       dplyr::left_join(Crosswalk_reduced, by="Taxname")%>%
       dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage))%>%
       dplyr::left_join(Undersampled, by=c("Taxlifestage", "SizeClass"))%>% #Add warnings for taxa undersampled by different methods

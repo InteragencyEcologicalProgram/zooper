@@ -1,6 +1,8 @@
-require(dplyr)
-require(tidyr)
-require(lubridate)
+suppressWarnings({
+  require(dplyr)
+  require(tidyr)
+  require(lubridate)
+})
 
 crosswalk_starts<-zooper::crosswalk%>%
   select(contains(c("EMP", "FMWT", "STN", "twentymm", "DOP", "FRP")))%>%

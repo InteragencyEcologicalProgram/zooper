@@ -45,12 +45,14 @@ skip_os_ci<-function(os, logical="or", ci="either"){
 
 skip_os_ci(os=c("darwin", "linux"), logical="or", ci="local")
 
-library(zooper)
-library(dplyr)
-library(purrr)
-library(tibble)
-library(tidyr)
-library(stringr)
+suppressWarnings({
+  library(zooper)
+  library(dplyr)
+  library(purrr)
+  library(tibble)
+  library(tidyr)
+  library(stringr)
+})
 
 #Test on all datasets
 
@@ -64,7 +66,9 @@ test_that("Community option produces messages", {
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
                             CPUE_total=sum(CPUE),
-                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled,)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled,)%>%distinct())),
+                "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+
   expect_output(comTime <<- Zoopsynther(Data_type="Community", Time_consistency = TRUE)%>%
                   summarise(col_names=list(names(.)),
                             N = nrow(.),
@@ -73,8 +77,22 @@ test_that("Community option produces messages", {
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
                             CPUE_total=sum(CPUE),
-                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())),
+                "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
 
+  expect_output(commass <<- Zoopsynther(Data_type="Community", Response=c("CPUE", "BPUE"))%>%
+                  summarise(col_names=list(names(.)),
+                            N = nrow(.),
+                            N_greater0 = nrow(filter(., CPUE>0)),
+                            N_BPUEgreater0 = nrow(filter(., BPUE>0)),
+                            Source = list(unique(paste(Source, SizeClass, sep="_"))),
+                            N_Volume_NA = length(which(is.na(Volume))),
+                            N_BPUE_NA = length(which(is.na(BPUE))),
+                            N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
+                            Samples = list(unique(SampleID)),
+                            CPUE_total=sum(CPUE),
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled,)%>%distinct())),
+                "These species have no relatives in their size class common to all datasets and have been removed from one or more size classes", all=TRUE)
 })
 
 test_that("Taxa option produces messages", {
@@ -86,7 +104,22 @@ test_that("Taxa option produces messages", {
                             N_Volume_NA = length(which(is.na(Volume))),
                             N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
                             Samples = list(unique(SampleID)),
-                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())), "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())),
+                "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
+
+
+  expect_output(taxmass <<- Zoopsynther(Data_type="Taxa", Response=c("CPUE", "BPUE"))%>%
+                  summarise(col_names=list(names(.)),
+                            N = nrow(.),
+                            N_greater0 = nrow(filter(., CPUE>0)),
+                            N_BPUEgreater0 = nrow(filter(., BPUE>0)),
+                            Source = list(unique(paste(Source, SizeClass, sep="_"))),
+                            N_Volume_NA = length(which(is.na(Volume))),
+                            N_BPUE_NA = length(which(is.na(BPUE))),
+                            N_Taxsamples = n_distinct(paste(SampleID, Taxlifestage, SizeClass)),
+                            Samples = list(unique(SampleID)),
+                            Taxa=list(select(., Taxlifestage, SizeClass, Undersampled)%>%distinct())),
+                "[Some taxa were not measured in all datasets|Do not use this data to make additional higher]", all=TRUE)
 })
 
 Data_source <- c("EMP", "FMWT", "STN", "20mm", "FRP","DOP", "EMP", "FRP", "EMP", "FMWT", "STN", "DOP")
@@ -106,10 +139,34 @@ test_that("Community dataset with time consistency is created and contains all s
   expect_setequal(unlist(comTime$Source), Data_sets)
 })
 
+test_that("Community dataset with biomass is created and contains all sources", {
+  expect_gt(commass$N, 0)
+  expect_gt(commass$N_greater0, 0)
+  expect_gt(commass$N_BPUEgreater0, 0)
+  expect_gt(commass$N_BPUE_NA, 0)
+  expect_setequal(unlist(commass$Source), Data_sets)
+})
+
+test_that("Community dataset with biomass is the same as Community dataset without biomass, except for additional column", {
+  expect_equal(select(com, -col_names), select(commass, -col_names, -N_BPUEgreater0, -N_BPUE_NA))
+})
+
 test_that("Taxa dataset is created and contains all sources", {
   expect_gt(tax$N, 0)
   expect_gt(tax$N_greater0, 0)
   expect_setequal(unlist(tax$Source), Data_sets)
+})
+
+test_that("Taxa dataset with biomass is created and contains all sources", {
+  expect_gt(taxmass$N, 0)
+  expect_gt(taxmass$N_greater0, 0)
+  expect_gt(taxmass$N_BPUEgreater0, 0)
+  expect_gt(taxmass$N_BPUE_NA, 0)
+  expect_setequal(unlist(taxmass$Source), Data_sets)
+})
+
+test_that("Taxa dataset with biomass is the same as Taxa dataset without biomass, except for additional column", {
+  expect_equal(select(tax, -col_names), select(taxmass, -col_names, -N_BPUEgreater0, -N_BPUE_NA))
 })
 
 
@@ -126,8 +183,16 @@ test_that("Community dataset with time consistency contains no duplicated rows",
   expect_equal(comTime$N, comTime$N_Taxsamples)
 })
 
+test_that("Community dataset with biomass contains no duplicated rows", {
+  expect_equal(commass$N, commass$N_Taxsamples)
+})
+
 test_that("Taxa dataset contains no duplicated rows", {
   expect_equal(tax$N, tax$N_Taxsamples)
+})
+
+test_that("Taxa dataset with biomass contains no duplicated rows", {
+  expect_equal(taxmass$N, taxmass$N_Taxsamples)
 })
 
 test_that("Taxa dataset contains no NA Volumes", {
@@ -141,7 +206,9 @@ test_that("Taxa and community datasets contain same samples", {
 test_that("No datasets contain the intro, start, or end columns from crosswalk", {
   expect_false(any(str_detect(unlist(com$col_names), "end|start|Intro")))
   expect_false(any(str_detect(unlist(comTime$col_names), "end|start|Intro")))
+  expect_false(any(str_detect(unlist(commass$col_names), "end|start|Intro")))
   expect_false(any(str_detect(unlist(tax$col_names), "end|start|Intro")))
+  expect_false(any(str_detect(unlist(taxmass$col_names), "end|start|Intro")))
 })
 
 
@@ -221,7 +288,7 @@ test_that("Community approach does not change overall CPUE", {
 data_com_time<-Zoopsynther("Community", Time_consistency = TRUE, Shiny = T)
 Removed_time<-unlist(str_split(str_split(data_com_time$Caveats, ", ")[[1]], ": "))[-1]
 Removed_data_time<-tibble(Taxlifestage=str_remove(Removed_time, " \\s*\\([^\\)]+\\)"),
-                     SizeClass=str_extract(Removed_time, " \\s*\\([^\\)]+\\)"))%>%
+                          SizeClass=str_extract(Removed_time, " \\s*\\([^\\)]+\\)"))%>%
   mutate(SizeClass=str_remove(str_remove(SizeClass, fixed(" (")), fixed(")")))
 Data_base_filtered_time<-zooper::zoopComb%>%
   anti_join(Removed_data_time, by=c("SizeClass", "Taxlifestage"))%>%
@@ -297,10 +364,10 @@ missing<-com%>%
   unique()
 
 test_that("Only the expected taxlifestages not present in every survey are retained after the community approach", {
-expect_setequal(missing,
-                c("Copepoda_UnID Adult Meso", "Copepoda_UnID Juvenile Meso",
-                  "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso",
-                  "Brachionidae_UnID Adult Meso", "Americorophium_UnID Adult Macro"))
+  expect_setequal(missing,
+                  c("Copepoda_UnID Adult Meso", "Copepoda_UnID Juvenile Meso",
+                    "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso",
+                    "Brachionidae_UnID Adult Meso", "Americorophium_UnID Adult Macro"))
 })
 
 rm(com, taxlifestages)

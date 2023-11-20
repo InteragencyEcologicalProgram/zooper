@@ -8,7 +8,7 @@ Zoopdownloader(
   Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso",
     "EMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Meso",
     "DOP_Macro"),
-  Biomass = FALSE,
+  Biomass = TRUE,
   Data_folder = tempdir(),
   Save_object = TRUE,
   Return_object = FALSE,
@@ -23,6 +23,8 @@ Zoopdownloader(
 }
 \arguments{
 \item{Data_sets}{Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.}
+
+\item{Biomass}{Whether to add biomass to the dataset (where conversion equations and required data are available). Defaults to \code{Biomass = TRUE}}
 
 \item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.}
 

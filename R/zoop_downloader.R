@@ -7,6 +7,7 @@
 #' "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "20mm" (20mm survey),
 #' "DOP" (Directed Outflow Project Lower Trophic Study), and "YBFMP" (Yolo Bypass Fish Monitoring Program).
 #' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.
+#' @param Biomass Whether to add biomass to the dataset (where conversion equations and required data are available). Defaults to \code{Biomass = TRUE}
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
@@ -37,7 +38,7 @@ Zoopdownloader <- function(
                   "20mm_Meso", "FRP_Meso", "EMP_Micro",
                   "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                   "STN_Macro", "DOP_Meso", "DOP_Macro"),
-    Biomass = FALSE,
+    Biomass = TRUE,
     Data_folder = tempdir(),
     Save_object = TRUE,
     Return_object = FALSE,
@@ -1126,7 +1127,7 @@ Zoopdownloader <- function(
 
   if(Biomass){
     zoop_lengths<-dplyr::bind_rows(lengths.list)
-    Zoop<-Zoopbiomass(zoop, zoop_lengths)%>%
+    zoop<-Zoopbiomass(zoop, zoop_lengths)%>%
       dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
                     "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE", "BPUE")
 

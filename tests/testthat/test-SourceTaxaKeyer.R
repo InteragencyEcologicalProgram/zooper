@@ -1,5 +1,7 @@
-library(zooper)
-library(dplyr)
+suppressWarnings({
+  library(zooper)
+  library(dplyr)
+})
 
 Data <-tibble::tibble(
   Source = c("EMP", "EMP", "EMP", "FMWT", "FMWT", "STN"),
