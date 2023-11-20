@@ -85,6 +85,7 @@ zoop_urls<-function(Sources){
     out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["cb_matrix.csv"])
     out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["pump_matrix.csv"])
     out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["macro_matrix.csv"])
+    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["macro_lengths.csv"])
 
   }
 

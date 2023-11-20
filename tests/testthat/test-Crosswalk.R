@@ -1,6 +1,8 @@
-require(dplyr)
-require(tidyr)
-require(lubridate)
+suppressWarnings({
+  require(dplyr)
+  require(tidyr)
+  require(lubridate)
+})
 
 crosswalk_starts<-zooper::crosswalk%>%
   select(contains(c("EMP", "FMWT", "STN", "twentymm", "DOP", "FRP")))%>%
@@ -50,6 +52,7 @@ test_that("No survey species codes are repeated in the crosswalk", {
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Meso))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Micro))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Macro))))
+  expect_true(all(!duplicated(na.omit(zooper::crosswalk$EMP_Lengths))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Meso))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$STN_Macro))))
   expect_true(all(!duplicated(na.omit(zooper::crosswalk$FMWT_Meso))))
@@ -64,4 +67,24 @@ test_that("No survey species codes are repeated in the crosswalk", {
 
 test_that("All Taxlifestage values in zoopComb appear in crossswalk", {
   expect_true(all(unique(zooper::zoopComb$Taxlifestage)%in%taxlifestages))
+})
+
+taxname_check<-zooper::crosswalk%>%
+  filter(!is.na(Level))%>%
+  rowwise()%>%
+  mutate(verify=pick(Phylum, Class, Order, Family, Genus, Species)[[Level]])%>%
+  ungroup()
+
+test_that("All Taxnames correspond to the specified taxonomic level", {
+  expect_equal(taxname_check$Taxname, taxname_check$verify)
+})
+
+taxname_level<-zooper::crosswalk%>%
+  distinct(Taxname, Level, Phylum, Class, Order, Family, Genus, Species)%>%
+  pull(Taxname)%>%
+  duplicated()%>%
+  which()
+
+test_that("Taxnames are entered with a consistent taxonomic level", {
+  expect_equal(length(taxname_level), 0)
 })

@@ -7,7 +7,8 @@
 LCD_Taxa(
   Data,
   Taxalevel,
-  Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g")
+  Groupers = c("Genus_g", "Family_g", "Order_g", "Class_g", "Phylum_g"),
+  Response = "CPUE"
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ LCD_Taxa(
 \item{Taxalevel}{The value of Groupers on which to apply this function.}
 
 \item{Groupers}{A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.}
+
+\item{Response}{Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort). Defaults to \code{Response = "CPUE"}.}
 }
 \value{
 A tibble with sums calculated for each unique value in \code{Data$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.

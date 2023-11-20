@@ -102,11 +102,16 @@ We first find all taxa that were not counted every year across the date range th
 
 Often, non-native species are not added to zooplankton species list the same year they are first detected in the system. To allow for some lag between introduction years and the years these species were first counted, you can change the `Intro_lag` option (currently defaults to 2 years). 
 
+## Biomass
+
+Functionality to output biomass is now included in zooper. However, biomass conversions are not available for all taxa and life stages. Micro and meso zooplankton are converted to biomass using average biomass values from the literature (see `biomass_mesomicro` for sources). The macrozooplankton are converted to biomass using length-weight equations (see `biomass_macro` for sources). Length data are currently only published online for EMP, so only EMP macro zooplankton biomass is available through zooper, and only for the two mysid taxa with dry weight length-weight equations (see `biomass_macro` for the full set of equations). As more conversions become available for any size class, they can be added to zooper to increase the biomass coverage.
+
 # Usage 
 
 ```{r}
 library(zooper)
 MyZoops <- Zoopsynther(Data_type = "Community", 
+                       Response = c("CPUE", "BPUE"),
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 
                        Date_range = c("1990-10-01", "2000-09-30"))
@@ -135,7 +140,7 @@ MyZoops%>%
   arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
   mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
   ggplot(aes(x=Year, y=CPUE))+
-  geom_bar(stat="identity", color="white", size=0.01, aes(fill=Taxlifestage))+
+  geom_bar(stat="identity", color="white", linewidth=0.01, aes(fill=Taxlifestage))+
   facet_wrap(~Salinity_zone, nrow=1)+
   coord_cartesian(expand=0)+
   scale_x_continuous(breaks = function(x) unique(floor(pretty(seq(min(x), max(x)), n=3))), expand=c(0,0))+
@@ -149,6 +154,36 @@ MyZoops%>%
         legend.background = element_rect(color="black"), axis.text.x=element_text(angle=45, hjust=1))
 ```
 
+
+Here's the same graph with biomass (although a few taxa were removed for which biomass conversions were not available)
+
+```{r plots2, message=FALSE, warning=FALSE, dpi=400, fig.height=7}
+MyZoops%>%
+  filter(!is.na(SalSurf))%>%
+  mutate(Salinity_zone=case_when(
+    SalSurf < 0.5 ~ "Freshwater",
+    SalSurf > 0.5 & SalSurf < 6 ~ "Low salinity zone",
+    SalSurf > 6 ~ "High salinity zone"
+  ))%>%
+  mutate(Salinity_zone=factor(Salinity_zone, levels=c("Freshwater", "Low salinity zone", "High salinity zone")))%>%
+  group_by(Year,Phylum, Class, Order, Family, Genus, Species, Lifestage, Taxlifestage, Salinity_zone)%>%
+  summarise(BPUE=mean(BPUE, na.rm=T), .groups="drop")%>%
+  arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
+  mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
+  ggplot(aes(x=Year, y=BPUE))+
+  geom_bar(stat="identity", color="white", linewidth=0.01, aes(fill=Taxlifestage))+
+  facet_wrap(~Salinity_zone, nrow=1)+
+  coord_cartesian(expand=0)+
+  scale_x_continuous(breaks = function(x) unique(floor(pretty(seq(min(x), max(x)), n=3))), expand=c(0,0))+
+  scale_fill_manual(values=sample(colorRampPalette(brewer.pal(12, "Set3"))(length(unique(MyZoops$Taxlifestage)))), 
+                    name="Taxa and life stage", 
+                    guide = guide_legend(ncol=3, title.position = "top", title.hjust = 0.5))+
+  ylab(bquote(Average~BPUE~"("*mu*g*"/"*m^3*")"))+
+  theme_bw()+
+  theme(panel.grid=element_blank(), text=element_text(size=14), legend.text = element_text(size=8), 
+        legend.key.size = unit(10, "points"), strip.background=element_blank(), legend.position = "bottom", 
+        legend.background = element_rect(color="black"), axis.text.x=element_text(angle=45, hjust=1))
+```
 
 # Code of conduct
 

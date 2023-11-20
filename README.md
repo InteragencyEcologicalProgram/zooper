@@ -144,18 +144,34 @@ between introduction years and the years these species were first
 counted, you can change the `Intro_lag` option (currently defaults to 2
 years).
 
+## Biomass
+
+Functionality to output biomass is now included in zooper. However,
+biomass conversions are not available for all taxa and life stages.
+Micro and meso zooplankton are converted to biomass using average
+biomass values from the literature (see `biomass_mesomicro` for
+sources). The macrozooplankton are converted to biomass using
+length-weight equations (see `biomass_macro` for sources). Length data
+are currently only published online for EMP, so only EMP macro
+zooplankton biomass is available through zooper, and only for the two
+mysid taxa with dry weight length-weight equations (see `biomass_macro`
+for the full set of equations). As more conversions become available for
+any size class, they can be added to zooper to increase the biomass
+coverage.
+
 # Usage
 
 ``` r
 library(zooper)
 MyZoops <- Zoopsynther(Data_type = "Community", 
+                       Response = c("CPUE", "BPUE"),
                        Sources = c("EMP", "FRP", "FMWT"), 
                        Size_class = "Meso", 
                        Date_range = c("1990-10-01", "2000-09-30"))
 #> [1] "No disclaimers here! Enjoy the clean data!"
 
 str(MyZoops)
-#> tibble [151,478 × 34] (S3: tbl_df/tbl/data.frame)
+#> tibble [151,478 × 35] (S3: tbl_df/tbl/data.frame)
 #>  $ Source      : chr [1:151478] "EMP" "EMP" "EMP" "EMP" ...
 #>  $ SizeClass   : chr [1:151478] "Meso" "Meso" "Meso" "Meso" ...
 #>  $ Volume      : num [1:151478] 10.6 10.6 10.6 10.6 10.6 ...
@@ -170,6 +186,7 @@ str(MyZoops)
 #>  $ Taxlifestage: chr [1:151478] "Acanthocyclops_UnID Adult" "Acartia_UnID Adult" "Acartiella sinensis Adult" "Asplanchna_UnID Adult" ...
 #>  $ SampleID    : chr [1:151478] "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" "EMP NZEZ2 1994-03-21" ...
 #>  $ CPUE        : num [1:151478] 11.34 1.89 5.67 0 0 ...
+#>  $ BPUE        : num [1:151478] 0.3176 0.2821 0.252 0.0284 0.0567 ...
 #>  $ Undersampled: logi [1:151478] FALSE FALSE FALSE TRUE FALSE FALSE ...
 #>  $ Date        : POSIXct[1:151478], format: "1994-03-21" "1994-03-21" ...
 #>  $ Station     : chr [1:151478] "NZEZ2" "NZEZ2" "NZEZ2" "NZEZ2" ...
@@ -213,7 +230,7 @@ MyZoops%>%
   arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
   mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
   ggplot(aes(x=Year, y=CPUE))+
-  geom_bar(stat="identity", color="white", size=0.01, aes(fill=Taxlifestage))+
+  geom_bar(stat="identity", color="white", linewidth=0.01, aes(fill=Taxlifestage))+
   facet_wrap(~Salinity_zone, nrow=1)+
   coord_cartesian(expand=0)+
   scale_x_continuous(breaks = function(x) unique(floor(pretty(seq(min(x), max(x)), n=3))), expand=c(0,0))+
@@ -228,6 +245,39 @@ MyZoops%>%
 ```
 
 <img src="man/figures/README-plots-1.png" width="100%" />
+
+Here’s the same graph with biomass (although a few taxa were removed for
+which biomass conversions were not available)
+
+``` r
+MyZoops%>%
+  filter(!is.na(SalSurf))%>%
+  mutate(Salinity_zone=case_when(
+    SalSurf < 0.5 ~ "Freshwater",
+    SalSurf > 0.5 & SalSurf < 6 ~ "Low salinity zone",
+    SalSurf > 6 ~ "High salinity zone"
+  ))%>%
+  mutate(Salinity_zone=factor(Salinity_zone, levels=c("Freshwater", "Low salinity zone", "High salinity zone")))%>%
+  group_by(Year,Phylum, Class, Order, Family, Genus, Species, Lifestage, Taxlifestage, Salinity_zone)%>%
+  summarise(BPUE=mean(BPUE, na.rm=T), .groups="drop")%>%
+  arrange(Phylum, Class, Order, Family, Genus, Species, Lifestage)%>%
+  mutate(Taxlifestage=factor(Taxlifestage, unique(Taxlifestage)))%>%
+  ggplot(aes(x=Year, y=BPUE))+
+  geom_bar(stat="identity", color="white", linewidth=0.01, aes(fill=Taxlifestage))+
+  facet_wrap(~Salinity_zone, nrow=1)+
+  coord_cartesian(expand=0)+
+  scale_x_continuous(breaks = function(x) unique(floor(pretty(seq(min(x), max(x)), n=3))), expand=c(0,0))+
+  scale_fill_manual(values=sample(colorRampPalette(brewer.pal(12, "Set3"))(length(unique(MyZoops$Taxlifestage)))), 
+                    name="Taxa and life stage", 
+                    guide = guide_legend(ncol=3, title.position = "top", title.hjust = 0.5))+
+  ylab(bquote(Average~BPUE~"("*mu*g*"/"*m^3*")"))+
+  theme_bw()+
+  theme(panel.grid=element_blank(), text=element_text(size=14), legend.text = element_text(size=8), 
+        legend.key.size = unit(10, "points"), strip.background=element_blank(), legend.position = "bottom", 
+        legend.background = element_rect(color="black"), axis.text.x=element_text(angle=45, hjust=1))
+```
+
+<img src="man/figures/README-plots2-1.png" width="100%" />
 
 # Code of conduct
 

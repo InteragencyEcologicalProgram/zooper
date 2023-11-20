@@ -1,5 +1,7 @@
-library(zooper)
-require(magrittr)
+suppressWarnings({
+  library(zooper)
+  require(magrittr)
+})
 
 # Should have 10 - Intro_lag years for species C
 Crosswalk1 <- tibble::tibble(

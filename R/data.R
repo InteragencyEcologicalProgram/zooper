@@ -101,6 +101,7 @@
 #'   \item{Taxlifestage}{Combined Taxname and Lifestage}
 #'   \item{SampleID}{Unique ID of the zooplankton sample. This key and \code{SizeClass} link to the \code{zoopEnvComb} dataset}
 #'   \item{CPUE}{Catch per unit effort (number \ifelse{html}{\out{m<sup>-3</sup>}}{\eqn{m^{-3}}})}
+#'   \item{BPUE}{Biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})}
 #' }
 #' @details Note that EMP Macro samples with QAQC flags (any value of AmphipodCode other than "A") have had their Amphipod CPUE set to NA in this integrated dataset. For more information on the source datasets see \code{\link{zooper}}.
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
@@ -138,7 +139,6 @@
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
 "zoopEnvComb"
 
-
 #' All taxonomic names
 #'
 #' A complete list of all valid taxonomic names included in the full dataset. Used to limit choices for filtering by taxa.
@@ -162,3 +162,41 @@
 #' @seealso \code{\link{Uncountedyears}}, \code{\link{Zoopsynther}}
 #'
 "startDates"
+
+#' Meso and Micro zooplankton average biomass values
+#'
+#' Average biomass values for meso and micro zooplankton to be used for biomass conversions
+#'
+#' @format a tibble with 44 rows and 4 columns.
+#' \describe{
+#'   \item{Taxname}{Current scientific name.}
+#'   \item{Level}{Taxonomic level of the taxa.}
+#'   \item{Lifestage}{Plankton lifestage.}
+#'   \item{Carbon_mass_micrograms}{Average carbon mass of an individual in micrograms.}
+#' }
+#' @seealso \code{\link{biomass_macro}}
+#'
+"biomass_mesomicro"
+
+#' Macro zooplankton length-weight equations
+#'
+#' Length-weight equations for macro zooplankton to be used for biomass conversions.
+#' The equations relate length in mm to dry mass in milligrams. Dry mass can be converted
+#' to carbon mass by assuming 40% of dry mass is carbon mass, after Uye 1982.
+#' Uye, S. 1982. Length-weight relationships of important zooplankton from the Inland Sea of Japan. Journal of the Oceanographical Society of Japan 38:149–158.
+#'
+#' @format a tibble with 23 rows and 9 columns.
+#' \describe{
+#'   \item{Taxname}{Current scientific name.}
+#'   \item{Level}{Taxonomic level of the taxa.}
+#'   \item{Preservative}{Preservative used to store sample before individuals were measured to develop the equations.}
+#'   \item{Weight_type}{The type of weight measurement.}
+#'   \item{N}{The number of individuals used in developing the equation.}
+#'   \item{Min_length}{Minimum length (mm) of individuals used in developing the equation.}
+#'   \item{Max_length}{Maximum length (mm) of individuals used in developing the equation.}
+#'   \item{a}{Coefficient a in the equation Weight (mg) = a * Length (mm) ^ b.}
+#'   \item{b}{Coefficient b in the equation Weight (mg) = a * Length (mm) ^ b.}
+#' }
+#' @seealso \code{\link{biomass_mesomicro}}
+#'
+"biomass_macro"

@@ -7,6 +7,7 @@
 #' "FRP" (Fish Restoration Program), "FMWT" (Fall Midwater Trawl), "STN" (Townet Survey), "20mm" (20mm survey),
 #' "DOP" (Directed Outflow Project Lower Trophic Study), and "YBFMP" (Yolo Bypass Fish Monitoring Program).
 #' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.
+#' @param Biomass Whether to add biomass to the dataset (where conversion equations and required data are available). Defaults to \code{Biomass = TRUE}
 #' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
@@ -33,20 +34,21 @@
 #' @export
 
 Zoopdownloader <- function(
-  Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso",
-                "20mm_Meso", "FRP_Meso", "EMP_Micro",
-                "FRP_Macro", "EMP_Macro", "FMWT_Macro",
-                "STN_Macro", "DOP_Meso", "DOP_Macro"),
-  Data_folder = tempdir(),
-  Save_object = TRUE,
-  Return_object = FALSE,
-  Return_object_type = "List",
-  Redownload_data = FALSE,
-  Download_method="auto",
-  Zoop_path = file.path(Data_folder, "zoopforzooper"),
-  Env_path = file.path(Data_folder, "zoopenvforzooper"),
-  Crosswalk = zooper::crosswalk,
-  Stations = zooper::stations){
+    Data_sets = c("EMP_Meso", "FMWT_Meso", "STN_Meso",
+                  "20mm_Meso", "FRP_Meso", "EMP_Micro",
+                  "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+                  "STN_Macro", "DOP_Meso", "DOP_Macro"),
+    Biomass = TRUE,
+    Data_folder = tempdir(),
+    Save_object = TRUE,
+    Return_object = FALSE,
+    Return_object_type = "List",
+    Redownload_data = FALSE,
+    Download_method="auto",
+    Zoop_path = file.path(Data_folder, "zoopforzooper"),
+    Env_path = file.path(Data_folder, "zoopenvforzooper"),
+    Crosswalk = zooper::crosswalk,
+    Stations = zooper::stations){
 
   # Setup -------------------------------------------------------------------
   where <- utils::getFromNamespace("where", "tidyselect")
@@ -71,6 +73,10 @@ Zoopdownloader <- function(
     stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
   }
 
+  if(Biomass & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
+    stop("Biomass are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
+  }
+
   # Load station key to later incorporate latitudes and longitudes
 
   stations <- Stations
@@ -79,6 +85,9 @@ Zoopdownloader <- function(
 
   data.list<-list()
 
+  if(Biomass){
+    lengths.list<-list()
+  }
 
   # Find URLs ---------------------------------------------------------------
 
@@ -185,39 +194,39 @@ Zoopdownloader <- function(
 
     zoo_DOP_Meso<-readr::read_csv(file.path(Data_folder, "DOP_Meso.csv"),
                                   col_types=readr::cols_only(ICF_ID="c", Acanthocyclops_spp_adult="d", Acanthocyclops_vernalis_adult="d",
-                                                        Acanthocyclops_vernalis_copepodid="d", Acartia_spp_adult="d", Acartia_spp_copepodid="d",
-                                                        Acartiella_sinensis_adult="d", Acartiella_sinensis_copepodid="d", Asplanchna_spp="d",
-                                                        Barnacle_UNID_nauplii="d", Bosmina_longirostris="d", Brachionidae_UNID="d",
-                                                        Brachionus_spp="d", Calanoid_UNID_adult="d", Calanoid_UNID_copepodid="d",
-                                                        Camptocercus_spp="d", Chydoridae_UNID="d", Chydorus_spp="d",
-                                                        Cladocera_UNID="d", Copepod_UNID_nauplii="d", Crab_UNID_zoea="d",
-                                                        Cyclopoid_UNID_adult="d", Cyclopoid_UNID_copepodid="d", Daphnia_spp="d",
-                                                        Daphniidae_UNID="d", Diaptomidae_UNID_adult="d", Diaptomidae_UNID_copepodid="d",
-                                                        Ditrichocorycaeus_affinis_adult="d", Eurytemora_affinis_adult="d", Eurytemora_affinis_copepodid="d",
-                                                        Eurytemora_spp_nauplii="d", Harpacticoid_UNID="d", Holopedium_gibberum="d",
-                                                        Ilyocryptus_spp="d", Keratella_spp="d", Labidocera_spp_adult="d",
-                                                        Labidocera_spp_copepodid="d", Leptodora_spp="d", Limnoithona_sinensis_adult="d",
-                                                        Limnoithona_sinensis_copepodid="d", Limnoithona_spp_adult="d", Limnoithona_spp_copepodid="d",
-                                                        Limnoithona_tetraspina_adult="d", Limnoithona_tetraspina_copepodid="d", Macrothrix_spp="d",
-                                                        Moina_spp="d", Oithona_davisae_adult="d", Oithona_davisae_copepodid="d",
-                                                        Oithona_similis_adult="d", Oithona_similis_copepodid="d", Oithona_spp_adult="d",
-                                                        Oithona_spp_copepodid="d", Osphranticum_labronectum_adult="d", Osphranticum_labronectum_copepodid="d",
-                                                        Ostracoda_UNID="d", Paracalanus_parvus_adult="d", Paracalanus_parvus_copepodid="d",
-                                                        Platyias_spp="d", Podonidae_UNID="d", Polyarthra_spp="d",
-                                                        Pseudodiaptomus_euryhalinus_adult="d", Pseudodiaptomus_forbesi_adult="d", Pseudodiaptomus_forbesi_copepodid="d",
-                                                        Pseudodiaptomus_marinus_adult="d", Pseudodiaptomus_marinus_copepodid="d", Pseudodiaptomus_spp_adult="d",
-                                                        Pseudodiaptomus_spp_copepodid="d", Pseudodiaptomus_spp_nauplii="d", Rotifer_UNID="d",
-                                                        Scapholeberis_spp="d", Sididae_UNID="d", Sinocalanus_doerrii_adult="d",
-                                                        Sinocalanus_doerrii_copepodid="d", Sinocalanus_doerrii_nauplii="d", Synchaeta_bicornis="d",
-                                                        Synchaeta_spp="d", Tortanus_dextrilobatus_adult="d", Tortanus_discaudatus_adult="d",
-                                                        Tortanus_spp_copepodid="d", Trichocerca_spp="d"))
+                                                             Acanthocyclops_vernalis_copepodid="d", Acartia_spp_adult="d", Acartia_spp_copepodid="d",
+                                                             Acartiella_sinensis_adult="d", Acartiella_sinensis_copepodid="d", Asplanchna_spp="d",
+                                                             Barnacle_UNID_nauplii="d", Bosmina_longirostris="d", Brachionidae_UNID="d",
+                                                             Brachionus_spp="d", Calanoid_UNID_adult="d", Calanoid_UNID_copepodid="d",
+                                                             Camptocercus_spp="d", Chydoridae_UNID="d", Chydorus_spp="d",
+                                                             Cladocera_UNID="d", Copepod_UNID_nauplii="d", Crab_UNID_zoea="d",
+                                                             Cyclopoid_UNID_adult="d", Cyclopoid_UNID_copepodid="d", Daphnia_spp="d",
+                                                             Daphniidae_UNID="d", Diaptomidae_UNID_adult="d", Diaptomidae_UNID_copepodid="d",
+                                                             Ditrichocorycaeus_affinis_adult="d", Eurytemora_affinis_adult="d", Eurytemora_affinis_copepodid="d",
+                                                             Eurytemora_spp_nauplii="d", Harpacticoid_UNID="d", Holopedium_gibberum="d",
+                                                             Ilyocryptus_spp="d", Keratella_spp="d", Labidocera_spp_adult="d",
+                                                             Labidocera_spp_copepodid="d", Leptodora_spp="d", Limnoithona_sinensis_adult="d",
+                                                             Limnoithona_sinensis_copepodid="d", Limnoithona_spp_adult="d", Limnoithona_spp_copepodid="d",
+                                                             Limnoithona_tetraspina_adult="d", Limnoithona_tetraspina_copepodid="d", Macrothrix_spp="d",
+                                                             Moina_spp="d", Oithona_davisae_adult="d", Oithona_davisae_copepodid="d",
+                                                             Oithona_similis_adult="d", Oithona_similis_copepodid="d", Oithona_spp_adult="d",
+                                                             Oithona_spp_copepodid="d", Osphranticum_labronectum_adult="d", Osphranticum_labronectum_copepodid="d",
+                                                             Ostracoda_UNID="d", Paracalanus_parvus_adult="d", Paracalanus_parvus_copepodid="d",
+                                                             Platyias_spp="d", Podonidae_UNID="d", Polyarthra_spp="d",
+                                                             Pseudodiaptomus_euryhalinus_adult="d", Pseudodiaptomus_forbesi_adult="d", Pseudodiaptomus_forbesi_copepodid="d",
+                                                             Pseudodiaptomus_marinus_adult="d", Pseudodiaptomus_marinus_copepodid="d", Pseudodiaptomus_spp_adult="d",
+                                                             Pseudodiaptomus_spp_copepodid="d", Pseudodiaptomus_spp_nauplii="d", Rotifer_UNID="d",
+                                                             Scapholeberis_spp="d", Sididae_UNID="d", Sinocalanus_doerrii_adult="d",
+                                                             Sinocalanus_doerrii_copepodid="d", Sinocalanus_doerrii_nauplii="d", Synchaeta_bicornis="d",
+                                                             Synchaeta_spp="d", Tortanus_dextrilobatus_adult="d", Tortanus_discaudatus_adult="d",
+                                                             Tortanus_spp_copepodid="d", Trichocerca_spp="d"))
 
     zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, "DOP_trawls.csv"),
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
-                                                          Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
-                                                          Start_Depth="d", Temperature="d", Conductivity="d",
-                                                          Turbidity="d", pH="d", DO="d", Microcystis="c",
-                                                          Chl_a="d", Secchi="d", Mesozooplankton_Volume="d"))
+                                                               Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
+                                                               Start_Depth="d", Temperature="d", Conductivity="d",
+                                                               Turbidity="d", pH="d", DO="d", Microcystis="c",
+                                                               Chl_a="d", Secchi="d", Mesozooplankton_Volume="d"))
 
     # Tranform from "wide" to "long" format, add some variables,
     # alter data to match other datasets
@@ -228,8 +237,8 @@ Zoopdownloader <- function(
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Start_Time), NA_character_, paste(.data$Date, .data$Start_Time)),
                                                         "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"), #create a variable for datetime
-              Source = "DOP", #add variable for data source
-              SizeClass = "Meso") %>%
+                    Source = "DOP", #add variable for data source
+                    SizeClass = "Meso") %>%
       dplyr::filter(!is.na(.data$Mesozooplankton_Volume)) %>% #get rid of environmental variables with no data
 
       #Select variables we are interested in.
@@ -239,9 +248,9 @@ Zoopdownloader <- function(
                     Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
                     "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
-                       dplyr::select("DOP_Meso", "Lifestage", "Taxname", "Phylum",
-                                     "Class", "Order", "Family", "Genus", "Species",
-                                     "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
+                         dplyr::select("DOP_Meso", "Lifestage", "Taxname", "Phylum",
+                                       "Class", "Order", "Family", "Genus", "Species",
+                                       "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Meso")%>%
@@ -261,13 +270,13 @@ Zoopdownloader <- function(
         .data$CPUE==0 & .data$Date >= .data$DOPstart & .data$Date < .data$DOPend ~ 0,
         .data$CPUE==0 & .data$Date >= .data$DOPend ~ NA_real_)) %>%
       dplyr::filter(!is.na(.data$CPUE)) %>%
-   dplyr::select(-"DOP_Meso", -"ICF_ID", -"DOPstart", -"DOPend", -"Intro") #Remove DOP code
+      dplyr::select(-"DOP_Meso", -"ICF_ID", -"DOPstart", -"DOPend", -"Intro") #Remove DOP code
     cat("\nDOP_Meso finished!\n\n")
 
   }
 
 
-# DOP Macro ---------------------------------------------------------------------
+  # DOP Macro ---------------------------------------------------------------------
   if("DOP_Macro"%in%Data_sets) {
 
     #download the files
@@ -313,8 +322,8 @@ Zoopdownloader <- function(
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Start_Time), NA_character_, paste(.data$Date, .data$Start_Time)),
                                                         "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"), #create a variable for datetime,
-                     Source = "DOP", #add variable for data source
-                     SizeClass = "Macro") %>%
+                    Source = "DOP", #add variable for data source
+                    SizeClass = "Macro") %>%
 
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select("Source", "Date", "Datetime",
@@ -325,7 +334,7 @@ Zoopdownloader <- function(
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("DOP_Macro", "Lifestage", "Taxname", "Phylum",
                                        "Class", "Order", "Family", "Genus", "Species",
-                                        "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
+                                       "DOPstart", "DOPend", "Intro")%>% #only retain dop codes
                          dplyr::filter(!is.na(.data$DOP_Macro))%>% #Only retain Taxnames corresponding to EMP codes
                          dplyr::distinct(),
                        by="DOP_Macro")%>%
@@ -558,7 +567,7 @@ Zoopdownloader <- function(
       Tryer(n=3, fun=utils::download.file, url=URLs$FRP$Meso,
             destfile=file.path(Data_folder, "zoopsFRP.csv"), mode="wb", method=Download_method)
       Tryer(n=3, fun=utils::download.file, url=URLs$FRP$site,
-       destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
+            destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
 
     }
 
@@ -574,10 +583,10 @@ Zoopdownloader <- function(
                                                   CommonName == "Asellidae UNID" ~ "Asellidae",
                                                   CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
                                                   CommonName == "Fish larvae" ~ "Fish UNID",
-                                    CommonName == "Insect Unid" ~ "Insect UNID",
-                                    CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
-                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
-                                    TRUE ~ CommonName))
+                                                  CommonName == "Insect Unid" ~ "Insect UNID",
+                                                  CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                                  TRUE ~ CommonName))
 
     #Already in long format
     data.list[["FRP_Meso"]] <- FRP_all%>%
@@ -590,10 +599,10 @@ Zoopdownloader <- function(
                     SizeClass="Meso",
                     TowType= dplyr::case_when(GearTypeAbbreviation == "ZOOP" ~ "Surface",
 
-                                       GearTypeAbbreviation == "ZOBL" ~ "Oblique",
+                                              GearTypeAbbreviation == "ZOBL" ~ "Oblique",
 
-                                       GearTypeAbbreviation == "ZBEN" ~ "Bottom",
-                                       TRUE ~ "Surface"),
+                                              GearTypeAbbreviation == "ZBEN" ~ "Bottom",
+                                              TRUE ~ "Surface"),
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium` = "3"))%>%
       dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart", Longitude = "LongitudeStart", Station = "Location",
                     CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
@@ -800,20 +809,20 @@ Zoopdownloader <- function(
     sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
-    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -.data$Date, -.data$Location), sites_FRP_Macro, by = "VisitNo") %>%
+    FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -"Date", -"Location"), sites_FRP_Macro, by = "VisitNo") %>%
       dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID", #fix some wonky common names
-                                    CommonName == "Insect Unid" ~ "Insect UNID",
-                                    CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
-                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
-                                    CommonName == "Tricoptera larvae Other" ~ "Tricoptera larvae UNID",
-                                    CommonName == "Palaemonectes" ~ "Palaemon",
-                                    CommonName == "Palaemonetes" ~ "Palaemon",
-                                    CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
-                                    CommonName == "Asellidae UNID" ~ "Asellidae",
-                                    CommonName == "Diptera adult" ~ "Diptera Adult",
-                                    CommonName == "Coleoptera other" ~ "Coleoptera Other",
-                                    CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
-                                    TRUE ~ CommonName))
+                                                  CommonName == "Insect Unid" ~ "Insect UNID",
+                                                  CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
+                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                                  CommonName == "Tricoptera larvae Other" ~ "Tricoptera larvae UNID",
+                                                  CommonName == "Palaemonectes" ~ "Palaemon",
+                                                  CommonName == "Palaemonetes" ~ "Palaemon",
+                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
+                                                  CommonName == "Asellidae UNID" ~ "Asellidae",
+                                                  CommonName == "Diptera adult" ~ "Diptera Adult",
+                                                  CommonName == "Coleoptera other" ~ "Coleoptera Other",
+                                                  CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
+                                                  TRUE ~ CommonName))
 
     #Already in long format
     data.list[["FRP_Macro"]] <- FRP_allmac%>%
@@ -826,9 +835,9 @@ Zoopdownloader <- function(
       dplyr::mutate(Source = "FRP",
                     SizeClass = "Macro",
                     TowType= dplyr::case_when(GearTypeAbbreviation == "MAC" ~ "Surface",
-                                       GearTypeAbbreviation == "MACOBL" ~ "Oblique",
-                                       GearTypeAbbreviation == "MACBEN" ~ "Bottom",
-                                       TRUE ~ "Surface"),
+                                              GearTypeAbbreviation == "MACOBL" ~ "Oblique",
+                                              GearTypeAbbreviation == "MACBEN" ~ "Bottom",
+                                              TRUE ~ "Surface"),
                     CPUE = .data$AdjCount/.data$effort, #add variable for data source and calculate CPUE
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium`="3"))%>%
 
@@ -930,9 +939,37 @@ Zoopdownloader <- function(
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
       dplyr::ungroup()%>%
       tibble::as_tibble() %>% #required to finish operation after lazy_dt()
-    dplyr::left_join(stations, by=c("Source", "Station"))
+      dplyr::left_join(stations, by=c("Source", "Station"))
 
     cat("\nEMP_Macro finished!\n\n")
+
+    if(Biomass){
+      #download the file
+      if (!file.exists(file.path(Data_folder, "EMP_Lengths.csv")) | Redownload_data) {
+        Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Lengths,
+              destfile=file.path(Data_folder, "EMP_Lengths.csv"), mode="wb", method=Download_method)
+
+        lengths.list[["EMP_Lengths"]]<-readr::read_csv(file.path(Data_folder, "EMP_Lengths.csv"),
+                                                       col_types=readr::cols_only(SampleDate="c", StationNZ="c",
+                                                                                  SpeciesName="c", Size="d", AdjustedFreq="d"))%>%
+          dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+          dplyr::rename(Date="SampleDate", Station="StationNZ", EMP_Lengths="SpeciesName", Length="Size", Count="AdjustedFreq")%>%
+          dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                             dplyr::select("EMP_Lengths", "Lifestage", "Taxname")%>% #only retain EMP codes
+                             dplyr::filter(!is.na(.data$EMP_Lengths))%>% #Only retain Taxnames corresponding to EMP codes
+                             dplyr::distinct(),
+                           by="EMP_Lengths")%>%
+          dplyr::filter(!is.na(.data$Taxname))%>%
+          dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage),
+                        Source="EMP",
+                        SizeClass="Macro",
+                        SampleID=paste(.data$Source, .data$Station, .data$Date))%>%
+          dplyr::select(-"EMP_Lengths", -"Date", -"Station")
+
+        cat("\nEMP_Macro lengths finished!\n\n")
+      }
+    }
+
   }
   # FMWT Macro --------------------------------------------------------------
 
@@ -1041,14 +1078,14 @@ Zoopdownloader <- function(
     dplyr::mutate(SalSurf= wql::ec2pss(.data$CondSurf/1000, t=25),
                   Year=lubridate::year(.data$Date))%>%
     {if("Tide"%in%names(.)){
-    dplyr::mutate(., Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
+      dplyr::mutate(., Tide=dplyr::recode(.data$Tide, "1"="High slack", "2"="Ebb", "3"="Low slack", "4"="Flood", "1=high slack"="High slack", "2=ebb"="Ebb", "3=low slack"="Low slack", "4=flood"="Flood")) #Rename tide codes to be consistent
     } else{
-    .
+      .
     }}%>%
     {if("CondBott"%in%names(.)){
-    dplyr::mutate(., SalBott=wql::ec2pss(.data$CondBott/1000, t=25))
+      dplyr::mutate(., SalBott=wql::ec2pss(.data$CondBott/1000, t=25))
     } else{
-    .
+      .
     }}%>%
     dplyr::select(-tidyselect::any_of(c("Region", "CondBott", "CondSurf"))) #Remove some extraneous variables to save memory
 
@@ -1088,6 +1125,14 @@ Zoopdownloader <- function(
     dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
                   "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE")
 
+  if(Biomass){
+    zoop_lengths<-dplyr::bind_rows(lengths.list)
+    zoop<-Zoopbiomass(zoop, zoop_lengths)%>%
+      dplyr::select("Source", "SizeClass", "Volume", "Lifestage", "Taxname", "Phylum", "Class",
+                    "Order", "Family", "Genus", "Species", "Taxlifestage", "SampleID", "CPUE", "BPUE")
+
+  }
+
   if(Save_object){
     saveRDS(zoop, file=paste0(Zoop_path, ".Rds"))
     saveRDS(zoopEnv, file=paste0(Env_path, ".Rds"))
@@ -1099,7 +1144,7 @@ Zoopdownloader <- function(
       return(zoop_full)
     }
     if(Return_object_type=="List"){
-      return(list(Zooplankton = zoop, Environment = zoopEnv))
+        return(list(Zooplankton = zoop, Environment = zoopEnv))
     }
   }
 
