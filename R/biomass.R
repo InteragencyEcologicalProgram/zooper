@@ -76,7 +76,7 @@ Zoopbiomass<-function(Zoop,
   }
 
 Zoop<-dplyr::bind_rows(zoop_list)%>%
-    dplyr::mutate(BPUE=.data$Mass/.data$Volume)
+    dplyr::mutate(BPUE=dplyr::if_else(.data$Volume==0, NA_real_, .data$Mass/.data$Volume))
 
   nomass<-Zoop%>%
     dplyr::filter(is.na(.data$Mass))%>%
