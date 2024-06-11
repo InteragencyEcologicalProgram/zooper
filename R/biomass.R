@@ -63,7 +63,7 @@ Zoopbiomass<-function(Zoop,
       dplyr::left_join(ZoopLengths%>%
                          dplyr::left_join(Biomass_macro, by="Taxname")%>%
                          dplyr::filter(!is.na(.data$a))%>%
-                         dplyr::mutate(Mass=0.1*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
+                         dplyr::mutate(Mass=0.25*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
                          dplyr::group_by(.data$SampleID, .data$Taxlifestage)%>%
                          dplyr::summarise(Mass=sum(.data$Mass), .groups="drop"),
                        by=c("Taxlifestage", "SampleID"))%>%
