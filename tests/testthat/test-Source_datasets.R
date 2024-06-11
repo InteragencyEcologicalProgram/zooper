@@ -190,12 +190,12 @@ test_that("SMSCG Meso column names have not changed", {
 })
 
 test_that("20mm Meso column names have not changed", {
-  expect_setequal(names_20mm_Meso, c('SampleDate', 'Survey', 'Station', 'TowNum', 'TowTime', 'Temp', 'TopEC', 'BottomEC', 'Secchi',
-                                     'Turbidity', 'Tide', 'BottomDepth', 'Duration', 'MeterCheck', 'Volume', 'Dilution',
+  expect_setequal(names_20mm_Meso, c('SampleDate', 'Year', 'Survey', 'Station', 'TowNum', 'TowTime', 'Temp', 'TopEC', 'BottomEC', 'Secchi',
+                                     'NTU','FNU', 'Tide', 'BottomDepth', 'Duration', 'MeterCheck', 'Volume', 'Dilution',
                                      'Acanthocyclops', 'Acanthomysis aspera', 'Acartia copepodid', 'Acartia spp_', 'Acartiella',
-                                     'Acartiella copepodid', 'Annelid worms', 'Asplanchna', 'barnacle nauplii', 'Bosmina',
-                                     'calanoid copepodid', 'Ceriodaphnia', 'Chironomid larvae', 'copepod nauplii', 'crab zoea',
-                                     'Cumaceans', 'cyclopoid copepodid', 'Daphnia', 'Diaphanosoma', 'Diaptomus copepodid',
+                                     'Acartiella copepodid', 'Annelid worms', 'Asplanchna', 'Barnacle nauplii', 'Bosmina',
+                                     'Calanoid copepodid', 'Ceriodaphnia', 'Chironomid larvae', 'Copepod nauplii', 'Crab zoea',
+                                     'Cumaceans', 'Cyclopoid copepodid', 'Daphnia', 'Diaphanosoma', 'Diaptomus copepodid',
                                      'Diaptomus spp_', 'Eurytemora copepodid', 'Eurytemora nauplii', 'Eurytemora spp_',
                                      'Gammarus', 'Harpacticoids', 'Keratella', 'Limnoithona juvenile', 'Limnoithona sinensis',
                                      'Limnoithona spp_', 'Limnoithona tetraspina', 'Oithona davisae', 'Oithona juvenile',
