@@ -506,7 +506,8 @@ Zoopdownloader <- function(
 
     zoo_20mm_Meso<-readxl::read_excel(file.path(Data_folder, "twentymm_Meso.csv"),
                                       sheet="20-mm CB CPUE Data",
-                                      col_types = c("date", rep("numeric", 3), "date", rep("numeric", 5), "text", rep("numeric", 74)))
+                                      col_types = c("numeric","date", rep("numeric", 3),
+                                                    "date", rep("numeric", 6), "text", rep("numeric", 74)))
 
     data.list[["twentymm_Meso"]]<-zoo_20mm_Meso%>%
       dplyr::mutate(SampleID = paste(.data$Station, .data$SampleDate, .data$TowNum),
@@ -515,12 +516,15 @@ Zoopdownloader <- function(
                                                                        NA_character_,
                                                                        paste0(.data$SampleDate, " ", lubridate::hour(.data$TowTime), ":", lubridate::minute(.data$TowTime))),
                                                         "%Y-%m-%d %H:%M", tz="America/Los_Angeles"))%>%
+      #turbidity is now eitehr NTU or FNU
       tidyr::pivot_longer(cols=c(-"SampleDate", -"Survey", -"Station", -"TowTime", -"Temp", -"TopEC",
-                                 -"BottomEC", -"Secchi", -"Turbidity", -"Tide", -"BottomDepth", -"Duration", -"MeterCheck", -"Volume",
+                                 -"BottomEC", -"Secchi", -"NTU", -"FNU", -"Tide", -"BottomDepth", -"Duration", -"MeterCheck", -"Volume",
                                  -"Dilution", -"SampleID", -"Datetime"),
                           names_to="twentymm_Meso", values_to="CPUE")%>% #transform from wide to long
+      dplyr::mutate(Turbidity = coalesce(NTU, FNU)) %>% #NTU and FNU are close enough it's not a big deal to treat them as the same
       dplyr::select(Date="SampleDate", "Station", Temperature = "Temp", CondSurf = "TopEC", CondBott = "BottomEC", "Secchi",
-                    "Turbidity", "Tide", "BottomDepth", "Volume", "SampleID", "Datetime", "twentymm_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
+                     Turbidity, "Tide", "BottomDepth", "Volume", "SampleID", "Datetime", "twentymm_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
+
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("twentymm_Meso", "Lifestage", "Taxname", "Phylum", "Class",
                                        "Order", "Family", "Genus", "Species", "Intro", "twentymmstart", "twentymmend", "twentymmstart2")%>% #only retain FMWT codes
