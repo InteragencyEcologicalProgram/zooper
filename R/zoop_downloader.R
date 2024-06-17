@@ -521,7 +521,7 @@ Zoopdownloader <- function(
                                  -"BottomEC", -"Secchi", -"NTU", -"FNU", -"Tide", -"BottomDepth", -"Duration", -"MeterCheck", -"Volume",
                                  -"Dilution", -"SampleID", -"Datetime"),
                           names_to="twentymm_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::mutate(Turbidity = coalesce(NTU, FNU)) %>% #NTU and FNU are close enough it's not a big deal to treat them as the same
+      dplyr::mutate(Turbidity = dplyr::coalesce(NTU, FNU)) %>% #NTU and FNU are close enough it's not a big deal to treat them as the same
       dplyr::select(Date="SampleDate", "Station", Temperature = "Temp", CondSurf = "TopEC", CondBott = "BottomEC", "Secchi",
                      Turbidity, "Tide", "BottomDepth", "Volume", "SampleID", "Datetime", "twentymm_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
 
