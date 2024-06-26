@@ -1,5 +1,5 @@
 #' Convert CPUE to biomass
-#' This function converts zooplankton CPUE to biomass for taxa with conversion equations.
+#' This function converts zooplankton CPUE to carbon biomass (Carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) for taxa with conversion equations.
 #'
 #' @param Zoop Zooplankton count dataset
 #' @param ZoopLengths Zooplankton length dataset for macrozooplankton.
@@ -63,7 +63,8 @@ Zoopbiomass<-function(Zoop,
       dplyr::left_join(ZoopLengths%>%
                          dplyr::left_join(Biomass_macro, by="Taxname")%>%
                          dplyr::filter(!is.na(.data$a))%>%
-                         dplyr::mutate(Mass=0.1*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
+                         # apply equation, then convert mg to ug and convert dry to carbon mass,
+                         dplyr::mutate(Mass=0.001*0.4*(.data$a*.data$Length^.data$b)*.data$Count)%>%
                          dplyr::group_by(.data$SampleID, .data$Taxlifestage)%>%
                          dplyr::summarise(Mass=sum(.data$Mass), .groups="drop"),
                        by=c("Taxlifestage", "SampleID"))%>%

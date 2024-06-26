@@ -101,7 +101,7 @@
 #'   \item{Taxlifestage}{Combined Taxname and Lifestage}
 #'   \item{SampleID}{Unique ID of the zooplankton sample. This key and \code{SizeClass} link to the \code{zoopEnvComb} dataset}
 #'   \item{CPUE}{Catch per unit effort (number \ifelse{html}{\out{m<sup>-3</sup>}}{\eqn{m^{-3}}})}
-#'   \item{BPUE}{Biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})}
+#'   \item{BPUE}{Carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})}
 #' }
 #' @details Note that EMP Macro samples with QAQC flags (any value of AmphipodCode other than "A") have had their Amphipod CPUE set to NA in this integrated dataset. For more information on the source datasets see \code{\link{zooper}}.
 #' @seealso \code{\link{Zoopdownloader}}, \code{\link{Zoopsynther}}, \code{\link{zooper}}
@@ -166,7 +166,7 @@
 
 #' Meso and Micro zooplankton average biomass values
 #'
-#' Average biomass values for meso and micro zooplankton to be used for biomass conversions
+#' Average carbon biomass values for meso and micro zooplankton to be used for biomass conversions
 #'
 #' @format a tibble with 44 rows and 4 columns.
 #' \describe{

@@ -3,7 +3,7 @@
 \name{Zoopbiomass}
 \alias{Zoopbiomass}
 \title{Convert CPUE to biomass
-This function converts zooplankton CPUE to biomass for taxa with conversion equations.}
+This function converts zooplankton CPUE to carbon biomass (Carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) for taxa with conversion equations.}
 \usage{
 Zoopbiomass(
   Zoop,
@@ -23,5 +23,5 @@ Zoopbiomass(
 }
 \description{
 Convert CPUE to biomass
-This function converts zooplankton CPUE to biomass for taxa with conversion equations.
+This function converts zooplankton CPUE to carbon biomass (Carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) for taxa with conversion equations.
 }

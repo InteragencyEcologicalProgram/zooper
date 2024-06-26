@@ -18,7 +18,7 @@ LCD_Taxa(
 
 \item{Groupers}{A character vector of names of additional taxonomic levels to be removed in this step. This vector can include \code{Taxalevel} and, if so, it will be removed from the vector within the function so \code{Taxalevel} is preserved.}
 
-\item{Response}{Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (biomass per unit effort). Defaults to \code{Response = "CPUE"}.}
+\item{Response}{Which response variable(s) would you like for the zooplankton data? Choices are "CPUE" (catch per unit effort) and "BPUE" (carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})). Defaults to \code{Response = "CPUE"}.}
 }
 \value{
 A tibble with sums calculated for each unique value in \code{Data$Taxalevel}. Sums will be excluded for grouping taxa that only contain 1 unique Taxname.

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zooper.R
 \docType{package}
 \name{zooper}
+\alias{zooper-package}
 \alias{zooper}
 \title{zooper: A package for integrating zooplankton datasets from the Sacramento San Joaquin Delta}
 \description{
@@ -85,3 +86,22 @@ This package contains functions, lookup tables, and 2 built-in pre-combined data
   }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/InteragencyEcologicalProgram/zooper}
+  \item Report bugs at \url{https://github.com/InteragencyEcologicalProgram/zooper/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Samuel M Bashevkin \email{sam.bashevkin@waterboards.ca.gov} (\href{https://orcid.org/0000-0001-7406-7089}{ORCID})
+
+Authors:
+\itemize{
+  \item Rosemary Hartman \email{Rosemary.Hartman@water.ca.gov} (\href{https://orcid.org/0000-0002-0642-183X}{ORCID})
+  \item Karrin Alstad \email{Karrin.Alstad@wildlife.ca.gov}
+  \item Catarina Pien \email{cpien@usbr.gov} (\href{https://orcid.org/0000-0003-4427-6300}{ORCID})
+}
+
+}

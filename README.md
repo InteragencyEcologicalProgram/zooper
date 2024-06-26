@@ -146,18 +146,19 @@ years).
 
 ## Biomass
 
-Functionality to output biomass is now included in zooper. However,
-biomass conversions are not available for all taxa and life stages.
-Micro and meso zooplankton are converted to biomass using average
-biomass values from the literature (see `biomass_mesomicro` for
-sources). The macrozooplankton are converted to biomass using
-length-weight equations (see `biomass_macro` for sources). Length data
-are currently only published online for EMP, so only EMP macro
-zooplankton biomass is available through zooper, and only for the two
-mysid taxa with dry weight length-weight equations (see `biomass_macro`
-for the full set of equations). As more conversions become available for
-any size class, they can be added to zooper to increase the biomass
-coverage.
+Functionality to output biomass (carbon biomass per unit effort in
+$\mu g$ $m^{-3}$) is now included in zooper. However, biomass
+conversions are not available for all taxa and life stages. Micro and
+meso zooplankton are converted to biomass using average biomass values
+from the literature (see `biomass_mesomicro` for sources). The
+macrozooplankton are converted to biomass using length-weight equations
+(see `biomass_macro` for sources). Length data are currently only
+published online for EMP, so only EMP macro zooplankton biomass is
+available through zooper, and only for the two mysid taxa with dry
+weight length-weight equations from formalin preserved specimens (see
+`biomass_macro` for the full set of equations). As more conversions
+become available for any size class, they can be added to zooper to
+increase the biomass coverage.
 
 # Usage
 
@@ -169,9 +170,12 @@ MyZoops <- Zoopsynther(Data_type = "Community",
                        Size_class = "Meso", 
                        Date_range = c("1990-10-01", "2000-09-30"))
 #> [1] "No disclaimers here! Enjoy the clean data!"
+```
+
+``` r
 
 str(MyZoops)
-#> tibble [151,478 × 35] (S3: tbl_df/tbl/data.frame)
+#> tibble [151,478 × 36] (S3: tbl_df/tbl/data.frame)
 #>  $ Source      : chr [1:151478] "EMP" "EMP" "EMP" "EMP" ...
 #>  $ SizeClass   : chr [1:151478] "Meso" "Meso" "Meso" "Meso" ...
 #>  $ Volume      : num [1:151478] 10.6 10.6 10.6 10.6 10.6 ...
@@ -197,11 +201,12 @@ str(MyZoops)
 #>  $ Tide        : chr [1:151478] "High slack" "High slack" "High slack" "High slack" ...
 #>  $ TowType     : chr [1:151478] "Oblique" "Oblique" "Oblique" "Oblique" ...
 #>  $ Datetime    : POSIXct[1:151478], format: "1994-03-21 09:25:00" "1994-03-21 09:25:00" ...
-#>  $ Turbidity   : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
+#>  $ TurbidityNTU: num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ pH          : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ DO          : num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ Microcystis : chr [1:151478] NA NA NA NA ...
 #>  $ Year        : num [1:151478] 1994 1994 1994 1994 1994 ...
+#>  $ TurbidityFNU: num [1:151478] NA NA NA NA NA NA NA NA NA NA ...
 #>  $ AmphipodCode: chr [1:151478] NA NA NA NA ...
 #>  $ SalSurf     : num [1:151478] 0.644 0.644 0.644 0.644 0.644 ...
 #>  $ SalBott     : num [1:151478] 0.958 0.958 0.958 0.958 0.958 ...

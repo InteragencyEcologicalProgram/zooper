@@ -17,7 +17,7 @@ a tibble with 44 rows and 4 columns.
 biomass_mesomicro
 }
 \description{
-Average biomass values for meso and micro zooplankton to be used for biomass conversions
+Average carbon biomass values for meso and micro zooplankton to be used for biomass conversions
 }
 \seealso{
 \code{\link{biomass_macro}}

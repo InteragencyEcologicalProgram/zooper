@@ -8,6 +8,7 @@
 -   Broke out turbidity into FNU and NTU. Most surveys use NTU, but 20mm has switched to FNU recently.  
 -   Updated the species name for *Eurytemora affinis* to *Eurytemora carolleeae* based on Jungbluth et al 2021
 -   Jungbluth, M. J., J. Burns, L. Grimaldo, A. Slaughter, A. Katla, and W. Kimmerer. 2021. Feeding habits and novel prey of larval fishes in the northern San Francisco Estuary. Environmental DNA.1-22. <https://doi.org/10.1002/edn3.226>
+-   Fixed issue where macrozoop biomass was being incorrectly converted to micrograms, resulting in 100X higher biomass values. 
 
 # zooper 2.5.1
 

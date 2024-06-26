@@ -19,7 +19,8 @@ a tibble with 44,690 rows and 20 columns
   \item{Secchi}{Secchi depth in cm}
   \item{Temperature}{Temperature in °C.}
   \item{BottomDepth}{Total depth of the water column in m}
-  \item{Turbidity}{Water turbidity in NTU}
+  \item{TurbidityNTU}{Water turbidity in Nephrelometric Turbidity Units}
+  \item{TurbidityFNU}{Water turbidity in Formazin Nephelometric Units}
   \item{Microcystis}{Intensity of Microcystis bloom coded qualitatively from 1-5 where 1 = absent, 2 = low, 3 = medium, 4 = high, 5 = very high}
   \item{pH}{Water pH}
   \item{DO}{Dissolved oxygen in mg/L}

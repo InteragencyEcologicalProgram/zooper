@@ -104,7 +104,7 @@ Often, non-native species are not added to zooplankton species list the same yea
 
 ## Biomass
 
-Functionality to output biomass is now included in zooper. However, biomass conversions are not available for all taxa and life stages. Micro and meso zooplankton are converted to biomass using average biomass values from the literature (see `biomass_mesomicro` for sources). The macrozooplankton are converted to biomass using length-weight equations (see `biomass_macro` for sources). Length data are currently only published online for EMP, so only EMP macro zooplankton biomass is available through zooper, and only for the two mysid taxa with dry weight length-weight equations (see `biomass_macro` for the full set of equations). As more conversions become available for any size class, they can be added to zooper to increase the biomass coverage.
+Functionality to output biomass (carbon biomass per unit effort in $\mu g$ $m^{-3}$) is now included in zooper. However, biomass conversions are not available for all taxa and life stages. Micro and meso zooplankton are converted to biomass using average biomass values from the literature (see `biomass_mesomicro` for sources). The macrozooplankton are converted to biomass using length-weight equations (see `biomass_macro` for sources). Length data are currently only published online for EMP, so only EMP macro zooplankton biomass is available through zooper, and only for the two mysid taxa with dry weight length-weight equations from formalin preserved specimens (see `biomass_macro` for the full set of equations). As more conversions become available for any size class, they can be added to zooper to increase the biomass coverage.
 
 # Usage 
 

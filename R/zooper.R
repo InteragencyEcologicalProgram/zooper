@@ -72,9 +72,8 @@
 #'        \href{https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=494}{Data are available here.}}
 #'   }
 #'
-#' @docType package
 #' @name zooper
-NULL
+"_PACKAGE"
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
