@@ -244,7 +244,7 @@ Zoopdownloader <- function(
       #Select variables we are interested in.
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
-                    "Temperature", "Turbidity", "pH", "DO", "Microcystis",
+                    "Temperature", TurbidityNTU ="Turbidity", "pH", "DO", "Microcystis",
                     Volume = "Mesozooplankton_Volume", BottomDepth = "Start_Depth",
                     "DOP_Meso", "CPUE", "Latitude", "Longitude", "ICF_ID", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
@@ -260,7 +260,7 @@ Zoopdownloader <- function(
                     TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
                                           `Channel Deep`="Bottom"),
                     CondBott=ifelse(.data$TowType=="Bottom", .data$CondSurf, NA), # Move salinity to bottom for bottom samples
-                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "Turbidity", "pH", "DO", "Microcystis"),
+                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "TurbidityNTU", "pH", "DO", "Microcystis"),
                                   ~ifelse(.data$TowType=="Bottom", NA, .x)), # Remove bottom samples for variables that aren't retained
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
@@ -328,7 +328,7 @@ Zoopdownloader <- function(
       #Select variables we are interested in. I need to check on the latitude/longitude issue with Sam.
       dplyr::select("Source", "Date", "Datetime",
                     Station = "Station_Code", Chl = "Chl_a", CondSurf = "Conductivity", "Secchi", "SizeClass",
-                    "Temperature", "Turbidity", "pH", "DO", "Microcystis",
+                    "Temperature", TurbidityNTU = "Turbidity", "pH", "DO", "Microcystis",
                     Volume = "Macrozooplankton_Volume", BottomDepth = "Start_Depth", "ICF_ID",
                     "DOP_Macro", "CPUE", "Latitude", "Longitude", TowType="Habitat") %>%
       dplyr::left_join(Crosswalk %>% #Add in Taxnames, Lifestage, and taxonomic info
@@ -344,7 +344,7 @@ Zoopdownloader <- function(
                     TowType=dplyr::recode(.data$TowType, `Channel Surface`="Surface", Shoal="Surface",
                                           `Channel Deep`="Bottom"),
                     CondBott=ifelse(.data$TowType=="Bottom", .data$CondSurf, NA),
-                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "Turbidity", "pH", "DO", "Microcystis"),
+                    dplyr::across(c("Chl", "CondSurf", "Secchi", "Temperature", "TurbidityNTU", "pH", "DO", "Microcystis"),
                                   ~ifelse(.data$TowType=="Bottom", NA, .x)),
                     BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
       dplyr::mutate(CPUE=dplyr::case_when(
@@ -450,7 +450,7 @@ Zoopdownloader <- function(
                           names_to="FMWT_Meso", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = "Project", "Year", "Date", "Datetime", "Station", Tide = "TideCode",
                     BottomDepth = "DepthBottom", "CondSurf", "CondBott", Temperature = "TempSurf",
-                    "Secchi", "Turbidity", "Microcystis", "Volume", "FMWT_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
+                    "Secchi", TurbidityNTU = "Turbidity", "Microcystis", "Volume", "FMWT_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FMWT_Meso", "Lifestage", "Taxname", "Phylum", "Class",
                                        "Order", "Family", "Genus", "Species", "Intro",
@@ -521,9 +521,10 @@ Zoopdownloader <- function(
                                  -"BottomEC", -"Secchi", -"NTU", -"FNU", -"Tide", -"BottomDepth", -"Duration", -"MeterCheck", -"Volume",
                                  -"Dilution", -"SampleID", -"Datetime"),
                           names_to="twentymm_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::mutate(Turbidity = dplyr::coalesce(NTU, FNU)) %>% #NTU and FNU are close enough it's not a big deal to treat them as the same
-      dplyr::select(Date="SampleDate", "Station", Temperature = "Temp", CondSurf = "TopEC", CondBott = "BottomEC", "Secchi",
-                     Turbidity, "Tide", "BottomDepth", "Volume", "SampleID", "Datetime", "twentymm_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
+          dplyr::select(Date="SampleDate", "Station", Temperature = "Temp", CondSurf = "TopEC",
+                    CondBott = "BottomEC", "Secchi",
+                     TurbidityNTU = "NTU", TurbidityFNU = "FNU",
+                    "Tide", "BottomDepth", "Volume", "SampleID", "Datetime", "twentymm_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
 
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("twentymm_Meso", "Lifestage", "Taxname", "Phylum", "Class",
@@ -609,14 +610,14 @@ Zoopdownloader <- function(
                                               TRUE ~ "Surface"),
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium` = "3"))%>%
       dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart", Longitude = "LongitudeStart", Station = "Location",
-                    CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
+                    CondSurf = "SC", "Secchi", "pH", "DO", TurbidityNTU = "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Meso = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
       dplyr::filter(!is.na(.data$Latitude)) %>% #remove samples with no gps coordinates
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Meso", values_from="CPUE", values_fill=list(CPUE=0))%>%
       tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime",
-                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"Turbidity",
+                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"TurbidityNTU",
                                  -"Tide", -"Microcystis", -"SizeClass", -"Latitude", -"Longitude",
                                  -"Temperature", -"Volume", -"SampleID", -"TowType"),
                           names_to="FRP_Meso", values_to="CPUE")%>%
@@ -691,7 +692,7 @@ Zoopdownloader <- function(
                      "Datetime",
                      Station = "StationCode",
                      Temperature = "WaterTemperature",
-                     "Secchi", "Turbidity",
+                     "Secchi", TurbidityNTU = "Turbidity",
                      CondSurf = "SpCnd",
                      "pH", "DO",
                      Microcystis="MicrocystisVisualRank",
@@ -711,7 +712,7 @@ Zoopdownloader <- function(
       tidyr::pivot_wider(names_from="YBFMP", values_from="CPUE", values_fill=list(CPUE=0)) %>%
       tidyr::pivot_longer(cols=c(-"Source", -"SizeClass", -"Volume", -"Date",
                                  -"Datetime", -"Station", -"Temperature", -"CondSurf", -"Secchi",
-                                 -"pH", -"DO", -"Turbidity", -"Microcystis",
+                                 -"pH", -"DO", -"TurbidityNTU", -"Microcystis",
                                  -"SampleID"),
                           names_to="YBFMP", values_to="CPUE")%>%
       dplyr::left_join(Crosswalk %>%
@@ -846,14 +847,14 @@ Zoopdownloader <- function(
                     Microcystis = dplyr::recode(.data$Microcystis, `1=absent`="1", `2=low`="2", `3=medium`="3"))%>%
 
       dplyr::select("Source", "Date", "Datetime", Latitude= "LatitudeStart", Longitude = "LongitudeStart", Station = "Location",
-                    CondSurf = "SC", "Secchi", "pH", "DO", "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
+                    CondSurf = "SC", "Secchi", "pH", "DO", TurbidityNTU = "Turbidity", "Tide", "Microcystis", "SizeClass", "TowType",
                     Temperature = "Temp", Volume = "effort", FRP_Macro = "CommonName", "CPUE", SampleID = "SampleID_frp")%>% #Select for columns in common and rename columns to match
       dplyr::filter(!is.na(.data$Latitude)) %>%
       dplyr::group_by(dplyr::across(-"CPUE"))%>% #Some taxa names are repeated as in EMP so
       dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=T), .groups="drop")%>% #this just adds up those duplications
       tidyr::pivot_wider(names_from="FRP_Macro", values_from="CPUE", values_fill=list(CPUE=0))%>%
       tidyr::pivot_longer(cols=c(-"Source", -"Date", -"Datetime",
-                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"Turbidity",
+                                 -"Station", -"CondSurf", -"Secchi", -"pH", -"DO", -"TurbidityNTU",
                                  -"Tide", -"Microcystis", -"SizeClass", -"Latitude", -"Longitude",
                                  -"Temperature", -"Volume", -"SampleID", -"TowType"),
                           names_to="FRP_Macro", values_to="CPUE")%>%
@@ -1035,7 +1036,8 @@ Zoopdownloader <- function(
                                  -"Volume"),
                           names_to="FMWT_Macro", values_to="CPUE")%>% #transform from wide to long
       dplyr::select(Source = "Project", "Date", "Datetime", "Station", Tide = "TideCode", BottomDepth = "DepthBottom",
-                    "CondSurf", "CondBott", Temperature = "TempSurf", "Secchi", "Turbidity", "Microcystis", "Volume",
+                    "CondSurf", "CondBott", Temperature = "TempSurf", "Secchi", TurbidityNTU = "Turbidity",
+                    "Microcystis", "Volume",
                     "FMWT_Macro", "CPUE")%>% #Select for columns in common and rename columns to match
       dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
                          dplyr::select("FMWT_Macro", "Lifestage", "Taxname", "Phylum", "Class", "Order",
