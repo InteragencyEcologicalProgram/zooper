@@ -50,7 +50,8 @@ Zoopbiomass<-function(Zoop,
         !is.na(.data$Mass_Order) ~ .data$Mass_Order,
         !is.na(.data$Mass_Class) ~ .data$Mass_Class,
         !is.na(.data$Mass_Phylum) ~ .data$Mass_Phylum,
-        TRUE ~ NA_real_))
+        TRUE ~ NA_real_),
+        BPUE=Mass*CPUE)
   }
 
   if("Macro"%in%unique(Zoop$SizeClass) & "Macro"%in%Size_class){
@@ -73,11 +74,11 @@ Zoopbiomass<-function(Zoop,
           .data$Source%in%unique(ZoopLengths$Source) &
           .data$CPUE==0 ~ 0,
         !is.na(.data$Mass) ~ Mass,
-        TRUE ~ NA_real_))
+        TRUE ~ NA_real_),
+        BPUE=dplyr::if_else(.data$Volume==0, NA_real_, .data$Mass/.data$Volume))
   }
 
-Zoop<-dplyr::bind_rows(zoop_list)%>%
-    dplyr::mutate(BPUE=dplyr::if_else(.data$Volume==0, NA_real_, .data$Mass/.data$Volume))
+Zoop<-dplyr::bind_rows(zoop_list)
 
   nomass<-Zoop%>%
     dplyr::filter(is.na(.data$Mass))%>%

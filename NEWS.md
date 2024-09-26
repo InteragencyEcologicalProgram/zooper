@@ -1,5 +1,6 @@
 # zooper (development version)
 
+-   Fixed issue with biomass conversion for macro and micro zooplankton. Previously it was not taking into account the count and instead providing the BPUE if 1 individual were present. 
 -   Added the biomass for the surveys and size classes with the appropriate conversation factors and length data. This feature is still experimental
 -   Fixed issue with crosswalk that may impact Zoopsynther community output (values in the species column weren't consistent, some were genus species, some just species)
 -   Updated FRP data
