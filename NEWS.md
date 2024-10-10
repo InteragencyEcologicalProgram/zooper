@@ -10,6 +10,7 @@
 -   Updated the species name for *Eurytemora affinis* to *Eurytemora carolleeae* based on Jungbluth et al 2021
 -   Jungbluth, M. J., J. Burns, L. Grimaldo, A. Slaughter, A. Katla, and W. Kimmerer. 2021. Feeding habits and novel prey of larval fishes in the northern San Francisco Estuary. Environmental DNA.1-22. <https://doi.org/10.1002/edn3.226>
 -   Fixed issue where macrozoop biomass was being incorrectly converted to micrograms, resulting in 100X higher biomass values. 
+-   Added FRP 2022 data and adjusted crosswalk to reflect changes to their taxonomic table. 
 
 # zooper 2.5.1
 
