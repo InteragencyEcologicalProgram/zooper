@@ -213,10 +213,10 @@ test_that("20mm Meso column names have not changed", {
 test_that("FRP Meso column names have not changed", {
   expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo","Location", "Date",
                                      "subsample" ,
-                                     "Count" , "AdjCount" ,"CPUE","Flagged_Data", "StartTime",
+                                     "Count" , "AdjCount" ,"CPUE","Flagged_Data_zoops", "StartTime",
                                      "EndTime",  "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",
-                                     "DepthOfSample", "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
-                                     "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "effort",   "LAB_NAME",
+                                    "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
+                                    "GearTypeAbbreviation", "effort",   "LAB_NAME",
                                      "Comments"))
 })
 
@@ -242,11 +242,11 @@ test_that("EMP Micro column names have not changed", {
 
 test_that("FRP Macro column names have not changed", {
   expect_setequal(names_FRP_Macro, c("SampleID_key","SampleID_frp", "CommonName", "VisitNo", "subsample",
-                                     "Count", "AdjCount", "Flagged_Data", "StartTime", "EndTime",
+                                     "Count", "AdjCount", "Flagged_Data_macroinvert", "StartTime", "EndTime",
                                      "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
                                      "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",        "Boulder",
-                                     "Cobble", "Gravel", "Organics", "Sand", "Silt",
-                                     "PercentOpen", "DetritalVolume", "GearTypeAbbreviation", "LAB_NAME",   "Location",
+                                     "Cobble", "Gravel", "Organics", "Sand", "Silt", "DetritalVolume",
+                                     "GearTypeAbbreviation", "LAB_NAME",   "Location",
                                      "Date","Comments", "effort", "CPUE"))
 })
 
