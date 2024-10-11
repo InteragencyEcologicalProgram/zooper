@@ -584,18 +584,15 @@ Zoopdownloader <- function(
       dplyr::mutate(CommonName = dplyr::case_when(CommonName == "Fish larvae" ~ "Fish UNID",
                                                   CommonName == "Insect Unid" ~ "Insect UNID",
                                                   CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
-                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
                                                   CommonName == "Asellidae UNID" ~ "Asellidae",
-                                                  CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
                                                   CommonName == "Fish larvae" ~ "Fish UNID",
                                                   CommonName == "Insect Unid" ~ "Insect UNID",
                                                   CommonName == "Calanoid copepod (gravid)" ~ "Calanoid UNID",
-                                                  CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
                                                   TRUE ~ CommonName))
 
     #Already in long format
     data.list[["FRP_Meso"]] <- FRP_all%>%
-      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+    #  dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$StartTime),
                                                                        NA_character_,
                                                                        paste(.data$Date, .data$StartTime)),
@@ -634,6 +631,8 @@ Zoopdownloader <- function(
       dplyr::ungroup()%>%
       tibble::as_tibble()%>%
       dplyr::mutate(SampleID=paste(.data$Source, .data$SampleID)) #Create identifier for each sample
+
+
     cat("\nFRP_Meso finished!\n\n")
   }
 
@@ -832,7 +831,7 @@ Zoopdownloader <- function(
     #Already in long format
     data.list[["FRP_Macro"]] <- FRP_allmac%>%
       dplyr::filter(.data$GearTypeAbbreviation %in% c("MAC", "MACOBL", "MACBEN"))%>%
-      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+     # dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
       dplyr::mutate(Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$StartTime),
                                                                        NA_character_,
                                                                        paste(.data$Date, as.character(.data$StartTime))),
