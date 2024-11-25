@@ -51,7 +51,7 @@ Zoopbiomass<-function(Zoop,
         !is.na(.data$Mass_Class) ~ .data$Mass_Class,
         !is.na(.data$Mass_Phylum) ~ .data$Mass_Phylum,
         TRUE ~ NA_real_),
-        BPUE=Mass*CPUE)
+        BPUE=.data$Mass*.data$CPUE)
   }
 
   if("Macro"%in%unique(Zoop$SizeClass) & "Macro"%in%Size_class){

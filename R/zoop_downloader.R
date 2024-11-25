@@ -909,7 +909,7 @@ Zoopdownloader <- function(
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
                                                         c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"), # Ensure everything ends up in local time
-                    Unidentified_mysid=dplyr::if_else(lubridate::year(.data$SampleDate)<2014, .data$Amphipod_Total, .data$Unidentified_mysid))%>% # Transfer pre 2014 amphipod counts to Amphipod_total
+                    Unidentified_Amphipod=dplyr::if_else(lubridate::year(.data$SampleDate)<2014, .data$Amphipod_Total, .data$Unidentified_Amphipod))%>% # Transfer pre 2014 amphipod counts to Amphipod_total
       tidyr::pivot_longer(cols=c(-"SampleDate", -"Time", -"Datetime", -"StationNZ", -"Secchi", -"Chl_a", -"Temperature",
                                  -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Depth", -"AmphipodCode"),
                           names_to="EMP_Macro", values_to="CPUE")%>% #transform from wide to long
