@@ -1005,7 +1005,11 @@ Zoopdownloader <- function(
                                                                  Crangonyx_sp="d", Gammarus_daiberi="d", Grandidierella_japonica="d",
                                                                  Hyalella_sp="d", Unidentified_Amphipod="d", Unidentified_Corophium="d",
                                                                  Unidentified_Gammarus="d"))%>%
-      dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))
+      dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station)) %>%
+      dplyr::mutate(Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_,
+                                                                         paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M", tz="America/Los_Angeles"),
+                    Date=lubridate::parse_date_time(.data$Date, "%Y-%m-%d", tz="America/Los_Angeles"))
+    #The 2025 data upload has a new date format for Macro (but not meso, and not SMSCG very annoying)
 
     zoo_SMSCG_Macro <- readr::read_csv(file.path(Data_folder, "SMSCG_Macro.csv"),
                                        col_types=readr::cols_only(Project="c", Year="d", Survey="d",
@@ -1021,13 +1025,17 @@ Zoopdownloader <- function(
                                                                   Hyalella_sp="d", Unidentified_Amphipod="d", Unidentified_Corophium="d",
                                                                   Unidentified_Gammarus="d"))%>%
       dplyr::mutate(ID=paste(.data$Year, .data$Project, .data$Survey, .data$Station))%>%
-      dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro$ID) & .data$Project%in%c("FMWT", "STN"))
+      dplyr::filter(!.data$ID%in%unique(zoo_FMWT_Macro$ID) & .data$Project%in%c("FMWT", "STN")) %>%
+
+      #put date and time in the right format. Date first, tehn datetime to try and fix a problem where the date randomly came out wrong in the 'datetime' version
+      dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%y", tz="America/Los_Angeles"),
+        Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_,
+                                                                         paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))
 
     data.list[["FMWT_Macro"]] <- dplyr::bind_rows(zoo_FMWT_Macro, zoo_SMSCG_Macro)%>%
       dplyr::select(-"ID")%>%
-      dplyr::mutate(Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$Date, .data$Time)), "%m/%d/%Y %H:%M", tz="America/Los_Angeles"),
-                    Date=lubridate::parse_date_time(.data$Date, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Microcystis = as.character(.data$Microcystis))%>% #create a variable for datetime
+      distinct()%>% #remove any samples duplicated between the SMSCG datset and the FMWTdataset
+      dplyr::mutate(Microcystis = as.character(.data$Microcystis))%>%
       tidyr::pivot_longer(cols=c(-"Project", -"Year", -"Survey", -"Date", -"Datetime",
                                  -"Station", -"Time", -"TideCode",
                                  -"DepthBottom", -"CondSurf", -"CondBott",
