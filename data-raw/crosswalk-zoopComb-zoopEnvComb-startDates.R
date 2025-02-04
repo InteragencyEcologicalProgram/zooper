@@ -31,6 +31,7 @@ zoop<-Zoopdownloader(Data_sets=c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                      Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE,
                      Redownload_data=TRUE, Crosswalk=crosswalk, Biomass=TRUE)
 
+
 zoopComb <- zoop$Zooplankton
 
 zoopEnvComb <- zoop$Environment
@@ -45,3 +46,4 @@ startDates<-zoopComb%>%
   dplyr::summarise(Startdate = min(Date), .groups="drop")
 
 usethis::use_data(zoopComb, zoopEnvComb, startDates, crosswalk, overwrite = TRUE)
+
