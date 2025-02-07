@@ -1042,6 +1042,7 @@ Zoopdownloader <- function(
     data.list[["FMWT_Macro"]] <- dplyr::bind_rows(zoo_FMWT_Macro, zoo_SMSCG_Macro)%>%
       dplyr::select(-"ID")%>%
       distinct()%>% #remove any samples duplicated between the SMSCG datset and the FMWTdataset
+      filter(Project %in% c("STN", "FMWT")) %>% #get rid of duplicated FRP and EMP samples
       dplyr::mutate(Microcystis = as.character(.data$Microcystis))%>%
       tidyr::pivot_longer(cols=c(-"Project", -"Year", -"Survey", -"Date", -"Datetime",
                                  -"Station", -"Time", -"TideCode",
