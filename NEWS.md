@@ -13,6 +13,7 @@
 -   Fixed issue where macrozoop biomass was being incorrectly converted to micrograms, resulting in 100X higher biomass values. 
 -   Added FRP 2022 data and adjusted crosswalk to reflect changes to their taxonomic table. 
 -   Added 2023 FMWT/STN data and adjusted zoopdownloader to reflect new date format
+-   Added 2022 and 2023 EMP meso and micro data from FTP site. This will be updated with the EDI publication when it is available. 
 
 # zooper 2.5.1
 

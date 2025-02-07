@@ -89,6 +89,8 @@ zoop_urls<-function(Sources){
 
   }
 
+
+
   if(any(c("STN", "FMWT")%in%Sources)){
     FMWTSTN_revision_url <- "https://pasta.lternet.edu/package/eml/edi/1103"
     FMWTSTN_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=FMWTSTN_revision_url, warn = FALSE), 1)

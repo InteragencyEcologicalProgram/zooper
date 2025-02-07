@@ -96,84 +96,91 @@ Zoopdownloader <- function(
   # EMP Meso ---------------------------------------------------------------------
   if("EMP_Meso"%in%Data_sets) {
 
+    # #download the file
+    # if (!file.exists(file.path(Data_folder, "EMP_meso.csv")) | Redownload_data) {
+    #   Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Meso,
+    #         destfile=file.path(Data_folder, "EMP_meso.csv"), mode="wb", method=Download_method)
+    # }
+
     #download the file
-    if (!file.exists(file.path(Data_folder, "EMP_meso.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Meso,
-            destfile=file.path(Data_folder, "EMP_meso.csv"), mode="wb", method=Download_method)
-    }
+  #download the file
+                                     # if (!file.exists(file.path(Data_folder, "EMP_meso.csv")) | Redownload_data) {
+                                     #     Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Meso,
+                                     #           destfile=file.path(Data_folder, "EMP_meso.csv"), mode="wb", method=Download_method)
+                                     #   }
 
 
-    # Import the EMP data
+                                       # Import the EMP data
 
-    zoo_EMP_Meso<-readr::read_csv(file.path(Data_folder, "EMP_meso.csv"),
-                                  col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
-                                                             Chl_a="d", Secchi="d", Temperature="d",
-                                                             ECSurfacePreTow="d", ECBottomPreTow="d",
-                                                             Volume="d", Depth="d", ACARTELA="d", ACARTIA="d",
-                                                             DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
-                                                             PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
-                                                             TORTANUS="d", ACANTHO="d", LIMNOSPP="d",
-                                                             LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
-                                                             OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
-                                                             HARPACT="d", CALJUV="d", EURYJUV="d",
-                                                             OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
-                                                             ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
-                                                             TORTJUV="d", CYCJUV="d", LIMNOJUV="d",
-                                                             OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
-                                                             EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
-                                                             SINONAUP="d", BOSMINA="d", DAPHNIA="d",
-                                                             DIAPHAN="d",OTHCLADO="d", ASPLANCH="d",
-                                                             KERATELA="d",OTHROT="d", POLYARTH="d",
-                                                             SYNCH="d",SYNCHBIC="d", TRICHO="d",
-                                                             BARNNAUP="d", CRABZOEA="d"))
+                                       zoo_EMP_Meso<-readr::read_csv("data-raw/EMP_meso.csv",
+                                                                     col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
+                                                                                                Chl_a="d", Secchi="d", Temperature="d",
+                                                                                                ECSurfacePreTow="d", ECBottomPreTow="d",
+                                                                                                Volume="d", Depth="d", ACARTELA="d", ACARTIA="d",
+                                                                                                DIAPTOM="d", EURYTEM="d", OTHCALAD="d",
+                                                                                                PDIAPFOR="d", PDIAPMAR="d", SINOCAL="d",
+                                                                                                TORTANUS="d", ACANTHO="d", LIMNOSPP="d",
+                                                                                                LIMNOSINE="d", LIMNOTET="d", OITHDAV="d",
+                                                                                                OITHSIM="d", OITHSPP="d", OTHCYCAD="d",
+                                                                                                HARPACT="d", CALJUV="d", EURYJUV="d",
+                                                                                                OTHCALJUV="d", PDIAPJUV="d", SINOCALJUV="d",
+                                                                                                ASINEJUV="d", ACARJUV="d", DIAPTJUV="d",
+                                                                                                TORTJUV="d", CYCJUV="d", LIMNOJUV="d",
+                                                                                                OITHJUV="d", OTHCYCJUV="d", COPNAUP="d",
+                                                                                                EURYNAUP="d", OTHCOPNAUP="d", PDIAPNAUP="d",
+                                                                                                SINONAUP="d", BOSMINA="d", DAPHNIA="d",
+                                                                                                DIAPHAN="d",OTHCLADO="d", ASPLANCH="d",
+                                                                                                KERATELA="d",OTHROT="d", POLYARTH="d",
+                                                                                                SYNCH="d",SYNCHBIC="d", TRICHO="d",
+                                                                                                BARNNAUP="d", CRABZOEA="d"))
 
-    # Tranform from "wide" to "long" format, add some variables,
-    # alter data to match other datasets
+                                       # Tranform from "wide" to "long" format, add some variables,
+                                       # alter data to match other datasets
 
-    data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
-      dplyr::filter(!is.na(.data$SampleDate))%>%
-      dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
-                    Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
-                    Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
-      tidyr::pivot_longer(cols=c(-"SampleDate", -"StationNZ", -"Time", -"Secchi", -"Chl_a", -"Temperature",
-                                 -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Datetime", -"Depth"),
-                          names_to="EMP_Meso", values_to="CPUE")%>% #transform from wide to long
-      dplyr::mutate(Source="EMP",
-                    SizeClass="Meso")%>% #add variable for data source
-      dplyr::select("Source", Date="SampleDate", "Datetime",
-                    Station="StationNZ", Chl = "Chl_a", CondBott = "ECBottomPreTow", CondSurf = "ECSurfacePreTow", "Secchi", "SizeClass",
-                    "Temperature", "Volume", BottomDepth="Depth", "EMP_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
-      dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
-                         dplyr::select("EMP_Meso", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species", "Intro", "EMPstart", "EMPend")%>% #only retain EMP codes
-                         dplyr::filter(!is.na(.data$EMP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
-                         dplyr::distinct(),
-                       by="EMP_Meso")%>%
-      dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
-      dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
-                    SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
-                    Tide="1",# All EMP samples collected at high slack
-                    TowType="Oblique",
-                    BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
-      dplyr::mutate(CPUE=dplyr::case_when(
-        .data$CPUE!=0 ~ .data$CPUE,
-        .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
-        .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
-        .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
-        .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
-      ))%>%
-      dplyr::select(-"EMP_Meso", -"EMPstart", -"EMPend", -"Intro")%>% #Remove EMP taxa codes
-      dplyr::select(-"Datetime")%>% #Add this back in when other EMP data have time
-      dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
-      dplyr::group_by(dplyr::across(-"CPUE"))%>%
-      dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
-      dplyr::ungroup()%>%
-      tibble::as_tibble() %>% #required to finish operation after lazy_dt()
-      dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
+                                       data.list[["EMP_Meso"]] <- zoo_EMP_Meso%>%
+                                         dplyr::filter(!is.na(.data$SampleDate))%>%
+                                         dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%Y-%m-%d", tz="America/Los_Angeles"),
+                                                       Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
+                                                                                           c("%Y-%m-%d %H:%M"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                       Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
+                                         tidyr::pivot_longer(cols=c(-"SampleDate", -"StationNZ", -"Time", -"Secchi", -"Chl_a", -"Temperature",
+                                                                    -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Datetime", -"Depth"),
+                                                             names_to="EMP_Meso", values_to="CPUE")%>% #transform from wide to long
+                                         dplyr::mutate(Source="EMP",
+                                                       SizeClass="Meso")%>% #add variable for data source
+                                         dplyr::select("Source", Date="SampleDate", "Datetime",
+                                                       Station="StationNZ", Chl = "Chl_a", CondBott = "ECBottomPreTow", CondSurf = "ECSurfacePreTow", "Secchi", "SizeClass",
+                                                       "Temperature", "Volume", BottomDepth="Depth", "EMP_Meso", "CPUE")%>% #Select for columns in common and rename columns to match
+                                         dplyr::left_join(Crosswalk%>% #Add in Taxnames, Lifestage, and taxonomic info
+                                                            dplyr::select("EMP_Meso", "Lifestage", "Taxname", "Phylum", "Class", "Order", "Family", "Genus", "Species", "Intro", "EMPstart", "EMPend")%>% #only retain EMP codes
+                                                            dplyr::filter(!is.na(.data$EMP_Meso))%>% #Only retain Taxnames corresponding to EMP codes
+                                                            dplyr::distinct(),
+                                                          by="EMP_Meso")%>%
+                                         dplyr::filter(!is.na(.data$Taxname))%>% #Should remove all the summed categories in original dataset
+                                         dplyr::mutate(Taxlifestage=paste(.data$Taxname, .data$Lifestage), #create variable for combo taxonomy x life stage
+                                                       SampleID=paste(.data$Source, .data$Station, .data$Date), #Create identifier for each sample
+                                                       Tide="1",# All EMP samples collected at high slack
+                                                       TowType="Oblique",
+                                                       BottomDepth=.data$BottomDepth*0.3048)%>% # Convert feet to meters
+                                         dplyr::mutate(CPUE=dplyr::case_when(
+                                           .data$CPUE!=0 ~ .data$CPUE,
+                                           .data$CPUE==0 & .data$Date < .data$Intro ~ 0,
+                                           .data$CPUE==0 & .data$Date >= .data$Intro & .data$Date < .data$EMPstart ~ NA_real_,
+                                           .data$CPUE==0 & .data$Date >= .data$EMPstart & .data$Date < .data$EMPend ~ 0,
+                                           .data$CPUE==0 & .data$Date >= .data$EMPend ~ NA_real_
+                                         ))%>%
+                                         dplyr::select(-"EMP_Meso", -"EMPstart", -"EMPend", -"Intro")%>% #Remove EMP taxa codes
+                                         dplyr::select(-"Datetime")%>% #Add this back in when other EMP data have time
+                                         dtplyr::lazy_dt()%>% #Speed up code using dtplyr package that takes advantage of data.table speed
+                                         dplyr::group_by(dplyr::across(-"CPUE"))%>%
+                                         dplyr::summarise(CPUE=sum(.data$CPUE, na.rm=TRUE))%>% #Some taxa now have the same names (e.g., CYCJUV and OTHCYCJUV) so we now add those categories together.
+                                         dplyr::ungroup()%>%
+                                         tibble::as_tibble() %>% #required to finish operation after lazy_dt()
+                                         dplyr::left_join(stations, by=c("Source", "Station")) #Add lat and long
 
 
-    cat("\nEMP_Meso finished!\n\n")
-  }
+                                       cat("\nEMP_Meso finished!\n\n")
+                                     }
 
 
   # DOP Meso ---------------------------------------------------------------------
@@ -731,13 +738,13 @@ Zoopdownloader <- function(
   if("EMP_Micro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "EMP_Micro.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Micro,
-            destfile=file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method=Download_method)
-    }
+    # if (!file.exists(file.path(Data_folder, "EMP_Micro.csv")) | Redownload_data) {
+    #   Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Micro,
+    #         destfile=file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method=Download_method)
+    # }
 
     # Import the EMP data
-    zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, "EMP_Micro.csv"),
+    zoo_EMP_Micro<-readr::read_csv("data-raw/EMP_Micro.csv",
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
                                                               Chl_a="d", Secchi="d", Temperature="d",
                                                               ECSurfacePreTow="d", ECBottomPreTow="d",
@@ -756,7 +763,7 @@ Zoopdownloader <- function(
     # alter data to match other datasets
 
     data.list[["EMP_Micro"]] <- zoo_EMP_Micro%>%
-      dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
+      dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%Y-%m-%d", tz="America/Los_Angeles"))%>%
       dplyr::rename(OTHCYCADPUMP = "OTHCYCAD")%>%
       tidyr::pivot_longer(cols=c(-"SampleDate", -"StationNZ", -"Secchi", -"Chl_a", -"Temperature",
                                  -"ECSurfacePreTow", -"ECBottomPreTow", -"Depth", -"Volume"),
@@ -1035,6 +1042,7 @@ Zoopdownloader <- function(
     data.list[["FMWT_Macro"]] <- dplyr::bind_rows(zoo_FMWT_Macro, zoo_SMSCG_Macro)%>%
       dplyr::select(-"ID")%>%
       distinct()%>% #remove any samples duplicated between the SMSCG datset and the FMWTdataset
+      filter(Project %in% c("STN", "FMWT")) %>% #get rid of duplicated FRP and EMP samples
       dplyr::mutate(Microcystis = as.character(.data$Microcystis))%>%
       tidyr::pivot_longer(cols=c(-"Project", -"Year", -"Survey", -"Date", -"Datetime",
                                  -"Station", -"Time", -"TideCode",
