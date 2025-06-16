@@ -212,7 +212,7 @@ test_that("20mm Meso column names have not changed", {
 
 test_that("FRP Meso column names have not changed", {
   expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo","Location", "Date",
-                                     "subsample" ,
+                                     "subsample" , "DragMethod",
                                      "Count" , "AdjCount" ,"CPUE","Flagged_Data_zoops", "StartTime",
                                      "EndTime",  "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",
                                     "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
@@ -242,6 +242,7 @@ test_that("EMP Micro column names have not changed", {
 
 test_that("FRP Macro column names have not changed", {
   expect_setequal(names_FRP_Macro, c("SampleID_key","SampleID_frp", "CommonName", "VisitNo", "subsample",
+                                     "DragMethod",
                                      "Count", "AdjCount", "Flagged_Data_macroinvert", "StartTime", "EndTime",
                                      "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
                                      "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",        "Boulder",
@@ -253,7 +254,7 @@ test_that("FRP Macro column names have not changed", {
 test_that("FRP site data column names have not changed", {
   expect_setequal(names_FRP_sites, c('VisitNo', 'Location', 'Date', 'Temp', 'SC', 'pH', 'DO',
                                      'Turbidity', 'Chlorophyll', 'Phycocyanin', 'FDOM', 'Secchi',
-                                     'Microcystis', 'Tide', 'Weather', 'WindWaves', 'Flagged_Data'))
+                                     'Microcystis', 'Tide', 'Weather', 'WindWaves', 'Flagged_Data', "SiteComments"))
 
 })
 
