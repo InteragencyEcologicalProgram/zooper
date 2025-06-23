@@ -14,6 +14,7 @@
 -   Added FRP 2022 data and adjusted crosswalk to reflect changes to their taxonomic table. 
 -   Added 2023 FMWT/STN data and adjusted zoopdownloader to reflect new date format
 -   Added FRP 2023 data and adjusted crosswalk to reflect changes to their table. 
+-   Adjusted crosswalk table to reflect the order "Cladocera" being split into several orders. 
 
 # zooper 2.5.1
 
