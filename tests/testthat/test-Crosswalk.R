@@ -88,3 +88,4 @@ taxname_level<-zooper::crosswalk%>%
 test_that("Taxnames are entered with a consistent taxonomic level", {
   expect_equal(length(taxname_level), 0)
 })
+

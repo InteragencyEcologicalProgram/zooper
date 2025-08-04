@@ -149,7 +149,7 @@ Zoopsynther<-function(
   }
 
   if(!is.null(Taxa) & !purrr::every(Taxa, ~.%in%CompleteTaxaList)){
-    warning("Check spelling of Taxa, some are not present in the completeTaxaList and are likely misspelled.")
+    warning("Check spelling of Taxa, some are not present in the completeTaxaList and are likely misspelled. If you want information on Cladocera, note that the Order Cladocera has been revised to reflect several different orders, three of which are found in our estuary: Anomopoda, Ctenopoda, and Onychopoda. 'Branchiopoda' (Class) will select all of these orders.")
   }
 
   #Make it possible to re-download data if desired

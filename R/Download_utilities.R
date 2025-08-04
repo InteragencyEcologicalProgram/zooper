@@ -76,7 +76,8 @@ zoop_urls<-function(Sources){
 
   if("EMP"%in%Sources){
     EMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
+    #EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
+    EMP_latest_revision = 11 #Keeping the old EMP dataset until I can go through and do a full update - next pull request.
     EMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
     EMP_entities <- Tryer(n=3, fun=readLines, con=EMP_pkg_url, warn = FALSE)
     EMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
