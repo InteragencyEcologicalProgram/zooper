@@ -76,17 +76,16 @@ zoop_urls<-function(Sources){
 
   if("EMP"%in%Sources){
     EMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-    #EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
-    EMP_latest_revision = 11 #Keeping the old EMP dataset until I can go through and do a full update - next pull request.
+    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
     EMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
     EMP_entities <- Tryer(n=3, fun=readLines, con=EMP_pkg_url, warn = FALSE)
     EMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
     names(EMP_entities) <- purrr::map_chr(EMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
-    out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["cb_matrix.csv"])
-    out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["pump_matrix.csv"])
-    out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["macro_matrix.csv"])
-    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["macro_lengths.csv"])
+    out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_CBMatrix_EDI"])
+    out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_PumpMatrix_EDI"])
+    out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_MysidMatrix_EDI"])
+    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_Mysid_Length_Data_EDI"])
 
   }
 
