@@ -340,34 +340,57 @@ test_that("Single source taxa dataset is created and contains all sources", {
 })
 
 # Code to identify taxa not counted in all surveys
+# Updated since EMP Macro no longer contains amphipods
 
-com <- Zoopsynther(Data_type="Community")
+# Build the community data
+com <- Zoopsynther(Data_type = "Community")
 
-taxlifestages<-com%>%
-  group_by(SizeClass)%>%
-  summarise(taxlifestages=list(unique(Taxlifestage)))%>%
-  unnest(taxlifestages)%>%
-  unstack(taxlifestages~SizeClass)
+# Map of all taxlifestages by SizeClass (named list)
+taxlifestages <- com |>
+  dplyr::group_by(.data$SizeClass) |>
+  dplyr::summarise(taxlifestages = list(unique(.data$Taxlifestage)), .groups = "drop") |>
+  tibble::deframe()
 
-missing<-com%>%
-  group_by(Source, SizeClass)%>%
-  summarise(n=n_distinct(Taxlifestage),
-            Taxlifestage=list(unique(Taxlifestage)),
-            missing=list(setdiff(taxlifestages[[unique(SizeClass)]], unlist(Taxlifestage))),
-            .groups="drop")%>%
-  rowwise()%>%
-  filter(length(unlist(missing))>0)%>%
-  ungroup()%>%
-  unnest(missing)%>%
-  mutate(missing=paste(missing, SizeClass))%>%
-  pull(missing)%>%
+# Set of "missing from at least one source" per (Source, SizeClass)
+missing <- com |>
+  dplyr::group_by(.data$Source, .data$SizeClass) |>
+  dplyr::summarise(Taxlifestage = list(unique(.data$Taxlifestage)), .groups = "drop") |>
+  dplyr::rowwise() |>
+  dplyr::mutate(missing = list(base::setdiff(taxlifestages[[.data$SizeClass]],
+                                             base::unlist(.data$Taxlifestage)))) |>
+  dplyr::ungroup() |>
+  tidyr::unnest("missing") |>
+  dplyr::mutate(missing = paste(.data$missing, .data$SizeClass)) |>
+  dplyr::pull(.data$missing) |>
   unique()
 
-test_that("Only the expected taxlifestages not present in every survey are retained after the community approach", {
-  expect_setequal(missing,
-                  c("Copepoda_UnID Adult Meso", "Copepoda_UnID Juvenile Meso",
-                    "Daphniidae_UnID Adult Meso", "Pseudodiaptomus_UnID Adult Meso",
-                    "Brachionidae_UnID Adult Meso", "Americorophium_UnID Adult Macro"))
+# Split by size class for clearer assertions
+meso_missing <- missing[base::grepl(" Meso$", missing)]
+macro_missing <- missing[base::grepl(" Macro$", missing)]
+
+testthat::test_that("Only the expected taxlifestages not present in every survey are retained after the community approach", {
+  # 1) Meso: keep the exact expected set (stable + intentional)
+  meso_expected <- c(
+    "Copepoda_UnID Adult Meso",
+    "Copepoda_UnID Juvenile Meso",
+    "Daphniidae_UnID Adult Meso",
+    "Pseudodiaptomus_UnID Adult Meso",
+    "Brachionidae_UnID Adult Meso"
+  )
+
+  testthat::expect_setequal(meso_missing, meso_expected)
+
+  # 2) Macro: with EMP Macro no longer having amphipods, multiple amphipod taxa
+  # can be "not in every survey". Assert policy instead of an exhaustive list.
+
+  # Must include the intended cross-survey rollup
+  testthat::expect_true("Americorophium_UnID Adult Macro" %in% macro_missing)
+
+  # Everything else that is "Macro missing" should be amphipod-related
+  # (Americorophium/Hyalella/Gammarus/Crangonyx/Sinocorophium/Corophiidae/Amphipoda),
+  # allowing either genus-level _UnID or species names.
+  amphipod_prefix <- "^(Americorophium|Hyalella|Gammarus|Crangonyx|Sinocorophium|Corophiidae|Amphipoda)"
+  testthat::expect_true(all(stringr::str_detect(macro_missing, amphipod_prefix)))
 })
 
 rm(com, taxlifestages)
