@@ -151,14 +151,14 @@ names_DOP_Macro<-readr::read_csv(file.path(Data_folder, "DOP_Macro.csv")) %>%
 
 test_that("EMP Meso column names have not changed", {
   expect_setequal(names_EMP_Meso, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation', 'DWRStationNo',
-                                    'Core', 'Time', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow', 'ECBottomPreTow',
+                                    'Core', 'Time', 'CDFW_Region', 'DWR_Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow', 'ECBottomPreTow',
                                     'Volume', 'TowDuration', 'Depth', 'ACARTELA', 'ACARTIA', 'DIAPTOM', 'EURYTEM', 'OTHCALAD', 'PDIAPFOR', 'PDIAPMAR',
                                     'SINOCAL', 'TORTANUS', 'ALLCALADULTS', 'ACANTHO', 'LIMNOSPP', 'LIMNOSINE', 'LIMNOTET', 'OITHDAV',
                                     'OITHSIM', 'OITHSPP', 'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'CALJUV', 'EURYJUV', 'OTHCALJUV',
                                     'PDIAPJUV', 'SINOCALJUV', 'ASINEJUV', 'ACARJUV', 'DIAPTJUV', 'TORTJUV', 'ALLCALJUV', 'CYCJUV',
                                     'LIMNOJUV', 'OITHJUV', 'OTHCYCJUV', 'ALLCYCJUV', 'COPNAUP', 'EURYNAUP', 'OTHCOPNAUP', 'PDIAPNAUP',
-                                    'SINONAUP', 'ALLCOPNAUP', 'BOSMINA', 'DAPHNIA', 'DIAPHAN', 'OTHCLADO', 'ALLCLADOCERA', 'ASPLANCH',
-                                    'KERATELA', 'OTHROT', 'POLYARTH', 'SYNCH', 'SYNCHBIC', 'TRICHO', 'ALLROTIFER', 'BARNNAUP', 'CRABZOEA'))
+                                    'SINONAUP', 'ALLCOPNAUP', 'BOSMINA', 'CERIODAP', 'DAPHNIA', 'DIAPHAN', 'OTHCLADO', 'ALLCLADOCERA', 'ASPLANCH',
+                                    'KERATELA', 'OTHROT', 'POLYARTH', 'SYNCH', 'SYNCHBIC', 'TRICHO', 'ALLROTIFERS', 'BARNNAUP', 'CRABZOEA'))
 
 })
 
@@ -232,12 +232,12 @@ test_that("YBFMP column names have not changed", {
 
 test_that("EMP Micro column names have not changed", {
   expect_setequal(names_EMP_Micro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation',
-                                     'DWRStationNo', 'Core', 'Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
+                                     'DWRStationNo', 'Core', 'CDFW_Region', 'DWR_Region', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
                                      'ECBottomPreTow', 'Volume', "Depth", 'LIMNOSINE', 'LIMNOSPP', 'LIMNOTET', 'TotalLimno',
                                      'OITHDAV', 'OITHSIM', 'OITHSPP', 'OTHCYCAD', 'ALLCYCADULTS', 'HARPACT', 'CYCJUV',
                                      'LIMNOJUV', 'OITHJUV', 'OTHCYCJUV', 'ALLCYCJUV', 'COPNAUP', 'EURYNAUP', 'OTHCOPNAUP',
                                      'PDIAPNAUP', 'SINONAUP', 'ALLCOPNAUP', 'ASPLANCH', 'KERATELA', 'OTHROT', 'POLYARTH',
-                                     'SYNCH', 'SYNCHBIC', 'TRICHO', 'ALLROTIFER', 'BARNNAUP'))
+                                     'SYNCH', 'SYNCHBIC', 'TRICHO', 'ALLROTIFERS', 'BARNNAUP'))
 })
 
 test_that("FRP Macro column names have not changed", {
@@ -259,18 +259,16 @@ test_that("FRP site data column names have not changed", {
 })
 
 test_that("EMP Macro column names have not changed", {
-  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation',
-                                     'DWRStationNo', 'Core', 'Region', 'Time', 'TowDuration', 'Depth', 'Secchi', 'Chl_a', 'Temperature', 'ECSurfacePreTow',
-                                     'ECBottomPreTow', 'Volume', 'AmphipodCode', 'A_aspera', 'A_hwanhaiensis', 'A_macropsis',
-                                     'D_holmquistae', 'H_longirostris', 'N_kadiakensis', 'N_mercedis', 'Unidentified_mysid',
-                                     "Mysid_Total", "A_spinicorne", "A_stimpsoni", "A_abdita", "Ampithoe_sp", "Caprelidae_sp",
-                                     "C_alienense", "Crangonyx_sp", "G_daiberi", "G_japonica", "Hyalella_sp", "Monocorophium_sp",
-                                     "Oedicerotidae_sp", "Pleustidae", "Unidentified_Amphipod", "Unidentified_Corophium",
-                                     "Unidentified_Gammarus", "Amphipod_Total"))
+  expect_setequal(names_EMP_Macro, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'TowCode', 'StationNZ', 'EZStation',
+                                     'DWRStationNo', 'Core', 'CDFW_Region', 'DWR_Region', 'Time', 'TowDuration', 'Depth', 'Secchi',
+                                     'Chl_a', 'Temperature', 'ECSurfacePreTow', 'ECBottomPreTow', 'Volume', 'Acanthomysis aspera',
+                                     'Acanthomysis hwanhaiensis', 'Alienacanthomysis macropsis', 'Deltamysis holmquistae',
+                                     'Hyperacanthomysis longirostris', 'Neomysis kadiakensis', 'Neomysis mercedis', 'Unidentified Mysid',
+                                     'TotalMysids'))
 })
 
 test_that("FRP Length column names have not changed", {
-  expect_setequal(names_EMP_Lengths, c('SampleDate', 'StationNZ', 'SpeciesName', 'Sex', 'Size', 'Frequency', 'AdjustedFreq'))
+  expect_setequal(names_EMP_Lengths, c('SampleDate', 'StationNZ', 'SpeciesName', 'Sex', 'Length', 'SumOfFrequency', 'AdjustedFreq'))
 })
 
 test_that("FMWT Macro column names have not changed", {
