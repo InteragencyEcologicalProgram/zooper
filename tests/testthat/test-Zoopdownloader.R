@@ -41,7 +41,8 @@ test_that("Only the expected stations are missing coordinates", {
 })
 
 test_that("Only the expected EZ stations are missing coordinates", {
-  expect_setequal(unique(No_coords_EZ$Station), c("NZEZ6 2004-12-21", "NZEZ2 2007-08-21", "NZEZ6 2007-08-21"))
+  expect_setequal(unique(No_coords_EZ$Station), c("NZEZ6 2004-12-21", "NZEZ2 2007-08-21", "NZEZ6 2007-08-21",
+                                                  "NZEZ6 2024-11-08", "NZEZ2 2024-11-08"))
 })
 
 test_that("All rowshave station names", {

@@ -212,7 +212,7 @@ test_that("20mm Meso column names have not changed", {
 
 test_that("FRP Meso column names have not changed", {
   expect_setequal(names_FRP_Meso, c( "SampleID_key","SampleID_frp","CommonName", "VisitNo","Location", "Date",
-                                     "subsample" , "DragMethod",
+                                     "subsample" , "DragMethod","SiteType",
                                      "Count" , "AdjCount" ,"CPUE","Flagged_Data_zoops", "StartTime",
                                      "EndTime",  "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",
                                     "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",
@@ -244,7 +244,7 @@ test_that("FRP Macro column names have not changed", {
   expect_setequal(names_FRP_Macro, c("SampleID_key","SampleID_frp", "CommonName", "VisitNo", "subsample",
                                      "DragMethod",
                                      "Count", "AdjCount", "Flagged_Data_macroinvert", "StartTime", "EndTime",
-                                     "LatitudeStart", "LatitudeEnd", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
+                                     "LatitudeStart", "LatitudeEnd","SiteType", "LongitudeStart", "LongitudeEnd",  "DepthOfSample",
                                      "DepthOfWater", "NetMeterEnd", "TowDirection", "NetMeterStart",        "Boulder",
                                      "Cobble", "Gravel", "Organics", "Sand", "Silt", "DetritalVolume",
                                      "GearTypeAbbreviation", "LAB_NAME",   "Location",
