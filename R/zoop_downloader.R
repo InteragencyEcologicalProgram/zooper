@@ -134,7 +134,7 @@ Zoopdownloader <- function(
       dplyr::filter(!is.na(.data$SampleDate))%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                        c("%Y-%m-%d %H:%M"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-"SampleDate", -"StationNZ", -"Time", -"Secchi", -"Chl_a", -"Temperature",
                                  -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Datetime", -"Depth"),
@@ -823,7 +823,6 @@ Zoopdownloader <- function(
                                                   CommonName == "Palaemonetes" ~ "Palaemon",
                                                   CommonName == "Hymenoptera UNID" ~ "Hymenoptera Other",
                                                   CommonName == "Asellidae UNID" ~ "Asellidae",
-                                                  CommonName == "Diptera adult" ~ "Diptera Adult",
                                                   CommonName == "Coleoptera other" ~ "Coleoptera Other",
                                                   CommonName == "Tricoptera larvae UNID"~"Trichoptera larvae Other",
                                                   TRUE ~ CommonName))
@@ -903,7 +902,7 @@ Zoopdownloader <- function(
     data.list[["EMP_Macro"]] <- zoo_EMP_Macro%>%
       dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"),
                     Datetime=lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_, paste(.data$SampleDate, .data$Time)),
-                                                        c("%Y-%m-%d %I:%M %p"), tz="Etc/GMT+8"), #create a variable for datetime
+                                                        c("%Y-%m-%d %H:%M"), tz="Etc/GMT+8"), #create a variable for datetime
                     Datetime=lubridate::with_tz(.data$Datetime, "America/Los_Angeles"))%>% # Ensure everything ends up in local time
       tidyr::pivot_longer(cols=c(-"SampleDate", -"Time", -"Datetime", -"StationNZ", -"Secchi", -"Chl_a", -"Temperature",
                                  -"ECSurfacePreTow", -"ECBottomPreTow", -"Volume", -"Depth"),

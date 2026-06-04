@@ -1,6 +1,7 @@
 # zooper (development version)
 
--   Added EMP data released in June 2025 (sampling from 1972–2023), **which no longer includes amphipods in the macro dataset**; see the [amphipods_notes (EDI 522)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=522) for more information.
+- Added EMP and FRP data released in May 2026  
+- Added EMP data released in June 2025 (sampling from 1972–2023), **which no longer includes amphipods in the macro dataset**; see the [amphipods_notes (EDI 522)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=522) for more information.
 -   ~~Fixed issue where EMP macro amphipod counts from before 2014 were being converted to unidentified mysids instead of unidentified amphipods, since amphipods were not identified to species before 2014.~~
 -   Fixed issue with biomass conversion for macro and micro zooplankton. Previously it was not taking into account the count and instead providing the BPUE if 1 individual were present. 
 -   Added the biomass for the surveys and size classes with the appropriate conversation factors and length data. This feature is still experimental

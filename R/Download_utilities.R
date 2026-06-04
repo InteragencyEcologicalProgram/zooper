@@ -82,10 +82,10 @@ zoop_urls<-function(Sources){
     EMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
     names(EMP_entities) <- purrr::map_chr(EMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
 
-    out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_CBMatrix_EDI"])
-    out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_PumpMatrix_EDI"])
-    out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_MysidMatrix_EDI"])
-    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2023_Mysid_Length_Data_EDI"])
+    out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_CBMatrix_EDI"])
+    out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_PumpMatrix_EDI"])
+    out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_MysidMatrix_EDI"])
+    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_Mysid_Length_Data_EDI"])
 
   }
 
@@ -159,3 +159,6 @@ zoop_urls<-function(Sources){
 
   return(out)
 }
+
+#set options to allow access to EDI without signing in
+#options(HTTPUserAgent="EDI_CodeGen")

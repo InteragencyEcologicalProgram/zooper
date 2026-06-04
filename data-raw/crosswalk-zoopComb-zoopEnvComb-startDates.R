@@ -35,6 +35,8 @@ zoopComb <- zoop$Zooplankton
 
 zoopEnvComb <- zoop$Environment
 
+
+
 startDates<-zoopComb%>%
   dplyr::left_join(zoopEnvComb%>%
                      dplyr::select(Date, SampleID),
@@ -45,4 +47,5 @@ startDates<-zoopComb%>%
   dplyr::summarise(Startdate = min(Date), .groups="drop")
 
 usethis::use_data(zoopComb, zoopEnvComb, startDates, crosswalk, overwrite = TRUE)
+
 
