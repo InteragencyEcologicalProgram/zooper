@@ -7,7 +7,7 @@ This function converts zooplankton CPUE to carbon biomass (Carbon biomass per un
 \usage{
 Zoopbiomass(
   Zoop,
-  ZoopLengths,
+  ZoopLengths = NULL,
   Biomass_mesomicro = zooper::biomass_mesomicro,
   Biomass_macro = zooper::biomass_macro
 )
@@ -15,7 +15,7 @@ Zoopbiomass(
 \arguments{
 \item{Zoop}{Zooplankton count dataset}
 
-\item{ZoopLengths}{Zooplankton length dataset for macrozooplankton.}
+\item{ZoopLengths}{Zooplankton length dataset for macrozooplankton. May be left NULL if the Macro size class is not included.}
 
 \item{Biomass_mesomicro}{The micro and meso zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}}
 

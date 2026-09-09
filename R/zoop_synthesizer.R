@@ -154,7 +154,13 @@ Zoopsynther<-function(
 
   #Make it possible to re-download data if desired
   if(Reload_data | Redownload_data){
-    Zoopdownloader(Redownload_data = Redownload_data, Zoop_path = Zoop_path, Env_path = Env_path, ...)
+    data_sets<-paste(rep(Sources, times=length(Size_class)), rep(Size_class, each=length(Sources)), sep="_")
+    data_sets<-data_sets[which(data_sets%in%c("EMP_Meso", "FMWT_Meso", "STN_Meso",
+                                              "20mm_Meso", "FRP_Meso", "EMP_Micro",
+                                              "FRP_Macro", "EMP_Macro", "FMWT_Macro",
+                                              "STN_Macro", "DOP_Meso", "DOP_Macro"))]
+
+    Zoopdownloader(Data_sets=data_sets, Redownload_data = Redownload_data, Zoop_path = Zoop_path, Env_path = Env_path, ...)
   }
 
   #Recode Source

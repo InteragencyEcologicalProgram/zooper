@@ -73,10 +73,6 @@ Zoopdownloader <- function(
     stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
   }
 
-  if(Biomass & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
-    stop("Biomass are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
-  }
-
   # Load station key to later incorporate latitudes and longitudes
 
   stations <- Stations
