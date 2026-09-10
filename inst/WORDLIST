@@ -12,13 +12,13 @@ CPUE
 CPUEs
 Calanoida
 Carquinez
+Cladocera
 Codecov
 Copepoda
 Copepods
-DOI
 DOP
-Datetimes
 EDI
+EDIutils
 EMP
 EZ
 Eurytemora
@@ -79,11 +79,11 @@ Zoopsynther
 affinis
 al
 amphipod
+amphipods
 calanoids
 carolleeae
 cladocera
 csv
-datetime
 dfbeb
 doi
 dtplyr
@@ -106,9 +106,7 @@ mysids
 plankter
 plankters
 pre
-redownload
-redownloaded
-redownloading
+redownloads
 rotifers
 rvest
 salinities
@@ -122,5 +120,6 @@ undersampled
 ver
 vernalis
 yyyy
+zoopdownloader
 zooper’
 μm
