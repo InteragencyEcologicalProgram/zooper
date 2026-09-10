@@ -1,4 +1,5 @@
 library(zooper)
+library(withr)
 
 Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "20mm_Meso", "FRP_Meso","EMP_Micro",
@@ -7,7 +8,7 @@ Data_sets <- c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                "DOP_Meso", "DOP_Macro")
 
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
-                       Save_object = FALSE, Redownload_data = TRUE,
+                       Save_object = FALSE,
                        Biomass=TRUE, Data_sets = Data_sets)
 
 No_coords2<-dplyr::filter(Data$Environment, is.na(Latitude) & !stringr::str_detect(Station, "NZEZ"))%>%
@@ -19,6 +20,13 @@ No_coords_EZ<-dplyr::filter(Data$Environment, is.na(Latitude) & stringr::str_det
 No_stations<-dplyr::filter(Data$Environment, is.na(Station))%>%
   dplyr::mutate(ID=paste(Source, Date))%>%
   dplyr::pull(ID)
+
+test_that("check_EDI_cred is working correctly", {
+  expect_error(with_envvar(new=c("EDI_API_KEY"="", "EDI_TOKEN"=""), check_EDI_cred()),
+               regexp="^An EDI API key is now required by EDI.*")
+  expect_no_error(with_envvar(new=c("EDI_API_KEY"="x"), check_EDI_cred()))
+  expect_no_error(with_envvar(new=c("EDI_TOKEN"="x"), check_EDI_cred()))
+})
 
 test_that("Dowloaded data includes all datasets", {
   expect_setequal(unique(paste(Data$Zooplankton$Source, Data$Zooplankton$SizeClass, sep="_")), Data_sets)
@@ -70,20 +78,20 @@ test_that("TowType only has the expected levels", {
 # BPUE
 
 test_that("When biomass is 0, CPUE is 0", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & BPUE==0)$CPUE), 0)
+  expect_equal(unique(dplyr::filter(Data$Zooplankton, SizeClass=="Macro" & BPUE==0)$CPUE), 0)
 })
 
 test_that("When CPUE is 0, Biomass is 0", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" & CPUE==0 &
+  expect_equal(unique(dplyr::filter(Data$Zooplankton, SizeClass=="Macro" & CPUE==0 &
                                !is.na(Volume) & Source=="EMP" &
                                Taxlifestage%in%c("Hyperacanthomysis longirostris Adult", "Neomysis mercedis Adult"))$BPUE), 0)
 })
 
 test_that("The only Macro masses are from EMP", {
-  expect_equal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Source), "EMP")
+  expect_equal(unique(dplyr::filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Source), "EMP")
 })
 
 test_that("The only Macro species with biomasses are those we expect", {
-  expect_setequal(unique(filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Taxlifestage),
+  expect_setequal(unique(dplyr::filter(Data$Zooplankton, SizeClass=="Macro" &  !is.na(BPUE))$Taxlifestage),
                   c("Hyperacanthomysis longirostris Adult", "Neomysis mercedis Adult"))
 })

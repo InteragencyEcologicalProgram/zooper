@@ -29,7 +29,7 @@ zoop<-Zoopdownloader(Data_sets=c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                  "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                                  "STN_Macro", "YBFMP_Meso", "YBFMP_Micro", "DOP_Macro", "DOP_Meso"),
                      Data_folder=tempdir(), Save_object=FALSE, Return_object=TRUE,
-                     Redownload_data=TRUE, Crosswalk=crosswalk, Biomass=TRUE)
+                     Crosswalk=crosswalk, Biomass=TRUE)
 
 zoopComb <- zoop$Zooplankton
 

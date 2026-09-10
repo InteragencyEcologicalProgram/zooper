@@ -20,8 +20,7 @@
 #' @param Temp_range Same as \code{Sal_bott_range} but for surface temperature.
 #' @param Lat_range Latitude range to include in the final dataset. Include a vector of length 2 specifying the minimum and maximum values you wish to include, in decimal degree format. Defaults to \code{Lat_range = NA}, which includes all latitudes.
 #' @param Long_range Same as previous, but for longitude. Don't forget that Longitudes should be negative in the Delta!
-#' @param Reload_data If set to \code{Reload_data = T} runs the \code{\link{Zoopdownloader}} function to re-combine source datasets. To include local versions of the datasets without redownloading them from online, set \code{Reload_data = TRUE} and \code{Redownload_data = FALSE}. Defaults to \code{Reload_data= FALSE}
-#' @param Redownload_data Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, runs \code{\link{Zoopdownloader}(Redownload_data=Redownload_data, Zoop_path=Zoop_path, Env_path=Env_path, ...)}. Defaults to \code{Redownload_data = FALSE}.
+#' @param Redownload_data Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, redownloads the data using \code{\link{Zoopdownloader}}. Defaults to \code{Redownload_data = FALSE}.
 #' @param All_env Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.
 #' @param Shiny Is this function being used within the shiny app? If set to \code{Shiny = TRUE}, outputs a list with the integrated dataset as one component and the caveats as the other component. Defaults to \code{Shiny = FALSE}.
 #' @inheritParams Zoopdownloader
@@ -85,7 +84,6 @@ Zoopsynther<-function(
   Temp_range = NA,
   Lat_range = NA,
   Long_range = NA,
-  Reload_data = F,
   Redownload_data = F,
   All_env = T,
   Shiny = F,
@@ -132,8 +130,8 @@ Zoopsynther<-function(
     stop("Response must contain one or more of the following options: CPUE, BPUE")
   }
 
-  if(!purrr::every(list(Shiny, Reload_data, Redownload_data, All_env, Time_consistency), is.logical)){
-    stop("Shiny, All_env, Reload_data, Redownload_data, and Time_consistency must all have logical arguments.")
+  if(!purrr::every(list(Shiny, Redownload_data, All_env, Time_consistency), is.logical)){
+    stop("Shiny, All_env, Redownload_data, and Time_consistency must all have logical arguments.")
   }
 
   if(Data_type=="Taxa" & Time_consistency){
@@ -153,14 +151,14 @@ Zoopsynther<-function(
   }
 
   #Make it possible to re-download data if desired
-  if(Reload_data | Redownload_data){
+  if(Redownload_data){
     data_sets<-paste(rep(Sources, times=length(Size_class)), rep(Size_class, each=length(Sources)), sep="_")
     data_sets<-data_sets[which(data_sets%in%c("EMP_Meso", "FMWT_Meso", "STN_Meso",
                                               "20mm_Meso", "FRP_Meso", "EMP_Micro",
                                               "FRP_Macro", "EMP_Macro", "FMWT_Macro",
                                               "STN_Macro", "DOP_Meso", "DOP_Macro"))]
 
-    Zoopdownloader(Data_sets=data_sets, Redownload_data = Redownload_data, Zoop_path = Zoop_path, Env_path = Env_path, ...)
+    Zoopdownloader(Data_sets=data_sets, Zoop_path = Zoop_path, Env_path = Env_path, ...)
   }
 
   #Recode Source

@@ -56,6 +56,23 @@ html_file_list<-function(URL){
   return(files)
 }
 
+#' Create a list of entities from an EDI package
+#'
+#' This function lists all data entities for an EDI package
+#'
+#' @param PID EDI package ID
+#' @keywords internal
+#'
+
+edi_entity_list<-function(PID){
+
+  latest_revision <- paste("edi", PID, max(EDIutils::list_data_package_revisions("edi", PID)), sep=".")
+  entities <- EDIutils::read_data_entity_names(packageId = latest_revision)
+  entities<-purrr::set_names(c(entities$entityId, latest_revision), c(entities$entityName, "PID"))
+
+  return(entities)
+}
+
 #' Extract latest EDI files
 #' This function extracts the latest version of a zooplankton EDI package and the list of files from that package
 #'
@@ -72,39 +89,35 @@ zoop_urls<-function(Sources){
          'EMP', 'FMWT', 'STN','20mm', 'FRP', 'YBFMP', 'DOP'")
   }
 
+  if(any(Sources%in%c("EMP", "STN", "FMWT", "YBFMP", "DOP", "FRP"))){
+    check_EDI_cred()
+  }
+
   out<-list()
 
   if("EMP"%in%Sources){
-    EMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/522"
-    EMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=EMP_revision_url, warn = FALSE), 1)
-    EMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/522/", EMP_latest_revision)
-    EMP_entities <- Tryer(n=3, fun=readLines, con=EMP_pkg_url, warn = FALSE)
-    EMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/522", EMP_latest_revision, EMP_entities, sep="/")
-    names(EMP_entities) <- purrr::map_chr(EMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    EMP_entities<-edi_entity_list(522)
 
-    out$EMP$Meso<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_CBMatrix_EDI"])
-    out$EMP$Micro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_PumpMatrix_EDI"])
-    out$EMP$Macro<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_MysidMatrix_EDI"])
-    out$EMP$Lengths<-paste0(EMP_pkg_url, "/", EMP_entities["1972-2024_Mysid_Length_Data_EDI"])
-
+    out$EMP$Meso<-EMP_entities[grep("CBMatrix", names(EMP_entities))]
+    out$EMP$Micro<-EMP_entities[grep("PumpMatrix", names(EMP_entities))]
+    out$EMP$Macro<-EMP_entities[grep("MysidMatrix", names(EMP_entities))]
+    out$EMP$Lengths<-EMP_entities[grep("Mysid_Length_Data", names(EMP_entities))]
+    out$EMP$PID<-EMP_entities["PID"]
   }
 
   if(any(c("STN", "FMWT")%in%Sources)){
-    FMWTSTN_revision_url <- "https://pasta.lternet.edu/package/eml/edi/1103"
-    FMWTSTN_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=FMWTSTN_revision_url, warn = FALSE), 1)
-    FMWTSTN_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/1103/", FMWTSTN_latest_revision)
-    FMWTSTN_entities <- Tryer(n=3, fun=readLines, con=FMWTSTN_pkg_url, warn = FALSE)
-    FMWTSTN_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/1103", FMWTSTN_latest_revision, FMWTSTN_entities, sep="/")
-    names(FMWTSTN_entities) <- purrr::map_chr(FMWTSTN_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    FMWTSTN_entities<-edi_entity_list(1103)
 
     SMSCG_URL<-"https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/Zooplankton_SMSCG/"
     SMSCG_files<-html_file_list(SMSCG_URL)
 
-    out$FMWTSTN$Meso<-paste0(FMWTSTN_pkg_url, "/", FMWTSTN_entities["FMWT_STN_CBNetCPUE.csv"])
+    out$FMWTSTN$Meso<-FMWTSTN_entities[grep("FMWT_STN_CBNet", names(FMWTSTN_entities))]
     out$SMSCG$Meso<-SMSCG_files[grep("CBNet", SMSCG_files)]
 
-    out$FMWTSTN$Macro<-paste0(FMWTSTN_pkg_url, "/", FMWTSTN_entities["FMWT_MysidNetCPUE.csv"])
+    out$FMWTSTN$Macro<-FMWTSTN_entities[grep("MysidNetCPUE", names(FMWTSTN_entities))]
     out$SMSCG$Macro<-SMSCG_files[grep("MysidNet", SMSCG_files)]
+
+    out$FMWTSTN$PID<-FMWTSTN_entities["PID"]
   }
 
   if("20mm"%in%Sources){
@@ -115,49 +128,62 @@ zoop_urls<-function(Sources){
   }
 
   if("YBFMP"%in%Sources){
-    YBFMP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/494"
-    YBFMP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=YBFMP_revision_url, warn = FALSE), 1)
-    YBFMP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/494/", YBFMP_latest_revision)
-    YBFMP_entities <- Tryer(n=3, fun=readLines, con=YBFMP_pkg_url, warn = FALSE)
-    YBFMP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/494", YBFMP_latest_revision, YBFMP_entities, sep="/")
-    names(YBFMP_entities) <- purrr::map_chr(YBFMP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    YBFMP_entities<-edi_entity_list(494)
 
-    out$YBFMP<-paste0(YBFMP_pkg_url, "/", YBFMP_entities["Zooplankton Data"])
+    out$YBFMP$Meso<-YBFMP_entities[grep("Zooplankton Data", names(YBFMP_entities))]
+
+    out$YBFMP$PID<-YBFMP_entities["PID"]
 
   }
 
   if("DOP"%in%Sources){
-    DOP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/1187"
-    DOP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=DOP_revision_url, warn = FALSE), 1)
-    DOP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/1187/", DOP_latest_revision)
-    DOP_entities <- Tryer(n=3, fun=readLines, con=DOP_pkg_url, warn = FALSE)
-    DOP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/1187", DOP_latest_revision, DOP_entities, sep="/")
-    names(DOP_entities) <- purrr::map_chr(DOP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    DOP_entities<-edi_entity_list(1187)
 
-    out$DOP$Meso<-paste0(DOP_pkg_url, "/", DOP_entities[grep("Mesozooplankton_Abundance", names(DOP_entities))])
+    out$DOP$Meso<-DOP_entities[grep("Mesozooplankton_Abundance", names(DOP_entities))]
 
-    out$DOP$Macro<-paste0(DOP_pkg_url, "/", DOP_entities[grep("Macrozooplankton_Abundance", names(DOP_entities))])
+    out$DOP$Macro<-DOP_entities[grep("Macrozooplankton_Abundance", names(DOP_entities))]
 
-    out$DOP$trawls<-paste0(DOP_pkg_url, "/", DOP_entities[grep("TowData", names(DOP_entities))])
+    out$DOP$trawls<-DOP_entities[grep("TowData", names(DOP_entities))]
+
+    out$DOP$PID<-DOP_entities["PID"]
 
   }
 
   if("FRP"%in%Sources){
-    FRP_revision_url <- "https://pasta.lternet.edu/package/eml/edi/269"
-    FRP_latest_revision <- utils::tail(Tryer(n=3, fun=readLines, con=FRP_revision_url, warn = FALSE), 1)
-    FRP_pkg_url <- paste0("https://pasta.lternet.edu/package/data/eml/edi/269/", FRP_latest_revision)
-    FRP_entities <- Tryer(n=3, fun=readLines, con=FRP_pkg_url, warn = FALSE)
-    FRP_name_urls <- paste("https://pasta.lternet.edu/package/name/eml/edi/269", FRP_latest_revision, FRP_entities, sep="/")
-    names(FRP_entities) <- purrr::map_chr(FRP_name_urls, ~Tryer(n=3, fun=readLines, con=.x, warn = FALSE))
+    FRP_entities<-edi_entity_list(269)
 
-    out$FRP$Meso<-paste0(FRP_pkg_url, "/", FRP_entities[grep("zoops_FRP", names(FRP_entities))])
+    out$FRP$Meso<-FRP_entities[grep("zoops_FRP", names(FRP_entities))]
 
-    out$FRP$Macro<-paste0(FRP_pkg_url, "/", FRP_entities[grep("macroinvert_FRP", names(FRP_entities))])
+    out$FRP$Macro<-FRP_entities[grep("macroinvert_FRP", names(FRP_entities))]
 
-    out$FRP$site<-paste0(FRP_pkg_url, "/", FRP_entities[grep("sitevisit_FRP", names(FRP_entities))])
+    out$FRP$site<-FRP_entities[grep("sitevisit_FRP", names(FRP_entities))]
+
+    out$FRP$PID<-FRP_entities["PID"]
   }
 
   return(out)
+}
+
+#' check for EDI credentials
+#'
+#' Check if EDI credentials are properly set, and return a message if not
+#'
+#' @noRd
+
+check_EDI_cred<-function(){
+  #borrowed from https://github.com/ropensci/EDIutils/blob/main/tests/testthat/helper-test-package.R
+  # Identical to function in deltafish
+  has_token <- (Sys.getenv("EDI_TOKEN") != "") && (Sys.getenv("EDI_TOKEN") != "foobar")
+  has_key <- (Sys.getenv("EDI_API_KEY") != "") && (Sys.getenv("EDI_API_KEY") != "foobar")
+
+  if(!has_token && !has_key){
+    stop("An EDI API key is now required by EDI. To resolve this:\n",
+         "1) Please log in or create an account at https://auth.edirepository.org/ \n",
+         "2) Access your API key from your profile -> Access Keys.\n",
+         "3) You can then use the key either with EDIutils::login() ",
+         "or by adding it to your .Renviron, e.g., by running usethis::edit_r_environ() ",
+         "and, adding a line `EDI_API_KEY=YOUR_KEY`, saving, and restarting R.")
+  }
 }
 
 #set options to allow access to EDI without signing in

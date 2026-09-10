@@ -1,5 +1,7 @@
 # zooper (development version)
 
+- Updated download method to use `EDIutils` package to handle new requirement for API keys. Added a function to check for an access key and provide instructions if one is not present. 
+- Removed parameter for `Redownload_data` from `Zoopdownloader` and `reload_data` from `Zoopsynther`, because the EDIutils functions directly read the data but do not save it.
 - Added EMP and FRP data released in May 2026  
 - Added EMP data released in June 2025 (sampling from 1972–2023), **which no longer includes amphipods in the macro dataset**; see the [amphipods_notes (EDI 522)](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=522) for more information.
 -   ~~Fixed issue where EMP macro amphipod counts from before 2014 were being converted to unidentified mysids instead of unidentified amphipods, since amphipods were not identified to species before 2014.~~
