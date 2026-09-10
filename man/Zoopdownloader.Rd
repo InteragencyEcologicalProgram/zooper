@@ -13,7 +13,6 @@ Zoopdownloader(
   Save_object = TRUE,
   Return_object = FALSE,
   Return_object_type = "List",
-  Redownload_data = FALSE,
   Download_method = "auto",
   Zoop_path = file.path(Data_folder, "zoopforzooper"),
   Env_path = file.path(Data_folder, "zoopenvforzooper"),
@@ -26,15 +25,13 @@ Zoopdownloader(
 
 \item{Biomass}{Whether to add carbon biomass (carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) to the dataset (where conversion equations and required data are available). Defaults to \code{Biomass = TRUE}}
 
-\item{Data_folder}{Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.}
+\item{Data_folder}{Path to folder to which you would like datasets to be downloaded. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}.}
 
 \item{Save_object}{Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.}
 
 \item{Return_object}{Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.}
 
 \item{Return_object_type}{If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{Zoopsynther} function without saving the combined dataset to disk.}
-
-\item{Redownload_data}{Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.}
 
 \item{Download_method}{Method used to download files. See argument \code{method} options in \code{\link[utils]{download.file}}. Defaults to "curl".}
 
@@ -63,7 +60,7 @@ Note that EMP Macro samples with QAQC flags (any value of AmphipodCode other tha
 \examples{
 \dontrun{
 Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
-Save_object = FALSE, Redownload_data = TRUE)
+Save_object = FALSE)
 }
 }
 \seealso{

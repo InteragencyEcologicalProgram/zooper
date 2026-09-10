@@ -99,6 +99,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Samuel M Bashevkin \email{sam.bashevkin@waterboards.ca.gov} (\href{https://orcid.org/0000-0001-7406-7089}{ORCID})
   \item Rosemary Hartman \email{Rosemary.Hartman@water.ca.gov} (\href{https://orcid.org/0000-0002-0642-183X}{ORCID})
   \item Karrin Alstad \email{Karrin.Alstad@wildlife.ca.gov}
   \item Catarina Pien \email{cpien@usbr.gov} (\href{https://orcid.org/0000-0003-4427-6300}{ORCID})

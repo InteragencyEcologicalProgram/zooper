@@ -8,11 +8,10 @@
 #' "DOP" (Directed Outflow Project Lower Trophic Study), and "YBFMP" (Yolo Bypass Fish Monitoring Program).
 #' @param Data_sets Datasets to include in combined data. Choices include "EMP_Meso", "FMWT_Meso", "STN_Meso", "20mm_Meso", "FRP_Meso", "YBFMP_Meso", "EMP_Micro", "YBFMP_Micro", "FRP_Macro", "EMP_Macro", "FMWT_Macro", "STN_Macro", "DOP_Macro", and "DOP_Meso". Defaults to including all datasets except the two YBFMP datasets.
 #' @param Biomass Whether to add carbon biomass (carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) to the dataset (where conversion equations and required data are available). Defaults to \code{Biomass = TRUE}
-#' @param Data_folder Path to folder in which source datasets are stored, and to which you would like datasets to be downloaded if you set \code{Redownload_data = TRUE}. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}. If you do not wish to redownload these datasets every time you run the function, you can set this to a directory on your computer and run the function in the future with \code{Redownload_data = FALSE}, which will load the source datasets from \code{Data_folder} instead of downloading them again.
+#' @param Data_folder Path to folder to which you would like datasets to be downloaded. If you do not want to store every source dataset, you can leave this at the default \code{tempdir()}.
 #' @param Save_object Should the combined data be saved to disk? Defaults to \code{Save_object = TRUE}.
 #' @param Return_object Should data be returned as an R object? If \code{TRUE}, the function will return the full combined dataset. Defaults to `Return_object = FALSE`.
 #' @param Return_object_type If \code{Return_object = TRUE}, should data be returned as a combined dataframe (\code{Return_object_type = "Combined"}) or a list with component "Zooplankton" containing the zooplankton data and component "Environment" containing the environmental data (\code{Return_object_type = "List"}, the default). A list is required to feed data into the \code{Zoopsynther} function without saving the combined dataset to disk.
-#' @param Redownload_data Should source datasets be redownloaded from the internet? Defaults to \code{Redownload_data = FALSE}.
 #' @param Download_method Method used to download files. See argument \code{method} options in \code{\link[utils]{download.file}}. Defaults to "curl".
 #' @param Zoop_path File path specifying the folder and filename of the zooplankton dataset. Defaults to \code{Zoop_path = file.path(Data_folder, "zoopforzooper")}.
 #' @param Env_path File path specifying the folder and filename of the dataset with accessory environmental parameters. Defaults to \code{Env_path = file.path(Data_folder, "zoopenvforzooper")}.
@@ -28,7 +27,7 @@
 #' @examples
 #' \dontrun{
 #' Data <- Zoopdownloader(Data_folder = tempdir(), Return_object = TRUE,
-#' Save_object = FALSE, Redownload_data = TRUE)
+#' Save_object = FALSE)
 #' }
 #' @seealso \code{\link{Zoopsynther}}, \code{\link{crosswalk}}, \code{\link{stations}}, \code{\link{zooper}}
 #' @export
@@ -43,7 +42,6 @@ Zoopdownloader <- function(
     Save_object = TRUE,
     Return_object = FALSE,
     Return_object_type = "List",
-    Redownload_data = FALSE,
     Download_method="auto",
     Zoop_path = file.path(Data_folder, "zoopforzooper"),
     Env_path = file.path(Data_folder, "zoopenvforzooper"),
@@ -69,12 +67,8 @@ Zoopdownloader <- function(
     stop("Return_object_type must be either 'List' or 'Combined'.")
   }
 
-  if(!purrr::every(list(Save_object, Return_object, Redownload_data), is.logical)){
-    stop("Save_object, Return_object, and Redownload_data must all have logical arguments.")
-  }
-
-  if(Biomass & !("Macro"%in%stringr::str_extract(Data_sets, "(?<=_).*") & "EMP_Macro"%in%Data_sets)){
-    stop("Biomass are only available for macrozooplankton, and currently only available for EMP, so EMP_Macro must be selected if Length = TRUE.")
+  if(!purrr::every(list(Save_object, Return_object), is.logical)){
+    stop("Save_object and Return_object must each have logical arguments.")
   }
 
   # Load station key to later incorporate latitudes and longitudes
@@ -97,15 +91,11 @@ Zoopdownloader <- function(
   if("EMP_Meso"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "EMP_meso.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Meso,
-            destfile=file.path(Data_folder, "EMP_meso.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_EMP_Meso <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Meso)
 
+        # Import the EMP data
 
-    # Import the EMP data
-
-    zoo_EMP_Meso<-readr::read_csv(file.path(Data_folder, "EMP_meso.csv"),
+    zoo_EMP_Meso<-readr::read_csv(raw_zoo_EMP_Meso,
                                   col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
                                                              Chl_a="d", Secchi="d", Temperature="d",
                                                              ECSurfacePreTow="d", ECBottomPreTow="d",
@@ -179,20 +169,13 @@ Zoopdownloader <- function(
   # DOP Meso ---------------------------------------------------------------------
   if("DOP_Meso"%in%Data_sets) {
 
-    #download the files
-    if (!file.exists(file.path(Data_folder, "DOP_Meso.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$DOP$Meso,
-            destfile=file.path(Data_folder, "DOP_Meso.csv"), mode="wb", method=Download_method)
-    }
-    if (!file.exists(file.path(Data_folder, "DOP_trawls.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$DOP$trawls,
-            destfile=file.path(Data_folder, "DOP_trawls.csv"), mode="wb", method=Download_method)
-    }
-
+    #download the file
+    raw_zoo_DOP_Meso <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$Meso)
+    raw_zoo_DOP_trawls <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$trawls)
 
     # Import the DOP data
 
-    zoo_DOP_Meso<-readr::read_csv(file.path(Data_folder, "DOP_Meso.csv"),
+    zoo_DOP_Meso<-readr::read_csv(raw_zoo_DOP_Meso,
                                   col_types=readr::cols_only(ICF_ID="c", Acanthocyclops_spp_adult="d", Acanthocyclops_vernalis_adult="d",
                                                              Acanthocyclops_vernalis_copepodid="d", Acartia_spp_adult="d", Acartia_spp_copepodid="d",
                                                              Acartiella_sinensis_adult="d", Acartiella_sinensis_copepodid="d", Asplanchna_spp="d",
@@ -221,7 +204,7 @@ Zoopdownloader <- function(
                                                              Synchaeta_spp="d", Tortanus_dextrilobatus_adult="d", Tortanus_discaudatus_adult="d",
                                                              Tortanus_spp_copepodid="d", Trichocerca_spp="d"))
 
-    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, "DOP_trawls.csv"),
+    zoo_DOP_trawls<-readr::read_csv(raw_zoo_DOP_trawls,
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
                                                                Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                                Start_Depth="d", Temperature="d", Conductivity="d",
@@ -279,20 +262,13 @@ Zoopdownloader <- function(
   # DOP Macro ---------------------------------------------------------------------
   if("DOP_Macro"%in%Data_sets) {
 
-    #download the files
-    if (!file.exists(file.path(Data_folder, "DOP_Macro.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$DOP$Macro,
-            destfile=file.path(Data_folder, "DOP_Macro.csv"), mode="wb", method=Download_method)
-    }
-    if (!file.exists(file.path(Data_folder, "DOP_trawls.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$DOP$trawls,
-            destfile=file.path(Data_folder, "DOP_trawls.csv"), mode="wb", method=Download_method)
-    }
-
+    #download the file
+    raw_zoo_DOP_Macro <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$Macro)
+    raw_zoo_DOP_trawls <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$trawls)
 
     # Import the DOP data
 
-    zoo_DOP_Macro<-readr::read_csv(file.path(Data_folder, "DOP_Macro.csv"),
+    zoo_DOP_Macro<-readr::read_csv(raw_zoo_DOP_Macro,
                                    col_types=readr::cols_only(ICF_ID="c", Alienacanthomysis_macropsis="d", Americorophium_spinicorne="d",
                                                               Americorophium_spp="d", Americorophium_stimpsoni="d", Ampelisca_abdita="d",
                                                               Amphipod_UNID="d", Ampithoe_spp="d", Ampithoe_valida="d",
@@ -305,7 +281,7 @@ Zoopdownloader <- function(
                                                               Orientomysis_aspera="d", Orientomysis_hwanhaiensis="d", Pleustidae_UNID="d",
                                                               Shrimp_UNID_larvae="d", Sinocorophium_alienense="d", Tanaidacea_UNID="d"))
 
-    zoo_DOP_trawls<-readr::read_csv(file.path(Data_folder, "DOP_trawls.csv"),
+    zoo_DOP_trawls<-readr::read_csv(raw_zoo_DOP_trawls,
                                     col_types=readr::cols_only(ICF_ID="c", Date="c", Start_Time="c",
                                                                Station_Code="c", Habitat="c", Latitude="d", Longitude="d",
                                                                Start_Depth="d", Temperature="d", Conductivity="d",
@@ -365,20 +341,15 @@ Zoopdownloader <- function(
   if("FMWT_Meso"%in%Data_sets | "STN_Meso"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "FMWTSTN_Meso.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$FMWTSTN$Meso,
-            destfile=file.path(Data_folder,"FMWTSTN_Meso.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_FMWT_Meso <- EDIutils::read_data_entity(URLs$FMWTSTN$PID, URLs$FMWTSTN$Meso)
 
-    if (!file.exists(file.path(Data_folder, "SMSCG_Meso.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=URLs$SMSCG$Meso,
             destfile=file.path(Data_folder, "SMSCG_Meso.csv"), mode="wb", method=Download_method)
-    }
 
 
     # Import the FMWT data
 
-    zoo_FMWT_Meso <- readr::read_csv(file.path(Data_folder, "FMWTSTN_Meso.csv"),
+    zoo_FMWT_Meso <- readr::read_csv(raw_zoo_FMWT_Meso,
                                      col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                 Date="c", Station="c", Time="c",
                                                                 TideCode="c", DepthBottom="d", CondSurf="d",
@@ -495,10 +466,8 @@ Zoopdownloader <- function(
 
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "twentymm_Meso.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=URLs$twentymm$Meso,
             destfile=file.path(Data_folder, "twentymm_Meso.csv"), mode="wb", method=Download_method)
-    }
 
 
 
@@ -568,16 +537,11 @@ Zoopdownloader <- function(
     # Import the FRP data
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "zoopsFRP.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$FRP$Meso,
-            destfile=file.path(Data_folder, "zoopsFRP.csv"), mode="wb", method=Download_method)
-      Tryer(n=3, fun=utils::download.file, url=URLs$FRP$site,
-            destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
+    raw_zoo_FRP_Meso <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$Meso)
+    raw_sites_FRP_Meso <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$site)
 
-    }
-
-    zoo_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP.csv"), na=c("", "NA"))
-    sites_FRP_Meso <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
+    zoo_FRP_Meso <- readr::read_csv(raw_zoo_FRP_Meso, na=c("", "NA"))
+    sites_FRP_Meso <- readr::read_csv(raw_sites_FRP_Meso, na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
     FRP_all = dplyr::left_join(zoo_FRP_Meso, sites_FRP_Meso) %>%
@@ -641,12 +605,9 @@ Zoopdownloader <- function(
   if("YBFMP_Meso"%in%Data_sets | "YBFMP_Micro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "YBFMP.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$YBFMP,
-            destfile=file.path(Data_folder, "YBFMP.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_YBFMP <- EDIutils::read_data_entity(URLs$YBFMP$PID, URLs$YBFMP$Meso)
 
-    zoo_YBFMP<-readr::read_csv(file.path(Data_folder, "YBFMP.csv"),
+    zoo_YBFMP<-readr::read_csv(raw_zoo_YBFMP,
                                col_types = readr::cols_only(Date="c", Time="c", StationCode="c",
                                                             Tide="c", WaterTemperature="d", Secchi="d",
                                                             SpCnd="d", pH="d", DO="d", Turbidity="d",
@@ -731,13 +692,10 @@ Zoopdownloader <- function(
   if("EMP_Micro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "EMP_Micro.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Micro,
-            destfile=file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_EMP_Micro <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Micro)
 
     # Import the EMP data
-    zoo_EMP_Micro<-readr::read_csv(file.path(Data_folder, "EMP_Micro.csv"),
+    zoo_EMP_Micro<-readr::read_csv(raw_zoo_EMP_Micro,
                                    col_types=readr::cols_only(SampleDate="c", StationNZ="c",
                                                               Chl_a="d", Secchi="d", Temperature="d",
                                                               ECSurfacePreTow="d", ECBottomPreTow="d",
@@ -801,16 +759,11 @@ Zoopdownloader <- function(
   if("FRP_Macro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "macroinvert_FRP.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$FRP$Macro,
-            destfile=file.path(Data_folder, "macroinvert_FRP.csv"), mode="wb", method=Download_method)
-      Tryer(n=3, fun=utils::download.file, url=URLs$FRP$site,
-            destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
+    raw_zoo_FRP_Macro <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$Macro)
+    raw_sites_FRP_Macro <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$site)
 
-    }
-
-    zoo_FRP_Macro <- readr::read_csv(file.path(Data_folder, "macroinvert_FRP.csv"), na=c("", "NA"))
-    sites_FRP_Macro <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))
+    zoo_FRP_Macro <- readr::read_csv(raw_zoo_FRP_Macro, na=c("", "NA"))
+    sites_FRP_Macro <- readr::read_csv(raw_sites_FRP_Macro, na=c("", "NA"))
 
     #join environmental data to taxa counts and fix some wonky names
     FRP_allmac = dplyr::left_join(dplyr::select(zoo_FRP_Macro, -"Date", -"Location"), sites_FRP_Macro, by = "VisitNo") %>%
@@ -878,14 +831,11 @@ Zoopdownloader <- function(
   if("EMP_Macro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "EMP_Macro.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Macro,
-            destfile=file.path(Data_folder, "EMP_Macro.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_EMP_Macro <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Macro)
 
     # Import the EMP data
 
-    zoo_EMP_Macro<-readr::read_csv(file.path(Data_folder, "EMP_Macro.csv"),
+    zoo_EMP_Macro<-readr::read_csv(raw_zoo_EMP_Macro,
                                    col_types=readr::cols_only(SampleDate="c", Time="c", StationNZ="c",
                                                               Chl_a="d", Secchi="d", Temperature="d",
                                                               ECSurfacePreTow="d", ECBottomPreTow="d",
@@ -941,12 +891,11 @@ Zoopdownloader <- function(
     cat("\nEMP_Macro finished!\n\n")
 
     if(Biomass){
-      #download the file
-      if (!file.exists(file.path(Data_folder, "EMP_Lengths.csv")) | Redownload_data) {
-        Tryer(n=3, fun=utils::download.file, url=URLs$EMP$Lengths,
-              destfile=file.path(Data_folder, "EMP_Lengths.csv"), mode="wb", method=Download_method)
 
-        lengths.list[["EMP_Lengths"]]<-readr::read_csv(file.path(Data_folder, "EMP_Lengths.csv"),
+      #download the file
+      raw_zoo_EMP_lengths <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Lengths)
+
+        lengths.list[["EMP_Lengths"]]<-readr::read_csv(raw_zoo_EMP_lengths,
                                                        col_types=readr::cols_only(SampleDate="c", StationNZ="c",
                                                                                   SpeciesName="c", Length="d", AdjustedFreq="d"))%>%
           dplyr::mutate(SampleDate=lubridate::parse_date_time(.data$SampleDate, "%m/%d/%Y", tz="America/Los_Angeles"))%>%
@@ -964,7 +913,7 @@ Zoopdownloader <- function(
           dplyr::select(-"EMP_Lengths", -"Date", -"Station")
 
         cat("\nEMP_Macro lengths finished!\n\n")
-      }
+
     }
 
   }
@@ -973,19 +922,14 @@ Zoopdownloader <- function(
   if("FMWT_Macro"%in%Data_sets | "STN_Macro"%in%Data_sets) {
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "FMWTSTN_Macro.csv")) | Redownload_data) {
-      Tryer(n=3, fun=utils::download.file, url=URLs$FMWTSTN$Macro,
-            destfile=file.path(Data_folder,"FMWTSTN_Macro.csv"), mode="wb", method=Download_method)
-    }
+    raw_zoo_FMWT_Macro <- EDIutils::read_data_entity(URLs$FMWTSTN$PID, URLs$FMWTSTN$Macro)
 
     #download the file
-    if (!file.exists(file.path(Data_folder, "SMSCG_Macro.csv")) | Redownload_data) {
       Tryer(n=3, fun=utils::download.file, url=URLs$SMSCG$Macro,
             destfile=file.path(Data_folder, "SMSCG_Macro.csv"), mode="wb", method=Download_method)
-    }
 
 
-    zoo_FMWT_Macro <- readr::read_csv(file.path(Data_folder, "FMWTSTN_Macro.csv"),
+    zoo_FMWT_Macro <- readr::read_csv(raw_zoo_FMWT_Macro,
                                       col_types=readr::cols_only(Project="c", Year="d", Survey="d",
                                                                  Date="c", Station="c", Time="c",
                                                                  TideCode="c", DepthBottom="d", CondSurf="d",
@@ -1023,7 +967,7 @@ Zoopdownloader <- function(
       #put date and time in the right format. Date first, tehn datetime to try and fix a problem where the date randomly came out wrong in the 'datetime' version
       dplyr::mutate(Date=lubridate::parse_date_time(.data$Date, "%m/%d/%y", tz="America/Los_Angeles"),
         Datetime = lubridate::parse_date_time(dplyr::if_else(is.na(.data$Time), NA_character_,
-                                                                         paste(.data$Date, .data$Time)), "%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles"))
+                                                                         paste(.data$Date, .data$Time)), orders="%Y-%m-%d %H:%M", tz="America/Los_Angeles"))
 
     data.list[["FMWT_Macro"]] <- dplyr::bind_rows(zoo_FMWT_Macro, zoo_SMSCG_Macro)%>%
       dplyr::select(-"ID")%>%

@@ -5,7 +5,7 @@
 \alias{stationsEMPEZ}
 \title{EMP EZ Station locations}
 \format{
-a tibble with 491 rows and 4 columns
+a tibble with 575 rows and 4 columns
 \describe{
   \item{Date}{Date sample was collected}
   \item{Station}{Sampling station name}

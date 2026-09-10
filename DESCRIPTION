@@ -46,13 +46,15 @@ Imports:
     stats,
     utils,
     wql,
-    rvest
+    rvest,
+    EDIutils
 URL: https://github.com/InteragencyEcologicalProgram/zooper
 BugReports: https://github.com/InteragencyEcologicalProgram/zooper/issues
-RoxygenNote: 7.3.3
 Suggests: 
     spelling,
     testthat (>= 2.1.0),
-    covr
+    covr,
+    withr
 Language: en-US
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0

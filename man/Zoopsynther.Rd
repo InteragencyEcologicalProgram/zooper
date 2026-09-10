@@ -24,7 +24,6 @@ Zoopsynther(
   Temp_range = NA,
   Lat_range = NA,
   Long_range = NA,
-  Reload_data = F,
   Redownload_data = F,
   All_env = T,
   Shiny = F,
@@ -74,9 +73,7 @@ Zoopsynther(
 
 \item{Long_range}{Same as previous, but for longitude. Don't forget that Longitudes should be negative in the Delta!}
 
-\item{Reload_data}{If set to \code{Reload_data = T} runs the \code{\link{Zoopdownloader}} function to re-combine source datasets. To include local versions of the datasets without redownloading them from online, set \code{Reload_data = TRUE} and \code{Redownload_data = FALSE}. Defaults to \code{Reload_data= FALSE}}
-
-\item{Redownload_data}{Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, runs \code{\link{Zoopdownloader}(Redownload_data=Redownload_data, Zoop_path=Zoop_path, Env_path=Env_path, ...)}. Defaults to \code{Redownload_data = FALSE}.}
+\item{Redownload_data}{Should data be re-downloaded from the internet? If set to \code{Redownload_data = TRUE}, redownloads the data using \code{\link{Zoopdownloader}}. Defaults to \code{Redownload_data = FALSE}.}
 
 \item{All_env}{Should all environmental parameters be included? Defaults to \code{All_env = TRUE}.}
 

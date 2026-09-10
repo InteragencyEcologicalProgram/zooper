@@ -5,7 +5,7 @@
 \alias{crosswalk}
 \title{Taxonomic crosswalk among datasets}
 \format{
-a tibble with 404 rows and 34 variables
+a tibble with 471 rows and 37 variables
 \describe{
   \item{EMP_Micro}{Taxonomic codes used in the Environmental Monitoring Program microzooplankton (43 \eqn{\mu}m) mesh dataset}
   \item{EMP_Meso}{Taxonomic codes used in the Environmental Monitoring Program mesozooplankton (160 \eqn{\mu}m) mesh dataset}
@@ -39,6 +39,8 @@ a tibble with 404 rows and 34 variables
   \item{twentymmstart2}{First year the 20mm Survey restarted counting this taxa}
   \item{DOPstart}{First year DOP starting counting this taxa}
   \item{DOPend}{Last year DOP counted this taxa}
+  \item{FRPstart}{First year FRP starting counting this taxa}
+  \item{FRPend}{Last year FRP counted this taxa}
   }
 }
 \usage{

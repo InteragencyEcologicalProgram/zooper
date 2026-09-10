@@ -2,12 +2,12 @@
 #' This function converts zooplankton CPUE to carbon biomass (Carbon biomass per unit effort (\eqn{\mu}g/ \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^{3}}})) for taxa with conversion equations.
 #'
 #' @param Zoop Zooplankton count dataset
-#' @param ZoopLengths Zooplankton length dataset for macrozooplankton.
+#' @param ZoopLengths Zooplankton length dataset for macrozooplankton. May be left NULL if the Macro size class is not included.
 #' @param Biomass_mesomicro The micro and meso zooplankton biomass conversion table. The default is \code{\link{biomass_mesomicro}}
 #' @param Biomass_macro The macro zooplankton biomass conversion table. The default is \code{\link{biomass_macro}}
 
 Zoopbiomass<-function(Zoop,
-                      ZoopLengths,
+                      ZoopLengths=NULL,
                       Biomass_mesomicro=zooper::biomass_mesomicro,
                       Biomass_macro=zooper::biomass_macro) {
 
@@ -21,6 +21,10 @@ Zoopbiomass<-function(Zoop,
 
   if ("Macro"%in%Size_class & any(c("FRP", "FMWT", "STN", "DOP")%in%unique(Zoop$Source))){
     message("Note that macro zooplankton biomass conversion is currently only available for EMP, so macrozooplankton biomass will not be returned for other surveys")
+  }
+
+  if ("Macro"%in%Size_class & is.null(ZoopLengths)){
+    stop("Parameter ZoopLengths must be included for Macrozooplankton.")
   }
 
   zoop_list<-list()

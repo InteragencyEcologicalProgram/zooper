@@ -15,22 +15,21 @@ Data_folder<-tempdir()
 
 # EMP Meso ----------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$EMP$Meso, destfile=file.path(Data_folder, "EMP_Meso.csv"), mode="wb", method=Download_method)
+raw_zoo_EMP_Meso <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Meso)
 
 
-names_EMP_Meso<-readr::read_csv(file.path(Data_folder, "EMP_Meso.csv"), col_types = cols(.default=col_character()))%>%
+names_EMP_Meso<-readr::read_csv(raw_zoo_EMP_Meso, col_types = cols(.default=col_character()))%>%
   names()
 
 
 # FMWT STN Meso -----------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$FMWTSTN$Meso,
-      destfile=file.path(Data_folder, "FMWTSTN_Meso.csv"), mode="wb", method=Download_method)
+raw_zoo_FMWT_Meso <- EDIutils::read_data_entity(URLs$FMWTSTN$PID, URLs$FMWTSTN$Meso)
 
 Tryer(n=3, fun=download.file, url=URLs$SMSCG$Meso,
       destfile=file.path(Data_folder, "SMSCG_Meso.csv"), mode="wb", method=Download_method)
 
-names_FMWTSTN_Meso<-readr::read_csv(file.path(Data_folder, "FMWTSTN_Meso.csv"),
+names_FMWTSTN_Meso<-readr::read_csv(raw_zoo_FMWT_Meso,
                                     col_types = "c")%>%
   names()
 
@@ -52,70 +51,63 @@ names_20mm_Meso<-readxl::read_excel(file.path(Data_folder, "twentymm_Meso.csv"),
 
 # FRP ----------------------------------------------------------------
 
-Tryer(n=3, fun=utils::download.file, url=URLs$FRP$Meso,
-      destfile=file.path(Data_folder, "zoopsFRP.csv"), mode="wb", method=Download_method)
-Tryer(n=3, fun=utils::download.file, url=URLs$FRP$Macro,
-      destfile=file.path(Data_folder, "macroinvert_FRP.csv"), mode="wb", method=Download_method)
-Tryer(n=3, fun=utils::download.file, url=URLs$FRP$site,
-      destfile=file.path(Data_folder, "sitesFRP.csv"), mode="wb", method=Download_method)
+raw_zoo_FRP_Meso <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$Meso)
+raw_sites_FRP <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$site)
+raw_zoo_FRP_Macro <- EDIutils::read_data_entity(URLs$FRP$PID, URLs$FRP$Macro)
 
-names_FRP_Meso <- readr::read_csv(file.path(Data_folder, "zoopsFRP.csv"), na=c("", "NA"))%>%
+names_FRP_Meso <- readr::read_csv(raw_zoo_FRP_Meso, na=c("", "NA"))%>%
   names()
-names_FRP_Macro <- readr::read_csv(file.path(Data_folder, "macroinvert_FRP.csv"), na=c("", "NA"))%>%
+names_FRP_Macro <- readr::read_csv(raw_zoo_FRP_Macro, na=c("", "NA"))%>%
   names()
-names_FRP_sites <- readr::read_csv(file.path(Data_folder, "sitesFRP.csv"), na=c("", "NA"))%>%
+names_FRP_sites <- readr::read_csv(raw_sites_FRP, na=c("", "NA"))%>%
   names()
 
 # YBFMP Meso/Micro --------------------------------------------------------
 
-Tryer(n=3, fun=utils::download.file, url=URLs$YBFMP,
-      destfile=file.path(Data_folder, "YBFMP.csv"), mode="wb", method=Download_method)
+raw_zoo_YBFMP <- EDIutils::read_data_entity(URLs$YBFMP$PID, URLs$YBFMP$Meso)
 
-names_YBFMP<-readr::read_csv(file.path(Data_folder, "YBFMP.csv"),
+names_YBFMP<-readr::read_csv(raw_zoo_YBFMP,
                              col_types = cols(.default=col_character()))%>%
   names()
 
 
 # EMP Micro ---------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$EMP$Micro,
-      destfile=file.path(Data_folder, "EMP_Micro.csv"), mode="wb", method=Download_method)
+raw_zoo_EMP_Micro <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Micro)
 
-names_EMP_Micro<-readr::read_csv(file.path(Data_folder, "EMP_Micro.csv"),
+names_EMP_Micro<-readr::read_csv(raw_zoo_EMP_Micro,
                                  col_types=cols(.default=col_character()))%>%
   names()
 
 
 # EMP Macro ---------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$EMP$Macro,
-      destfile=file.path(Data_folder, "EMP_Macro.csv"), mode="wb", method=Download_method)
+raw_zoo_EMP_Macro <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Macro)
 
 
-names_EMP_Macro<-readr::read_csv(file.path(Data_folder, "EMP_Macro.csv"),
+names_EMP_Macro<-readr::read_csv(raw_zoo_EMP_Macro,
                                  col_types=cols(.default=col_character()))%>%
   names()
 
 
 # EMP Lengths ---------------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$EMP$Lengths,
-      destfile=file.path(Data_folder, "EMP_Lengths.csv"), mode="wb", method=Download_method)
+raw_zoo_EMP_Lengths <- EDIutils::read_data_entity(URLs$EMP$PID, URLs$EMP$Lengths)
 
 
-names_EMP_Lengths<-readr::read_csv(file.path(Data_folder, "EMP_Lengths.csv"),
+names_EMP_Lengths<-readr::read_csv(raw_zoo_EMP_Lengths,
                                  col_types=cols(.default=col_character()))%>%
   select(-where(~all(is.na(.x))))%>% # drop empty columns
   names()
 
 # FMWT STN Macro ----------------------------------------------------------
 
-Tryer(n=3, fun=download.file, url=URLs$FMWTSTN$Macro,
-      destfile=file.path(Data_folder, "FMWTSTN_Macro.csv"), mode="wb", method=Download_method)
+raw_zoo_FMWTSTN_Macro <- EDIutils::read_data_entity(URLs$FMWTSTN$PID, URLs$FMWTSTN$Macro)
+
 Tryer(n=3, fun=download.file, url=URLs$SMSCG$Macro,
       destfile=file.path(Data_folder, "SMSCG_Macro.csv"), mode="wb", method=Download_method)
 
-names_FMWT_Macro <- readr::read_csv(file.path(Data_folder, "FMWTSTN_Macro.csv"),
+names_FMWT_Macro <- readr::read_csv(raw_zoo_FMWTSTN_Macro,
                                     col_types = cols(.default=col_character()))%>%
   names()
 
@@ -127,27 +119,21 @@ names_SMSCG_Macro <- readr::read_csv(file.path(Data_folder, "SMSCG_Macro.csv"),
 # DOP Meso and Macro -------------------------------------------------------------------
 
 #download the files
-Tryer(n=3, fun=utils::download.file, url=URLs$DOP$Meso,
-      destfile=file.path(Data_folder, "DOP_Meso.csv"), mode="wb", method= Download_method)
+raw_zoo_DOP_Meso <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$Meso)
+raw_zoo_DOP_Macro <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$Macro)
+raw_zoo_DOP_trawls <- EDIutils::read_data_entity(URLs$DOP$PID, URLs$DOP$trawls)
 
-Tryer(n=3, fun=utils::download.file, url=URLs$DOP$trawls,
-      destfile=file.path(Data_folder, "DOP_trawls.csv"), mode="wb", method=Download_method)
-
-Tryer(n=3, fun=utils::download.file, url=URLs$DOP$Macro,
-      destfile=file.path(Data_folder, "DOP_Macro.csv"), mode="wb", method=Download_method)
-
-names_DOP_Meso<-readr::read_csv(file.path(Data_folder, "DOP_Meso.csv")) %>%
-  names()
-names_DOP_trawls<-readr::read_csv(file.path(Data_folder, "DOP_trawls.csv")) %>%
+names_DOP_Meso<-readr::read_csv(raw_zoo_DOP_Meso) %>%
   names()
 
-names_DOP_Macro<-readr::read_csv(file.path(Data_folder, "DOP_Macro.csv")) %>%
+names_DOP_trawls<-readr::read_csv(raw_zoo_DOP_trawls) %>%
+  names()
+
+names_DOP_Macro<-readr::read_csv(raw_zoo_DOP_Macro) %>%
   names()
 
 
 # Tests -------------------------------------------------------------------
-
-
 
 test_that("EMP Meso column names have not changed", {
   expect_setequal(names_EMP_Meso, c('SurveyCode', 'Year', 'Survey', 'SurveyRep', 'SampleDate', 'StationNZ', 'EZStation', 'DWRStationNo',
