@@ -1,4 +1,4 @@
-# zooper (development version)
+# zooper 2.6.0
 
 - Updated download method to use `EDIutils` package to handle new requirement for API keys. Added a function to check for an access key and provide instructions if one is not present. 
 - Removed parameter for `Redownload_data` from `Zoopdownloader` and `reload_data` from `Zoopsynther`, because the EDIutils functions directly read the data but do not save it.
